@@ -27,7 +27,7 @@ class UserFactory extends Factory
     {
          
         return [
-            'user_id' => Str::random(13),
+            'user_id' => $this->faker->numerify('#############'),
             'name' => $this->faker->name(),
             'last_name1' => $this->faker->name(),
             'last_name2' => $this->faker->name(),

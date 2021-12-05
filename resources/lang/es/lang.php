@@ -15,5 +15,9 @@ return [
      'province' => 'Provincia',
      'canton' => 'Canton',
      'updated_at' => 'Actualizado',
-     'list_user' => 'Lista de usuarios'
+     'list_user' => 'Lista de usuarios',
+     'user_created' => 'El usuario fué creado!',
+     'user_updated' => 'Los datos del usuario fueron actualizados correctamente!',
+     'user_error' => 'Verifica que los campos cumplan con los requisitos',
+     'user_deleted' => 'El usuario fué eliminado con exito.',
 ];

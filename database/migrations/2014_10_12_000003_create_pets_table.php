@@ -26,7 +26,7 @@ class CreatePetsTable extends Migration
             $table->string('id_pet_mother', 14)->nullable();
             $table->string('user_id', 13)->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

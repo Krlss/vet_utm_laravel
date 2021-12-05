@@ -4,7 +4,7 @@
 
 @section('content_header')
     <div class="flex justify-between items-center">
-        <div class="text-lg font-bold">Creación de un usuario</div>
+        <div class="text-lg font-bold">Edición de un usuario</div>
         <a href="{{ route('dashboard.users.index') }}"
             class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
             Lista de usuarios
@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        {!! Form::open(['route' => 'dashboard.users.store']) !!}
+        {!! Form::model($user, ['route' => ['dashboard.users.update', $user], 'autocomplete' => 'off', 'method' => 'put']) !!}
         @include('dashboard.users.fields')
         {!! Form::close() !!}
     </div>

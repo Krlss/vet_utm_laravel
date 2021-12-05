@@ -33,6 +33,7 @@ class User extends Authenticatable
         'last_name2',
         'email',
         'address',
+        'password',
         'phone',
         'id_province',
         'id_canton',
@@ -49,22 +50,18 @@ class User extends Authenticatable
         'password',
         'remember_token'
     ];
+ 
 
-
-public static $rules = [
-    'user_id' => 'required|dimensions:min_width=10,min_height=13',
-    'name' => 'required',
-    'last_name1' => 'required',
-    'last_name2' => 'required',
-    'email' => 'required|unique:App\Models\User,email',
-    'id_canton' => 'required',
-    'address' => 'required',
-    'phone' => 'required|digits:10',
-];
-
-
-
-
+    public static $rules = [
+        'user_id' => 'required|max:13|min:10',
+        'name' => 'required',
+        'last_name1' => 'required',
+        'last_name2' => 'required',
+        'email' => 'required',
+        'id_canton' => 'required',
+        'address' => 'required',
+        'phone' => 'required|digits:10',
+    ];
 
 
 
