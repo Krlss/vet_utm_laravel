@@ -225,35 +225,10 @@ return [
     */
     'menu' => [
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'gestor',
-            'icon'        => 'fas fa-tachometer-alt fa-fw',
-            /* 'can'          => 'admin.home' */
-        ],
-        [
-            'text'        => 'Usuarios',
-            'icon'        => 'far fa-user fa-fw',
-            /* 'can'          => 'admin.users.index' */
-        ],
-
-        [
-            'text' => 'Categorías',
-            'icon' => 'fas fa-fw fa-th',
-            'active' => ['admin/categories*'], //Todas las categorias 
-            /* 'can'          => 'admin.categories.index' */
-        ],
-        // [
-        //     'text' => 'Subcategorias',
-        //     'route'  => 'admin.tags.index',
-        //     'icon' => 'far fa-fw fa-bookmark',
-        //     'active' => ['admin/tags*'],
-        //     'can'          => 'admin.tags.index'
-        // ],
-
+            'text' => 'Dashboard',
+            'url'  => '/dashboard',
+            'icon'      => 'fas fa-tachometer-alt',
+        ], 
         ['header' => 'Administración'],
         [
             'text'      => 'Usuarios',
@@ -261,12 +236,7 @@ return [
             'active'    => ['dashboard/users', 'dashboard/users/create', 'dashboard/users/edit'],
             'url'       => 'dashboard/users',
             /* 'can'          => 'admin.products.index' */
-        ],
-        [
-            'text'       => 'Publicar nuevo producto',
-            'icon'      => 'fas fa-fw fa-file',
-            /* 'can'          => 'admin.products.create' */
-        ],
+        ], 
     ],
 
 

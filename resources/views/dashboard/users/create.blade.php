@@ -22,7 +22,7 @@
         @endif
 
         {!! Form::open(['route' => 'dashboard.users.store']) !!}
-        @include('dashboard.users.fields')
+        @include('dashboard.users.fields_create')
         {!! Form::close() !!}
     </div>
 </div>
