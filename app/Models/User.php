@@ -39,7 +39,6 @@ class User extends Authenticatable
         'id_canton',
     ];
 
-    protected $guarded = ['id'];
     /**
      * 
      * The attributes that should be hidden for serialization.

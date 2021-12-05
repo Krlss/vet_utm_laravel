@@ -4,10 +4,10 @@
 
 @section('content_header')
     <div class="flex justify-between items-center">
-        <div class="text-lg font-bold">{{trans('lang.edit_user')}}</div>
-        <a href="{{ route('dashboard.users.index') }}"
+        <div class="text-lg font-bold">{{trans('lang.pet_registration')}}</div>
+        <a href="{{ route('dashboard.pets.index') }}"
             class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-            {{trans('lang.list_user')}}
+            {{trans('lang.list_pets')}}
         </a>
     </div>
 @endsection
@@ -21,8 +21,8 @@
             </div>
         @endif
 
-        {!! Form::model($user, ['route' => ['dashboard.users.update', $user], 'autocomplete' => 'off', 'method' => 'put']) !!}
-        @include('dashboard.users.fields')
+        {!! Form::open(['route' => 'dashboard.pets.store']) !!}
+        @include('dashboard.pets.fields_create')
         {!! Form::close() !!}
     </div>
 </div>

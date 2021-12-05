@@ -9,19 +9,35 @@ class Pet extends Model
 {
     use HasFactory;
 
-    protected $fillable = [ 
+    protected $keyType = 'string';
+    protected $primaryKey = 'pet_id';
+    public $incrementing = false;
+
+    protected $fillable = [  
         'name',
         'birth',
         'sex',
         'specie',
         'race',
         'lost',
+        'pet_id',
+        'castrated',
         'id_pet_pather',
         'id_pet_mother',
         'user_id',
     ];
 
-    public function pet()
+    public static $rules = [
+        'name' => 'required',
+        'specie' => 'required',
+        'race' => 'required',
+        'lost' => 'required',
+        'sex' => 'required',
+        'birth' => 'required',
+        'castrated' => 'required',
+    ]; 
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

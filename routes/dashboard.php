@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('', [HomeController::class, 'index'])->name('dashboard.home');
 
 Route::resource('users', UserController::class)->names('dashboard.users');
+Route::resource('pets', PetController::class)->names('dashboard.pets'); 
 
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']); 
 
-Route::resource('pets', PetController::class)->names('dashboard.pets');

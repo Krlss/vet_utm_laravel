@@ -93,7 +93,15 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        DB::beginTransaction();
+        try {
+            
         $user->delete();
+        DB::commit();
         return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_deleted'));
+    } catch (\Throwable $e) {
+        DB::rollBack();            
+        return redirect()->back()->with('error', trans('lang.user_error'));
+    } 
     }
 }

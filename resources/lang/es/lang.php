@@ -1,6 +1,14 @@
 <?php 
 
 return [
+     'login' => 'Iniciar sesión',
+     'rememberme' => 'Recuérdame',
+     'password' => 'Contraseña',
+     'Forgotyourpassword' => '¿Olvidaste tu contraseña?',
+     'yep' => 'Si',
+     'nop' => 'No',
+
+
      'tableUserID' => 'Cedula o RUC',
      'namesUser' => 'Nombres',
      'last_names' => 'Apellidos',
@@ -20,4 +28,37 @@ return [
      'user_updated' => 'Los datos del usuario fueron actualizados correctamente!',
      'user_error' => 'Verifica que los campos cumplan con los requisitos',
      'user_deleted' => 'El usuario fué eliminado con exito.',
+     'show_user' => 'Mostrar usuario',
+     'edit_user' => 'Edición de un usuario',
+
+
+
+     'namePet' => 'Nombre de la mascota',
+     'name' => 'Nombre',
+     'pet_id' => 'Identificación',
+     'castrated' => 'Castrado',
+     'lost' => 'Perdido',
+     'duenio' => 'Dueño',
+     'list_pets' => 'Lista de mascotas',
+     'createPet' => 'Registrar Mascota',
+     'pet_registration' => 'Registro de mascotas',
+     'specie' => 'Especie',
+     'race' => 'Raza',
+     'lost' => 'Perdido',
+     'maleP' => 'Macho',
+     'femaleP' => 'Hembra',
+     'sexP' => 'Sexo', 
+     'birth' => 'Fecha de nacimiento', 
+     'castrated' => 'Esterilizado',
+     'select_owner' => 'Seleccione un dueño',
+     'pet_created' => 'Mascota creada correctamente',
+     'pet_updated' => 'Mascota actualizada correctamente',
+     'pet_deleted' => 'Mascota eliminada correctamente',
+     'pet_errpr' => 'Verifica que los campos cumplan con los requisitos',
+     'data_owner' => 'Datos del dueño',
+     'data_pet' => 'Datos de la mascota',
+
+     'show_pet' => 'Mostrar mascota',
+     'list_pets' => 'Lista de mascotas',
+     'edit_pet' => 'Edición de una mascota',
 ];

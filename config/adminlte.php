@@ -234,7 +234,14 @@ return [
             'text'      => 'Usuarios',
             'icon'      => 'fas fa-users',
             'active'    => ['dashboard/users', 'dashboard/users/create', 'dashboard/users/edit'],
-            'url'       => 'dashboard/users',
+            'route'         => 'dashboard.users.index',   
+            /* 'can'          => 'admin.products.index' */
+        ], 
+        [
+            'text'      => 'Mascotas',
+            'icon'      => 'fas fa-paw',
+            'active'    => ['dashboard/pets', 'dashboard/pets/create', 'dashboard/pets/edit'],
+            'route'         => 'dashboard.pets.index', 
             /* 'can'          => 'admin.products.index' */
         ], 
     ],
