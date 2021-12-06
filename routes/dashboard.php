@@ -4,9 +4,10 @@ use App\Http\Controllers\admin\HomeController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\CantonController;
 use App\Http\Controllers\admin\PetController;
-use App\Http\Controllers\admin\ProvinceController;
+use App\Http\Controllers\admin\ProvinceController; 
+use App\Http\Controllers\Api\PetApiController;
 use Illuminate\Support\Facades\Route;
-
+use Illuminate\Http\Request;
 
 Route::get('', [HomeController::class, 'index'])->name('dashboard.home');
 

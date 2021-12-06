@@ -6,6 +6,7 @@ use App\Models\Canton;
 use App\Models\Team;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use Laravel\Jetstream\Features;
 
@@ -24,10 +25,10 @@ class UserFactory extends Factory
      * @return array
      */
     public function definition()
-    {
-         
+    {   
+            $user_id = $this->faker->numerify('#############');
         return [
-            'user_id' => $this->faker->numerify('#############'),
+            'user_id' => $user_id,
             'name' => $this->faker->name(),
             'last_name1' => $this->faker->name(),
             'last_name2' => $this->faker->name(),
@@ -36,7 +37,7 @@ class UserFactory extends Factory
             'id_canton' =>  Canton::all()->random()->id,
             'phone' => $this->faker->numerify('#########'),
             'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'password' => Hash::make($user_id),
             'remember_token' => Str::random(10),
         ];
     }
