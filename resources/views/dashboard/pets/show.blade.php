@@ -18,10 +18,4 @@
     </div>
 </div>
 
-<form action="{{route('dashboard.uploadGoogle')}}" method="POST">
-    @csrf
-    <input type="file" name="thing">
-    <button type="submit"> GO </button>
-</form>
-
 @endsection

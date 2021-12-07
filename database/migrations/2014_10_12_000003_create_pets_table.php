@@ -14,7 +14,7 @@ class CreatePetsTable extends Migration
     public function up()
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->string('pet_id', 14)->unique();
+            $table->string('pet_id', 15)->unique();
             $table->string('pet_photo_path', 2048)->nullable();
             $table->string('name');
             $table->date('birth'); 

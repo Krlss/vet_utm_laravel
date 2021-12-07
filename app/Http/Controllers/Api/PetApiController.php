@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Image;
 use App\Models\Pet;
-use Illuminate\Http\Request; 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class PetApiController extends Controller
@@ -109,20 +111,46 @@ class PetApiController extends Controller
 
     public function uploadPetUnknow(Request $request) 
     {        
-        $input = $request->all(); 
-        $path = public_path() . '/img/';
-         
-        for ($i=0; $i < count($input); $i++) { 
-            $decode_file = base64_decode($input[$i]['base64']);
-            /* file_put_contents($path . $input[$i]['name'], $decode_file);
-            
-            $img_saved = asset('/img/'. $input[$i]['name']); */
-            Storage::disk("google")->put($input[$i]['name'], $decode_file);            
-            $url = Storage::disk("google")->url($input[$i]['name']);
-            $kjlasd = $url;
+        $input = $request->all();  
+
+        $arrName = explode("-", $input[0]['name']); // ['.....' - '.....' - '......']
+        $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
+        $arridWithJpg = explode(".", $idWithJpg); // without .jpg
+        $pet['pet_id'] = strtoupper($arridWithJpg[0] . rand(100, 999)); //Last ID
+        $pet['name'] = 'UNDEFINED';
+        $pet['birth'] = date('Y-m-d');
+        $pet['sex'] = 'UNDEFINED';
+        $pet['specie'] = 'UNDEFINED';
+        $pet['race'] = 'UNDEFINED';
+
+
+        DB::beginTransaction();
+
+
+        try {
+            Pet::create($pet);
+
+            for ($i=0; $i < count($input); $i++) { 
+
+                $decode_file = base64_decode($input[$i]['base64']);     
+
+                Storage::disk("google")->put($input[$i]['name'], $decode_file); 
+
+                $urlGoogleImage = Storage::disk("google")->url($input[$i]['name']);
+
+                $image['url'] = $urlGoogleImage;
+                $image['name'] = $input[$i]['name'];
+                $image['pet_id'] = $pet['pet_id'];
+
+                Image::create($image);
+            }
+
+            DB::commit();           
+            return response()->json(['message'=>'Report is ok...', 'data' => []], 200); 
+        } catch (\Throwable $th) {
+            DB::rollBack();     
+            return response()->json(['message'=>'Something went error...', 'data' => []], 500);
         }
-
-
-        return response()->json(['message'=>'no lost pets', 'data' => []], 200);
+     
     }
 }

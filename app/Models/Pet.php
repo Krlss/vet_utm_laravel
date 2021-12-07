@@ -61,4 +61,8 @@ class Pet extends Model
     {
         return $this->childrenPetMother()->with('allChildrenPetMother');
     }
+ 
+     public function images(){
+        return $this->hasMany(Image::class);
+    }
 }

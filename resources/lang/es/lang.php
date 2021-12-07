@@ -61,4 +61,6 @@ return [
      'show_pet' => 'Mostrar mascota',
      'list_pets' => 'Lista de mascotas',
      'edit_pet' => 'Edición de una mascota',
+     'canine' => 'Canina',
+     'feline' => 'Felina',
 ];

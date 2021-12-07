@@ -19,7 +19,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::text('specie', old('specie'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.specie'), 'required' => true]) !!}
+                {!! Form::select('specie',['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
                 <div class="text-gray-500 text-sm mb-2">
                     {{ trans('lang.required') }}
                 </div>
@@ -126,20 +126,6 @@
     </div>
 
 
-    {{-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-        <!-- Food Id Field -->
-        <div class="form-group row ">
-            {!! Form::label('id_pet_pather', trans('lang.slide_food_id'), ['class' => 'col-3 control-label text-right']) !!}
-            <div class="col-9">
-                {!! Form::select('id_pet_pather', $food, null, ['data-empty' => trans('lang.slide_food_id_placeholder'), 'class' => ' not-required form-control', 'id' => 'food_id']) !!}
-                <div class="progress" style="max-height: 2px">
-                    <div class="progress-bar" style="max-height: 2px" id="progress_products" role="progressbar"
-                        style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="form-text text-muted">{{ trans('lang.slide_food_id_help') }}</div>
-            </div>
-        </div>
-    </div> --}}
 
     <button type="submit"
         class="float-right bg-blue-500 hover:bg-blue-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>

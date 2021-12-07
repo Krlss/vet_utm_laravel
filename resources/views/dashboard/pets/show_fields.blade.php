@@ -1,10 +1,10 @@
 <div>
 
     @if ($user)
-        <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{trans('lang.data_owner')}}</div>
+        <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_owner') }}</div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+            {{-- User ID --}}
             <div class="form-group flex-col">
                 {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => '  ']) !!}
                 <div class="">
@@ -13,7 +13,7 @@
                     </p>
                 </div>
             </div>
-
+            {{-- User first_name --}}
             <div class="form-group flex-col">
                 {!! Form::label('namesUser', trans('lang.namesUser'), ['class' => '  ']) !!}
                 <div class="">
@@ -22,7 +22,7 @@
                     </p>
                 </div>
             </div>
-
+            {{-- User last_name --}}
             <div class="form-group flex-col">
                 {!! Form::label('last_names', trans('lang.last_names'), ['class' => '  ']) !!}
                 <div class="">
@@ -31,10 +31,7 @@
                     </p>
                 </div>
             </div>
-
-        </div>
-
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+            {{-- UserEmail --}}
             <div class="form-group flex-col">
                 {!! Form::label('email', trans('lang.email'), ['class' => '  ']) !!}
                 <div class="">
@@ -43,18 +40,11 @@
                     </p>
                 </div>
             </div>
-            <div class="form-group flex-col">
-                {!! Form::label('phone', trans('lang.phone'), ['class' => '  ']) !!}
-                <div class="">
-                    <p>
-                        {!! $user->phone !!}
-                    </p>
-                </div>
-            </div>
+
         </div>
 
-        <div class="grid grid-cols-1 ">
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1">
+            {{-- User address --}}
             <div class="form-group flex-col">
                 {!! Form::label('address', trans('lang.address'), ['class' => '  ']) !!}
                 <div class="">
@@ -63,11 +53,10 @@
                     </p>
                 </div>
             </div>
-
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
-
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            {{-- User province --}}
             @if ($province)
                 <div class="form-group flex-col">
                     {!! Form::label('province', trans('lang.province'), ['class' => '  ']) !!}
@@ -78,7 +67,7 @@
                     </div>
                 </div>
             @endif
-
+            {{-- User Canton --}}
             @if ($canton)
                 <div class="form-group flex-col">
                     {!! Form::label('canton', trans('lang.canton'), ['class' => '  ']) !!}
@@ -90,22 +79,32 @@
                 </div>
             @endif
 
+            {{-- User Phone --}}
+            <div class="form-group flex-col">
+                {!! Form::label('phone', trans('lang.phone'), ['class' => '  ']) !!}
+                <div class="">
+                    <p>
+                        {!! $user->phone !!}
+                    </p>
+                </div>
+            </div>
+
         </div>
     @endif
 
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{trans('lang.data_pet')}}</div>
+    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_pet') }}</div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
-
+        {{-- Pet ID --}}
         <div class="form-group flex-col">
             {!! Form::label('pet_id', trans('lang.pet_id'), ['class' => '  ']) !!}
             <div class="">
                 <p>
                     {!! $pet->pet_id !!}
                 </p>
-            </div>  
+            </div>
         </div>
-
+        {{-- Pet name --}}
         <div class="form-group flex-col">
             {!! Form::label('namePet', trans('lang.namePet'), ['class' => '  ']) !!}
             <div class="">
@@ -114,12 +113,12 @@
                 </p>
             </div>
         </div>
-
+        {{-- Pet Specie --}}
         <div class="form-group flex-col">
             {!! Form::label('specie', trans('lang.specie'), ['class' => '  ']) !!}
             <div class="">
                 <p>
-                    {!! $pet->specie !!}
+                    {!! trans('lang.' . $pet->specie) !!}
                 </p>
             </div>
         </div>
@@ -136,7 +135,7 @@
     </div>
 
 
-    
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 
         <div class="form-group flex-col">
@@ -145,7 +144,7 @@
                 <p>
                     {!! $pet->sex == 'M' ? trans('lang.maleP') : trans('lang.femaleP') !!}
                 </p>
-            </div>  
+            </div>
         </div>
 
         <div class="form-group flex-col">

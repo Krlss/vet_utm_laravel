@@ -105,20 +105,22 @@ class PetController extends Controller
         /* PRIMERA LETRA NOMBRE + 
         SEXO + 
         AÑO NACIMIENTO + 
+        Día en que se registró +
         CASTRADO + 
         PRIMERA LETRA RAZA + 
         PRIMERA LETRA ESPECIE + 
         numbero random 1000 to 9999  */
 
-        /* PM2020YBP9999  */
+        /* PM202007YBP9999  */
 
         $name = $input['name'];
         $birth = $input['birth'];
         $arrBirth = explode("-", $birth);
+        $day = date("d");
         $castrated = $input['castrated'] === 0 ? 'F' : 'M';
         $race = $input['race'];
         $specie = $input['specie'];
 
-        return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
+        return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
     }
 }
