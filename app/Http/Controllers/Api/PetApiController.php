@@ -4,7 +4,8 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
-use Illuminate\Http\Request;
+use Illuminate\Http\Request; 
+use Illuminate\Support\Facades\Storage;
 
 class PetApiController extends Controller
 {
@@ -108,11 +109,20 @@ class PetApiController extends Controller
 
     public function uploadPetUnknow(Request $request) 
     {        
-        $input = $request->all();
-        
-        for ($i=0; $i < count($input) ; $i++) { 
-              
+        $input = $request->all(); 
+        $path = public_path() . '/img/';
+         
+        for ($i=0; $i < count($input); $i++) { 
+            $decode_file = base64_decode($input[$i]['base64']);
+            /* file_put_contents($path . $input[$i]['name'], $decode_file);
+            
+            $img_saved = asset('/img/'. $input[$i]['name']); */
+            Storage::disk("google")->put($input[$i]['name'], $decode_file);            
+            $url = Storage::disk("google")->url($input[$i]['name']);
+            $kjlasd = $url;
         }
+
+
         return response()->json(['message'=>'no lost pets', 'data' => []], 200);
     }
 }
