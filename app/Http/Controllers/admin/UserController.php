@@ -10,6 +10,7 @@ use App\Models\Province;
 use App\Models\User; 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -36,6 +37,7 @@ class UserController extends Controller
         $password = $input['user_id'];
 
         $input['password'] = Hash::make($password);
+        $input['api_token'] = Str::random(25);
         
         DB::beginTransaction();
         try {

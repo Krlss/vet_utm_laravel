@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->string('phone', 12)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('api_token');
             $table->rememberToken();
             $table->timestamps();
             $table->foreign('id_canton')->references('id')->on('cantons')->onDelete('cascade')->onUpdate('cascade');

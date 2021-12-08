@@ -34,6 +34,7 @@ class User extends Authenticatable
         'email',
         'address',
         'password',
+        'api_token',
         'phone',
         'id_province',
         'id_canton',

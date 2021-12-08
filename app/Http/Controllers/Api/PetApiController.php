@@ -131,7 +131,7 @@ class PetApiController extends Controller
         $pet['published'] = false;
         $pet['specie'] = '#########';
         $pet['race'] = '#########';
-
+        $pet['n_lost'] = 0;
 
         DB::beginTransaction();
 

@@ -32,9 +32,12 @@ use Illuminate\Support\Facades\Route;
 }); */
  
 
-Route::post('login', [UserApiController::class, 'Login']);
 
 Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
 Route::get('getPetByID/{id}', [PetApiController::class, 'getPetByID']);
 
 Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->name('dashboard.uploadGoogle');
+
+Route::post('login', [UserApiController::class, 'Login']);
+Route::post('register', [UserApiController::class, 'Register']);
+Route::get('users/{id}', [UserApiController::class, 'getProfile']);

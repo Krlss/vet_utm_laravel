@@ -200,7 +200,7 @@
         </div>
     </div>
 
-    @if (count($images))
+    @if (count($images) <= 0)
         <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}</div>
     @else
         <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">

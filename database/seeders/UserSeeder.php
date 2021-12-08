@@ -6,6 +6,7 @@ use App\Models\Canton;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserSeeder extends Seeder
 {
@@ -26,6 +27,7 @@ class UserSeeder extends Seeder
             'address' =>  'aisdjasoidjaosid',
             'phone' =>  '0990146541',
             'password' =>  Hash::make('12345678'),
+            'api_token' =>  Str::random(25),
         ]);
     }
 }
