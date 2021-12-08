@@ -27,7 +27,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('specie', ['##########' => 'Indefinido', 'canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], $pet->specie ? $pet->specie : 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('specie', ['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], $pet->specie ? $pet->specie : 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
                 <div class="text-gray-500 text-sm mb-2">
                     {{ trans('lang.required') }}
                 </div>
@@ -78,7 +78,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('sex', ['##########' => 'Indefinido', 'M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
                 <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
             </div>
             @error('sex')

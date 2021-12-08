@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateUserApiRequest;
+use App\Mail\VerifyEmail;
 use App\Models\Canton;
 use App\Models\Pet;
 use App\Models\Province;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UserApiController extends Controller
@@ -27,12 +29,24 @@ class UserApiController extends Controller
             $user = User::where('email', $request->email)->first();
             
             if($user){
-                $passwordD = Hash::check($password, $user->password);
-                if($passwordD){
-                    return response()->json(['message'=>'Welcome', 'data' => $user], 200);
+                if($user->email_verified_at == null){                    
+                    return response()->json(['message'=>'Look your email', 'data' => []], 301);                    
                 }else{
-                    return response()->json(['message'=>'Password incorrect', 'data' => null], 401);
-                }
+                    $passwordD = Hash::check($password, $user->password);
+                    if($passwordD){
+                        $pet = Pet::where('user_id', $user->user_id)->get();
+                        $canton = Canton::where('id', $user->id_canton)->first();
+                        
+                        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+     
+                        $user['pet'] = $pet;
+                        $user['canton'] = $canton;
+                        $user['province'] = $province;
+                        return response()->json(['message'=>'Welcome', 'data' => $user], 200);
+                    }else{
+                        return response()->json(['message'=>'Password incorrect', 'data' => null], 401);
+                    }
+                }                
             }else{
                 return response()->json(['message'=>'User not found', 'data' => null], 404); 
             }   
@@ -47,6 +61,7 @@ class UserApiController extends Controller
 
     $input = $request->all();
     $input['api_token'] = Str::random(25);
+    $input['password'] = Hash::make($input['password']);
 
     $userFind = User::where('user_id', $input['user_id'])
     ->where('email', $input['email'])
@@ -56,12 +71,20 @@ class UserApiController extends Controller
     try {
         DB::beginTransaction();
 
-        $user = User::create($input);
+        User::create($input);
 
-        DB::commit();
-        return response()->json(['message'=>'Welcome', 'data' => $user], 200); 
+        DB::commit(); 
+
+        $detail = [
+            'title' => 'Clínica veterinaria de la universidad técnica de manabí',
+            'body' => 'Para verificar el correo electrónico da clic en el siguiente link.',
+            'api_token' => $input['api_token'],
+            'backurl' => url()->previous()
+        ];
+        response()->json(['message'=>'Welcome', 'data' => []], 200); 
+        Mail::to($input['email'])->send(new VerifyEmail($detail));
     } catch (\Throwable $th) {
-        return response()->json(['message'=>'Welcome', 'data' => []], 500); 
+        return response()->json(['message'=>'Something went error', 'data' => $th], 500);
     }
 
    }
@@ -72,6 +95,14 @@ class UserApiController extends Controller
     if($header){
         $user = User::where('api_token', $header)->first();
         if($user){
+            $pet = Pet::where('user_id', $user->user_id)->get();
+            $canton = Canton::where('id', $user->id_canton)->first();
+            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+ 
+            $user['pet'] = $pet;
+            $user['canton'] = $canton;
+            $user['province'] = $province;
+
             return response()->json(['message'=>'Your data :)', 'data' => $user], 200); 
         }
         return response()->json(['message'=>'User not found', 'data' => []], 404); 
@@ -81,4 +112,24 @@ class UserApiController extends Controller
 
     return response()->json(['message'=>'Welcome', 'data' => []], 200); 
    }
+
+   public function VerifyEmail ($api_token) {
+
+       try {
+        DB::beginTransaction();
+
+        $user = User::where('api_token', $api_token)->first();
+        if($user->email_verified_at) return response()->json(['message'=>'the email has already been verified', 'data' => []], 500);
+        $data['email_verified_at'] = now();
+        $user->update($data);
+        DB::commit();
+
+        return response()->json(['message'=>'Verified email!', 'data' => []], 200); 
+       } catch (\Throwable $th) {
+           DB::rollBack();
+           return response()->json(['message'=>'Something went error', 'data' => $th], 500);
+       }
+
+   }
 }
+ 

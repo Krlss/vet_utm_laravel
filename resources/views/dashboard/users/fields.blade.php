@@ -96,7 +96,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('province_id', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('province_id', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('province_id', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => trans('lang.select_province')]) !!}
                 <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
             </div>
             @error('province_id')
@@ -107,7 +107,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('id_canton', trans('lang.canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('id_canton', $cantons, $canton ? $canton->id : null, ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('id_canton', $cantons, $canton ? $canton->id : null, ['class' => 'select2 form-control', 'required' => true , 'placeholder' => trans('lang.select_canton')]) !!}
                 <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
             </div>
             @error('id_canton')
@@ -123,7 +123,8 @@
 @push('scripts_lib')
     <script>
         $(document).ready(function() {
-            if (<?php echo $canton; ?>) {
+            var cantoncurrent = <?php echo $canton; ?>;
+            if (cantoncurrent) {
                 $.ajax({
                     method: "GET",
                     url: "{{ url('dashboard/provinces/cantons') }}",
@@ -135,7 +136,7 @@
                     if (msg.length <= 0) cantonsOptions = '<option value="0">Sin padre</option>';
                     $.each(msg, function(i, canton) {
                         if ($('#id_canton').val() !== [])
-                            <?php echo $canton->id; ?> === canton.id ? cantonsOptions +=
+                            cantoncurrent === canton.id ? cantonsOptions +=
                             '<option selected value="' +
                             canton.id + '">' + canton.name +
                             '</option>' :

@@ -49,7 +49,7 @@
                 {!! Form::label('address', trans('lang.address'), ['class' => '  ']) !!}
                 <div class="">
                     <p>
-                        {!! $user->address !!}
+                        {{ $user->address ? $user->address : trans('lang.without_address') }}
                     </p>
                 </div>
             </div>
@@ -57,27 +57,24 @@
 
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
             {{-- User province --}}
-            @if ($province)
-                <div class="form-group flex-col">
-                    {!! Form::label('province', trans('lang.province'), ['class' => '  ']) !!}
-                    <div class="">
-                        <p>
-                            {{ $province->name }}
-                        </p>
-                    </div>
+            <div class="form-group flex-col">
+                {!! Form::label('province', trans('lang.province'), ['class' => '  ']) !!}
+                <div class="">
+                    <p>
+                        {{ $province ? $province->name : trans('lang.without_province') }}
+                    </p>
                 </div>
-            @endif
+            </div>
+
             {{-- User Canton --}}
-            @if ($canton)
-                <div class="form-group flex-col">
-                    {!! Form::label('canton', trans('lang.canton'), ['class' => '  ']) !!}
-                    <div class="">
-                        <p>
-                            {{ $canton->name }}
-                        </p>
-                    </div>
+            <div class="form-group flex-col">
+                {!! Form::label('canton', trans('lang.canton'), ['class' => '  ']) !!}
+                <div class="">
+                    <p>
+                        {{ $canton ? $canton->name : trans('lang.without_canton') }}
+                    </p>
                 </div>
-            @endif
+            </div>
 
             {{-- User Phone --}}
             <div class="form-group flex-col">
@@ -200,14 +197,14 @@
         </div>
     </div>
 
-    @if (count($images) <= 0)
+    @if (count($images) > 0)
         <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}</div>
     @else
         <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">
             {{ trans('lang.not_photos_report') }}
         </div>
         <div class="w-full text-left">
-            {{trans('lang.recommendable_not_published')}}
+            {{ trans('lang.recommendable_not_published') }}
         </div>
     @endif
 

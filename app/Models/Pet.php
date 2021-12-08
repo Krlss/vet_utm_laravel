@@ -34,7 +34,6 @@ class Pet extends Model
         'specie' => 'required',
         'race' => 'required',
         'lost' => 'required',
-        'sex' => 'required',
         'birth' => 'required',
         'castrated' => 'required',
     ]; 

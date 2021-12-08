@@ -38,6 +38,7 @@ class UserController extends Controller
 
         $input['password'] = Hash::make($password);
         $input['api_token'] = Str::random(25);
+        $input['email_verified_at'] = null;
         
         DB::beginTransaction();
         try {
@@ -57,7 +58,7 @@ class UserController extends Controller
         
         $canton = Canton::where('id', $user->id_canton)->first(); 
 
-        $province = Province::where('id', $canton->id_province)->first();
+        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
         
         return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province'));
     }
@@ -68,7 +69,7 @@ class UserController extends Controller
         
         $canton = Canton::where('id', $user->id_canton)->first(); 
 
-        $province = Province::where('id', $canton->id_province)->first();
+        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
         $provinces = Province::pluck('name', 'id');
 

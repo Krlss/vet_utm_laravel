@@ -56,13 +56,14 @@ class ReportController extends Controller
     {
         $pet = Pet::where('pet_id', $id)->first();
         $images = Image::where('pet_id', $id)->get();
+        if(count($images)<=0) $images = [];
         $user = User::where('user_id', $pet->user_id)->first();
         $canton = null;
         $province = null;
 
         if($user){
             $canton = Canton::where('id', $user->id_canton)->first();
-            $province = Province::where('id', $canton->id_province)->first();
+            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
         }
         return view('dashboard.reports.show', compact('pet', 'user', 'canton','province', 'images'));
     }
@@ -71,7 +72,8 @@ class ReportController extends Controller
     {
         $pet = Pet::where('pet_id', $id)->first();
         $users = User::pluck('user_id', 'user_id');
-        $images = Image::where('pet_id', $pet->pet_id)->get();
+        $images = Image::where('pet_id', $pet->pet_id)->get(); 
+        if(count($images)<=0) $images = [];
 
         return view('dashboard.reports.edit', compact('pet', 'users', 'images'));
     }

@@ -71,7 +71,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], 'M', ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], null, ['class' => 'select2 form-control', 'placeholder' => 'Seleccione un sexo']) !!}
                 <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
             </div>
             @error('sex')

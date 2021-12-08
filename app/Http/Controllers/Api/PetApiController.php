@@ -106,10 +106,11 @@ class PetApiController extends Controller
     public function getAllPetsLost() 
     {
         try {
-            $pets = Pet::where('lost', true)
-            ->where('published', true)
-            ->get();
-            if($pets) return response()->json(['message'=>'All pets lost', 'data' => $pets], 200);
+            $pets = Pet::where('lost', true)->where('published', true)->get();
+
+            if($pets) {
+                return response()->json(['message'=>'All pets lost', 'data' => $pets], 200);
+            }
             return response()->json(['message'=>'no lost pets', 'data' => []], 404);
         } catch (\Throwable $th) {
             return response()->json(['message'=>'Something went error', 'data' => []], 500);
@@ -126,12 +127,12 @@ class PetApiController extends Controller
         $pet['pet_id'] = strtoupper($arridWithJpg[0] . rand(100, 999)); //Last ID
         $pet['name'] = '#########';
         $pet['birth'] = date('Y-m-d');
-        $pet['sex'] = '#########';
+        $pet['sex'] = null;
         $pet['lost'] = true;
         $pet['published'] = false;
         $pet['specie'] = '#########';
         $pet['race'] = '#########';
-        $pet['n_lost'] = 0;
+        $pet['n_lost'] = 1;
 
         DB::beginTransaction();
 

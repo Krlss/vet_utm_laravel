@@ -42,7 +42,17 @@
         @include('dashboard.reports.fields')
         {!! Form::close() !!}
 
-        <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}</div>
+        @if ($images)
+            <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}
+            </div>
+        @else
+            <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">
+                {{ trans('lang.not_photos_report') }}
+            </div>
+            <div class="w-full text-left">
+                {{ trans('lang.recommendable_not_published') }}
+            </div>
+        @endif
 
         <div class="flex flex-wrap w-full h-full">
             @foreach ($images as $img)

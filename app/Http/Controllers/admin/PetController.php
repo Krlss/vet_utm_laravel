@@ -60,7 +60,7 @@ class PetController extends Controller
 
         if($user){
             $canton = Canton::where('id', $user->id_canton)->first();
-            $province = Province::where('id', $canton->id_province)->first();
+            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
         }
         return view('dashboard.pets.show', compact('pet', 'user', 'canton','province'));
     }
@@ -130,6 +130,7 @@ class PetController extends Controller
         $castrated = $input['castrated'] === 0 ? 'F' : 'M';
         $race = $input['race'];
         $specie = $input['specie'];
+        $input['sex'] = $input['sex'] ? $input['sex'] : 'D';
 
         return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
     }

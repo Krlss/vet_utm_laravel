@@ -41,3 +41,5 @@ Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->
 Route::post('login', [UserApiController::class, 'Login']);
 Route::post('register', [UserApiController::class, 'Register']);
 Route::get('users/{id}', [UserApiController::class, 'getProfile']);
+
+Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']); 

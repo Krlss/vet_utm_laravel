@@ -30,6 +30,11 @@ return [
      'user_deleted' => 'El usuario fué eliminado con exito.',
      'show_user' => 'Mostrar usuario',
      'edit_user' => 'Edición de un usuario',
+     'select_province' => 'Seleccione una provincia',
+     'select_canton' => 'Seleccione un canton',
+     'without_province' => 'Sin provincia',
+     'without_canton' => 'Sin canton',
+     'without_address' => 'Sin dirección', 
 
 
 

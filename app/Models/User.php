@@ -36,6 +36,7 @@ class User extends Authenticatable
         'password',
         'api_token',
         'phone',
+        'email_verified_at',
         'id_province',
         'id_canton',
     ];
@@ -61,17 +62,6 @@ class User extends Authenticatable
         'id_canton' => 'required',
         'address' => 'max:2500',
         'phone' => 'required|digits:10',
-    ];
-
-
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
     ];
 
     /**
