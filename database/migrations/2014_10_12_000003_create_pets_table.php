@@ -23,6 +23,8 @@ class CreatePetsTable extends Migration
             $table->boolean('castrated')->default(false);
             $table->string('race');
             $table->boolean('lost')->default(false);
+            $table->integer('n_lost');
+            $table->boolean('published')->default(false);
             $table->string('id_pet_pather', 14)->nullable();
             $table->string('id_pet_mother', 14)->nullable();
             $table->string('user_id', 13)->nullable();

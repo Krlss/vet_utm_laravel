@@ -34,7 +34,9 @@ class PetController extends Controller
         do {
             $input['pet_id'] = $this->genaretePetId($input);
         } while (Pet::where('pet_id', '==', $input['pet_id'])->first());
-
+        
+        //1 if created as lost
+        $input['n_lost'] = $input['lost'] ? 1 : 0;
 
         DB::beginTransaction();
         try {
@@ -53,18 +55,20 @@ class PetController extends Controller
     public function show(Pet $pet)
     {
         $user = User::where('user_id', $pet->user_id)->first();
+        $canton = null;
+        $province = null;
 
-        $canton = Canton::where('id', $user->id_canton)->first();
-
-        $province = Province::where('id', $canton->id_province)->first();
-
+        if($user){
+            $canton = Canton::where('id', $user->id_canton)->first();
+            $province = Province::where('id', $canton->id_province)->first();
+        }
         return view('dashboard.pets.show', compact('pet', 'user', 'canton','province'));
     }
  
     public function edit(Pet $pet)
     {
 
-        $users = User::pluck('name', 'user_id');
+        $users = User::pluck('user_id', 'user_id');
 
         return view('dashboard.pets.edit', compact('pet', 'users'));
     }
@@ -72,6 +76,12 @@ class PetController extends Controller
     public function update(UpdatePetRequest $request, Pet $pet)
     {
         $input = $request->all();
+        $input['user_id'] = $input['users'];
+        
+        //if it changes from false to true
+        if(!$pet->lost && $input['lost']){
+            $input['n_lost'] = $pet->n_lost + 1;
+        }
 
         DB::beginTransaction();
         try {

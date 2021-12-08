@@ -8,11 +8,11 @@
     @endpush
 @section('content_header')
     <div class="flex justify-between items-center">
-        <div class="text-lg font-bold">{{ trans('lang.list_pets') }}</div>
-        <a href="{{ route('dashboard.pets.create') }}"
+        <div class="text-lg font-bold">{{ trans('lang.list_pets_lost') }}</div>
+        {{-- <a href="{{ route('dashboard.reports.create') }}"
             class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
             {{ trans('lang.createPet') }}
-        </a>
+        </a> --}}
     </div>
 @endsection
 <div class="card">
@@ -34,8 +34,7 @@
                 <tr>
                     <th>{{ trans('lang.pet_id') }}</th>
                     <th>{{ trans('lang.namePet') }}</th> 
-                    <th>{{ trans('lang.castrated') }}</th> 
-                    <th>{{ trans('lang.lost') }}</th> 
+                    <th>{{ trans('lang.published') }}</th>  
                     <th>{{ trans('lang.duenio') }}</th> 
                     <th>{{ trans('lang.updated_at') }}</th> 
                     
@@ -47,26 +46,25 @@
                     <tr>
                         <td>{{ $pet->pet_id }}</td>
                         <td>{{ $pet->name }}</td>
-                        <td>{{ $pet->castrated == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
-                        <td>{{ $pet->lost == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
+                        <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td> 
                         <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner')}}</td>
 
                         <td>{{ $pet->updated_at->diffForHumans() }}</td>
                         <td class="flex items-center justify-center">
 
-                            <a href="{{ route('dashboard.pets.show', $pet) }}">
+                            <a href="{{ route('dashboard.reports.show', $pet) }}">
                                 <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
                             </a>
-                            <a href="{{ route('dashboard.pets.edit', $pet) }}" class='btn btn-link'>
+                            <a href="{{ route('dashboard.reports.edit', $pet) }}" class='btn btn-link'>
                                 <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
                             </a>
-                            {!! Form::open(['route' => ['dashboard.pets.destroy', $pet], 'method' => 'delete']) !!}
+                            {{-- {!! Form::open(['route' => ['dashboard.reports.destroy', $pet], 'method' => 'delete']) !!}
                             {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
                                 'type' => 'submit',
                                 'class' => '',
                                 'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name')",
                                 ]) !!}
-                            {!! Form::close() !!}
+                            {!! Form::close() !!} --}}
                         </td>
                     </tr>
                 @endforeach

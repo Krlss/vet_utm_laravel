@@ -90,8 +90,13 @@ class PetApiController extends Controller
     public function getPetByID($id)
     {
         try {
-            $pet = Pet::where('pet_id', $id)->first(); 
-            if($pet) return response()->json(['message'=>'Profile of pet lost', 'data' => $pet], 200);
+            $pet = Pet::where('pet_id', $id)
+            ->where('published', true)
+            ->first();            
+            $images = Image::where('pet_id', $pet->pet_id)->get(); 
+            $data['pet'] = $pet;
+            $data['images'] = $images;
+            if($pet) return response()->json(['message'=>'Profile of pet lost', 'data' => $data], 200);
             return response()->json(['message'=>'pet not found', 'data' => []], 404);
         } catch (\Throwable $th) {
             return response()->json(['message'=>'Something went error', 'data' => []], 500);
@@ -101,7 +106,9 @@ class PetApiController extends Controller
     public function getAllPetsLost() 
     {
         try {
-            $pets = Pet::where('lost', true)->get();
+            $pets = Pet::where('lost', true)
+            ->where('published', true)
+            ->get();
             if($pets) return response()->json(['message'=>'All pets lost', 'data' => $pets], 200);
             return response()->json(['message'=>'no lost pets', 'data' => []], 404);
         } catch (\Throwable $th) {
@@ -117,11 +124,13 @@ class PetApiController extends Controller
         $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
         $arridWithJpg = explode(".", $idWithJpg); // without .jpg
         $pet['pet_id'] = strtoupper($arridWithJpg[0] . rand(100, 999)); //Last ID
-        $pet['name'] = 'UNDEFINED';
+        $pet['name'] = '#########';
         $pet['birth'] = date('Y-m-d');
-        $pet['sex'] = 'UNDEFINED';
-        $pet['specie'] = 'UNDEFINED';
-        $pet['race'] = 'UNDEFINED';
+        $pet['sex'] = '#########';
+        $pet['lost'] = true;
+        $pet['published'] = false;
+        $pet['specie'] = '#########';
+        $pet['race'] = '#########';
 
 
         DB::beginTransaction();
@@ -136,8 +145,11 @@ class PetApiController extends Controller
 
                 Storage::disk("google")->put($input[$i]['name'], $decode_file); 
 
-                $urlGoogleImage = Storage::disk("google")->url($input[$i]['name']);
+                $urlGoogleImage = Storage::disk("google")->url($input[$i]['name']);                
+                $urlG = explode('=',$urlGoogleImage);            
+                $id_img = explode('&', $urlG[1]);
 
+                $image['id_image'] = $id_img[0];
                 $image['url'] = $urlGoogleImage;
                 $image['name'] = $input[$i]['name'];
                 $image['pet_id'] = $pet['pet_id'];

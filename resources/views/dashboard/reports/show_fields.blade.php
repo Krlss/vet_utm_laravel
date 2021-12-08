@@ -134,9 +134,7 @@
 
     </div>
 
-
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 
         <div class="form-group flex-col">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => '  ']) !!}
@@ -179,6 +177,19 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+
+        <div class="form-group flex-col">
+            {!! Form::label('published', trans('lang.published'), ['class' => '  ']) !!}
+            <div class="">
+                <p>
+                    {!! $pet->published ? trans('lang.yep') : trans('lang.nop') !!}
+                </p>
+            </div>
+        </div>
+
         <div class="form-group flex-col">
             {!! Form::label('n_lost', trans('lang.n_lost'), ['class' => '  ']) !!}
             <div class="">
@@ -187,7 +198,23 @@
                 </p>
             </div>
         </div>
+    </div>
 
+    @if (count($images))
+        <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}</div>
+    @else
+        <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">
+            {{ trans('lang.not_photos_report') }}
+        </div>
+        <div class="w-full text-left">
+            {{trans('lang.recommendable_not_published')}}
+        </div>
+    @endif
+
+    <div class="flex flex-wrap w-full h-full">
+        @foreach ($images as $img)
+            <img class="w-60 object-cover p-2" src={{ $img->url }} />
+        @endforeach
     </div>
 
 </div>

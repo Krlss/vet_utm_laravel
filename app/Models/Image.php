@@ -10,7 +10,7 @@ class Image extends Model
     use HasFactory;
 
     // Habilitar asignacion masiva
-    protected $fillable = ['pet_id', 'url', 'name'];
+    protected $fillable = ['id_image', 'pet_id', 'url', 'name'];
 
     public function pet()
     {

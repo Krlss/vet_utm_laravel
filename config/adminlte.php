@@ -244,6 +244,13 @@ return [
             'route'         => 'dashboard.pets.index', 
             /* 'can'          => 'admin.products.index' */
         ], 
+        [
+            'text'      => 'Reportes',
+            'icon'      => 'fas fa-list-alt',
+            'active'    => ['dashboard/reports', 'dashboard/reports/edit'],
+            'route'         => 'dashboard.reports.index', 
+            /* 'can'          => 'admin.products.index' */
+        ], 
     ],
 
 

@@ -19,7 +19,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             <div class="">
-                {!! Form::select('specie',['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
+                {!! Form::select('specie',['##########' => 'Indefinido', 'canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], '##########', ['class' => 'select2 form-control', 'required' => true]) !!}
                 <div class="text-gray-500 text-sm mb-2">
                     {{ trans('lang.required') }}
                 </div>
@@ -128,5 +128,5 @@
 
 
     <button type="submit"
-        class="float-right bg-blue-500 hover:bg-blue-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
+        class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 </div>

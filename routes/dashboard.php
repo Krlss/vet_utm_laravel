@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\CantonController;
 use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\admin\ProvinceController;
+use App\Http\Controllers\admin\ReportController;
 
 use Illuminate\Support\Facades\Route; 
 
@@ -15,3 +16,6 @@ Route::resource('pets', PetController::class)->names('dashboard.pets');
 
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']); 
 
+Route::resource('reports', ReportController::class)->names('dashboard.reports');
+
+Route::delete('destroyImgGoogle', [ReportController::class, 'destroyImageGoogle'])->name('dashboard.destroyImageGoogle');

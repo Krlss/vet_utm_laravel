@@ -117,7 +117,7 @@
     </div>
 
     <button type="submit"
-        class="float-right bg-blue-500 hover:bg-blue-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
+        class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 </div>
 
 @push('scripts_lib')
