@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\PetApiController;
+use App\Http\Controllers\Api\ProvinceApiController;
 use App\Http\Controllers\Api\UserApiController;
 use Google\Service\Storage;
 use Google\Service\Docs\Request;
@@ -41,5 +42,9 @@ Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->
 Route::post('login', [UserApiController::class, 'Login']);
 Route::post('register', [UserApiController::class, 'Register']);
 Route::get('users/{id}', [UserApiController::class, 'getProfile']);
+Route::put('updatedUser/', [UserApiController::class, 'updateDataUser']);
 
 Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']); 
+
+Route::get('provinces', [ProvinceApiController::class, 'getAllProvinces']);
+Route::get('provinces/cantons/{id}', [ProvinceApiController::class, 'getCantonsByProvince']);

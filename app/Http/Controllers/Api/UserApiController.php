@@ -113,6 +113,47 @@ class UserApiController extends Controller
     return response()->json(['message'=>'Welcome', 'data' => []], 200); 
    }
 
+   function updateDataUser (Request $request){
+
+    $input = $request->all();
+    $header = $request->header('Authorization');
+
+    if($header){
+        $user = User::where('api_token', $header)->first();
+        if($user){
+
+            $pet = Pet::where('user_id', $user->user_id)->get();
+            $canton = Canton::where('id', $user->id_canton)->first();
+            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+
+            
+            try {
+                DB::beginTransaction();
+                $input['updated_at'] = now();
+                $input['id'] = $user->id;
+           
+           
+                $user->update($input);
+                
+                $user['pet'] = $pet;
+                $user['canton'] = $canton;
+                $user['province'] = $province;
+                
+                DB::commit();         
+                return response()->json(['message'=>'User updated!', 'data' => $user], 200); 
+            } catch (\Throwable $th) {
+                return response()->json(['message'=>'Something went error', 'data' => $th], 500);
+            }
+        }else{
+            return response()->json(['message'=>'User not found', 'data' => []], 404); 
+        }
+    }else{
+        return response()->json(['message'=>'you are not authorized to update that profile', 'data' => []], 401); 
+    }
+
+    return response()->json(['message'=>'User updated!', 'data' => []], 200);
+   }
+
    public function VerifyEmail ($api_token) {
 
        try {
