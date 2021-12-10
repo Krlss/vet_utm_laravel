@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Canton;
 use App\Models\Image;
 use App\Models\Pet;
+use App\Models\Province;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -39,7 +42,47 @@ class PetApiController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        $header = $request->header('Authorization');
+
+        if($header){
+            $user = User::where('api_token', $header)->first();            
+            if($user){
+                try { 
+                    $canton = Canton::where('id', $user->id_canton)->first();
+                    $province = $canton ? Province::where('id', $canton->id_province)->first() : null;            
+                    
+                    if($input['lost']){
+                        $input['n_lost'] = 1;
+                    }else{
+                        $input['n_lost'] = 0;
+                    }
+                    $input['user_id'] = $user->user_id;
+
+                    DB::beginTransaction();  
+                    
+                    $input['pet_id'] = $this->genaretePetId($input);
+               
+                    Pet::create($input);
+
+                    $pet = Pet::where('user_id', $user->user_id)->get();
+
+                    $user['pet'] = $pet;
+                    $user['canton'] = $canton;
+                    $user['province'] = $province;
+                    
+                    DB::commit();         
+                    return response()->json(['message'=>'Pet created!', 'data' => $user], 200); 
+                } catch (\Throwable $th) {
+                    return response()->json(['message'=>'Something went error', 'data' => $th], 500);
+                }
+
+            }else{
+                return response()->json(['message'=>'User not found', 'data' => []], 404); 
+            }
+        }else{
+            return response()->json(['message'=>'you do not have permission to create a new pet in that profile', 'data' => []], 401); 
+        }
     }
 
     /**
@@ -92,7 +135,12 @@ class PetApiController extends Controller
         try {
             $pet = Pet::where('pet_id', $id)
             ->where('published', true)
-            ->first();            
+            ->first();   
+            
+            $user = User::where('user_id', $pet->user_id)->first();
+            $canton = $user ? Canton::where('id', $user->id_canton)->first() : null;
+            $user['canton'] = $canton;
+            $pet['user'] = $user;
             $images = Image::where('pet_id', $pet->pet_id)->get(); 
             $data['pet'] = $pet;
             $data['images'] = $images;
@@ -107,7 +155,6 @@ class PetApiController extends Controller
     {
         try {
             $pets = Pet::where('lost', true)->where('published', true)->get();
-
             if($pets) {
                 return response()->json(['message'=>'All pets lost', 'data' => $pets], 200);
             }
@@ -166,4 +213,76 @@ class PetApiController extends Controller
         }
      
     }
+
+    public function updateDataPet (Request $request){
+        $input = $request->all();
+        $header = $request->header('Authorization');
+
+        if($header){
+            $pet = Pet::where('pet_id', $input['pet_id'])->first();            
+            if($pet){
+                try {
+
+                    if(isset($input['user_id'])){
+                        $user = User::where('user_id',$input['user_id'])->first(); 
+                        if(!$user) return response()->json(['message'=>'User not found', 'data' => []], 404); 
+                    }
+
+                    $user = User::where('user_id', $pet->user_id)->first(); 
+                    $canton = Canton::where('id', $user->id_canton)->first();
+                    $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+                    $input['updated_at'] = now();
+            
+
+                    if(!$pet->lost && isset($input['lost'])){
+                        $input['n_lost'] = $pet->n_lost + 1;
+                    }
+
+                    DB::beginTransaction();               
+                
+                    $pet->update($input); 
+
+                    $user['pet'] = $pet;
+                    $user['canton'] = $canton;
+                    $user['province'] = $province;
+                    
+                    DB::commit();         
+                    return response()->json(['message'=>'Pet updated!', 'data' => $user], 200); 
+                                       
+                } catch (\Throwable $th) {
+                    return response()->json(['message'=>'Something went error', 'data' => $th], 500);
+                }
+
+            }else{
+                return response()->json(['message'=>'Pet not found', 'data' => []], 404); 
+            }
+        }else{
+            return response()->json(['message'=>'you are not authorized to update that profile', 'data' => []], 401); 
+        }
+    }
+
+    public function genaretePetId($input){
+        /* name, sex, birth, castrated, race, specie */
+        /* PRIMERA LETRA NOMBRE + 
+        SEXO + 
+        AÑO NACIMIENTO + 
+        Día en que se registró +
+        CASTRADO + 
+        PRIMERA LETRA RAZA + 
+        PRIMERA LETRA ESPECIE + 
+        numbero random 1000 to 9999  */
+
+        /* PM202007YBP9999  */
+
+        $name = $input['name'];
+        $birth = $input['birth'];
+        $arrBirth = explode("-", $birth);
+        $day = date("d");
+        $castrated = $input['castrated'] === 0 ? 'F' : 'M';
+        $race = $input['race'];
+        $specie = $input['specie'];
+        $input['sex'] = $input['sex'] ? $input['sex'] : 'D';
+
+        return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
+    } 
 }

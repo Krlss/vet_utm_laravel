@@ -24,9 +24,9 @@ class UserApiController extends Controller
 
    function Login (Request $request) {  
         try {
-            $password = $request->password;
+            $password = $request->password; 
 
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('email', strtolower($request->email))->first();
             
             if($user){
                 if($user->email_verified_at == null){                    
@@ -67,6 +67,7 @@ class UserApiController extends Controller
     ->where('email', $input['email'])
     ->first();
     if($userFind) return response()->json(['message'=>'the user is already created', 'data' => []], 401); 
+    $input['email'] = strtolower($input['email']);
 
     try {
         DB::beginTransaction();
@@ -126,7 +127,12 @@ class UserApiController extends Controller
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
+            if($user->email != $input['email']){
+                $input['email_verified_at'] = null;
+            }
             
+            $input['email'] = strtolower($input['email']);
+
             try {
                 DB::beginTransaction();
                 $input['updated_at'] = now();
@@ -150,8 +156,7 @@ class UserApiController extends Controller
     }else{
         return response()->json(['message'=>'you are not authorized to update that profile', 'data' => []], 401); 
     }
-
-    return response()->json(['message'=>'User updated!', 'data' => []], 200);
+ 
    }
 
    public function VerifyEmail ($api_token) {
