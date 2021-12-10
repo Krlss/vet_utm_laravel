@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateUserApiRequest;
 use App\Mail\VerifyEmail;
 use App\Models\Canton;
+use App\Models\Image;
 use App\Models\Pet;
 use App\Models\Province;
 use Illuminate\Support\Facades\DB;
@@ -99,8 +100,13 @@ class UserApiController extends Controller
             $pet = Pet::where('user_id', $user->user_id)->get();
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+
+            for ($i=0; $i < count($pet); $i++) {                 
+                $images = Image::where('pet_id', $pet[$i]->pet_id)->get();
+                $pet[$i]['images'] = $images;
+            }
  
-            $user['pet'] = $pet;
+            $user['pet'] = $pet; 
             $user['canton'] = $canton;
             $user['province'] = $province;
 

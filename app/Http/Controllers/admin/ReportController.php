@@ -19,7 +19,7 @@ class ReportController extends Controller
  
     public function index()
     {
-        $pets = Pet::orderBy('updated_at', 'DESC')->get();
+        $pets = Pet::where('lost', true)->orderBy('updated_at', 'DESC')->get();
         return view('dashboard.reports.index', compact('pets'));
     }
  

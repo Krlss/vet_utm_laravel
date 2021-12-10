@@ -38,6 +38,7 @@ Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
 Route::get('getPetByID/{id}', [PetApiController::class, 'getPetByID']);
 
 Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->name('dashboard.uploadGoogle');
+Route::post('reportPet', [PetApiController::class, 'reportPet']);
 
 Route::post('login', [UserApiController::class, 'Login']);
 Route::post('register', [UserApiController::class, 'Register']);

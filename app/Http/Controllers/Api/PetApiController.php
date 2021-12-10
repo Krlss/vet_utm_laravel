@@ -11,6 +11,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class PetApiController extends Controller
 {
@@ -285,4 +287,80 @@ class PetApiController extends Controller
 
         return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
     } 
+
+    public function reportPet (Request $request) {
+        $input = $request->all();  
+        
+        
+
+        DB::beginTransaction();
+
+
+        try {
+            $newUser['user_id'] = $input['user']['user_id'];
+            $newUser['phone'] = $input['user']['phone'];  
+            $newUser['email'] = $input['user']['email'];  
+            
+            
+            $user = User::where('user_id', $newUser['user_id'])
+            ->orWhere('phone', $newUser['phone'])
+            ->orWhere('email', $newUser['email'])
+            ->first();
+            
+            
+            if($user){
+                $pet['user_id'] = $user->user_id;
+            }else{
+                unset($input['user']['id_province']); //delete
+                $input['user']['password'] = Hash::make($newUser['user_id']);
+                $input['user']['api_token'] = Str::random(25);
+                $pet['user_id'] = $newUser['user_id'];
+                User::create($input['user']);
+            }
+            unset($input['user']);
+            $pet['name'] = $input['namepet'];
+            unset($input['namepet']);
+            $pet['birth'] = $input['birth'];
+            unset($input['birth']);
+            $pet['sex'] = $input['sex'];
+            unset($input['sex']);
+            $pet['castrated'] = $input['castrated'];
+            unset($input['castrated']);
+            $pet['specie'] = $input['specie'];
+            unset($input['specie']);
+            $pet['race'] = $input['race'];
+            unset($input['race']);   
+            $pet['pet_id'] = $this->genaretePetId($pet); //Last ID
+            $pet['lost'] = true;
+            $pet['published'] = false;
+            $pet['n_lost'] = 1;
+
+
+            Pet::create($pet);
+
+            for ($i=0; $i < count($input['images']); $i++) { 
+
+                $decode_file = base64_decode($input['images'][$i]['base64']);     
+
+                Storage::disk("google")->put($input['images'][$i]['name'], $decode_file); 
+
+                $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);                
+                $urlG = explode('=',$urlGoogleImage);            
+                $id_img = explode('&', $urlG[1]);
+
+                $image['id_image'] = $id_img[0];
+                $image['url'] = $urlGoogleImage;
+                $image['name'] = $input['images'][$i]['name'];
+                $image['pet_id'] = $pet['pet_id'];
+
+                Image::create($image);
+            }
+
+            DB::commit();           
+            return response()->json(['message'=>'Report is ok...', 'data' => []], 200); 
+        } catch (\Throwable $th) {
+            DB::rollBack();     
+            return response()->json(['message'=>'Something went error...', 'data' => []], 500);
+        }
+    }
 }
