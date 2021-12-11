@@ -237,10 +237,44 @@ class PetApiController extends Controller
             
 
                     if(!$pet->lost && isset($input['lost'])){
-                        $input['n_lost'] = $pet->n_lost + 1;
+                        if($input['lost']) $input['n_lost'] = $pet->n_lost + 1;
                     }
 
-                    DB::beginTransaction();               
+                    DB::beginTransaction();   
+                    $imagesCurrent = Image::where('pet_id',$input['pet_id'])->get();
+
+
+                    foreach($imagesCurrent as $imgC){
+                        $exist = array_search($imgC->url, array_column($input['images'], 'url'));
+                        if(is_numeric($exist)){
+                            continue;
+                        }else{            
+                            Storage::disk("google")->delete($imgC->id_image);
+                            $imgC->delete();
+                        }
+                    }
+
+                    for ($i=0; $i < count($input['images']); $i++) { 
+                        if(isset($input['images'][$i]['base64'])){
+                            $decode_file = base64_decode($input['images'][$i]['base64']);     
+        
+                            Storage::disk("google")->put($input['images'][$i]['name'], $decode_file); 
+            
+                            $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);                
+                            $urlG = explode('=',$urlGoogleImage);            
+                            $id_img = explode('&', $urlG[1]);
+            
+                            $image['id_image'] = $id_img[0];
+                            $image['url'] = $urlGoogleImage;
+                            $image['name'] = $input['images'][$i]['name'];
+                            $image['pet_id'] = $pet['pet_id'];
+            
+                            Image::create($image);
+                        }
+                    }
+                    
+                    
+
                 
                     $pet->update($input); 
 
