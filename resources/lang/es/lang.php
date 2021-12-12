@@ -86,4 +86,7 @@ return [
 
      'list_pets_lost' => 'Lista de mascotas perdidas',
      'created_lost_pets' => 'Registrar animal como perdido',
+     'users_count' => 'Cantindad de usuarios',
+     'pets_count' => 'Cantindad de mascotas',
+     'reports_count' => 'Cantindad de mascotas perdidas',
 ];

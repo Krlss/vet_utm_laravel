@@ -33,7 +33,8 @@
             <thead>
                 <tr>
                     <th>{{ trans('lang.pet_id') }}</th>
-                    <th>{{ trans('lang.namePet') }}</th> 
+                    <th>{{ trans('lang.name') }}</th> 
+                    <th>{{ trans('lang.specie') }}</th> 
                     <th>{{ trans('lang.published') }}</th>  
                     <th>{{ trans('lang.duenio') }}</th> 
                     <th>{{ trans('lang.updated_at') }}</th> 
@@ -46,6 +47,7 @@
                     <tr>
                         <td>{{ $pet->pet_id }}</td>
                         <td>{{ $pet->name }}</td>
+                        <td>{{ trans('lang.' . $pet->specie) }}</td>
                         <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td> 
                         <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner')}}</td>
 

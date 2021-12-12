@@ -33,9 +33,10 @@
             <thead>
                 <tr>
                     <th>{{ trans('lang.pet_id') }}</th>
-                    <th>{{ trans('lang.namePet') }}</th> 
+                    <th>{{ trans('lang.name') }}</th> 
                     <th>{{ trans('lang.castrated') }}</th> 
                     <th>{{ trans('lang.lost') }}</th> 
+                    <th>{{ trans('lang.specie') }}</th> 
                     <th>{{ trans('lang.duenio') }}</th> 
                     <th>{{ trans('lang.updated_at') }}</th> 
                     
@@ -49,6 +50,7 @@
                         <td>{{ $pet->name }}</td>
                         <td>{{ $pet->castrated == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
                         <td>{{ $pet->lost == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
+                        <td>{{ trans('lang.' . $pet->specie) }}</td>
                         <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner')}}</td>
 
                         <td>{{ $pet->updated_at->diffForHumans() }}</td>
