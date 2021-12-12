@@ -190,4 +190,51 @@
 
     </div>
 
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        <div class="form-group flex-col">
+            {!! Form::label('pather', trans('lang.pather'), ['class' => '  ']) !!}
+            <div class="">
+                @if ($pet->id_pet_pather)
+                    <a href={{ route('dashboard.pets.show', $pet->id_pet_pather) }}>
+                        {!! $pet->id_pet_pather !!}
+                    </a>
+                @else
+                    <p>{{ trans('lang.it_doesnt_have') }}</p>
+                @endif
+            </div>
+        </div>
+
+        <div class="form-group flex-col">
+            {!! Form::label('mother', trans('lang.mother'), ['class' => '  ']) !!}
+            <div class="">
+                @if ($pet->id_pet_mother)
+                    <a href={{ route('dashboard.pets.show', $pet->id_pet_mother) }}>
+                        {!! $pet->id_pet_mother !!}
+                    </a>
+                @else
+                    <p>{{ trans('lang.it_doesnt_have') }}</p>
+                @endif
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1">
+        <div class="form-group flex-col">
+            {!! Form::label('childs', trans('lang.childs'), ['class' => '  ']) !!}
+            <div class="flex flex-wrap space-x-2">
+                @if (count($childs))
+                    @foreach ($childs as $child)
+                        <div class="p-1 border-2">
+                            <a href={{ route('dashboard.pets.show', $child->pet_id) }}>
+                                {!! $child->pet_id !!}
+                            </a>
+                        </div>
+                    @endforeach
+                @else
+                    <p>{{ trans('lang.it_doesnt_have') }}</p>
+                @endif
+            </div>
+        </div>
+    </div>
 </div>

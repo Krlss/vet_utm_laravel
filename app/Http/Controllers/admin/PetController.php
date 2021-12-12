@@ -24,7 +24,14 @@ class PetController extends Controller
     public function create()
     {
         $users = User::pluck('user_id', 'user_id');
-        return view('dashboard.pets.create', compact('users'));
+        $pets = Pet::all();
+        $father = $pets->where('sex', 'M')
+        ->where('specie', 'canine')
+        ->pluck('pet_id', 'pet_id');
+        $mother = $pets->where('sex', 'F')
+        ->where('specie', 'canine')
+        ->pluck('pet_id', 'pet_id');
+        return view('dashboard.pets.create', compact('users', 'pets'))->with('pather', $father)->with('mother', $mother);
     }
  
     public function store(CreatePetRequest $request)
@@ -37,7 +44,11 @@ class PetController extends Controller
         
         //1 if created as lost
         $input['n_lost'] = $input['lost'] ? 1 : 0;
+        if($input['pather']) $input['id_pet_pather'] = $input['pather'] == 'null' ? null : $input['pather'];
+        unset($input['pather']);
 
+        if($input['mother']) $input['id_pet_mother'] = $input['mother'] == 'null' ? null : $input['mother'];
+        unset($input['mother']);
         DB::beginTransaction();
         try {
             Pet::create($input);
@@ -62,15 +73,24 @@ class PetController extends Controller
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
         }
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton','province'));
+
+        $childs = Pet::where('id_pet_pather', $pet->pet_id)
+        ->orWhere('id_pet_mother', $pet->pet_id)
+        ->get();
+
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton','province', 'childs'));
     }
  
     public function edit(Pet $pet)
     {
 
         $users = User::pluck('user_id', 'user_id');
+        $pets = Pet::all();
 
-        return view('dashboard.pets.edit', compact('pet', 'users'));
+        $pather = $pets->where('sex', 'M')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
+        $mother = $pets->where('sex', 'F')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
+
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother'));
     }
  
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -133,5 +153,17 @@ class PetController extends Controller
         $input['sex'] = $input['sex'] ? $input['sex'] : 'D';
 
         return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
+    }
+
+    public function getParents (Request $request) {
+        try {
+            $input = $request->all();
+
+            $result = Pet::where('specie', $input['specie'])->select('name', 'pet_id', 'sex')->get(); 
+             
+            return $result;
+        }catch (\Throwable $e){
+            return json_encode(['Parents' => []]);
+        }
     }
 }

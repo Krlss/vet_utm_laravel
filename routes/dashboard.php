@@ -16,6 +16,8 @@ Route::resource('pets', PetController::class)->names('dashboard.pets');
 
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']); 
 
+Route::get('parents', [PetController::class, 'getParents']);
+
 Route::resource('reports', ReportController::class)->names('dashboard.reports');
 
 Route::delete('destroyImgGoogle', [ReportController::class, 'destroyImageGoogle'])->name('dashboard.destroyImageGoogle');

@@ -35,8 +35,13 @@ return [
      'without_province' => 'Sin provincia',
      'without_canton' => 'Sin canton',
      'without_address' => 'Sin dirección', 
-
-
+     'pather' => 'Mascota padre', 
+     'select_pather' => 'Seleccione un padre', 
+     'mother' => 'Mascota madre', 
+     'select_mother' => 'Seleccione una madre', 
+     'not_required' => 'No es obligatorio',
+     'childs' => 'Hijos',
+     'it_doesnt_have' => 'No tiene',
 
      'namePet' => 'Nombre de la mascota',
      'name' => 'Nombre',

@@ -30,9 +30,9 @@ class Pet extends Model
     ];
 
     public static $rules = [
-        'name' => 'required',
+        'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
         'specie' => 'required',
-        'race' => 'required',
+        'race' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
         'lost' => 'required',
         'birth' => 'required',
         'castrated' => 'required',

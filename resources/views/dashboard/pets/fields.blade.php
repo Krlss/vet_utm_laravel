@@ -131,9 +131,65 @@
 
         </div>
 
-
     </div>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+        {{-- parents --}}
+        <div class="flex flex-col px-2">
+            {!! Form::label('pather', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            <div class="">
+                {!! Form::select('pather', $pather, $pet->id_pet_pather, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_pather')]) !!}
+                <div class="text-gray-500 text-sm mb-2">{{ trans('lang.not_required') }}</div>
+            </div>
+            @error('pather')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
 
+        <div class="flex flex-col px-2">
+            {!! Form::label('mother', trans('lang.mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            <div class="">
+                {!! Form::select('mother', $mother, $pet->id_pet_mother, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_mother')]) !!}
+                <div class="text-gray-500 text-sm mb-2">{{ trans('lang.not_required') }}</div>
+            </div>
+            @error('mother')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
     <button type="submit"
         class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 </div>
+
+
+
+@push('scripts_lib')
+    <script>
+        $("[name='specie']").on('change', function() {
+            var specieValue = $("[name='specie']").val(); 
+            $.ajax({
+                method: "GET",
+                url: "{{ url('dashboard/parents') }}",
+                data: {
+                    specie: specieValue
+                }
+            }).done(function(msg) {
+                let pather;
+                let mother;
+                pather = `<option value='null' >Selecciona un padre</option>`
+                mother = `<option value='null' >Selecciona una madre</option>`
+                $.each(msg, function(i, parent) {                    
+                    console.log(parent);
+                    if (parent.sex == 'M') {
+                        pather += `<option value=${parent.pet_id}>${parent.pet_id}</option>`;
+                    } else {
+                        mother += `<option value=${parent.pet_id}>${parent.pet_id}</option>`;
+                    }
+                });
+                $("[name='pather'] option").empty();
+                $("[name='pather']").html(pather);
+                $("[name='mother'] option").empty();
+                $("[name='mother']").html(mother);
+            });
+        });
+    </script>
+@endpush
