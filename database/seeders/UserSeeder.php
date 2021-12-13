@@ -28,6 +28,6 @@ class UserSeeder extends Seeder
             'phone' =>  '0990146541',
             'password' =>  Hash::make('12345678'),
             'api_token' =>  Str::random(25),
-        ]);
+        ])->assignRole('Administrador');
     }
 }

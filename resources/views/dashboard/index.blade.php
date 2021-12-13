@@ -9,7 +9,7 @@
 
 <div class="content">
     <!-- Small boxes (Stat box) -->
-    <div class="flex flex-row flex-wrap items-center justify-end mt-4 mr-2">
+    <div class="flex flex-row flex-wrap items-center justify-end mt-4">
         <div class="col-lg-3 col-6">
             <!-- small box -->
             <div class="small-box bg-info">

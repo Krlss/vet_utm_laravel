@@ -14,7 +14,13 @@ use Illuminate\Support\Facades\DB;
 
 class PetController extends Controller
 {
- 
+    public function __construct(){
+        $this->middleware('can:dashboard.pets.index')->only('index');
+        $this->middleware('can:dashboard.pets.destroy')->only('destroy');
+        $this->middleware('can:dashboard.pets.create')->only('create', 'store');
+        $this->middleware('can:dashboard.pets.edit')->only('edit', 'update');
+    }
+
     public function index()
     {
         $pets = Pet::orderBy('updated_at', 'DESC')->get();

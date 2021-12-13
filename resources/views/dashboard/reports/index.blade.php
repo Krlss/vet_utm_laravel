@@ -33,12 +33,12 @@
             <thead>
                 <tr>
                     <th>{{ trans('lang.pet_id') }}</th>
-                    <th>{{ trans('lang.name') }}</th> 
-                    <th>{{ trans('lang.specie') }}</th> 
-                    <th>{{ trans('lang.published') }}</th>  
-                    <th>{{ trans('lang.duenio') }}</th> 
-                    <th>{{ trans('lang.updated_at') }}</th> 
-                    
+                    <th>{{ trans('lang.name') }}</th>
+                    <th>{{ trans('lang.specie') }}</th>
+                    <th>{{ trans('lang.published') }}</th>
+                    <th>{{ trans('lang.duenio') }}</th>
+                    <th>{{ trans('lang.updated_at') }}</th>
+
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -48,18 +48,21 @@
                         <td>{{ $pet->pet_id }}</td>
                         <td>{{ $pet->name }}</td>
                         <td>{{ trans('lang.' . $pet->specie) }}</td>
-                        <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td> 
-                        <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner')}}</td>
+                        <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
+                        <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
 
                         <td>{{ $pet->updated_at->diffForHumans() }}</td>
                         <td class="flex items-center justify-center">
-
-                            <a href="{{ route('dashboard.reports.show', $pet) }}">
-                                <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
-                            </a>
-                            <a href="{{ route('dashboard.reports.edit', $pet) }}" class='btn btn-link'>
-                                <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
-                            </a>
+                            @can('dashboard.reports.show')
+                                <a href="{{ route('dashboard.reports.show', $pet) }}">
+                                    <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
+                                </a>
+                            @endcan
+                            @can('dashboard.reports.edit')
+                                <a href="{{ route('dashboard.reports.edit', $pet) }}" class='btn btn-link'>
+                                    <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
+                                </a>
+                            @endcan
                             {{-- {!! Form::open(['route' => ['dashboard.reports.destroy', $pet], 'method' => 'delete']) !!}
                             {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
                                 'type' => 'submit',

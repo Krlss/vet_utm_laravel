@@ -11,9 +11,17 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('can:dashboard.users.index')->only('index');
+        $this->middleware('can:dashboard.users.destroy')->only('destroy');
+        $this->middleware('can:dashboard.users.create')->only('create', 'store');
+        $this->middleware('can:dashboard.users.edit')->only('edit', 'update');
+    }
 
     public function index()
     {
@@ -26,8 +34,9 @@ class UserController extends Controller
     public function create()
     {
         $provinces = Province::pluck('name', 'id'); 
+        $roles = Role::pluck('name', 'name');
         $cantons = [];
-        return view('dashboard.users.create', compact('provinces', 'cantons'));
+        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles'));
     }
 
     public function store(CreateUserRequest $request)
@@ -74,8 +83,10 @@ class UserController extends Controller
         $provinces = Province::pluck('name', 'id');
 
         $cantons = []; 
+
+        $roles = Role::pluck('name', 'id');
         
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province','provinces', 'cantons'));
+        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province','provinces', 'cantons', 'roles'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -84,6 +95,7 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
+            $user->roles()->sync($request['roles']);
             $user->update($input);
             
             DB::commit();                   

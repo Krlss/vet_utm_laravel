@@ -12,10 +12,18 @@ use Illuminate\Http\Request;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Support\Facades\DB; 
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Storage; 
+
 
 class ReportController extends Controller
-{
+{ 
+    public function __construct(){
+        $this->middleware('can:dashboard.reports.index')->only('index');
+        $this->middleware('can:dashboard.reports.destroy')->only('destroy');
+        /* $this->middleware('can:dashboard.reports.create')->only('create', 'store'); */
+        $this->middleware('can:dashboard.reports.edit')->only('edit', 'update');
+        $this->middleware('can:dashboard.destroyImageGoogle')->only('destroyImageGoogle'); 
+    }
  
     public function index()
     {
@@ -87,6 +95,11 @@ class ReportController extends Controller
 
         DB::beginTransaction();
         try {
+
+            if(!$petUpdated->published && $input['published']){
+                 
+            }
+
             $petUpdated->update($input);
             
             DB::commit();                   

@@ -60,10 +60,13 @@
                 <section class="flex flex-col p-1 h-60 w-60 relative overflow-hidden">
                     {!! Form::hidden('url', $img->url, null) !!}
                     <img class="h-60 w-60 border object-cover" src={{ $img->url }} />
-                    <button class="text-red-400 hover:text-red-500 absolute top-2 right-2 font-extrabold"
-                        value={{ $img->name }} id='buttonImg'>
-                        X
-                    </button>
+                    @can('dashboard.destroyImageGoogle')
+                        <button class="text-red-400 hover:text-red-500 absolute top-2 right-2 font-extrabold"
+                            value={{ $img->name }} id='buttonImg'>
+                            X
+                        </button>
+                    @endcan
+
                 </section>
                 {{ Form::close() }}
             @endforeach

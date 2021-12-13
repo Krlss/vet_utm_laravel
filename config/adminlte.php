@@ -228,6 +228,7 @@ return [
             'text' => 'Dashboard',
             'url'  => '/dashboard',
             'icon'      => 'fas fa-tachometer-alt',
+            'can'          => 'dashboard.home'
         ], 
         ['header' => 'Administración'],
         [
@@ -235,21 +236,28 @@ return [
             'icon'      => 'fas fa-users',
             'active'    => ['dashboard/users', 'dashboard/users/create', 'dashboard/users/edit'],
             'route'         => 'dashboard.users.index',   
-            /* 'can'          => 'admin.products.index' */
+            'can'          => 'dashboard.users.index'
         ], 
         [
             'text'      => 'Mascotas',
             'icon'      => 'fas fa-paw',
             'active'    => ['dashboard/pets', 'dashboard/pets/create', 'dashboard/pets/edit'],
             'route'         => 'dashboard.pets.index', 
-            /* 'can'          => 'admin.products.index' */
+            'can'          => 'dashboard.pets.index'
         ], 
         [
             'text'      => 'Reportes',
             'icon'      => 'fas fa-list-alt',
             'active'    => ['dashboard/reports', 'dashboard/reports/edit'],
             'route'         => 'dashboard.reports.index', 
-            /* 'can'          => 'admin.products.index' */
+            'can'          => 'dashboard.reports.index'
+        ], 
+        [
+            'text'      => 'Roles y permisos',
+            'icon'      => 'fas fa-list-alt',
+            'active'    => ['dashboard/roles', 'dashboard/permissions'],
+            'route'         => 'dashboard.roles.index', 
+            'can'          => 'dashboard.roles.index'
         ], 
     ],
 

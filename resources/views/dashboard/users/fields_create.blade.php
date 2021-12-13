@@ -91,7 +91,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         <div class="flex flex-col px-2">
             {!! Form::label('province_id', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -111,6 +111,17 @@
                 <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
             </div>
             @error('id_canton')
+                <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+
+        <div class="flex flex-col px-2">
+            {!! Form::label('roles', trans('lang.role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            <div class="">
+                {!! Form::select('roles', $roles, 'Cliente', ['class' => 'select2 form-control', 'required' => true]) !!}
+                <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
+            </div>
+            @error('roles')
                 <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>

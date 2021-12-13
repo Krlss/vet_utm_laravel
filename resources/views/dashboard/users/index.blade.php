@@ -9,10 +9,12 @@
 @section('content_header')
     <div class="flex justify-between items-center">
         <div class="text-lg font-bold">{{ trans('lang.list_user') }}</div>
-        <a href="{{ route('dashboard.users.create') }}"
-            class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-            {{ trans('lang.createUser') }}
-        </a>
+        @can('dashboard.users.create')
+            <a href="{{ route('dashboard.users.create') }}"
+                class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+                {{ trans('lang.createUser') }}
+            </a>
+        @endcan
     </div>
 @endsection
 <div class="card">
@@ -44,19 +46,27 @@
                         <td>{{ $user->updated_at->diffForHumans() }}</td>
                         <td class="flex items-center justify-center">
 
-                            <a href="{{ route('dashboard.users.show', $user) }}">
-                                <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
-                            </a>
-                            <a href="{{ route('dashboard.users.edit', $user) }}" class='btn btn-link'>
-                                <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
-                            </a>
-                            {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
-                            {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
+                            @can('dashboard.users.show')
+                                <a href="{{ route('dashboard.users.show', $user) }}">
+                                    <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
+                                </a>
+                            @endcan
+
+                            @can('dashboard.users.edit')
+                                <a href="{{ route('dashboard.users.edit', $user) }}" class='btn btn-link'>
+                                    <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
+                                </a>
+                            @endcan
+
+                            @can('dashboard.users.destroy')
+                                {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
+                                {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
     'type' => 'submit',
     'class' => '',
     'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
 ]) !!}
-                            {!! Form::close() !!}
+                                {!! Form::close() !!}
+                            @endcan
                         </td>
                     </tr>
                 @endforeach
