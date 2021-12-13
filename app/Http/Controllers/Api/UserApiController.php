@@ -30,7 +30,16 @@ class UserApiController extends Controller
             $user = User::where('email', strtolower($request->email))->first();
             
             if($user){
-                if($user->email_verified_at == null){                    
+                if($user->email_verified_at == null){    
+
+                    $detail = [
+                        'title' => 'Clínica veterinaria de la universidad técnica de manabí',
+                        'body' => 'Para verificar el correo electrónico da clic en el siguiente link.',
+                        'api_token' => $user->api_token,
+                        'backurl' => url()->previous()
+                    ];
+
+                    Mail::to($user->email)->send(new VerifyEmail($detail));
                     return response()->json(['message'=>'Look your email', 'data' => []], 301);                    
                 }else{
                     $passwordD = Hash::check($password, $user->password);
@@ -77,14 +86,7 @@ class UserApiController extends Controller
 
         DB::commit(); 
 
-        $detail = [
-            'title' => 'Clínica veterinaria de la universidad técnica de manabí',
-            'body' => 'Para verificar el correo electrónico da clic en el siguiente link.',
-            'api_token' => $input['api_token'],
-            'backurl' => url()->previous()
-        ];
-        response()->json(['message'=>'Welcome', 'data' => []], 200); 
-        Mail::to($input['email'])->send(new VerifyEmail($detail));
+        return response()->json(['message'=>'Welcome', 'data' => []], 200); 
     } catch (\Throwable $th) {
         return response()->json(['message'=>'Something went error', 'data' => $th], 500);
     }

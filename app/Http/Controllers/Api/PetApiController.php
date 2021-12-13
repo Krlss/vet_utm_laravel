@@ -174,13 +174,13 @@ class PetApiController extends Controller
         $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
         $arridWithJpg = explode(".", $idWithJpg); // without .jpg
         $pet['pet_id'] = strtoupper($arridWithJpg[0] . rand(100, 999)); //Last ID
-        $pet['name'] = '#########';
+        $pet['name'] = 'Desconocido';
         $pet['birth'] = date('Y-m-d');
         $pet['sex'] = null;
         $pet['lost'] = true;
         $pet['published'] = false;
-        $pet['specie'] = '#########';
-        $pet['race'] = '#########';
+        $pet['specie'] = 'Desconocido';
+        $pet['race'] = 'Desconocido';
         $pet['n_lost'] = 1;
 
         DB::beginTransaction();

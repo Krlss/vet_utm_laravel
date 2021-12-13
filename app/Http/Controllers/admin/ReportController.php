@@ -13,7 +13,8 @@ use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Support\Facades\DB; 
 use Illuminate\Support\Facades\Storage; 
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\NewReport;
 
 class ReportController extends Controller
 { 
@@ -95,14 +96,31 @@ class ReportController extends Controller
 
         DB::beginTransaction();
         try {
+                              
+            if($petUpdated->published == 0 && $input['published'] == 1){
+                
+                $users = User::where('email_verified_at', '!=', null)
+                ->join('pets', 'users.user_id', '=', 'pets.user_id')
+                ->where('pets.race', $input['race'])
+                ->orWhere('pets.specie', $input['specie'])
+                ->pluck('email'); 
 
-            if(!$petUpdated->published && $input['published']){
-                 
+                $data['name'] = $input['name'];
+                $data['specie'] = $input['specie'];
+                $data['race'] = $input['race'];
+                $data['user_id'] = $input['user_id'];
+                
+                $detail = [
+                    'title' => 'Clínica veterinaria de la universidad técnica de manabí',
+                    'body' => 'Hay un nuevo reporte de una mascota perdida.',
+                    'data' => $data
+                ];
+                
+                Mail::to($users)->send(new NewReport($detail));
             }
 
-            $petUpdated->update($input);
-            
-            DB::commit();                   
+            $petUpdated->update($input);            
+            DB::commit(); 
             return redirect()->route('dashboard.reports.index')->with('info', trans('lang.pet_updated'));
         } catch (\Throwable $e) {
             DB::rollBack();            
