@@ -9,7 +9,36 @@ class Pet extends Model
 {
     use HasFactory;
 
-    public function pet()
+    protected $keyType = 'string';
+    protected $primaryKey = 'pet_id';
+    public $incrementing = false;
+
+    protected $fillable = [  
+        'name',
+        'birth',
+        'sex',
+        'specie',
+        'race',
+        'lost',
+        'n_lost',
+        'pet_id',
+        'published',
+        'castrated',
+        'id_pet_pather',
+        'id_pet_mother',
+        'user_id',
+    ];
+
+    public static $rules = [
+        'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+        'specie' => 'required',
+        'race' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+        'lost' => 'required',
+        'birth' => 'required',
+        'castrated' => 'required',
+    ]; 
+
+    public function user()
     {
         return $this->belongsTo(User::class);
     }
@@ -32,5 +61,9 @@ class Pet extends Model
     public function allChildrenPetMother()
     {
         return $this->childrenPetMother()->with('allChildrenPetMother');
+    }
+ 
+     public function images(){
+        return $this->hasMany(Image::class);
     }
 }

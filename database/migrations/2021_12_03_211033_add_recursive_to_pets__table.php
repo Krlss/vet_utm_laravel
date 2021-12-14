@@ -14,8 +14,8 @@ class AddRecursiveToPetsTable extends Migration
     public function up()
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->foreign('id_pet_pather')->references('pet_id')->on('pets');
-            $table->foreign('id_pet_mother')->references('pet_id')->on('pets');
+            $table->foreign('id_pet_pather')->references('pet_id')->on('pets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_pet_mother')->references('pet_id')->on('pets')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

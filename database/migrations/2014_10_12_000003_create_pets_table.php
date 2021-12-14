@@ -14,19 +14,22 @@ class CreatePetsTable extends Migration
     public function up()
     {
         Schema::create('pets', function (Blueprint $table) {
-            $table->string('pet_id', 14)->unique();
+            $table->string('pet_id', 15)->unique();
             $table->string('pet_photo_path', 2048)->nullable();
             $table->string('name');
-            $table->string('birth')->nullable(); 
-            $table->string('sex');
+            $table->date('birth'); 
+            $table->string('sex')->default(null)->nullable();
             $table->string('specie');
+            $table->boolean('castrated')->default(false);
             $table->string('race');
             $table->boolean('lost')->default(false);
-            $table->string('id_pet_pather', 14)->nullable();
-            $table->string('id_pet_mother', 14)->nullable();
+            $table->integer('n_lost');
+            $table->boolean('published')->default(false);
+            $table->string('id_pet_pather', 15)->nullable();
+            $table->string('id_pet_mother', 15)->nullable();
             $table->string('user_id', 13)->nullable();
             $table->timestamps();
-            $table->foreign('user_id')->references('user_id')->on('users');
+            $table->foreign('user_id')->references('user_id')->on('users')->onDelete('cascade')->onUpdate('cascade');
         });
     }
 

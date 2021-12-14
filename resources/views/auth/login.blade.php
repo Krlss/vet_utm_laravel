@@ -40,7 +40,7 @@
                 @endif
 
                 <x-jet-button class="ml-4">
-                    {{ trans('lang.Login') }}
+                    {{ trans('lang.login') }}
                 </x-jet-button>
             </div>
         </form>

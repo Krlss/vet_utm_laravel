@@ -33,12 +33,14 @@ class User extends Authenticatable
         'last_name2',
         'email',
         'address',
+        'password',
+        'api_token',
         'phone',
+        'email_verified_at',
         'id_province',
         'id_canton',
     ];
 
-    protected $guarded = ['id'];
     /**
      * 
      * The attributes that should be hidden for serialization.
@@ -49,32 +51,17 @@ class User extends Authenticatable
         'password',
         'remember_token'
     ];
+ 
 
-
-public static $rules = [
-    'user_id' => 'required|dimensions:min_width=10,min_height=13',
-    'name' => 'required',
-    'last_name1' => 'required',
-    'last_name2' => 'required',
-    'email' => 'required|unique:App\Models\User,email',
-    'id_canton' => 'required',
-    'address' => 'required',
-    'phone' => 'required|digits:10',
-];
-
-
-
-
-
-
-
-    /**
-     * The attributes that should be cast.
-     *
-     * @var array
-     */
-    protected $casts = [
-        'email_verified_at' => 'datetime',
+    public static $rules = [
+        'user_id' => 'required|max:13|min:10',
+        'name' => 'required|max:75',
+        'last_name1' => 'required|max:50',
+        'last_name2' => 'required|max:50',
+        'email' => 'required|max:100',
+        'id_canton' => 'required',
+        'address' => 'max:2500',
+        'phone' => 'required|digits:10',
     ];
 
     /**

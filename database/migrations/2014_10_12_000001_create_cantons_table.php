@@ -18,7 +18,7 @@ class CreateCantonsTable extends Migration
             $table->string('name')->unique(); 
             $table->integer('id_province'); 
             $table->timestamps();
-            $table->foreign('id_province')->references('id')->on('provinces'); 
+            $table->foreign('id_province')->references('id')->on('provinces')->onDelete('cascade')->onUpdate('cascade'); 
         });
     }
 

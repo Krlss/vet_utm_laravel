@@ -7,7 +7,7 @@
     "require": {
         "php": "^7.3|^8.0",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^7.0.1",
+        "google/apiclient": "^2.12",
         "jeroennoten/laravel-adminlte": "^3.7",
         "laravel/framework": "^8.65",
         "laravel/jetstream": "^2.4",
@@ -15,6 +15,7 @@
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.5",
+        "nao-pon/flysystem-google-drive": "^1.1",
         "spatie/laravel-permission": "^5.4"
     },
     "require-dev": {
@@ -30,7 +31,7 @@
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/"
-        } 
+        }
     },
     "autoload-dev": {
         "psr-4": {

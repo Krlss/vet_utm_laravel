@@ -14,8 +14,15 @@
 
 <div class="card">
     <div class="card-body">
+
+        @if (session('error'))
+            <div class="alert alert-danger">
+                <strong>{{ session('error') }}</strong>
+            </div>
+        @endif
+
         {!! Form::open(['route' => 'dashboard.users.store']) !!}
-        @include('dashboard.users.fields')
+        @include('dashboard.users.fields_create')
         {!! Form::close() !!}
     </div>
 </div>

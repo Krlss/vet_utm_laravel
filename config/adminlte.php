@@ -225,48 +225,40 @@ return [
     */
     'menu' => [
         [
-            'text' => 'blog',
-            'url'  => 'admin/blog',
-            'can'  => 'manage-blog',
-        ],
-        [
-            'text'        => 'gestor',
-            'icon'        => 'fas fa-tachometer-alt fa-fw',
-            /* 'can'          => 'admin.home' */
-        ],
-        [
-            'text'        => 'Usuarios',
-            'icon'        => 'far fa-user fa-fw',
-            /* 'can'          => 'admin.users.index' */
-        ],
-
-        [
-            'text' => 'Categorías',
-            'icon' => 'fas fa-fw fa-th',
-            'active' => ['admin/categories*'], //Todas las categorias 
-            /* 'can'          => 'admin.categories.index' */
-        ],
-        // [
-        //     'text' => 'Subcategorias',
-        //     'route'  => 'admin.tags.index',
-        //     'icon' => 'far fa-fw fa-bookmark',
-        //     'active' => ['admin/tags*'],
-        //     'can'          => 'admin.tags.index'
-        // ],
-
+            'text' => 'Dashboard',
+            'url'  => '/dashboard',
+            'icon'      => 'fas fa-tachometer-alt',
+            'can'          => 'dashboard.home'
+        ], 
         ['header' => 'Administración'],
         [
             'text'      => 'Usuarios',
             'icon'      => 'fas fa-users',
             'active'    => ['dashboard/users', 'dashboard/users/create', 'dashboard/users/edit'],
-            'url'       => 'dashboard/users',
-            /* 'can'          => 'admin.products.index' */
-        ],
+            'route'         => 'dashboard.users.index',   
+            'can'          => 'dashboard.users.index'
+        ], 
         [
-            'text'       => 'Publicar nuevo producto',
-            'icon'      => 'fas fa-fw fa-file',
-            /* 'can'          => 'admin.products.create' */
-        ],
+            'text'      => 'Mascotas',
+            'icon'      => 'fas fa-paw',
+            'active'    => ['dashboard/pets', 'dashboard/pets/create', 'dashboard/pets/edit'],
+            'route'         => 'dashboard.pets.index', 
+            'can'          => 'dashboard.pets.index'
+        ], 
+        [
+            'text'      => 'Reportes',
+            'icon'      => 'fas fa-list-alt',
+            'active'    => ['dashboard/reports', 'dashboard/reports/edit'],
+            'route'         => 'dashboard.reports.index', 
+            'can'          => 'dashboard.reports.index'
+        ], 
+        [
+            'text'      => 'Roles y permisos',
+            'icon'      => 'fas fa-list-alt',
+            'active'    => ['dashboard/roles', 'dashboard/permissions'],
+            'route'         => 'dashboard.roles.index', 
+            'can'          => 'dashboard.roles.index'
+        ], 
     ],
 
 
