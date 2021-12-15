@@ -13,12 +13,13 @@
 @endsection
 <div class="card">
     <div class="card-body">
-        {!! Form::open(['route' => 'dashboard.roles.update']) !!}
+
+        {!! Form::model($role, ['route' => ['dashboard.roles.update', $role], 'autocomplete' => 'off', 'method' => 'put']) !!}
         <div class="row">
             @include('dashboard.roles.fields')
         </div>
         {!! Form::close() !!}
-        <div class="clearfix"></div>
+        <div class="clearfix"></div> 
 
     </div>
 </div>

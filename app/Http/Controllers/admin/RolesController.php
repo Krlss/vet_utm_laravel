@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
+use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
@@ -38,7 +39,18 @@ class RolesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+
+        try {
+            DB::beginTransaction();
+            Role::create($input);
+            DB::commit();
+
+            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_created'));
+        } catch (\Throwable $th) {
+            DB::rollBack();            
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
     }
 
     /**
@@ -81,8 +93,17 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Role $role)
     {
-        //
+        try {
+            DB::beginTransaction();            
+            $role->delete();            
+            DB::commit();
+
+            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_deleted'));
+        } catch (\Throwable $th) {
+            DB::rollBack();            
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
     }
 }
