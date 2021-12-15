@@ -42,8 +42,10 @@ return [
      'role_table' => 'Lista de roles',
      'permission_create' => 'Crear permiso',
      'edit_role' => 'Editar rol',
+     'role_deleted' => 'Rol eliminado',
 
      'role_create' => 'Crear Rol',
+     'role_created' => 'Rol creado correctamente.',
      'guard_name' => 'Guard name',
      'save_rol' => 'Guardar rol',
      'roles' => 'Roles',
