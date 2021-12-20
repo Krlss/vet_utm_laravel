@@ -44,6 +44,7 @@ Route::post('login', [UserApiController::class, 'Login']);
 Route::post('register', [UserApiController::class, 'Register']);
 Route::get('users/{id}', [UserApiController::class, 'getProfile']);
 Route::put('updatedUser/', [UserApiController::class, 'updateDataUser']);
+Route::put('updatedPassword/', [UserApiController::class, 'updatedPassword']);
 Route::put('updatedPet/', [PetApiController::class, 'updateDataPet']);  
 Route::post('createdPet', [PetApiController::class, 'store']); 
 
