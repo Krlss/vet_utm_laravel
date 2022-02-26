@@ -11,7 +11,7 @@ use App\Http\Controllers\admin\PermissionController;
 
 use Illuminate\Support\Facades\Route; 
 
-Route::get('', [HomeController::class, 'index'])->middleware('can:dashboard.home')->name('dashboard.home');
+Route::get('/', [HomeController::class, 'index'])->middleware('can:dashboard.home')->name('dashboard.home');
 
 Route::resource('users', UserController::class)->names('dashboard.users');
 Route::resource('pets', PetController::class)->names('dashboard.pets'); 
