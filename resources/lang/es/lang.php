@@ -8,7 +8,7 @@ return [
      'yep' => 'Si',
      'nop' => 'No',
 
-
+     'Desconocido' => 'Desconocido',
      'tableUserID' => 'Cedula o RUC',
      'namesUser' => 'Nombres',
      'last_names' => 'Apellidos',
