@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvinceSeeder::class);
         //Canton::factory(500)->create();
         $this->call(CantonSeeder::class);
-        User::factory(150)->create();
+        //User::factory(150)->create();
         $this->call(UserSeeder::class);
     }
 }
