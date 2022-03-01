@@ -240,21 +240,18 @@ class PetApiController extends Controller
                     }
 
                     DB::beginTransaction();
-                    /*                    $imagesCurrent = Image::where('pet_id',$input['pet_id'])->get();
+                    $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
 
-
-                     foreach($imagesCurrent as $imgC){
-                        if(isset($input['images']))
+                    if (isset($input['images']))
+                        foreach ($imagesCurrent as $imgC) {
                             $exist = array_search($imgC->url, array_column($input['images'], 'url'));
-                        else $exist = null;
-                        
-                        if(is_numeric($exist)){
-                            continue;
-                        }else{            
-                            Storage::disk("google")->delete($imgC->id_image);
-                            $imgC->delete();
+                            if (is_numeric($exist)) {
+                                continue;
+                            } else {
+                                Storage::disk("google")->delete($imgC->id_image);
+                                $imgC->delete();
+                            }
                         }
-                    } */
 
                     if (isset($input['images'])) {
                         for ($i = 0; $i < count($input['images']); $i++) {
