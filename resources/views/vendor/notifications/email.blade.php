@@ -29,7 +29,7 @@ switch ($level) {
 }
 ?>
 @component('mail::button', ['url' => $actionUrl, 'color' => $color])
-{{ $actionText} }}
+{{ $actionText }}
 @endcomponent
 @endisset
 
