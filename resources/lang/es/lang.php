@@ -1,12 +1,13 @@
-<?php 
+<?php
 
 return [
      'login' => 'Iniciar sesión',
      'rememberme' => 'Recuérdame',
-     'password' => 'Contraseña',
+     '_password' => 'Contraseña',
      'Forgotyourpassword' => '¿Olvidaste tu contraseña?',
      'yep' => 'Si',
      'nop' => 'No',
+     'confi_pass' => 'Confirma la contraseña',
 
      'Desconocido' => 'Desconocido',
      'tableUserID' => 'Cedula o RUC',
@@ -49,11 +50,11 @@ return [
      'guard_name' => 'Guard name',
      'save_rol' => 'Guardar rol',
      'roles' => 'Roles',
-     'without_address' => 'Sin dirección', 
-     'pather' => 'Mascota padre', 
-     'select_pather' => 'Seleccione un padre', 
-     'mother' => 'Mascota madre', 
-     'select_mother' => 'Seleccione una madre', 
+     'without_address' => 'Sin dirección',
+     'pather' => 'Mascota padre',
+     'select_pather' => 'Seleccione un padre',
+     'mother' => 'Mascota madre',
+     'select_mother' => 'Seleccione una madre',
      'not_required' => 'No es obligatorio',
      'childs' => 'Hijos',
      'it_doesnt_have' => 'No tiene',
@@ -72,10 +73,10 @@ return [
      'lost' => 'Perdido',
      'maleP' => 'Macho',
      'femaleP' => 'Hembra',
-     'sexP' => 'Sexo', 
-     'n_lost' => '# veces perdido', 
-     'recommendable_not_published' => 'Recomendable no publicar en la aplicación móvil porque no tiene fotos.', 
-     'birth' => 'Fecha de nacimiento', 
+     'sexP' => 'Sexo',
+     'n_lost' => '# veces perdido',
+     'recommendable_not_published' => 'Recomendable no publicar en la aplicación móvil porque no tiene fotos.',
+     'birth' => 'Fecha de nacimiento',
      'castrated' => 'Esterilizado',
      'select_owner' => 'Seleccione un dueño',
      'pet_created' => 'Mascota creada correctamente',
@@ -108,9 +109,9 @@ return [
 
 
 
-     'dashboard.home'	 => 'Ver dashboard',
+     'dashboard.home'      => 'Ver dashboard',
      'dashboard.users.index' => 'Ver lista de usuarios',
-     'dashboard.users.create'	 => 'Registrar usuario',
+     'dashboard.users.create'      => 'Registrar usuario',
      'dashboard.users.edit' => 'Editar usuario',
      'dashboard.users.destroy' => 'Eliminar usuario',
      'dashboard.users.show' => 'Ver datos de usuarios',
@@ -130,5 +131,23 @@ return [
      'dashboard.roles.edit' => 'Editar rol',
      'dashboard.roles.destroy' => 'Eliminar rol',
      'dashboard.permissions' => 'Ver lista de permisos',
+
+
+     'forgot_password_msg' => '¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.',
+     'send_email_forgot_password' => 'Enviar enlace al correo',
+     'reset' => '¡Tu contraseña ha sido restablecida!',
+     'sent' => '¡Le hemos enviado un correo electrónico con su enlace de restablecimiento de contraseña!',
+     'throttled' => 'Espere antes de volver a intentarlo.',
+     'token' => 'Este token de restablecimiento de contraseña no es válido.',
+     'user' => "No podemos encontrar un usuario con esa dirección de correo electrónico.",
+     'failed' => 'Estas credenciales no coinciden con nuestros registros.',
+     'password' => 'La contraseña proporcionada es incorrecta.',
+     'throttle' => 'Demasiados intentos de inicio de sesión. Vuelva a intentarlo en :seconds segundos.',
+     'woops' => 'Whoops! Ocurrió algun error.',
+     'You are receiving this email because we received a password reset request for your account.' => 'Está recibiendo este correo electrónico porque recibimos una solicitud de restablecimiento de contraseña para su cuenta.',
+     'This password reset link will expire in 60 minutes.' => 'Este enlace de restablecimiento de contraseña caducará en 60 minutos',
+     'If you did not request a password reset, no further action is required.' => 'Si no solicitó un restablecimiento de contraseña, no se requiere ninguna otra acción.',
+     'Reset Password' => 'Restablecer contraseña',
+     'Reset Password Notification' => 'Notificación para restablecer la contraseña',
 
 ];
