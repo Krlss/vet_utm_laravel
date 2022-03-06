@@ -65,14 +65,14 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
     <div class="flex flex-col px-2">
         {!! Form::label('address', trans('lang.address'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::text('address', old('address'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.address'), 'required' => true]) !!}
+        {!! Form::text('address', old('address'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.address')]) !!}
         @error('address')
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
     <div class="flex flex-col px-2">
         {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone'), 'required' => true]) !!}
+        {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
         @error('phone')
         <span class="text-danger">{{ $message }}</span>
         @enderror
@@ -82,7 +82,7 @@
 
     <div class="flex flex-col px-2">
         {!! Form::label('province_id', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::select('province_id', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => trans('lang.select_province')]) !!}
+        {!! Form::select('province_id', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province')]) !!}
         @error('province_id')
         <span class="text-danger">{{ $message }}</span>
         @enderror
@@ -90,7 +90,7 @@
 
     <div class="flex flex-col px-2">
         {!! Form::label('id_canton', trans('lang.canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::select('id_canton', $cantons, $canton ? $canton->id : null, ['class' => 'select2 form-control', 'required' => true , 'placeholder' => trans('lang.select_canton')]) !!}
+        {!! Form::select('id_canton', $cantons, $canton ? $canton->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_canton')]) !!}
         @error('id_canton')
         <span class="text-danger">{{ $message }}</span>
         @enderror
@@ -98,8 +98,6 @@
 
 
 </div>
-
-<button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 
 <style>
     input[type=number]::-webkit-inner-spin-button,
@@ -114,29 +112,29 @@
 <script>
     $(document).ready(function() {
         var cantoncurrent = <?php echo $canton; ?>;
-        if (cantoncurrent) {
-            $.ajax({
-                method: "GET",
-                url: "{{ url('dashboard/provinces/cantons') }}",
-                data: {
-                    province_id: $('#province_id').val()
-                }
-            }).done(function(msg) {
-                let cantonsOptions;
-                if (msg.length <= 0) cantonsOptions = '<option value="0">Sin padre</option>';
-                $.each(msg, function(i, canton) {
-                    if ($('#id_canton').val() !== [])
-                        cantoncurrent === canton.id ? cantonsOptions +=
-                        '<option selected value="' +
-                        canton.id + '">' + canton.name +
-                        '</option>' :
-                        cantonsOptions += '<option value="' + canton.id + '">' +
+        $.ajax({
+            method: "GET",
+            url: "{{ url('dashboard/provinces/cantons') }}",
+            data: {
+                province_id: $('#province_id').val()
+            }
+        }).done(function(msg) {
+            let cantonsOptions;
+            if (msg.length <= 0) cantonsOptions = '<option value>Sin opciones</option>';
+            $.each(msg, function(i, canton) {
+                console.log(cantoncurrent.id == canton.id)
+                if (cantoncurrent.id == canton.id) {
+                    cantonsOptions += '<option selected="selected" value="' + canton.id + '">' +
                         canton.name +
                         '</option>'
-                });
-                $('#id_canton').html(cantonsOptions);
+                } else {
+                    cantonsOptions += '<option value="' + canton.id + '">' +
+                        canton.name +
+                        '</option>'
+                }
             });
-        }
+            $('#id_canton').html(cantonsOptions);
+        });
     });
 </script>
 
@@ -154,7 +152,7 @@
         }).done(function(msg) {
             let cantonsOptions;
             if (msg.length <= 0) {
-                cantonsOptions = '<option value="0">Sin padre</option>'
+                cantonsOptions = '<option value>Sin opciones</option>'
             } else {
                 $.each(msg, function(i, canton) {
                     cantonsOptions += '<option value="' + canton.id + '">' + canton.name +

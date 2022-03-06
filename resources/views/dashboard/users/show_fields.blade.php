@@ -136,26 +136,12 @@
                 {!! Form::close() !!}
                 @endcan
 
-                <!-- @can('dashboard.users.destroy')
-                {{ Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) }}
-                @csrf
-                {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
-                'type' => 'submit',
-                'class' => '',
-                'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name de este usuario?')",
-                ]) !!}
-                {!! Form::close() !!}
-                @endcan -->
-
             </div>
         </div>
 
     </div>
     @endforeach
 </div>
-
-
-
 
 @else
 <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">

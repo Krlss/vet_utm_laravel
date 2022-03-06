@@ -59,7 +59,6 @@ class User extends Authenticatable
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100',
-        'id_canton' => '',
         'address' => 'max:2500',
         'phone' => 'digits:10',
     ];
