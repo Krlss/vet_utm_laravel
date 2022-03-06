@@ -126,8 +126,8 @@
                 @endcan
 
                 @can('dashboard.users.destroy')
-                {{ Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'post']) }}
-                @csrf
+                {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}
+                {!! Form::hidden('pet_id', $pet->pet_id, null) !!}
                 {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
                 'type' => 'submit',
                 'class' => '',
@@ -135,6 +135,17 @@
                 ]) !!}
                 {!! Form::close() !!}
                 @endcan
+
+                <!-- @can('dashboard.users.destroy')
+                {{ Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) }}
+                @csrf
+                {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
+                'type' => 'submit',
+                'class' => '',
+                'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name de este usuario?')",
+                ]) !!}
+                {!! Form::close() !!}
+                @endcan -->
 
             </div>
         </div>

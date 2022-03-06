@@ -30,7 +30,7 @@ return [
      'user_error' => 'Verifica que los campos cumplan con los requisitos',
      'user_deleted' => 'El usuario fué eliminado con exito.',
      'show_user' => 'Mostrar usuario',
-     'edit_user' => 'Edición de un usuario',
+     'edit_user' => 'Editar los datos de un usuario',
      'select_province' => 'Seleccione una provincia',
      'select_canton' => 'Seleccione un canton',
      'without_province' => 'Sin provincia',

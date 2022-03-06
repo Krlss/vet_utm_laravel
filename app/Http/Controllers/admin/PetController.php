@@ -200,14 +200,20 @@ class PetController extends Controller
         }
     }
 
-    public function deletePetToUser(UpdatePetRequest $request, Pet $pet)
+    public function deletePetToUser(Request $request)
     {
         $input = $request->all();
-        unset($input['user_id']);
+
+        $pet = Pet::where('pet_id', $input['pet_id'])->first();
 
         try {
             DB::beginTransaction();
-            $pet->update($input);
+
+            $pet->user_id = null;
+            $pet->save();
+
+            DB::commit();
+
             return redirect()->back()->with('info', trans('lang.pet_user_delete'));
         } catch (\Throwable $th) {
             DB::rollBack();

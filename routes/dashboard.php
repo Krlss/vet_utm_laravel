@@ -14,7 +14,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'index'])->middleware('can:dashboard.home')->name('dashboard.home');
 
 Route::post('pet/user', [UserController::class, 'getUserToPet']);
-Route::post('deletePetUser', [PetController::class, 'deletePetToUser'])->name('dashboard.deletePetUser');
+Route::delete('pet/user/delete', [PetController::class, 'deletePetToUser'])->name('dashboard.deletePetUser');
 
 Route::resource('users', UserController::class)->names('dashboard.users');
 Route::resource('pets', PetController::class)->names('dashboard.pets');
