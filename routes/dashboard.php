@@ -9,16 +9,19 @@ use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\RolesController;
 use App\Http\Controllers\admin\PermissionController;
 
-use Illuminate\Support\Facades\Route; 
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->middleware('can:dashboard.home')->name('dashboard.home');
 
+Route::post('pet/user', [UserController::class, 'getUserToPet']);
+Route::post('deletePetUser', [PetController::class, 'deletePetToUser'])->name('dashboard.deletePetUser');
+
 Route::resource('users', UserController::class)->names('dashboard.users');
-Route::resource('pets', PetController::class)->names('dashboard.pets'); 
+Route::resource('pets', PetController::class)->names('dashboard.pets');
 
-Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']); 
+Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']);
 
-Route::get('parents', [PetController::class, 'getParents']);
+Route::post('parents', [PetController::class, 'getParents']);
 
 Route::resource('reports', ReportController::class)->names('dashboard.reports');
 

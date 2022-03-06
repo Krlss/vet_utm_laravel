@@ -4,10 +4,13 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\UpdatePetRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Canton;
+use App\Models\Pet;
 use App\Models\Province;
-use App\Models\User; 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -16,7 +19,8 @@ use Spatie\Permission\Models\Role;
 class UserController extends Controller
 {
 
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:dashboard.users.index')->only('index');
         $this->middleware('can:dashboard.users.destroy')->only('destroy');
         $this->middleware('can:dashboard.users.create')->only('create', 'store');
@@ -33,7 +37,7 @@ class UserController extends Controller
 
     public function create()
     {
-        $provinces = Province::pluck('name', 'id'); 
+        $provinces = Province::pluck('name', 'id');
         $roles = Role::pluck('name', 'name');
         $cantons = [];
         return view('dashboard.users.create', compact('provinces', 'cantons', 'roles'));
@@ -41,52 +45,53 @@ class UserController extends Controller
 
     public function store(CreateUserRequest $request)
     {
-        $input = $request->all(); 
+        $input = $request->all();
 
         $password = $input['user_id'];
 
         $input['password'] = Hash::make($password);
         $input['api_token'] = Str::random(25);
         $input['email_verified_at'] = null;
-        
+
         DB::beginTransaction();
         try {
             User::create($input);
-            
-            DB::commit();                   
+
+            DB::commit();
             return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_created'));
         } catch (\Throwable $e) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.user_error'));
-        } 
+        }
     }
 
     public function show(User $user)
-    {   
-        $pets = $user->pets()->where('user_id', $user->user_id)->get();
-        
-        $canton = Canton::where('id', $user->id_canton)->first(); 
+    {
+
+        $pets = Pet::where('user_id', $user->user_id)->get();
+
+        $canton = Canton::where('id', $user->id_canton)->first();
 
         $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
-        
+
         return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province'));
     }
 
     public function edit(User $user)
     {
-        $pets = $user->pets()->where('user_id', $user->user_id)->get();
-        
-        $canton = Canton::where('id', $user->id_canton)->first(); 
+        $pets = Pet::where('user_id', $user->user_id)->get();
+
+        $canton = Canton::where('id', $user->id_canton)->first();
 
         $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
         $provinces = Province::pluck('name', 'id');
 
-        $cantons = []; 
+        $cantons = [];
 
         $roles = Role::pluck('name', 'id');
-        
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province','provinces', 'cantons', 'roles'));
+
+        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -97,26 +102,38 @@ class UserController extends Controller
         try {
             $user->roles()->sync($request['roles']);
             $user->update($input);
-            
-            DB::commit();                   
+
+            DB::commit();
             return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_updated'));
         } catch (\Throwable $e) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.user_error'));
-        } 
+        }
     }
 
     public function destroy(User $user)
     {
         DB::beginTransaction();
         try {
-            
-        $user->delete();
-        DB::commit();
-        return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_deleted'));
-    } catch (\Throwable $e) {
-        DB::rollBack();            
-        return redirect()->back()->with('error', trans('lang.user_error'));
-    } 
+
+            $user->delete();
+            DB::commit();
+            return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_deleted'));
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
+    }
+
+    public function getUserToPet(Request $request)
+    {
+        $input = $request->all();
+
+        try {
+            $users = User::where('user_id', 'like', '%' . $input['search'] . '%')->select('user_id', 'user_id')->get()->take(25);
+            return $users;
+        } catch (\Throwable $e) {
+            return null;
+        }
     }
 }

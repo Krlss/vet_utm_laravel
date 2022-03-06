@@ -48,7 +48,7 @@ class RolesController extends Controller
 
             return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_created'));
         } catch (\Throwable $th) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.user_error'));
         }
     }
@@ -82,9 +82,22 @@ class RolesController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Role $role)
     {
-        //
+
+        try {
+            $request->validate([
+                'name' => 'required'
+            ]);
+
+            DB::beginTransaction();
+            $role->update($request->all());
+            DB::commit();
+
+            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_updated'));
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
     }
 
     /**
@@ -96,13 +109,13 @@ class RolesController extends Controller
     public function destroy(Role $role)
     {
         try {
-            DB::beginTransaction();            
-            $role->delete();            
+            DB::beginTransaction();
+            $role->delete();
             DB::commit();
 
             return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_deleted'));
         } catch (\Throwable $th) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.user_error'));
         }
     }

@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\DB;
 
 class PetController extends Controller
 {
-    public function __construct(){
+    public function __construct()
+    {
         $this->middleware('can:dashboard.pets.index')->only('index');
         $this->middleware('can:dashboard.pets.destroy')->only('destroy');
         $this->middleware('can:dashboard.pets.create')->only('create', 'store');
@@ -26,20 +27,23 @@ class PetController extends Controller
         $pets = Pet::orderBy('updated_at', 'DESC')->get();
         return view('dashboard.pets.index', compact('pets'));
     }
- 
+
     public function create()
     {
         $users = User::pluck('user_id', 'user_id');
         $pets = Pet::all();
         $father = $pets->where('sex', 'M')
-        ->where('specie', 'canine')
-        ->pluck('pet_id', 'pet_id');
+            ->where('specie', 'canine')
+            ->pluck('pet_id', 'pet_id');
         $mother = $pets->where('sex', 'F')
-        ->where('specie', 'canine')
-        ->pluck('pet_id', 'pet_id');
-        return view('dashboard.pets.create', compact('users', 'pets'))->with('pather', $father)->with('mother', $mother);
+            ->where('specie', 'canine')
+            ->pluck('pet_id', 'pet_id');
+
+        $childrens = [];
+        $childrensSelected = [];
+        return view('dashboard.pets.create', compact('users', 'pets', 'childrens', 'childrensSelected'))->with('pather', $father)->with('mother', $mother);
     }
- 
+
     public function store(CreatePetRequest $request)
     {
         $input = $request->all();
@@ -47,46 +51,47 @@ class PetController extends Controller
         do {
             $input['pet_id'] = $this->genaretePetId($input);
         } while (Pet::where('pet_id', '==', $input['pet_id'])->first());
-        
+
         //1 if created as lost
         $input['n_lost'] = $input['lost'] ? 1 : 0;
-        if($input['pather']) $input['id_pet_pather'] = $input['pather'] == 'null' ? null : $input['pather'];
+
+        if (isset($input['pather'])) $input['id_pet_pather'] = $input['pather'] == 'null' ? null : $input['pather'];
         unset($input['pather']);
 
-        if($input['mother']) $input['id_pet_mother'] = $input['mother'] == 'null' ? null : $input['mother'];
+        if (isset($input['mother'])) $input['id_pet_mother'] = $input['mother'] == 'null' ? null : $input['mother'];
         unset($input['mother']);
         DB::beginTransaction();
         try {
             Pet::create($input);
-            
-            DB::commit();                   
+
+            DB::commit();
             return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_created'));
         } catch (\Throwable $e) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.pet_errpr') . $e->getMessage());
-        } 
+        }
 
         dd($input);
     }
- 
+
     public function show(Pet $pet)
     {
         $user = User::where('user_id', $pet->user_id)->first();
         $canton = null;
         $province = null;
 
-        if($user){
+        if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
         }
 
         $childs = Pet::where('id_pet_pather', $pet->pet_id)
-        ->orWhere('id_pet_mother', $pet->pet_id)
-        ->get();
+            ->orWhere('id_pet_mother', $pet->pet_id)
+            ->get();
 
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton','province', 'childs'));
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs'));
     }
- 
+
     public function edit(Pet $pet)
     {
 
@@ -98,56 +103,58 @@ class PetController extends Controller
 
         return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother'));
     }
- 
+
     public function update(UpdatePetRequest $request, Pet $pet)
     {
         $input = $request->all();
-        $input['user_id'] = $input['users'];
-        
+
+        if (isset($input['pather'])) $input['id_pet_pather'] = $input['pather'] == 'null' ? null : $input['pather'];
+        unset($input['pather']);
+
+        if (isset($input['mother'])) $input['id_pet_mother'] = $input['mother'] == 'null' ? null : $input['mother'];
+        unset($input['mother']);
+
         //if it changes from false to true
-        if(!$pet->lost && $input['lost']){
+        if (!$pet->lost && $input['lost']) {
             $input['n_lost'] = $pet->n_lost + 1;
         }
 
         DB::beginTransaction();
         try {
             $pet->update($input);
-            
-            DB::commit();                   
+
+            DB::commit();
             return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_updated'));
         } catch (\Throwable $e) {
-            DB::rollBack();            
+            DB::rollBack();
             return redirect()->back()->with('error', trans('lang.user_error'));
-        } 
+        }
     }
- 
+
     public function destroy(Pet $pet)
     {
         DB::beginTransaction();
         try {
-            
-        $pet->delete();
-        DB::commit();
-        return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_deleted'));
-    } catch (\Throwable $e) {
-        DB::rollBack();            
-        return redirect()->back()->with('error', trans('lang.user_error'));
-    } 
+
+            $pet->delete();
+            DB::commit();
+            return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_deleted'));
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
     }
 
 
-    public function genaretePetId($input){
-        /* name, sex, birth, castrated, race, specie */
-        /* PRIMERA LETRA NOMBRE + 
-        SEXO + 
-        AÑO NACIMIENTO + 
-        Día en que se registró +
-        CASTRADO + 
-        PRIMERA LETRA RAZA + 
-        PRIMERA LETRA ESPECIE + 
-        numbero random 1000 to 9999  */
+    public function genaretePetId($input)
+    {
 
-        /* PM202007YBP9999  */
+        /* FIRST letter of province + secuencial two letter a-z more secuencial number 001-999*/
+        /* MAA-001 */
+        /* MZZ-999 */
+
+
+
 
         $name = $input['name'];
         $birth = $input['birth'];
@@ -161,15 +168,50 @@ class PetController extends Controller
         return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
     }
 
-    public function getParents (Request $request) {
+    /*     public function getParentsPather(Request $request)
+    {
         try {
             $input = $request->all();
 
-            $result = Pet::where('specie', $input['specie'])->select('name', 'pet_id', 'sex')->get(); 
-             
+            $result = Pet::where('specie', $input['specie'])
+                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                ->where('sex', '<>', 'F')
+                ->select('pet_id', 'pet_id')->get()->take(25);
+
             return $result;
-        }catch (\Throwable $e){
+        } catch (\Throwable $e) {
             return json_encode(['Parents' => []]);
+        }
+    }
+ */
+    public function getParents(Request $request)
+    {
+        try {
+            $input = $request->all();
+
+            $result = Pet::where('specie', $input['specie'])
+                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                ->where('sex', $input['sex'])
+                ->select('pet_id', 'pet_id')->get()->take(25);
+
+            return $result;
+        } catch (\Throwable $e) {
+            return json_encode(['Parents' => []]);
+        }
+    }
+
+    public function deletePetToUser(UpdatePetRequest $request, Pet $pet)
+    {
+        $input = $request->all();
+        unset($input['user_id']);
+
+        try {
+            DB::beginTransaction();
+            $pet->update($input);
+            return redirect()->back()->with('info', trans('lang.pet_user_delete'));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', trans('lang.user_error'));
         }
     }
 }

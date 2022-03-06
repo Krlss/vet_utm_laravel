@@ -51,7 +51,7 @@ class User extends Authenticatable
         'password',
         'remember_token'
     ];
- 
+
 
     public static $rules = [
         'user_id' => 'required|max:13|min:10',
@@ -59,9 +59,9 @@ class User extends Authenticatable
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100',
-        'id_canton' => 'required',
+        'id_canton' => '',
         'address' => 'max:2500',
-        'phone' => 'required|digits:10',
+        'phone' => 'digits:10',
     ];
 
     /**

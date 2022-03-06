@@ -44,6 +44,7 @@ return [
      'permission_create' => 'Crear permiso',
      'edit_role' => 'Editar rol',
      'role_deleted' => 'Rol eliminado',
+     'role_updated' => 'Rol actualizado',
 
      'role_create' => 'Crear Rol',
      'role_created' => 'Rol creado correctamente.',
@@ -95,8 +96,8 @@ return [
      'show_pet_lost' => 'Datos de mascota perdida',
      'show_pet' => 'Datos mascota',
      'list_pets' => 'Lista de mascotas',
-     'edit_pet' => 'Edición de una mascota',
-     'edit_pet_report' => 'Edición de una mascota reportada',
+     'edit_pet' => 'Editar los datos de una mascota',
+     'edit_pet_report' => 'Editar los datos de una mascota reportada',
      'canine' => 'Canina',
      'feline' => 'Felina',
 
@@ -131,7 +132,7 @@ return [
      'dashboard.roles.edit' => 'Editar rol',
      'dashboard.roles.destroy' => 'Eliminar rol',
      'dashboard.permissions' => 'Ver lista de permisos',
-
+     'dashboard.users.role' => 'Dar rol',
 
      'forgot_password_msg' => '¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.',
      'send_email_forgot_password' => 'Enviar enlace al correo',
@@ -150,4 +151,20 @@ return [
      'Reset Password' => 'Restablecer contraseña',
      'Reset Password Notification' => 'Notificación para restablecer la contraseña',
 
+     'fist_selected_province' => 'Primero selecciona una provincia',
+     'select_province' => 'Selecciona la provincia',
+
+     'label_data_user' => 'Datos del usuario',
+     'label_data_user_pets' => 'Mascotas del usuario',
+     'label_data_user_pets_without' => 'El usuario no tiene mascostas.',
+     'pet_user_delete' => 'Ha sido eliminada la mascota del usuario',
+     'type_user_id' => 'Digita la cedula o RUC de la persona',
+     'type_user_id_empty' => 'No hay personas registradas.',
+     'label_info_user_create' => 'Información obligatoria',
+     'label_info_pet_create' => 'Información obligatoria',
+     'label_info_user_contact' => 'Información de contacto',
+     'label_info_pet_create_not_Required' => 'Información no obligatoria',
+     'pather_id_type' => 'Digite el identificador del padre',
+     'mother_id_type' => 'Digite el identificador de la madre',
+     'owner_id_type' => 'Digite la cedula o RUC del dueño'
 ];
