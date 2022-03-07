@@ -19,9 +19,9 @@
         <div class="form-group flex-col">
             {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => ' ']) !!}
             <div class="">
-                <p>
+                <a href={{ route('dashboard.users.show', $user) }}>
                     {!! $user->user_id !!}
-                </p>
+                </a>
             </div>
         </div>
         {{-- User first_name --}}
@@ -254,7 +254,6 @@
                     </a>
                     @endcan
 
-                    @can('dashboard.users.destroy')
                     {!! Form::open(['route' => ['dashboard.deletePetChildren', $child], 'method' => 'delete']) !!}
                     {!! Form::hidden('pet_id', $child->pet_id, null) !!}
                     {!! Form::hidden('sex', $pet->sex, null) !!}
@@ -264,7 +263,6 @@
                     'onclick' => "return confirm('Estás seguro que deseas eliminar a $child->name de esta mascota?')",
                     ]) !!}
                     {!! Form::close() !!}
-                    @endcan
 
                 </div>
             </div>

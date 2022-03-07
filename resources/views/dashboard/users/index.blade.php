@@ -57,7 +57,6 @@
                         </a>
                         @endcan
 
-                        @can('dashboard.users.destroy')
                         {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
                         {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
                         'type' => 'submit',
@@ -65,7 +64,6 @@
                         'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
                         ]) !!}
                         {!! Form::close() !!}
-                        @endcan
                     </td>
                 </tr>
                 @endforeach
