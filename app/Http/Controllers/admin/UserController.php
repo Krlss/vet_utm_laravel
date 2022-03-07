@@ -131,7 +131,7 @@ class UserController extends Controller
 
         try {
             $users = User::where('user_id', 'like', '%' . $input['search'] . '%')->select('user_id', 'user_id')->get()->take(25);
-            return $users;
+            return response()->json($users);
         } catch (\Throwable $e) {
             return null;
         }

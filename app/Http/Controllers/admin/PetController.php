@@ -64,6 +64,19 @@ class PetController extends Controller
         try {
             Pet::create($input);
 
+            if (isset($input['childrens'])) {
+                $childrens = $input['childrens'];
+                unset($input['childrens']);
+
+                foreach ($childrens as $children) {
+                    if ($input['sex'] == 'M') {
+                        Pet::where('pet_id', $children)->update(['id_pet_pather' => $input['pet_id']]);
+                    } elseif ($input['sex'] == 'F') {
+                        Pet::where('pet_id', $children)->update(['id_pet_mother' => $input['pet_id']]);
+                    }
+                }
+            }
+
             DB::commit();
             return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_created'));
         } catch (\Throwable $e) {
@@ -173,13 +186,20 @@ class PetController extends Controller
         try {
             $input = $request->all();
 
-            $result = Pet::where('specie', $input['specie'])
-                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
-                ->where('sex', $input['sex'])
-                ->whereNotIn('pet_id', $input['childrensSeleted'])
-                ->select('pet_id', 'pet_id')->get()->take(25);
+            if (isset($input['childrensSeleted'])) {
+                $result = Pet::where('specie', $input['specie'])
+                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where('sex', $input['sex'])
+                    ->whereNotIn('pet_id', $input['childrensSeleted'])
+                    ->select('pet_id', 'pet_id')->get()->take(25);
+            } else {
+                $result = Pet::where('specie', $input['specie'])
+                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where('sex', $input['sex'])
+                    ->select('pet_id', 'pet_id')->get()->take(25);
+            }
 
-            return $result;
+            return response()->json($result);
         } catch (\Throwable $e) {
             return json_encode(['Parents' => []]);
         }
