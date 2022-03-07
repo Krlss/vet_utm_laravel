@@ -78,8 +78,8 @@ class User extends Authenticatable
         return $this->hasMany(Pet::class);
     }
 
-    public function canton()
+    public function parish()
     {
-        return $this->belongsTo(Canton::class);
+        return $this->belongsTo(Parish::class);
     }
 }

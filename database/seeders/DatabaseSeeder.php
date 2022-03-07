@@ -21,6 +21,9 @@ class DatabaseSeeder extends Seeder
         $this->call(ProvinceSeeder::class);
         //Canton::factory(500)->create();
         $this->call(CantonSeeder::class);
+
+        $this->call(ParishSeeder::class);
+
         //User::factory(150)->create();
         $this->call(UserSeeder::class);
     }

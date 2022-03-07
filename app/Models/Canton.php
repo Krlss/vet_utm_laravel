@@ -9,9 +9,9 @@ class Canton extends Model
 {
     use HasFactory;
 
-    public function users()
+    public function parishs()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(Parish::class);
     }
 
     public function province()
