@@ -7,6 +7,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Models\Canton;
+use App\Models\Parish;
 use App\Models\Pet;
 use App\Models\Province;
 use App\Models\User;
@@ -71,11 +72,13 @@ class UserController extends Controller
 
         $pets = Pet::where('user_id', $user->user_id)->get();
 
-        $canton = Canton::where('id', $user->id_canton)->first();
+        $parishe = Parish::where('id', $user->id_parish)->first();
+
+        $canton = $parishe ? Canton::where('id', $parishe->id_canton)->first() : null;
 
         $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
-        return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province'));
+        return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province', 'parishe'));
     }
 
     public function edit(User $user)

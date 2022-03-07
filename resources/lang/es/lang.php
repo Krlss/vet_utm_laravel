@@ -36,6 +36,7 @@ return [
      'select_canton' => 'Seleccione un canton',
      'without_province' => 'Sin provincia',
      'without_canton' => 'Sin canton',
+     'without_parishe' => 'Sin parroquia',
      'role' => 'Rol',
      'permission_table' => 'Lista de permiso',
      'permission_look' => 'Ver permisos',

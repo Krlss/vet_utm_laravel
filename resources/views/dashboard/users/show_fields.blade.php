@@ -77,7 +77,7 @@
 
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
     <div class="form-group flex-col">
         {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
@@ -93,6 +93,15 @@
         <div class="">
             <p>
                 {{ $canton ? $canton->name : trans('lang.without_canton')}}
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group flex-col">
+        {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
+        <div class="">
+            <p>
+                {{ $parishe ? $parishe->name : trans('lang.without_parishe')}}
             </p>
         </div>
     </div>
