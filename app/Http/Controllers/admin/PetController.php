@@ -220,4 +220,20 @@ class PetController extends Controller
             return redirect()->back()->with('error', trans('lang.user_error'));
         }
     }
+
+    public function getChildrens(Request $request)
+    {
+        try {
+            $input = $request->all();
+            $pets = Pet::where('specie', $input['specie'])
+                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                ->where('pet_id', '<>', $input['pather_seleted'])
+                ->where('pet_id', '<>', $input['mother_seleted'])
+                ->select('pet_id', 'pet_id')->get()->take(25);
+            $result = ['pets' => $pets];
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            return json_encode(['Childrens' => []]);
+        }
+    }
 }

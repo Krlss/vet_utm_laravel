@@ -106,9 +106,6 @@
         <div class="flex flex-col px-2">
             {!! Form::label('pather', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('pather', $pather, null, ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.pather_id_type') }}
-            </div>
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -117,9 +114,6 @@
         <div class="flex flex-col px-2">
             {!! Form::label('mother', trans('lang.mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('mother', $mother, null, ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.mother_id_type') }}
-            </div>
             @error('mother')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -129,31 +123,27 @@
         <div class="flex flex-col px-2">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('user_id', $users, null, ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.owner_id_type') }}
-            </div>
             @error('user_id')
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
     </div>
 
-    <!-- <div class="grid grid-cols-1 mb-4">
-        {{-- parents --}}
+    <div class="">
         <div class="flex flex-col px-2">
-            {!! Form::label('childrens', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <select id="childrens" name="childrens[]" class="form-control" multiple></select>
+            {{-- childres --}}
 
-            {!! Form::select('childrens[]', $childrens, $childrensSelected, ['multiple'=>'multiple','id'=>'childrens']) !!}
+            {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
             <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.pather_id_type') }}
+                {{ trans('lang.pather_id_type_ad') }}
             </div>
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
-        </div>
 
-    </div> -->
+        </div>
+    </div>
 
     <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 
@@ -169,10 +159,15 @@
         $('#pather').html('');
         $('#mother').val(null).trigger('change');
         $('#mother').html('');
+        $('#childrens').val(null).trigger('change');
+        $('#childrens').html('');
     });
 
 
     $('#pather').select2({
+        width: '100%',
+        placeholder: "Digite el identificador del padre",
+        minimumInputLength: 2,
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
@@ -201,6 +196,9 @@
     });
 
     $('#mother').select2({
+        width: '100%',
+        placeholder: "Digite el identificador de la madre",
+        minimumInputLength: 2,
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
@@ -229,6 +227,9 @@
     });
 
     $('#user_id').select2({
+        width: '100%',
+        placeholder: "Digite la cedula o RUC del dueño",
+        minimumInputLength: 2,
         ajax: {
             url: "{{url('dashboard/pet/user')}}",
             method: "POST",
@@ -253,24 +254,40 @@
         }
     });
 
-    /* $('#childrens[]').select2({
-        placeholder: "Choose tags...",
+    $('#childrens').select2({
+        width: '100%',
+        placeholder: "Digita los identificadores de las mascotas",
         minimumInputLength: 2,
+        allowClear: true,
+        language: "en",
         ajax: {
-            url: '/tags/find',
+            url: "{{url('dashboard/childrens')}}",
             dataType: 'json',
+            method: "POST",
             data: function(params) {
-                return {
-                    q: $.trim(params.term)
-                };
+                var specieValue = $("[name='specie']").val();
+                var query = {
+                    search: params.term,
+                    specie: specieValue,
+                    pather_seleted: $("[name='pather']").val(),
+                    mother_seleted: $("[name='mother']").val(),
+                    "_token": "{{csrf_token()}}"
+                }
+                return query;
             },
             processResults: function(data) {
+                data.pets = data.pets.map(function(obj) {
+                    return {
+                        "text": obj.pet_id,
+                        "id": obj.pet_id
+                    };
+                });
                 return {
-                    results: data
+                    results: data.pets
                 };
             },
             cache: true
         }
-    }); */
+    });
 </script>
 @endpush

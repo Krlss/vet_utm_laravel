@@ -22,6 +22,7 @@ Route::resource('pets', PetController::class)->names('dashboard.pets');
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']);
 
 Route::post('parents', [PetController::class, 'getParents']);
+Route::post('childrens', [PetController::class, 'getChildrens']);
 
 Route::resource('reports', ReportController::class)->names('dashboard.reports');
 

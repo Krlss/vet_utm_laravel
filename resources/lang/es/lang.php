@@ -45,6 +45,7 @@ return [
      'edit_role' => 'Editar rol',
      'role_deleted' => 'Rol eliminado',
      'role_updated' => 'Rol actualizado',
+     'childrens' => 'Hijos',
 
      'role_create' => 'Crear Rol',
      'role_created' => 'Rol creado correctamente.',
@@ -165,6 +166,7 @@ return [
      'label_info_user_contact' => 'Información de contacto',
      'label_info_pet_create_not_Required' => 'Información no obligatoria',
      'pather_id_type' => 'Digite el identificador del padre',
+     'pather_id_type_ad' => 'Primero seleccione un sexo',
      'mother_id_type' => 'Digite el identificador de la madre',
      'owner_id_type' => 'Digite la cedula o RUC del dueño'
 ];

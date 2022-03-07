@@ -163,6 +163,8 @@
         });
 
         $('#pather').select2({
+            placeholder: "Digite el identificador del padre...",
+            minimumInputLength: 2,
             ajax: {
                 url: "{{url('dashboard/parents')}}",
                 method: "POST",
@@ -197,6 +199,8 @@
         });
 
         $('#mother').select2({
+            placeholder: "Digite el identificador de la madre...",
+            minimumInputLength: 2,
             ajax: {
                 url: "{{url('dashboard/parents')}}",
                 method: "POST",
@@ -231,6 +235,8 @@
         });
 
         $('#user_id').select2({
+            placeholder: "Digite la cedula o RUC del dueño...",
+            minimumInputLength: 2,
             ajax: {
                 url: "{{url('dashboard/pet/user')}}",
                 method: "POST",
