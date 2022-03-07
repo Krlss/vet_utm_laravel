@@ -168,22 +168,6 @@ class PetController extends Controller
         return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
     }
 
-    /*     public function getParentsPather(Request $request)
-    {
-        try {
-            $input = $request->all();
-
-            $result = Pet::where('specie', $input['specie'])
-                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
-                ->where('sex', '<>', 'F')
-                ->select('pet_id', 'pet_id')->get()->take(25);
-
-            return $result;
-        } catch (\Throwable $e) {
-            return json_encode(['Parents' => []]);
-        }
-    }
- */
     public function getParents(Request $request)
     {
         try {
@@ -192,6 +176,7 @@ class PetController extends Controller
             $result = Pet::where('specie', $input['specie'])
                 ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                 ->where('sex', $input['sex'])
+                ->whereNotIn('pet_id', $input['childrensSeleted'])
                 ->select('pet_id', 'pet_id')->get()->take(25);
 
             return $result;
@@ -225,11 +210,25 @@ class PetController extends Controller
     {
         try {
             $input = $request->all();
-            $pets = Pet::where('specie', $input['specie'])
-                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
-                ->where('pet_id', '<>', $input['pather_seleted'])
-                ->where('pet_id', '<>', $input['mother_seleted'])
-                ->select('pet_id', 'pet_id')->get()->take(25);
+
+            $is_null_parent = $input['sex'] == 'F' ? 'id_pet_mother' : 'id_pet_pather';
+            if ($input['sex'] == null) $is_null_parent = null;
+
+            if ($is_null_parent) {
+                $pets = Pet::where('specie', $input['specie'])
+                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where('pet_id', '<>', $input['pather_seleted'])
+                    ->where('pet_id', '<>', $input['mother_seleted'])
+                    ->where($is_null_parent, null)
+                    ->select('pet_id', 'pet_id')->get()->take(25);
+            } else {
+                $pets = Pet::where('specie', $input['specie'])
+                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where('pet_id', '<>', $input['pather_seleted'])
+                    ->where('pet_id', '<>', $input['mother_seleted'])
+                    ->select('pet_id', 'pet_id')->get()->take(25);
+            }
+
             $result = ['pets' => $pets];
             return response()->json($result);
         } catch (\Throwable $th) {

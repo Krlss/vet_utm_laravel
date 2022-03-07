@@ -163,19 +163,27 @@
         $('#childrens').html('');
     });
 
+    $("[name='sex']").on('change', function() {
+        $('#childrens').val(null).trigger('change');
+        $('#childrens').html('');
+    });
+
 
     $('#pather').select2({
         width: '100%',
         placeholder: "Digite el identificador del padre",
         minimumInputLength: 2,
+        allowClear: true,
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
             data: function(params) {
                 var specieValue = $("[name='specie']").val();
+                var childrensSeleted = $("#childrens").val();
                 var query = {
                     search: params.term,
                     specie: specieValue,
+                    childrensSeleted: childrensSeleted,
                     sex: 'M',
                     "_token": "{{csrf_token()}}"
                 }
@@ -199,14 +207,17 @@
         width: '100%',
         placeholder: "Digite el identificador de la madre",
         minimumInputLength: 2,
+        allowClear: true,
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
             data: function(params) {
                 var specieValue = $("[name='specie']").val();
+                var childrensSeleted = $("#childrens").val();
                 var query = {
                     search: params.term,
                     specie: specieValue,
+                    childrensSeleted: childrensSeleted,
                     sex: 'F',
                     "_token": "{{csrf_token()}}"
                 }
@@ -230,6 +241,7 @@
         width: '100%',
         placeholder: "Digite la cedula o RUC del dueño",
         minimumInputLength: 2,
+        allowClear: true,
         ajax: {
             url: "{{url('dashboard/pet/user')}}",
             method: "POST",
@@ -271,6 +283,7 @@
                     specie: specieValue,
                     pather_seleted: $("[name='pather']").val(),
                     mother_seleted: $("[name='mother']").val(),
+                    sex: $("[name='sex']").val(),
                     "_token": "{{csrf_token()}}"
                 }
                 return query;
