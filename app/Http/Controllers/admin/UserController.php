@@ -40,7 +40,8 @@ class UserController extends Controller
         $provinces = Province::pluck('name', 'id');
         $roles = Role::pluck('name', 'name');
         $cantons = [];
-        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles'));
+        $parishes = [];
+        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes'));
     }
 
     public function store(CreateUserRequest $request)

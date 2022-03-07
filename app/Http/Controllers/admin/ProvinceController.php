@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Canton;
+use App\Models\Parish;
 use App\Models\Province;
 use Illuminate\Http\Request;
 
@@ -85,15 +86,29 @@ class ProvinceController extends Controller
         //
     }
 
-    public function AllCantonsByProvince(Request $request){
+    public function AllCantonsByProvince(Request $request)
+    {
         try {
             $input = $request->all();
 
-            $result = Canton::where('id_province', $input['province_id'])->select('name', 'id')->get(); 
-             
-            return $result;
-        }catch (\Throwable $e){
-            return json_encode(['cantons' => []]);
+            $result = Canton::where('id_province', $input['province_id'])->select('name', 'id')->get();
+
+            return response()->json($result);
+        } catch (\Throwable $e) {
+            return response()->json([]);
+        }
+    }
+
+    public function AllParishesByCanton(Request $request)
+    {
+        try {
+            $input = $request->all();
+
+            $result = Parish::where('id_canton', $input['id_canton'])->select('name', 'id')->get();
+
+            return response()->json($result);
+        } catch (\Throwable $e) {
+            return response()->json([]);
         }
     }
 }

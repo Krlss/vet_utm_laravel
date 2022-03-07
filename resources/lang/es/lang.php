@@ -23,6 +23,7 @@ return [
      'createUser' => 'Crear usuario',
      'province' => 'Provincia',
      'canton' => 'Canton',
+     'parishe' => 'Parroquia',
      'updated_at' => 'Actualizado',
      'list_user' => 'Lista de usuarios',
      'user_created' => 'El usuario fué creado!',
@@ -153,6 +154,7 @@ return [
      'Reset Password Notification' => 'Notificación para restablecer la contraseña',
 
      'fist_selected_province' => 'Primero selecciona una provincia',
+     'fist_selected_canton' => 'Primero selecciona un cantón',
      'select_province' => 'Selecciona la provincia',
 
      'label_data_user' => 'Datos del usuario',

@@ -37,8 +37,7 @@ class User extends Authenticatable
         'api_token',
         'phone',
         'email_verified_at',
-        'id_province',
-        'id_canton',
+        'id_parish'
     ];
 
     /**
