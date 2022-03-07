@@ -15,6 +15,7 @@ Route::get('/', [HomeController::class, 'index'])->middleware('can:dashboard.hom
 
 Route::post('pet/user', [UserController::class, 'getUserToPet']);
 Route::delete('pet/user/delete', [PetController::class, 'deletePetToUser'])->name('dashboard.deletePetUser');
+Route::delete('pet/children/delete', [PetController::class, 'deletePetToChildren'])->name('dashboard.deletePetChildren');
 
 Route::resource('users', UserController::class)->names('dashboard.users');
 Route::resource('pets', PetController::class)->names('dashboard.pets');

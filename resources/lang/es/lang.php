@@ -159,6 +159,7 @@ return [
      'label_data_user_pets' => 'Mascotas del usuario',
      'label_data_user_pets_without' => 'El usuario no tiene mascostas.',
      'pet_user_delete' => 'Ha sido eliminada la mascota del usuario',
+     'pet_children_delete' => 'Ha sido eliminada un hijo de esta mascota',
      'type_user_id' => 'Digita la cedula o RUC de la persona',
      'type_user_id_empty' => 'No hay personas registradas.',
      'label_info_user_create' => 'Información obligatoria',

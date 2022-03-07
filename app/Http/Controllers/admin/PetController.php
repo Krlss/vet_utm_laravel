@@ -226,6 +226,33 @@ class PetController extends Controller
         }
     }
 
+    public function deletePetToChildren(Request $request)
+    {
+
+        $input = $request->all();
+
+        $pet = Pet::where('pet_id', $input['pet_id'])->first();
+
+        try {
+            DB::beginTransaction();
+
+            if ($input['sex'] == 'F') {
+                $pet->id_pet_mother = null;
+            }
+            if ($input['sex'] == 'M') {
+                $pet->id_pet_pather = null;
+            }
+            $pet->save();
+
+            DB::commit();
+
+            return redirect()->back()->with('info', trans('lang.pet_children_delete'));
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            return redirect()->back()->with('error', trans('lang.user_error'));
+        }
+    }
+
     public function getChildrens(Request $request)
     {
         try {
