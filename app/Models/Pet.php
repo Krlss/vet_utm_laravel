@@ -13,7 +13,7 @@ class Pet extends Model
     protected $primaryKey = 'pet_id';
     public $incrementing = false;
 
-    protected $fillable = [  
+    protected $fillable = [
         'name',
         'birth',
         'sex',
@@ -30,13 +30,12 @@ class Pet extends Model
     ];
 
     public static $rules = [
-        'name' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
+        'pet_id' => 'required',
+        'name' => 'required',
         'specie' => 'required',
-        'race' => 'required|regex:/^[a-zA-Z0-9 ]+$/u',
-        'lost' => 'required',
-        'birth' => 'required',
-        'castrated' => 'required',
-    ]; 
+        'sex' => 'required',
+        'race' => 'required',
+    ];
 
     public function user()
     {
@@ -45,7 +44,7 @@ class Pet extends Model
 
     public function childrenPetPather()
     {
-        return $this->hasMany(Pet::class, 'pet_pather_id', 'pet_id');
+        return $this->hasMany(Pet::class, 'pet_id', 'pet_pather_id');
     }
 
     public function allChildrenPetPather()
@@ -55,15 +54,16 @@ class Pet extends Model
 
     public function childrenPetMother()
     {
-        return $this->hasMany(Pet::class, 'pet_mother_id', 'pet_id');
+        return $this->hasMany(Pet::class, 'pet_id', 'pet_mother_id');
     }
 
     public function allChildrenPetMother()
     {
         return $this->childrenPetMother()->with('allChildrenPetMother');
     }
- 
-     public function images(){
+
+    public function images()
+    {
         return $this->hasMany(Image::class);
     }
 }

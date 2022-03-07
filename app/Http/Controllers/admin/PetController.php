@@ -114,7 +114,13 @@ class PetController extends Controller
         $pather = $pets->where('sex', 'M')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
         $mother = $pets->where('sex', 'F')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
 
-        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother'));
+        $childrens = Pet::where('id_pet_pather', $pet->pet_id)
+            ->orWhere('id_pet_mother', $pet->pet_id)
+            ->pluck('pet_id', 'pet_id');
+
+        $childrensSelected = is_null($childrens) ? [] : $childrens->all();
+
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -134,6 +140,38 @@ class PetController extends Controller
 
         DB::beginTransaction();
         try {
+
+            if (isset($input['childrens'])) {
+
+                $childrendsCurrent = Pet::where('id_pet_pather', $pet->pet_id)
+                    ->orWhere('id_pet_mother', $pet->pet_id)
+                    ->get();
+
+                foreach ($childrendsCurrent as $childrendsC) {
+                    $exist = array_search($childrendsC->pet_id, $input['childrens']);
+                    if (is_numeric($exist)) {
+                        continue;
+                    } else {
+                        if ($pet->sex == 'M') {
+                            $childrendsC->update(['id_pet_pather', null]);
+                        } elseif ($pet->sex == 'F') {
+                            $childrendsC->update(['id_pet_mother' => null]);
+                        }
+                    }
+                }
+
+                $childrens = $input['childrens'];
+                unset($input['childrens']);
+
+                foreach ($childrens as $children) {
+                    if ($input['sex'] == 'M') {
+                        Pet::where('pet_id', $children)->update(['id_pet_pather' => $input['pet_id']]);
+                    } elseif ($input['sex'] == 'F') {
+                        Pet::where('pet_id', $children)->update(['id_pet_mother' => $input['pet_id']]);
+                    }
+                }
+            }
+
             $pet->update($input);
 
             DB::commit();
@@ -190,12 +228,14 @@ class PetController extends Controller
                 $result = Pet::where('specie', $input['specie'])
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('sex', $input['sex'])
+                    ->where('pet_id', '<>', $input['pet_id'])
                     ->whereNotIn('pet_id', $input['childrensSeleted'])
                     ->select('pet_id', 'pet_id')->get()->take(25);
             } else {
                 $result = Pet::where('specie', $input['specie'])
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('sex', $input['sex'])
+                    ->where('pet_id', '<>', $input['pet_id'])
                     ->select('pet_id', 'pet_id')->get()->take(25);
             }
 
@@ -253,6 +293,22 @@ class PetController extends Controller
         }
     }
 
+    public function getChildrensToPet(Request $request)
+    {
+        try {
+
+            $input = $request->all();
+
+            $pets = Pet::where('id_pet_pather', $input['pet_id'])
+                ->orWhere('id_pet_mother', $input['pet_id'])
+                ->pluck('pet_id');
+            $result = ['pets' => $pets];
+            return response()->json($result);
+        } catch (\Throwable $e) {
+            return response()->json([]);
+        }
+    }
+
     public function getChildrens(Request $request)
     {
         try {
@@ -266,6 +322,7 @@ class PetController extends Controller
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('pet_id', '<>', $input['pather_seleted'])
                     ->where('pet_id', '<>', $input['mother_seleted'])
+                    ->where('pet_id', '<>', $input['pet_id'])
                     ->where($is_null_parent, null)
                     ->select('pet_id', 'pet_id')->get()->take(25);
             } else {
@@ -273,6 +330,7 @@ class PetController extends Controller
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('pet_id', '<>', $input['pather_seleted'])
                     ->where('pet_id', '<>', $input['mother_seleted'])
+                    ->where('pet_id', '<>', $input['pet_id'])
                     ->select('pet_id', 'pet_id')->get()->take(25);
             }
 

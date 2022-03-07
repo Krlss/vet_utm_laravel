@@ -183,6 +183,7 @@
                 var query = {
                     search: params.term,
                     specie: specieValue,
+                    pet_id: null,
                     childrensSeleted: childrensSeleted,
                     sex: 'M',
                     "_token": "{{csrf_token()}}"
@@ -217,6 +218,7 @@
                 var query = {
                     search: params.term,
                     specie: specieValue,
+                    pet_id: null,
                     childrensSeleted: childrensSeleted,
                     sex: 'F',
                     "_token": "{{csrf_token()}}"
@@ -281,6 +283,7 @@
                 var query = {
                     search: params.term,
                     specie: specieValue,
+                    pet_id: null,
                     pather_seleted: $("[name='pather']").val(),
                     mother_seleted: $("[name='mother']").val(),
                     sex: $("[name='sex']").val(),

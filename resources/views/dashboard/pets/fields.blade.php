@@ -149,6 +149,23 @@
         </div>
     </div>
 
+    <div class="">
+        <div class="flex flex-col px-2">
+            {{-- childres --}}
+
+            {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
+
+            <div class="text-gray-500 text-sm mb-2">
+                {{ trans('lang.pather_id_type_ad') }}
+            </div>
+            @error('pather')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+
+        </div>
+    </div>
+
     <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
     </div>
 
@@ -160,19 +177,32 @@
             $('#pather').html('');
             $('#mother').val(null).trigger('change');
             $('#mother').html('');
+            $('#childrens').val(null).trigger('change');
+            $('#childrens').html('');
         });
 
+        $("[name='sex']").on('change', function() {
+            $('#childrens').val(null).trigger('change');
+            $('#childrens').html('');
+        });
+
+
         $('#pather').select2({
-            placeholder: "Digite el identificador del padre...",
+            width: '100%',
+            placeholder: "Digite el identificador del padre",
             minimumInputLength: 2,
+            allowClear: true,
             ajax: {
                 url: "{{url('dashboard/parents')}}",
                 method: "POST",
                 data: function(params) {
                     var specieValue = $("[name='specie']").val();
+                    var childrensSeleted = $("#childrens").val();
                     var query = {
                         search: params.term,
                         specie: specieValue,
+                        pet_id: $("[name='pet_id']").val(),
+                        childrensSeleted: childrensSeleted,
                         sex: 'M',
                         "_token": "{{csrf_token()}}"
                     }
@@ -182,15 +212,9 @@
                 processResults: function(data) {
                     return {
                         results: $.map(data, function(pet) {
-                            if (pet.pet_id === $('#pet_id').val()) return {
-                                text: null,
-                                id: null
-                            }
-                            else {
-                                return {
-                                    text: pet.pet_id,
-                                    id: pet.pet_id
-                                }
+                            return {
+                                text: pet.pet_id,
+                                id: pet.pet_id
                             }
                         })
                     };
@@ -199,16 +223,21 @@
         });
 
         $('#mother').select2({
-            placeholder: "Digite el identificador de la madre...",
+            width: '100%',
+            placeholder: "Digite el identificador de la madre",
             minimumInputLength: 2,
+            allowClear: true,
             ajax: {
                 url: "{{url('dashboard/parents')}}",
                 method: "POST",
                 data: function(params) {
                     var specieValue = $("[name='specie']").val();
+                    var childrensSeleted = $("#childrens").val();
                     var query = {
                         search: params.term,
                         specie: specieValue,
+                        pet_id: $("[name='pet_id']").val(),
+                        childrensSeleted: childrensSeleted,
                         sex: 'F',
                         "_token": "{{csrf_token()}}"
                     }
@@ -218,15 +247,9 @@
                 processResults: function(data) {
                     return {
                         results: $.map(data, function(pet) {
-                            if (pet.pet_id === $('#pet_id').val()) return {
-                                text: null,
-                                id: null
-                            }
-                            else {
-                                return {
-                                    text: pet.pet_id,
-                                    id: pet.pet_id
-                                }
+                            return {
+                                text: pet.pet_id,
+                                id: pet.pet_id
                             }
                         })
                     };
@@ -235,8 +258,10 @@
         });
 
         $('#user_id').select2({
-            placeholder: "Digite la cedula o RUC del dueño...",
+            width: '100%',
+            placeholder: "Digite la cedula o RUC del dueño",
             minimumInputLength: 2,
+            allowClear: true,
             ajax: {
                 url: "{{url('dashboard/pet/user')}}",
                 method: "POST",
@@ -260,5 +285,78 @@
                 }
             }
         });
+
+        $('#childrens').select2({
+            width: '100%',
+            placeholder: "Digita los identificadores de las mascotas",
+            minimumInputLength: 2,
+            allowClear: true,
+            language: "en",
+            ajax: {
+                url: "{{url('dashboard/childrens')}}",
+                dataType: 'json',
+                method: "POST",
+                data: function(params) {
+                    var specieValue = $("[name='specie']").val();
+                    var query = {
+                        search: params.term,
+                        specie: specieValue,
+                        pet_id: $("[name='pet_id']").val(),
+                        pather_seleted: $("[name='pather']").val(),
+                        mother_seleted: $("[name='mother']").val(),
+                        sex: $("[name='sex']").val(),
+                        "_token": "{{csrf_token()}}"
+                    }
+                    return query;
+                },
+                processResults: function(data) {
+                    data.pets = data.pets.map(function(obj) {
+                        return {
+                            "text": obj.pet_id,
+                            "id": obj.pet_id
+                        };
+                    });
+                    return {
+                        results: data.pets
+                    };
+                },
+                cache: true
+            }
+        });
+
+        /*        $(document).ready(() => {
+
+
+                   $.ajax({
+                       url: "{{url('dashboard/pet/childrens')}}",
+                       dataType: 'json',
+                       method: "POST",
+                       data: {
+                           "_token": "{{csrf_token()}}",
+                           pet_id: $('#pet_id').val()
+                       },
+                       xhr: () => {
+                           let xhr = new XMLHttpRequest();
+                           xhr.upload.onprogress = (e) => {
+                               let percent = (e.loaded / e.total) * 100;
+                               percent = percent - 2;
+                               document.getElementById('progress_childrens').style.width = percent + '%';
+                           };
+                           return xhr;
+                       },
+                   }).done(function(data) {
+                       console.log(data);
+                       document.getElementById('progress_childrens').style.width = '0%';
+                       let petsOptions = '';
+                       $('#childrens').val(null).trigger('change');
+                       $.each(data.pets, function(i, pets) {
+                           petsOptions += '<option value="' + pets.pet_id + '">' + pets.pet_id + '</option>';
+                       });
+                       $('#childrens').html(petsOptions);
+                   }).fail((xhr, textStatus) => {
+                       console.log(xhr);
+                       console.log(textStatus)
+                   });
+               }) */
     </script>
     @endpush
