@@ -177,5 +177,9 @@ return [
      'main_street' => 'Calle principal',
      'street_1_sec' => 'Calle sec. 1',
      'street_2_sec' => 'Calle sec. 2',
-     'address_ref' => 'Referencia'
+     'address_ref' => 'Referencia',
+     'without_main_street' => 'Calle principal',
+     'without_street_1_sec' => 'Calle sec. 1',
+     'without_street_2_sec' => 'Calle sec. 2',
+     'without_address_ref' => 'Referencia'
 ];
