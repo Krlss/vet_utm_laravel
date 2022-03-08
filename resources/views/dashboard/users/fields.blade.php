@@ -53,7 +53,7 @@
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-
+    @can('dashboard.users.role')
     <div class="flex flex-col px-2">
         {!! Form::label('roles', trans('lang.role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
         {!! Form::select('roles', $roles, count($user->roles) ? $user->roles[0]->id : null, ['class' => 'select2 form-control', 'required' => true]) !!}
@@ -61,7 +61,7 @@
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
-
+    @endcan
 </div>
 
 <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
