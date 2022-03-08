@@ -95,6 +95,12 @@ class PetController extends Controller
         $province = null;
         $parish = null;
 
+        $ip = isset($_SERVER['HTTP_CLIENT_IP'])
+            ? $_SERVER['HTTP_CLIENT_IP']
+            : (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                ? $_SERVER['HTTP_X_FORWARDED_FOR']
+                : $_SERVER['REMOTE_ADDR']);
+
         if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = Province::where('id', $user->id_province)->first();
@@ -106,7 +112,7 @@ class PetController extends Controller
             ->get();
 
 
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish'));
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish', 'ip'));
     }
 
     public function edit(Pet $pet)

@@ -1,4 +1,7 @@
 <div>
+
+    {!! $ip !!}
+
     @if (session('info'))
     <div class="alert alert-info">
         <strong>{{ session('info') }}</strong>
