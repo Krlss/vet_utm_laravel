@@ -34,7 +34,6 @@ class UserSeeder extends Seeder
             'id_parish' =>  $id_parish,
             'id_canton' => $id_canton->id,
             'id_province' => $id_province->id,
-            'address' =>  'aisdjasoidjaosid',
             'phone' =>  '0990146541',
             'password' =>  Hash::make('12345678'),
             'api_token' =>  Str::random(25),
