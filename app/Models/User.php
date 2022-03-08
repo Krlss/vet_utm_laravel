@@ -39,7 +39,11 @@ class User extends Authenticatable
         'email_verified_at',
         'id_parish',
         'id_canton',
-        'id_province'
+        'id_province',
+        'main_street',
+        'street_1_sec',
+        'street_2_sec',
+        'address_ref'
     ];
 
     /**

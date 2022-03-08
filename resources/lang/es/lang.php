@@ -172,5 +172,10 @@ return [
      'pather_id_type' => 'Digite el identificador del padre',
      'pather_id_type_ad' => 'Primero seleccione un sexo',
      'mother_id_type' => 'Digite el identificador de la madre',
-     'owner_id_type' => 'Digite la cedula o RUC del dueño'
+     'owner_id_type' => 'Digite la cedula o RUC del dueño',
+
+     'main_street' => 'Calle principal',
+     'street_1_sec' => 'Calle sec. 1',
+     'street_2_sec' => 'Calle sec. 2',
+     'address_ref' => 'Referencia'
 ];
