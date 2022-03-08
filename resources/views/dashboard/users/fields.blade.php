@@ -47,6 +47,14 @@
     </div>
 
     <div class="flex flex-col px-2">
+        {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
+        @error('phone')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+
+    <div class="flex flex-col px-2">
         {!! Form::label('roles', trans('lang.role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
         {!! Form::select('roles', $roles, count($user->roles) ? $user->roles[0]->id : null, ['class' => 'select2 form-control', 'required' => true]) !!}
         @error('roles')
@@ -54,30 +62,12 @@
         @enderror
     </div>
 
-
-
 </div>
 
 <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
     {!!trans('lang.label_info_user_contact')!!}
 </h6>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2">
-    <div class="flex flex-col px-2">
-        {!! Form::label('address', trans('lang.address'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::text('address', old('address'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.address')]) !!}
-        @error('address')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-    <div class="flex flex-col px-2">
-        {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
-        @error('phone')
-        <span class="text-danger">{{ $message }}</span>
-        @enderror
-    </div>
-</div>
 
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2">
 
@@ -97,7 +87,6 @@
         @enderror
     </div>
 
-
 </div>
 
 <!-- Parroquias -->
@@ -111,6 +100,48 @@
         @enderror
     </div>
 
+</div>
+
+
+<!-- Street and refe -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
+    <div class="flex flex-col col-span-3 px-2">
+        {!! Form::label('main_street', trans('lang.main_street'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::text('main_street', old('main_street'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.main_street')]) !!}
+        @error('main_street')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
+<!-- sec 1 -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
+    <div class="flex flex-col col-span-3 px-2">
+        {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::text('street_1_sec', old('street_1_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.street_1_sec')]) !!}
+        @error('street_1_sec')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
+<!-- sec 2 -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
+    <div class="flex flex-col col-span-3 px-2">
+        {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::text('street_2_sec', old('street_2_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.street_2_sec')]) !!}
+        @error('street_2_sec')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
+</div>
+<!-- address ref -->
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
+    <div class="flex flex-col col-span-3 px-2">
+        {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::textarea('address_ref', old('address_ref'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.address_ref'), 'rows' => 3]) !!}
+        @error('address_ref')
+        <span class="text-danger">{{ $message }}</span>
+        @enderror
+    </div>
 </div>
 
 <style>
