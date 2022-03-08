@@ -14,7 +14,7 @@
     @if ($user)
     <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_owner') }}</div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {{-- User ID --}}
         <div class="form-group flex-col">
             {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => ' ']) !!}
@@ -42,25 +42,15 @@
                 </p>
             </div>
         </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
         {{-- UserEmail --}}
         <div class="form-group flex-col">
             {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
             <div class="">
                 <p>
                     {!! $user->email !!}
-                </p>
-            </div>
-        </div>
-
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
-        {{-- User address --}}
-        <div class="form-group flex-col">
-            {!! Form::label('address', trans('lang.address'), ['class' => ' ']) !!}
-            <div class="">
-                <p>
-                    {!! $user->address !!}
                 </p>
             </div>
         </div>
@@ -103,6 +93,50 @@
             <div class="">
                 <p>
                     {{ $parish ? $parish->name : trans('lang.without_parishe')}}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 ">
+
+        <div class="form-group flex-col">
+            {!! Form::label('main_street', trans('lang.main_street'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {!! $user->main_street ? $user->main_street : trans('lang.without_main_street') !!}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group flex-col">
+            {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {!! $user->street_1_sec ? $user->street_1_sec : trans('lang.without_street_1_sec') !!}
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 ">
+
+        <div class="form-group flex-col">
+            {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {!! $user->street_2_sec ? $user->street_2_sec : trans('lang.without_street_2_sec') !!}
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group flex-col">
+            {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {!! $user->address_ref ? $user->address_ref : trans('lang.without_address_ref') !!}
                 </p>
             </div>
         </div>
