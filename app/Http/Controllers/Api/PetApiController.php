@@ -63,7 +63,7 @@ class PetApiController extends Controller
 
                     DB::beginTransaction();
 
-                    $input['pet_id'] = $this->genaretePetId($input);
+                    $input['pet_id'] = $this->genaretePetId($input['public_ip']);
 
                     Pet::create($input);
 
@@ -169,10 +169,11 @@ class PetApiController extends Controller
     {
         $input = $request->all();
 
-        $arrName = explode("-", $input[0]['name']); // ['.....' - '.....' - '......']
+        $arrName = explode("-", $input['images'][0]['name']); // ['.....' - '.....' - '......']
         $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
         $arridWithJpg = explode(".", $idWithJpg); // without .jpg
-        $pet['pet_id'] = strtoupper($arridWithJpg[0] . rand(100, 999)); //Last ID
+        $pet['pet_id'] = $this->genaretePetId($input['public_ip']); //Last ID
+        unset($input['public_ip']);
         $pet['name'] = 'Desconocido';
         $pet['birth'] = date('Y-m-d');
         $pet['sex'] = null;
@@ -188,19 +189,19 @@ class PetApiController extends Controller
         try {
             Pet::create($pet);
 
-            for ($i = 0; $i < count($input); $i++) {
+            for ($i = 0; $i < count($input['images']); $i++) {
 
-                $decode_file = base64_decode($input[$i]['base64']);
+                $decode_file = base64_decode($input['images'][$i]['base64']);
 
-                Storage::disk("google")->put($input[$i]['name'], $decode_file);
+                Storage::disk("google")->put($input['images'][$i]['name'], $decode_file);
 
-                $urlGoogleImage = Storage::disk("google")->url($input[$i]['name']);
+                $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);
                 $urlG = explode('=', $urlGoogleImage);
                 $id_img = explode('&', $urlG[1]);
 
                 $image['id_image'] = $id_img[0];
                 $image['url'] = $urlGoogleImage;
-                $image['name'] = $input[$i]['name'];
+                $image['name'] = $input['images'][$i]['name'];
                 $image['pet_id'] = $pet['pet_id'];
 
                 Image::create($image);
@@ -295,17 +296,24 @@ class PetApiController extends Controller
 
     public function genaretePetId($input)
     {
-
         /* FIRST letter of province + secuencial two letter a-z more secuencial number 001-999*/
         /* MAA-001 */
         /* MZZ-999 */
 
-        $region = json_decode(file_get_contents("http://ip-api.com/json/"));
+        $url = "http://ip-api.com/json/" . $input;
+        $region = json_decode(file_get_contents($url));
+        $letter_user = null;
 
-        if ($region) {
+        if ($region->status == "success") {
             $region = $region->region ? $region->region : 'D';
         } else {
             $region = 'D';
+        }
+
+        if (isset($input['user_id'])) {
+            $user = User::where('user_id', $input['user_id'])->pluck('id_province');
+            $letter_user = Province::where('id', $user)->pluck('letter');
+            if ($letter_user) $region = $letter_user[0];
         }
 
         $provinces_letter = Province::pluck('letter');
@@ -386,13 +394,11 @@ class PetApiController extends Controller
             if ($user) {
                 $pet['user_id'] = $user->user_id;
             } else {
-                unset($input['user']['id_province']); //delete
                 $input['user']['password'] = Hash::make($newUser['user_id']);
                 $input['user']['api_token'] = Str::random(25);
                 $pet['user_id'] = $newUser['user_id'];
                 User::create($input['user']);
             }
-            unset($input['user']);
             $pet['name'] = $input['namepet'];
             unset($input['namepet']);
             $pet['birth'] = $input['birth'];
@@ -405,7 +411,8 @@ class PetApiController extends Controller
             unset($input['specie']);
             $pet['race'] = $input['race'];
             unset($input['race']);
-            $pet['pet_id'] = $this->genaretePetId($pet); //Last ID
+            
+            $pet['pet_id'] = $this->genaretePetId($input['user']['public_ip']); //Last ID
             $pet['lost'] = true;
             $pet['published'] = false;
             $pet['n_lost'] = 1;
