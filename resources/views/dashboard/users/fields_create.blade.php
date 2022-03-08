@@ -91,9 +91,6 @@
         <div class="flex flex-col px-2">
             {!! Form::label('id_canton', trans('lang.canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('id_canton', $cantons, null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_province')]) !!}
-            <div class="progress" style="max-height: 2px">
-                <div class="progress-bar" style="max-height: 2px" id="progress_cantons" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
             @error('id_canton')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -107,9 +104,6 @@
         <div class="flex flex-col col-span-2 px-2">
             {!! Form::label('id_parish', trans('lang.parishe'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('id_parish', $parishes, null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_canton')]) !!}
-            <div class="progress" style="max-height: 2px">
-                <div class="progress-bar" style="max-height: 2px" id="progress_parishes" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
-            </div>
             @error('id_parishes')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -136,6 +130,8 @@
     $('#province_id').on('change', function() {
         $('#id_canton').html('');
         $("#id_canton").val([]);
+        $('#id_parish').html('');
+        $("#id_parish").val([]);
         $('#select2-id_canton-container').html('');
         $.ajax({
             dataType: "json",
@@ -143,23 +139,13 @@
             url: "{{ url('dashboard/provinces/cantons') }}",
             data: {
                 province_id: $('#province_id').val()
-            },
-            xhr: () => {
-                let xhr = new XMLHttpRequest();
-                xhr.upload.onprogress = (e) => {
-                    let percent = (e.loaded / e.total) * 100;
-                    percent = percent - 2;
-                    document.getElementById('progress_cantons').style.width = percent + '%';
-                };
-                return xhr;
-            },
+            }
         }).done(function(msg) {
-            document.getElementById('progress_cantons').style.width = '0%';
             let cantonsOptions;
             if (msg.length <= 0) {
-                cantonsOptions = "<option value='null'>Seleccione un canton</option>"
+                cantonsOptions = "<option value>Seleccione un canton</option>"
             } else {
-                cantonsOptions += "<option value='null'>Seleccione un canton</option>";
+                cantonsOptions += "<option value>Seleccione un canton</option>";
                 $.each(msg, function(i, canton) {
                     cantonsOptions += '<option value="' + canton.id + '">' + canton.name +
                         '</option>';
@@ -179,23 +165,13 @@
             url: "{{ url('dashboard/provinces/cantons/parishes') }}",
             data: {
                 id_canton: $('#id_canton').val()
-            },
-            xhr: () => {
-                let xhr = new XMLHttpRequest();
-                xhr.upload.onprogress = (e) => {
-                    let percent = (e.loaded / e.total) * 100;
-                    percent = percent - 2;
-                    document.getElementById('progress_parishes').style.width = percent + '%';
-                };
-                return xhr;
-            },
+            }
         }).done(function(msg) {
-            document.getElementById('progress_parishes').style.width = '0%';
             let parishesOptions;
             if (msg.length <= 0) {
-                parishesOptions = "<option value='null'>Seleccione una parroquia</option>"
+                parishesOptions = "<option value>Seleccione una parroquia</option>"
             } else {
-                parishesOptions += "<option value='null'>Seleccione una parroquia</option>";
+                parishesOptions += "<option value>Seleccione una parroquia</option>";
                 $.each(msg, function(i, parishes) {
                     parishesOptions += '<option value="' + parishes.id + '">' + parishes.name +
                         '</option>';

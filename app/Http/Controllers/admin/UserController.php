@@ -85,7 +85,9 @@ class UserController extends Controller
     {
         $pets = Pet::where('user_id', $user->user_id)->get();
 
-        $canton = Canton::where('id', $user->id_canton)->first();
+        $parishe = Parish::where('id', $user->id_parish)->first();
+
+        $canton = $parishe ? Canton::where('id', $parishe->id_canton)->first() : null;
 
         $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
@@ -93,9 +95,11 @@ class UserController extends Controller
 
         $cantons = [];
 
+        $parishes = [];
+
         $roles = Role::pluck('name', 'id');
 
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles'));
+        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parishe', 'parishes'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
