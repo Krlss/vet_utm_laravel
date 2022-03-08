@@ -6,7 +6,7 @@
         {!! trans('lang.label_info_pet_create') !!}
     </h6>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
         {{-- Name pet --}}
         <div class="flex flex-col px-2">
             {!! Form::label('name', trans('lang.namePet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -34,6 +34,10 @@
             @enderror
         </div>
 
+    </div>
+
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {{-- Sex --}}
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -42,14 +46,6 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-
-    </div>
-
-    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!! trans('lang.label_info_pet_create_not_Required') !!}
-    </h6>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         <!-- Birth -->
         <div class="flex flex-col px-2">
@@ -60,6 +56,13 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+    </div>
+
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
+        {!! trans('lang.label_info_pet_create_not_Required') !!}
+    </h6>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         {{-- castrated pet --}}
         <div class="flex flex-col px-2">
@@ -121,18 +124,10 @@
             @enderror
         </div>
 
-        {{-- Owner --}}
-        <div class="flex flex-col px-2">
-            {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::select('user_id', $users, null, ['placeholder' => '']) !!}
-            @error('user_id')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
     </div>
 
-    <div class="">
-        <div class="flex flex-col px-2">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+        <div class="flex flex-col col-span-2 px-2">
             {{-- childres --}}
 
             {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -144,6 +139,17 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
 
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+        {{-- Owner --}}
+        <div class="flex flex-col px-2">
+            {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('user_id', $users, null, ['placeholder' => '']) !!}
+            @error('user_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 

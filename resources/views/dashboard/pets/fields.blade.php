@@ -51,13 +51,6 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
-    </div>
-
-    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!! trans('lang.label_info_pet_create_not_Required') !!}
-    </h6>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         <!-- Birth pet -->
         <div class="flex flex-col px-2">
@@ -67,6 +60,14 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
+
+    </div>
+
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
+        {!! trans('lang.label_info_pet_create_not_Required') !!}
+    </h6>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         <!-- Pet castrated -->
         <div class="flex flex-col px-2">
@@ -136,20 +137,9 @@
             @enderror
         </div>
 
-        {{-- Owner --}}
-        <div class="flex flex-col px-2">
-            {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.owner_id_type') }}
-            </div>
-            @error('user_id')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
     </div>
 
-    <div class="">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
         <div class="flex flex-col px-2">
             {{-- childres --}}
 
@@ -163,6 +153,20 @@
             <span class="text-danger">{{ $message }}</span>
             @enderror
 
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+        {{-- Owner --}}
+        <div class="flex flex-col px-2">
+            {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
+            <div class="text-gray-500 text-sm mb-2">
+                {{ trans('lang.owner_id_type') }}
+            </div>
+            @error('user_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 
