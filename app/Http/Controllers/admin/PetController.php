@@ -206,19 +206,66 @@ class PetController extends Controller
         /* MAA-001 */
         /* MZZ-999 */
 
+        $region = json_decode(file_get_contents("http://ip-api.com/json/"));
 
+        if ($region) {
+            $region = $region->region ? $region->region : 'D';
+        } else {
+            $region = 'D';
+        }
 
+        $provinces_letter = Province::pluck('letter');
 
-        $name = $input['name'];
-        $birth = $input['birth'];
-        $arrBirth = explode("-", $birth);
-        $day = date("d");
-        $castrated = $input['castrated'] === 0 ? 'F' : 'M';
-        $race = $input['race'];
-        $specie = $input['specie'];
-        $input['sex'] = $input['sex'] ? $input['sex'] : 'D';
+        $letters = [];
 
-        return strtoupper($name[0] . $input['sex'] . $arrBirth[0] . $day . $castrated . $race[0] . $specie[0] . rand(1000, 9999));
+        foreach ($provinces_letter as $i) {
+            foreach ($provinces_letter as $j) {
+                array_push($letters, $i . $j);
+            }
+        }
+
+        $last_pet = Pet::where('pet_id', 'like', strtoupper($region) . '%')->orderBy('pet_id', 'DESC')->pluck('pet_id')->first();
+
+        if (!$last_pet) {
+            //Letter[0] is AA (?). First pet register.
+            $last_pet = strtoupper($region . $letters[0] . '-' . '001');
+        } else {
+            //pet_id convert to array ['MGF', '065];
+            $array_petID = explode("-", $last_pet);
+
+            //get number
+            $num_int = intval($array_petID[1]);
+            $new_num = '';
+
+            $newCombination = '';
+            $array_letter = [];
+
+            if ($num_int == 999) {
+                //get last combination for generate new
+                $array_letter = explode($region, $array_petID[0]);
+
+                for ($i = 0; $i < count($letters); $i++) {
+                    //get next combination
+                    if ($letters[$i] == $array_letter[1]) {
+                        $newCombination = $letters[$i + 1];
+                    }
+                }
+                $last_pet = strtoupper($region . $newCombination . "-" . '001');
+            } else {
+                $num_int = $num_int + 1;
+
+                //get last combination
+                $array_letter = explode($region, $array_petID[0]);
+
+                if ($num_int < 10) $new_num = '00' . $num_int;
+                elseif ($num_int < 100) $new_num = '0' . $num_int;
+                else $new_num = '' . $new_num;
+
+                $last_pet = strtoupper($region . $array_letter[1] . "-" . $new_num);
+            }
+        }
+
+        return $last_pet;
     }
 
     public function getParents(Request $request)
