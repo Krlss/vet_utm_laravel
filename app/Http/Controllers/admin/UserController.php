@@ -24,8 +24,8 @@ class UserController extends Controller
     {
         $this->middleware('can:dashboard.users.index')->only('index');
         $this->middleware('can:dashboard.users.destroy')->only('destroy');
-        $this->middleware('can:dashboard.users.create')->only('create', 'store');
-        $this->middleware('can:dashboard.users.edit')->only('edit', 'update');
+        $this->middleware('can:dashboard.users.create')->only('create');
+        $this->middleware('can:dashboard.users.edit')->only('edit');
     }
 
     public function index()

@@ -22,7 +22,7 @@
         <tbody>
             @foreach ($permissions as $permission)
             <tr>
-                <td>{{ trans('lang.' . $permission->name) }}</td>
+                <td>{{ $permission->name }}</td>
                 <!-- <td>{{ $permission->guard_name }}</td> -->
                 @foreach ($roles as $role)
                 <td>

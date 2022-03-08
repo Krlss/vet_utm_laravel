@@ -83,7 +83,4 @@ class CantonController extends Controller
     {
         //
     }
-
-
-    
 }
