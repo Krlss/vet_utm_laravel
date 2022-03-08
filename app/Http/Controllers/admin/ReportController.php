@@ -23,7 +23,7 @@ class ReportController extends Controller
         $this->middleware('can:dashboard.reports.index')->only('index');
         $this->middleware('can:dashboard.reports.destroy')->only('destroy');
         /* $this->middleware('can:dashboard.reports.create')->only('create', 'store'); */
-        $this->middleware('can:dashboard.reports.edit')->only('edit');
+        $this->middleware('can:dashboard.reports.edit')->only('edit', 'update');
         $this->middleware('can:dashboard.destroyImageGoogle')->only('destroyImageGoogle');
     }
 

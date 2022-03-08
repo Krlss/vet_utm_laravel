@@ -24,8 +24,8 @@ class UserController extends Controller
     {
         $this->middleware('can:dashboard.users.index')->only('index');
         $this->middleware('can:dashboard.users.destroy')->only('destroy');
-        $this->middleware('can:dashboard.users.create')->only('create');
-        $this->middleware('can:dashboard.users.edit')->only('edit');
+        $this->middleware('can:dashboard.users.create')->only('create', 'store');
+        $this->middleware('can:dashboard.users.edit')->only('edit', 'update');
     }
 
     public function index()
@@ -108,7 +108,8 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
-            $user->roles()->sync($request['roles']);
+
+            if (isset($request['roles'])) $user->roles()->sync($request['roles']);
             $user->update($input);
 
             DB::commit();

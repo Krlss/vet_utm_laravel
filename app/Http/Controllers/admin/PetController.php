@@ -19,8 +19,8 @@ class PetController extends Controller
     {
         $this->middleware('can:dashboard.pets.index')->only('index');
         $this->middleware('can:dashboard.pets.destroy')->only('destroy');
-        $this->middleware('can:dashboard.pets.create')->only('create');
-        $this->middleware('can:dashboard.pets.edit')->only('edit');
+        $this->middleware('can:dashboard.pets.create')->only('create', 'store');
+        $this->middleware('can:dashboard.pets.edit')->only('edit', 'update');
     }
 
     public function index()
