@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ParishApiController;
 use App\Http\Controllers\Api\PetApiController;
 use App\Http\Controllers\Api\ProvinceApiController;
 use App\Http\Controllers\Api\UserApiController;
@@ -52,3 +53,4 @@ Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']);
 
 Route::get('provinces', [ProvinceApiController::class, 'getAllProvinces']);
 Route::get('provinces/cantons/{id}', [ProvinceApiController::class, 'getCantonsByProvince']);
+Route::get('cantons/parish/{id}', [ParishApiController::class, 'getParishesByCanton']);
