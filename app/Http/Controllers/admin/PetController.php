@@ -95,12 +95,6 @@ class PetController extends Controller
         $province = null;
         $parish = null;
 
-        $ip = isset($_SERVER['HTTP_CLIENT_IP'])
-            ? $_SERVER['HTTP_CLIENT_IP']
-            : (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-                ? $_SERVER['HTTP_X_FORWARDED_FOR']
-                : $_SERVER['REMOTE_ADDR']);
-
         if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
             $province = Province::where('id', $user->id_province)->first();
@@ -112,7 +106,7 @@ class PetController extends Controller
             ->get();
 
 
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish', 'ip'));
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish'));
     }
 
     public function edit(Pet $pet)
@@ -216,7 +210,14 @@ class PetController extends Controller
         /* MAA-001 */
         /* MZZ-999 */
 
-        $region = json_decode(file_get_contents("http://ip-api.com/json/"));
+        $ip = isset($_SERVER['HTTP_CLIENT_IP'])
+            ? $_SERVER['HTTP_CLIENT_IP']
+            : (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
+                ? $_SERVER['HTTP_X_FORWARDED_FOR']
+                : $_SERVER['REMOTE_ADDR']);
+
+        $url = "http://ip-api.com/json/" . $ip;
+        $region = json_decode(file_get_contents($url));
 
         if ($region) {
             $region = $region->region ? $region->region : 'D';
