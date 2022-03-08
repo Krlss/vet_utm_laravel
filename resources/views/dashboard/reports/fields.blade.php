@@ -1,91 +1,64 @@
 <div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
+        {!! trans('lang.label_info_pet_create') !!}
+    </h6>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         {!! Form::hidden('pet_id', old('pet_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
 
         <div class="flex flex-col px-2">
             {!! Form::label('name', trans('lang.namePet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'required' => true]) !!}
-                <div class="text-gray-500 text-sm mb-2">
-                    {{ trans('lang.required') }}
-                </div>
-            </div>
+            {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'required' => true]) !!}
             @error('name')
-                <span class="text-danger">{{ $message }}</span>
+            <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
         <div class="flex flex-col px-2">
             {!! Form::label('specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::select('specie', ['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], $pet->specie ? $pet->specie : 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
-                <div class="text-gray-500 text-sm mb-2">
-                    {{ trans('lang.required') }}
-                </div>
-            </div>
+            {!! Form::select('specie', ['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], $pet->specie ? $pet->specie : 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
             @error('specie')
-                <span class="text-danger">{{ $message }}</span>
+            <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
         <div class="flex flex-col px-2">
             {!! Form::label('race', trans('lang.race'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::text('race', old('race'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name2'), 'required' => true]) !!}
-                <div class="text-gray-500 text-sm mb-2">
-                    {{ trans('lang.required') }}
-                </div>
-            </div>
+            {!! Form::text('race', old('race'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name2'), 'required' => true]) !!}
             @error('race')
-                <span class="text-danger">{{ $message }}</span>
+            <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
 
     </div>
 
-    {{--  --}}
+    {{-- --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         {{-- Sex --}}
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
-                <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
-            </div>
+            {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
             @error('sex')
-                <span class="text-danger">{{ $message }}</span>
-            @enderror
-        </div>
-
-        <div class="flex flex-col px-2">
-            {!! Form::label('users', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::select('users', $users, $pet->user_id ? $pet->user_id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_owner')]) !!}
-                <div class="text-gray-500 text-sm mb-2">{{ trans('lang.required') }}</div>
-            </div>
-            @error('users')
-                <span class="text-danger">{{ $message }}</span>
+            <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
         <div class="flex flex-col px-2">
             <!-- Birth pet -->
             {!! Form::label('birth', trans('lang.birth'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            <div class="">
-                {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d')]) !!}
-                <div class="text-gray-500 text-sm mb-2">
-                    {{ trans('lang.birth') }}
-                </div>
-            </div>
+            {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d')]) !!}
             @error('birth')
-                <span class="text-danger">{{ $message }}</span>
+            <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
     </div>
 
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
+        {!! trans('lang.label_info_pet_create_not_Required') !!}
+    </h6>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         {{-- Castrado --}}
@@ -101,8 +74,8 @@
                     {{ trans('lang.yep') }}
                 </label>
                 @error('castrated')
-                    <br>
-                    <small class="text-danger">{{ $message }}</small>
+                <br>
+                <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
@@ -120,8 +93,8 @@
                     {{ trans('lang.yep') }}
                 </label>
                 @error('lost')
-                    <br>
-                    <small class="text-danger">{{ $message }}</small>
+                <br>
+                <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
@@ -141,8 +114,8 @@
                     {{ trans('lang.yep') }}
                 </label>
                 @error('published')
-                    <br>
-                    <small class="text-danger">{{ $message }}</small>
+                <br>
+                <small class="text-danger">{{ $message }}</small>
                 @enderror
             </div>
 
@@ -153,5 +126,52 @@
 
     </div>
 
-    
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+        {{-- Owner --}}
+        <div class="flex flex-col px-2">
+            {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
+            <div class="text-gray-500 text-sm mb-2">
+                {{ trans('lang.owner_id_type') }}
+            </div>
+            @error('user_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
+        </div>
+    </div>
+
 </div>
+
+@push('scripts_lib')
+<script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script>
+    $('#user_id').select2({
+        width: '100%',
+        placeholder: "Digite la cedula o RUC del dueño",
+        minimumInputLength: 2,
+        allowClear: true,
+        ajax: {
+            url: "{{url('dashboard/pet/user')}}",
+            method: "POST",
+            data: function(params) {
+                var query = {
+                    search: params.term,
+                    "_token": "{{csrf_token()}}"
+                }
+                return query;
+            },
+            dataType: "json",
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(user) {
+                        return {
+                            text: user.user_id,
+                            id: user.user_id
+                        }
+                    })
+                };
+            }
+        }
+    });
+</script>
+@endpush

@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewReport;
+use App\Models\Parish;
 
 class ReportController extends Controller
 {
@@ -41,25 +42,6 @@ class ReportController extends Controller
 
     public function store(CreatePetRequest $request)
     {
-        $input = $request->all();
-
-        do {
-            $input['pet_id'] = $this->genaretePetId($input);
-        } while (Pet::where('pet_id', '==', $input['pet_id'])->first());
-
-
-        DB::beginTransaction();
-        try {
-            Pet::create($input);
-
-            DB::commit();
-            return redirect()->route('dashboard.reports.index')->with('info', trans('lang.pet_created'));
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.pet_errpr') . $e->getMessage());
-        }
-
-        dd($input);
     }
 
     public function show($id)
@@ -70,12 +52,14 @@ class ReportController extends Controller
         $user = User::where('user_id', $pet->user_id)->first();
         $canton = null;
         $province = null;
+        $parish = null;
 
         if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
-            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+            $province = Province::where('id', $user->id_province)->first();
+            $parish = Parish::where('id', $user->id_parish)->first();
         }
-        return view('dashboard.reports.show', compact('pet', 'user', 'canton', 'province', 'images'));
+        return view('dashboard.reports.show', compact('pet', 'user', 'canton', 'province', 'images', 'parish'));
     }
 
     public function edit($id)
@@ -91,7 +75,7 @@ class ReportController extends Controller
     public function update(UpdatePetRequest $request, Pet $pet)
     {
         $input = $request->all();
-        $input['user_id'] = $input['users'] ? $input['users'] : null;
+        /* $input['user_id'] = $input['users'] ? $input['users'] : null; */
 
         $petUpdated = Pet::where('pet_id', $input['pet_id'])->first();
 

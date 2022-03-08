@@ -2,6 +2,10 @@
 
 @section('content')
 
+@push('css_lib')
+<link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+@endpush
+
 @section('content_header')
 <div class="flex justify-between lg:items-center items-start lg:flex-row flex-col">
 
@@ -13,7 +17,7 @@
 
 
         <a href="{{ route('dashboard.reports.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-            {{ trans('lang.list_pets') }}
+            {{ trans('lang.list_pets_lost') }}
         </a>
 
 
