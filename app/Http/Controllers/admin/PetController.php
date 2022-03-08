@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Models\Canton;
+use App\Models\Parish;
 use App\Models\Pet;
 use App\Models\Province;
 use App\Models\User;
@@ -95,14 +96,15 @@ class PetController extends Controller
 
         if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
-            $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+            $province = Province::where('id', $user->id_province)->first();
+            $parish = Parish::where('id', $user->id_parish)->first();
         }
 
         $childs = Pet::where('id_pet_pather', $pet->pet_id)
             ->orWhere('id_pet_mother', $pet->pet_id)
             ->get();
 
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs'));
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish'));
     }
 
     public function edit(Pet $pet)

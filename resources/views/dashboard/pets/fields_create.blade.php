@@ -1,5 +1,7 @@
 <div>
 
+    {!! Form::hidden('pet_id', 'without id', null) !!}
+
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
         {!! trans('lang.label_info_pet_create') !!}
     </h6>

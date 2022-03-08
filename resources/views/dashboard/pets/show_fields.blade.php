@@ -54,7 +54,7 @@
 
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-1">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
         {{-- User address --}}
         <div class="form-group flex-col">
             {!! Form::label('address', trans('lang.address'), ['class' => ' ']) !!}
@@ -64,31 +64,6 @@
                 </p>
             </div>
         </div>
-    </div>
-
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-        {{-- User province --}}
-        @if ($province)
-        <div class="form-group flex-col">
-            {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
-            <div class="">
-                <p>
-                    {{ $province->name }}
-                </p>
-            </div>
-        </div>
-        @endif
-        {{-- User Canton --}}
-        @if ($canton)
-        <div class="form-group flex-col">
-            {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
-            <div class="">
-                <p>
-                    {{ $canton->name }}
-                </p>
-            </div>
-        </div>
-        @endif
 
         {{-- User Phone --}}
         <div class="form-group flex-col">
@@ -96,6 +71,38 @@
             <div class="">
                 <p>
                     {!! $user->phone !!}
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+        {{-- User province --}}
+        <div class="form-group flex-col">
+            {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {{ $province ? $province->name : trans('lang.without_province') }}
+                </p>
+            </div>
+        </div>
+
+        {{-- User Canton --}}
+        <div class="form-group flex-col">
+            {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {{ $canton ? $canton->name : trans('lang.without_canton')}}
+                </p>
+            </div>
+        </div>
+
+        {{-- User parish --}}
+        <div class="form-group flex-col">
+            {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
+            <div class="">
+                <p>
+                    {{ $parish ? $parish->name : trans('lang.without_parishe')}}
                 </p>
             </div>
         </div>
