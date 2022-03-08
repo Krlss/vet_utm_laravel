@@ -140,8 +140,10 @@ class PetController extends Controller
             $input['n_lost'] = $pet->n_lost + 1;
         }
 
+
         DB::beginTransaction();
         try {
+            if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
 
             if (isset($input['childrens'])) {
 

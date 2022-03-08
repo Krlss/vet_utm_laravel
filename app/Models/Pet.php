@@ -30,7 +30,7 @@ class Pet extends Model
     ];
 
     public static $rules = [
-        'pet_id' => 'required',
+        'pet_id' => 'required|max:7|min:7',
         'name' => 'required',
         'specie' => 'required',
         'sex' => 'required',
