@@ -9,11 +9,15 @@ use Illuminate\Support\Facades\DB;
 
 class RolesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:dashboard.roles.index')->only('index');
+        $this->middleware('can:dashboard.roles.destroy')->only('destroy');
+        $this->middleware('can:dashboard.roles.create')->only('create', 'store');
+        $this->middleware('can:dashboard.roles.edit')->only('edit', 'update');
+    }
+
     public function index()
     {
         $roles = Role::all();

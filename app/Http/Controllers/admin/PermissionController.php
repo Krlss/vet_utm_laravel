@@ -9,11 +9,10 @@ use Spatie\Permission\Models\Permission;
 
 class PermissionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('can:dashboard.permissions')->only('index');
+    }
     public function index()
     {
         $roles = Role::all();
@@ -88,23 +87,25 @@ class PermissionController extends Controller
         //
     }
 
-    public function givePermissionToRole(Request $request){
-        
+    public function givePermissionToRole(Request $request)
+    {
+
         try {
             $input = $request->all();
             $role = Role::findOrfail($input['roleId']);
             $role->givePermissionTo($input['permission']);
-        } catch (\Throwable $th) {}
-        
+        } catch (\Throwable $th) {
+        }
     }
 
-    public function revokePermissionToRole(Request $request){
+    public function revokePermissionToRole(Request $request)
+    {
 
         try {
             $input = $request->all();
             $role = Role::findOrfail($input['roleId']);
-            $role->revokePermissionTo($input['permission']);            
-        } catch (\Throwable $th) {}
-
+            $role->revokePermissionTo($input['permission']);
+        } catch (\Throwable $th) {
+        }
     }
 }
