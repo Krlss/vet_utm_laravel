@@ -39,7 +39,7 @@ class UserController extends Controller
     public function create()
     {
         $provinces = Province::pluck('name', 'id');
-        $roles = Role::pluck('name', 'name');
+        $roles = Role::pluck('name', 'id');
         $cantons = [];
         $parishes = [];
         return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes'));
@@ -57,7 +57,7 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
-            User::create($input);
+            User::create($input)->assignRole($request['roles']);
 
             DB::commit();
             return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_created'));
