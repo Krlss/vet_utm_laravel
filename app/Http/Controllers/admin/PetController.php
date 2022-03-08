@@ -218,11 +218,18 @@ class PetController extends Controller
 
         $url = "http://ip-api.com/json/" . $ip;
         $region = json_decode(file_get_contents($url));
+        $letter_user = null;
 
-        if ($region) {
+        if ($region->status == "success") {
             $region = $region->region ? $region->region : 'D';
         } else {
             $region = 'D';
+        }
+
+        if ($input['user_id']) {
+            $user = User::where('user_id', $input['user_id'])->pluck('id_province');
+            $letter_user = Province::where('id', $user)->pluck('letter');
+            if ($letter_user) $region = $letter_user[0];
         }
 
         $provinces_letter = Province::pluck('letter');

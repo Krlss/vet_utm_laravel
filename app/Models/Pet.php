@@ -35,6 +35,7 @@ class Pet extends Model
         'specie' => 'required',
         'sex' => 'required',
         'race' => 'required',
+        'birth' => 'required'
     ];
 
     public function user()
