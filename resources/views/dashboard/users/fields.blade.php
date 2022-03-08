@@ -82,9 +82,9 @@
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2">
 
     <div class="flex flex-col px-2">
-        {!! Form::label('province_id', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::select('province_id', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province')]) !!}
-        @error('province_id')
+        {!! Form::label('id_province', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+        {!! Form::select('id_province', $provinces, $province ? $province->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province')]) !!}
+        @error('id_province')
         <span class="text-danger">{{ $message }}</span>
         @enderror
     </div>
@@ -105,7 +105,7 @@
 
     <div class="flex flex-col col-span-2 px-2">
         {!! Form::label('id_parish', trans('lang.parishe'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-        {!! Form::select('id_parish', $parishes, $parishe ? $parishe->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_canton')]) !!}
+        {!! Form::select('id_parish', $parishes, $parish ? $parish->id : null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_canton')]) !!}
         @error('id_parishes')
         <span class="text-danger">{{ $message }}</span>
         @enderror
@@ -125,8 +125,9 @@
 @push('scripts_lib')
 <script>
     $(document).ready(function() {
-        var cantoncurrent = "<?php echo $canton; ?>";
-        var parishecurrent = "<?php echo $parishe; ?>";
+        var cantoncurrent = "<?php echo $canton ? $canton->id : null; ?>";
+        var parishecurrent = "<?php echo $parish ? $parish->id : null; ?>";
+        var provincecurrent = "<?php echo $province ? $province->id : null; ?>";
         $('#id_canton').val(null);
         $('#id_canton').html('');
         $.ajax({
@@ -134,7 +135,7 @@
             method: "GET",
             url: "{{ url('dashboard/provinces/cantons') }}",
             data: {
-                province_id: $('#province_id').val()
+                id_province: provincecurrent
             }
         }).done(function(msg) {
             let cantonsOptions;
@@ -144,7 +145,7 @@
                 cantonsOptions = "<option value>Selecciona un canton</option>";
             }
             $.each(msg, function(i, canton) {
-                if (cantoncurrent.id == canton.id) {
+                if (cantoncurrent == canton.id) {
                     cantonsOptions += '<option selected="selected" value="' + canton.id + '">' + canton.name + '</option>';
                 } else {
                     cantonsOptions += '<option value="' + canton.id + '">' + canton.name + '</option>';
@@ -171,7 +172,7 @@
                 parishesOptions = "<option value>Seleccione una parroquia</option>";
             }
             $.each(msg, function(i, parishe) {
-                if (parishecurrent.id == parishe.id) {
+                if (parishecurrent == parishe.id) {
                     parishesOptions += '<option selected="selected" value="' + parishe.id + '">' + parishe.name + '</option>';
                 } else {
                     parishesOptions += '<option value="' + parishe.id + '">' + parishe.name + '</option>';
@@ -183,7 +184,7 @@
 </script>
 
 <script>
-    $('#province_id').on('change', function() {
+    $('#id_province').on('change', function() {
         $('#id_canton').html('');
         $("#id_canton").val([]);
         $('#id_parish').html('');
@@ -194,16 +195,15 @@
             method: "GET",
             url: "{{ url('dashboard/provinces/cantons') }}",
             data: {
-                province_id: $('#province_id').val()
+                id_province: $('#id_province').val()
             }
         }).done(function(msg) {
             let cantonsOptions;
+            $('#id_parish').html("<option value>Primero selecciona un cantón</option>");
             if (msg.length <= 0) {
                 cantonsOptions = '<option value>Primero selecciona una provincia</option>'
-                $('#id_parish').html("<option value>Primero selecciona un cantón</option>");
             } else {
                 cantonsOptions = "<option value>Selecciona un canton</option>";
-                $('#id_parish').html("<option value>Selecciona una parroquia</option>");
                 $.each(msg, function(i, canton) {
                     cantonsOptions += '<option value="' + canton.id + '">' + canton.name + '</option>';
                 });

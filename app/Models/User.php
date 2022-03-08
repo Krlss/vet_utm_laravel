@@ -37,7 +37,9 @@ class User extends Authenticatable
         'api_token',
         'phone',
         'email_verified_at',
-        'id_parish'
+        'id_parish',
+        'id_canton',
+        'id_province'
     ];
 
     /**
@@ -80,5 +82,15 @@ class User extends Authenticatable
     public function parish()
     {
         return $this->belongsTo(Parish::class);
+    }
+
+    public function canton()
+    {
+        return $this->belongsTo(Canton::class);
+    }
+
+    public function province()
+    {
+        return $this->belongsTo(Province::class);
     }
 }

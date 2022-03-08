@@ -72,24 +72,24 @@ class UserController extends Controller
 
         $pets = Pet::where('user_id', $user->user_id)->get();
 
-        $parishe = Parish::where('id', $user->id_parish)->first();
+        $parish = Parish::where('id', $user->id_parish)->first();
 
-        $canton = $parishe ? Canton::where('id', $parishe->id_canton)->first() : null;
+        $canton = Canton::where('id', $user->id_canton)->first();
 
-        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+        $province = Province::where('id', $user->id_province)->first();
 
-        return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province', 'parishe'));
+        return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province', 'parish'));
     }
 
     public function edit(User $user)
     {
         $pets = Pet::where('user_id', $user->user_id)->get();
 
-        $parishe = Parish::where('id', $user->id_parish)->first();
+        $parish = Parish::where('id', $user->id_parish)->first();
 
-        $canton = $parishe ? Canton::where('id', $parishe->id_canton)->first() : null;
+        $canton = Canton::where('id', $user->id_canton)->first();
 
-        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+        $province = Province::where('id', $user->id_province)->first();
 
         $provinces = Province::pluck('name', 'id');
 
@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'id');
 
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parishe', 'parishes'));
+        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parish', 'parishes'));
     }
 
     public function update(UpdateUserRequest $request, User $user)

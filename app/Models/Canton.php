@@ -14,6 +14,11 @@ class Canton extends Model
         return $this->hasMany(Parish::class);
     }
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
     public function province()
     {
         return $this->belongsTo(Province::class);

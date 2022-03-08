@@ -101,7 +101,7 @@
         {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
         <div class="">
             <p>
-                {{ $parishe ? $parishe->name : trans('lang.without_parishe')}}
+                {{ $parish ? $parish->name : trans('lang.without_parishe')}}
             </p>
         </div>
     </div>

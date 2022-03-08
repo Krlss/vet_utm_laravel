@@ -13,4 +13,9 @@ class Province extends Model
     {
         return $this->hasMany(Canton::class);
     }
+
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
 }

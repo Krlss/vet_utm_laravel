@@ -91,7 +91,7 @@ class ProvinceController extends Controller
         try {
             $input = $request->all();
 
-            $result = Canton::where('id_province', $input['province_id'])->select('name', 'id')->get();
+            $result = Canton::where('id_province', $input['id_province'])->select('name', 'id')->get();
 
             return response()->json($result);
         } catch (\Throwable $e) {
