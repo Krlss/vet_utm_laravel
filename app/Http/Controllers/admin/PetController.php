@@ -93,6 +93,7 @@ class PetController extends Controller
         $user = User::where('user_id', $pet->user_id)->first();
         $canton = null;
         $province = null;
+        $parish = null;
 
         if ($user) {
             $canton = Canton::where('id', $user->id_canton)->first();
@@ -103,6 +104,7 @@ class PetController extends Controller
         $childs = Pet::where('id_pet_pather', $pet->pet_id)
             ->orWhere('id_pet_mother', $pet->pet_id)
             ->get();
+
 
         return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish'));
     }
