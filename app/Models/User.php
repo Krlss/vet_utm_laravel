@@ -97,4 +97,9 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Province::class);
     }
+
+    public function adminlte_desc()
+    {
+        return 'Rol: ' . $this->roles[0]->name;
+    }
 }

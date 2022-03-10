@@ -66,9 +66,9 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-warning',
+    'usermenu_header_class' => 'bg-secondary',
     'usermenu_image' => false,
-    'usermenu_desc' => false,
+    'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 
     /*
@@ -85,8 +85,8 @@ return [
 
     'layout_topnav' => null,
     'layout_boxed' => null,
-    'layout_fixed_sidebar' => null,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_sidebar' => true,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
     'layout_dark_mode' => null,
 
@@ -128,7 +128,7 @@ return [
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => '',
+    'classes_sidebar_nav' => 'fixed',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -146,7 +146,7 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => false,
+    'sidebar_collapse' => true,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
     'sidebar_collapse_remember_no_transition' => true,
@@ -228,34 +228,35 @@ return [
             'text' => 'Dashboard',
             'url'  => '/dashboard',
             'icon'      => 'fas fa-tachometer-alt',
-            'can'          => 'dashboard.home'
+            'can'          => 'dashboard.home',
+            'active' => ['']
         ], 
         ['header' => 'Administración'],
         [
             'text'      => 'Usuarios',
             'icon'      => 'fas fa-users',
-            'active'    => ['dashboard/users', 'dashboard/users/create', 'dashboard/users/edit'],
+            'active'    => ['dashboard/users*'],
             'route'         => 'dashboard.users.index',   
             'can'          => 'dashboard.users.index'
         ], 
         [
             'text'      => 'Mascotas',
             'icon'      => 'fas fa-paw',
-            'active'    => ['dashboard/pets', 'dashboard/pets/create', 'dashboard/pets/edit'],
+            'active'    => ['dashboard/pets*'],
             'route'         => 'dashboard.pets.index', 
             'can'          => 'dashboard.pets.index'
         ], 
         [
             'text'      => 'Reportes',
             'icon'      => 'fas fa-list-alt',
-            'active'    => ['dashboard/reports', 'dashboard/reports/edit'],
+            'active'    => ['dashboard/reports*'],
             'route'         => 'dashboard.reports.index', 
             'can'          => 'dashboard.reports.index'
         ], 
         [
             'text'      => 'Roles y permisos',
             'icon'      => 'fas fa-list-alt',
-            'active'    => ['dashboard/roles', 'dashboard/permissions'],
+            'active'    => ['dashboard/roles*', 'dashboard/permissions*'],
             'route'         => 'dashboard.roles.index', 
             'can'          => 'dashboard.roles.index'
         ], 
