@@ -52,7 +52,7 @@ return [
      'role_create' => 'Crear Rol',
      'role_created' => 'Rol creado correctamente.',
      'guard_name' => 'Guard name',
-     'save_rol' => 'Guardar rol',
+     'save' => 'Guardar',
      'roles' => 'Roles',
      'without_address' => 'Sin dirección',
      'pather' => 'Mascota padre',
