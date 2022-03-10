@@ -19,5 +19,7 @@
     <h1>{{$detail['title']}}</h1>
     <p>{{$detail['body']}}</p>
     <a href="{{$detail['backurl']}}/api/verifyEmail/{{$detail['api_token']}}">LINK</a>
+    <p>Si no abre el link, puede copiar el siguiente link y pegarlo en su navegador.</p>
+    <p>{{$detail['backurl']}}/api/verifyEmail/{{$detail['api_token']}}</p>
 </body>
 </html>
