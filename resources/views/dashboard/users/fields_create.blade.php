@@ -185,7 +185,7 @@
         <div x-show="open">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
                 <div class="flex flex-col col-span-2 px-2">
-                    {{-- childres --}}
+                    {{-- pets --}}
 
                     {!! Form::label('pets', trans('lang.pets'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('pets[]', $pets, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets']) !!}
@@ -195,6 +195,11 @@
 
                 </div>
             </div>
+
+            <button type="button">Agregar nueva mascota</button>
+
+
+
         </div>
 
     </div>
@@ -274,7 +279,17 @@
         placeholder: "Digita los identificadores de las mascotas",
         minimumInputLength: 2,
         allowClear: true,
-        language: "en",
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras...";
+            }
+        },
         ajax: {
             url: "{{url('dashboard/PetsWithoutOwner')}}",
             dataType: 'json',

@@ -181,6 +181,17 @@
         width: '100%',
         placeholder: "Digite el identificador del padre",
         minimumInputLength: 2,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras...";
+            }
+        },
         allowClear: true,
         ajax: {
             url: "{{url('dashboard/parents')}}",
@@ -217,6 +228,17 @@
         placeholder: "Digite el identificador de la madre",
         minimumInputLength: 2,
         allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras...";
+            }
+        },
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
@@ -252,6 +274,17 @@
         placeholder: "Digite la cedula o RUC del dueño",
         minimumInputLength: 2,
         allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras...";
+            }
+        },
         ajax: {
             url: "{{url('dashboard/pet/user')}}",
             method: "POST",
@@ -281,7 +314,17 @@
         placeholder: "Digita los identificadores de las mascotas",
         minimumInputLength: 2,
         allowClear: true,
-        language: "en",
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras...";
+            }
+        },
         ajax: {
             url: "{{url('dashboard/childrens')}}",
             dataType: 'json',
