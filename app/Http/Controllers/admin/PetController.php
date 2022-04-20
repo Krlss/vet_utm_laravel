@@ -376,6 +376,20 @@ class PetController extends Controller
         }
     }
 
+    public function getPetsWithoutOwner(Request $request)
+    {
+        try {
+            $input = $request->all();
+            $pets = Pet::where('user_id', null)
+                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                ->select('pet_id', 'pet_id')->get()->take(25);
+            $result = ['pets' => $pets];
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            return json_encode(['pets' => []]);
+        }
+    }
+
     public function getChildrens(Request $request)
     {
         try {

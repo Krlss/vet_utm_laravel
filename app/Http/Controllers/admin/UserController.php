@@ -42,7 +42,11 @@ class UserController extends Controller
         $roles = Role::pluck('name', 'id');
         $cantons = [];
         $parishes = [];
-        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes'));
+
+        $pets = [];
+        $petsSelected = [];
+
+        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes', 'pets', 'petsSelected'));
     }
 
     public function store(CreateUserRequest $request)

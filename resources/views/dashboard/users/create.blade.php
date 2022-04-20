@@ -2,6 +2,10 @@
 
 @section('content')
 
+@push('css_lib')
+<link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+@endpush
+
 @section('content_header')
 <div class="flex justify-between items-center">
     <div class="text-lg font-bold">Creación de un usuario</div>
