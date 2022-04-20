@@ -167,7 +167,7 @@ return [
      'type_user_id_empty' => 'No hay personas registradas.',
      'label_info_user_create' => 'Información obligatoria',
      'label_info_pet_create' => 'Información obligatoria',
-     'label_info_user_contact' => 'Información de contacto',
+     'label_info_user_contact' => 'Información domiciliaria',
      'label_info_pet_create_not_Required' => 'Información no obligatoria',
      'pather_id_type' => 'Digite el identificador del padre',
      'pather_id_type_ad' => 'Primero seleccione un sexo',

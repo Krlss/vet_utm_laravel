@@ -59,13 +59,13 @@ class User extends Authenticatable
 
 
     public static $rules = [
-        'user_id' => 'required|max:13|min:10',
+        'user_id' => 'required|max:13|min:10|unique:users',
         'name' => 'required|max:75',
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
-        'email' => 'required|max:100',
+        'email' => 'required|max:100|unique:users',
         'address' => 'max:2500',
-        'phone' => 'digits:10',
+        'phone' => 'digits:10|unique:users',
     ];
 
     /**

@@ -195,6 +195,9 @@ return [
         'legal_identification' => 'Identificación legal',
         'store_type_id' => 'Tipo de Almacen',
         'color_rgb' => 'Color',
-        'type_tax_id'=> 'Clase de impuesto'
+        'type_tax_id' => 'Clase de impuesto',
+        'user_id' => 'cedula o ruc',
+        'last_name1' => 'primer apellido',
+        'last_name2' => 'segundo apellido'
     ],
 ];
