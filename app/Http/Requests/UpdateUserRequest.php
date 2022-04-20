@@ -24,6 +24,6 @@ class UpdateUserRequest extends FormRequest
      */
     public function rules()
     {
-        return User::$rules;
+        return User::$rules_updated;
     }
 }

@@ -132,9 +132,6 @@
 
             {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.pather_id_type_ad') }}
-            </div>
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -211,10 +208,11 @@
             },
             dataType: "json",
             processResults: function(data) {
+                console.log(data);
                 return {
                     results: $.map(data, function(pet) {
                         return {
-                            text: pet.pet_id,
+                            text: pet.name + " - " + pet.pet_id,
                             id: pet.pet_id
                         }
                     })
@@ -260,7 +258,7 @@
                 return {
                     results: $.map(data, function(pet) {
                         return {
-                            text: pet.pet_id,
+                            text: pet.name + " - " + pet.pet_id,
                             id: pet.pet_id
                         }
                     })
@@ -300,7 +298,7 @@
                 return {
                     results: $.map(data, function(user) {
                         return {
-                            text: user.user_id,
+                            text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
                             id: user.user_id
                         }
                     })
@@ -345,7 +343,7 @@
             processResults: function(data) {
                 data.pets = data.pets.map(function(obj) {
                     return {
-                        "text": obj.pet_id,
+                        "text": obj.name + " - " + obj.pet_id,
                         "id": obj.pet_id
                     };
                 });

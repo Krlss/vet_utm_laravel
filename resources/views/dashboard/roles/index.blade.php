@@ -11,12 +11,12 @@
     <div class="text-lg font-bold">{{ trans('lang.role_table') }}</div>
     <div class="flex items-center justify-between space-x-2">
         @can('dashboard.permissions')
-        <a href="{{ route('dashboard.permissions.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.permissions.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
             {{ trans('lang.permission_look') }}
         </a>
         @endcan
         @can('dashboard.roles.create')
-        <a href="{{ route('dashboard.roles.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.roles.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline">
             {{ trans('lang.role_create') }}
         </a>
         @endcan

@@ -10,8 +10,22 @@
 </div>
 @endif
 
-<h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
+<h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
     {!!trans('lang.label_data_user')!!}
+    @can('dashboard.users.edit')
+    <a href="{{ route('dashboard.users.edit', $user) }}" class='btn btn-link text-gray-500 hover:text-green-700'>
+        <i class="fas fa-edit cursor-pointer"></i>
+    </a>
+    @endcan
+    @can('dashboard.users.destroy')
+    {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
+    {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+    'type' => 'submit',
+    'class' => '',
+    'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
+    ]) !!}
+    {!! Form::close() !!}
+    @endcan
 </h6>
 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
@@ -155,18 +169,18 @@
             <div class="flex items-center justify-center">
                 @can('dashboard.pets.show')
                 <a href="{{ route('dashboard.pets.show', $pet) }}">
-                    <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
+                    <i class="fas fa-eye text-gray-500 hover:text-blue-700 cursor-pointer"></i>
                 </a>
                 @endcan
                 @can('dashboard.pets.edit')
                 <a href="{{ route('dashboard.pets.edit', $pet) }}" class='btn btn-link'>
-                    <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
+                    <i class="fas fa-edit text-gray-500 hover:text-green-700  cursor-pointer"></i>
                 </a>
                 @endcan
 
                 {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}
                 {!! Form::hidden('pet_id', $pet->pet_id, null) !!}
-                {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
+                {!! Form::button('<li class="text-gray-500 hover:text-red-700 fa fa-times-circle"></li>', [
                 'type' => 'submit',
                 'class' => '',
                 'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name de este usuario?')",

@@ -10,7 +10,7 @@
 <div class="flex justify-between items-center">
     <div class="text-lg font-bold">{{ trans('lang.list_user') }}</div>
     @can('dashboard.users.create')
-    <a href="{{ route('dashboard.users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+    <a href="{{ route('dashboard.users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
         {{ trans('lang.createUser') }}
     </a>
     @endcan

@@ -21,9 +21,9 @@ class CreateUsersTable extends Migration
             $table->string('last_name1');
             $table->string('last_name2');
             $table->string('email')->unique();
-            $table->integer('id_parish')->nullable();
-            $table->integer('id_canton')->nullable();
-            $table->integer('id_province')->nullable();
+            $table->integer('id_parish')->unsigned()->nullable();
+            $table->integer('id_canton')->unsigned()->nullable();
+            $table->integer('id_province')->unsigned()->nullable();
             $table->string('address')->nullable();
             $table->string('phone', 12)->unique();
             $table->timestamp('email_verified_at')->nullable();
@@ -31,9 +31,9 @@ class CreateUsersTable extends Migration
             $table->string('api_token');
             $table->rememberToken();
             $table->timestamps();
-            $table->foreign('id_parish')->references('id')->on('parishes')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_canton')->references('id')->on('cantons')->onDelete('cascade')->onUpdate('cascade');
-            $table->foreign('id_province')->references('id')->on('provinces')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('id_parish')->references('id')->on('parishes')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('id_canton')->references('id')->on('cantons')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('id_province')->references('id')->on('provinces')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

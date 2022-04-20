@@ -67,4 +67,9 @@ class Pet extends Model
     {
         return $this->hasMany(Image::class);
     }
+
+    public function getFullNameAttribute()
+    {
+        return $this->name . ' - ' . $this->pet_id;
+    }
 }

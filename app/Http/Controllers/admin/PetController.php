@@ -229,7 +229,7 @@ class PetController extends Controller
         if ($input['user_id']) {
             $user = User::where('user_id', $input['user_id'])->pluck('id_province');
             $letter_user = Province::where('id', $user)->pluck('letter');
-            if ($letter_user) $region = $letter_user[0];
+            if (count($letter_user)) $region = $letter_user[0];
         }
 
         $provinces_letter = Province::pluck('letter');
@@ -297,13 +297,13 @@ class PetController extends Controller
                     ->where('sex', $input['sex'])
                     ->where('pet_id', '<>', $input['pet_id'])
                     ->whereNotIn('pet_id', $input['childrensSeleted'])
-                    ->select('pet_id', 'pet_id')->get()->take(25);
+                    ->select('name', 'pet_id')->get()->take(25);
             } else {
                 $result = Pet::where('specie', $input['specie'])
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('sex', $input['sex'])
                     ->where('pet_id', '<>', $input['pet_id'])
-                    ->select('pet_id', 'pet_id')->get()->take(25);
+                    ->select('name', 'pet_id')->get()->take(25);
             }
 
             return response()->json($result);
@@ -382,7 +382,7 @@ class PetController extends Controller
             $input = $request->all();
             $pets = Pet::where('user_id', null)
                 ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
-                ->select('pet_id', 'pet_id')->get()->take(25);
+                ->select('name', 'pet_id')->get()->take(25);
             $result = ['pets' => $pets];
             return response()->json($result);
         } catch (\Throwable $th) {
@@ -394,7 +394,8 @@ class PetController extends Controller
     {
         try {
             $input = $request->all();
-
+            /* No puedes ser padre y madre a la ves, dependiendo del sexo que se envie buscará en la columna de la base
+            de datos para ver si ese campo está nulo, así solo se podra tener un padre o una madre */
             $is_null_parent = $input['sex'] == 'F' ? 'id_pet_mother' : 'id_pet_pather';
             if ($input['sex'] == null) $is_null_parent = null;
 
@@ -405,14 +406,14 @@ class PetController extends Controller
                     ->where('pet_id', '<>', $input['mother_seleted'])
                     ->where('pet_id', '<>', $input['pet_id'])
                     ->where($is_null_parent, null)
-                    ->select('pet_id', 'pet_id')->get()->take(25);
+                    ->select('name', 'pet_id')->get()->take(25);
             } else {
                 $pets = Pet::where('specie', $input['specie'])
                     ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
                     ->where('pet_id', '<>', $input['pather_seleted'])
                     ->where('pet_id', '<>', $input['mother_seleted'])
                     ->where('pet_id', '<>', $input['pet_id'])
-                    ->select('pet_id', 'pet_id')->get()->take(25);
+                    ->select('name', 'pet_id')->get()->take(25);
             }
 
             $result = ['pets' => $pets];

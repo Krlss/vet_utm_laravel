@@ -1,6 +1,6 @@
 <div>
-    <div x-data="{ open: true }">
 
+    <div x-data="{ open: true }">
         <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
             {!! trans('lang.label_info_user_create') !!}
             <div class="ml-2 cursor-pointer">
@@ -75,8 +75,6 @@
                 @endcan
             </div>
         </div>
-
-
     </div>
 
     <div x-data="{ open: true }">
@@ -173,7 +171,7 @@
 
     <div x-data="{open: true}">
         <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
-            INFORMACIÓN DE LAS MASCOTAS
+            {!! trans('lang.label_info_user_pets') !!}
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
@@ -183,7 +181,7 @@
         </h6>
 
         <div x-show="open">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+            <div class="grid grid-cols-1 mb-2">
                 <div class="flex flex-col col-span-2 px-2">
                     {{-- pets --}}
 
@@ -196,16 +194,16 @@
                 </div>
             </div>
 
-            <button type="button">Agregar nueva mascota</button>
-
-
+            <div class="px-2 mt-4">
+                <a href="{{ route('dashboard.pets.create') }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:underline">Crear una nueva mascota</a>
+            </div>
 
         </div>
 
     </div>
 
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{trans('lang.save')}}</button>
+    <button type=" submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{trans('lang.save')}}</button>
 
     <style>
         input[type=number]::-webkit-inner-spin-button,
@@ -304,7 +302,7 @@
             processResults: function(data) {
                 data.pets = data.pets.map(function(obj) {
                     return {
-                        "text": obj.pet_id,
+                        "text": obj.name + " - " + obj.pet_id,
                         "id": obj.pet_id
                     };
                 });

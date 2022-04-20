@@ -228,7 +228,7 @@
                     return {
                         results: $.map(data, function(pet) {
                             return {
-                                text: pet.pet_id,
+                                text: pet.name + " - " + pet.pet_id,
                                 id: pet.pet_id
                             }
                         })
@@ -274,7 +274,7 @@
                     return {
                         results: $.map(data, function(pet) {
                             return {
-                                text: pet.pet_id,
+                                text: pet.name + " - " + pet.pet_id,
                                 id: pet.pet_id
                             }
                         })
@@ -314,7 +314,7 @@
                     return {
                         results: $.map(data, function(user) {
                             return {
-                                text: user.user_id,
+                                text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
                                 id: user.user_id
                             }
                         })
@@ -359,7 +359,7 @@
                 processResults: function(data) {
                     data.pets = data.pets.map(function(obj) {
                         return {
-                            "text": obj.pet_id,
+                            "text": obj.name + " - " + obj.pet_id,
                             "id": obj.pet_id
                         };
                     });

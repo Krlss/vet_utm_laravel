@@ -63,6 +63,16 @@ class UserController extends Controller
         try {
             User::create($input)->assignRole($request['roles']);
 
+            if (isset($input['pets'])) {
+                $pets = $input['pets'];
+                unset($input['pets']);
+
+                foreach ($pets as $pet) {
+                    Pet::where('pet_id', $pet)->update(['user_id' => $input['user_id']]);
+                }
+            }
+
+
             DB::commit();
             return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_created'));
         } catch (\Throwable $e) {
@@ -103,7 +113,11 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'id');
 
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parish', 'parishes'));
+        $pets_array = $pets->pluck('pet_id', 'pet_id');
+
+        $petsSelected = is_null($pets_array) ? [] : $pets_array->all();
+
+        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parish', 'parishes', 'petsSelected', 'pets_array'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -114,6 +128,30 @@ class UserController extends Controller
         try {
 
             if (isset($request['roles'])) $user->roles()->sync($request['roles']);
+
+            //All pets this current user!
+            $pets_exist = Pet::where('user_id', $user->user_id)->pluck('pet_id');
+
+            foreach ($pets_exist as $current) {
+                $exist = null;
+                if (isset($input['pets_array']))
+                    $exist = array_search($current, $input['pets_array']);
+                if (is_numeric($exist)) {
+                    continue;
+                } else {
+                    Pet::where('pet_id', $current)->update(['user_id' => null]);
+                }
+            }
+            if (isset($input['pets_array']))
+                foreach ($input['pets_array'] as $new_pet) {
+                    $exist = array_search($new_pet, $pets_exist->all());
+                    if (is_numeric($exist)) {
+                        continue;
+                    } else {
+                        Pet::where('pet_id', $new_pet)->update(['user_id' => $input['user_id']]);
+                    }
+                }
+
             $user->update($input);
 
             DB::commit();
@@ -143,7 +181,7 @@ class UserController extends Controller
         $input = $request->all();
 
         try {
-            $users = User::where('user_id', 'like', '%' . $input['search'] . '%')->select('user_id', 'user_id')->get()->take(25);
+            $users = User::where('user_id', 'like', '%' . $input['search'] . '%')->select('name', 'last_name1', 'last_name2', 'user_id')->get()->take(25);
             return response()->json($users);
         } catch (\Throwable $e) {
             return null;

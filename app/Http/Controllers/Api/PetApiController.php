@@ -178,7 +178,7 @@ class PetApiController extends Controller
         $pet['birth'] = date('Y-m-d');
         $pet['sex'] = null;
         $pet['lost'] = true;
-        $pet['published'] = false;
+        $pet['published'] = true;
         $pet['specie'] = 'Desconocido';
         $pet['race'] = 'Desconocido';
         $pet['n_lost'] = 1;
@@ -411,10 +411,10 @@ class PetApiController extends Controller
             unset($input['specie']);
             $pet['race'] = $input['race'];
             unset($input['race']);
-            
+
             $pet['pet_id'] = $this->genaretePetId($input['user']['public_ip']); //Last ID
             $pet['lost'] = true;
-            $pet['published'] = false;
+            $pet['published'] = true;
             $pet['n_lost'] = 1;
 
 

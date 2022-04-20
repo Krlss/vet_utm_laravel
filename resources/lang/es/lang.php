@@ -167,7 +167,8 @@ return [
      'type_user_id_empty' => 'No hay personas registradas.',
      'label_info_user_create' => 'Información obligatoria',
      'label_info_pet_create' => 'Información obligatoria',
-     'label_info_user_contact' => 'Información domiciliaria',
+     'label_info_user_contact' => 'Información domiciliaria (no obligatoria)',
+     'label_info_user_pets' => 'Información de las mascotas (no obligatoria)',
      'label_info_pet_create_not_Required' => 'Información no obligatoria',
      'pather_id_type' => 'Digite el identificador del padre',
      'pather_id_type_ad' => 'Primero seleccione un sexo',
@@ -183,5 +184,7 @@ return [
      'without_street_2_sec' => 'Sin calle secundaria 2',
      'without_address_ref' => 'Sin referencia',
 
-     'pets' => 'Mascotas'
+     'pets' => 'Mascotas',
+     'edit_this_user' => 'Editar los datos de este usuario',
+     'edit_this_pet' => 'Editar los datos de esta mascota'
 ];

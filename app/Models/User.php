@@ -68,6 +68,16 @@ class User extends Authenticatable
         'phone' => 'digits:10|unique:users',
     ];
 
+    public static $rules_updated = [
+        'user_id' => 'required|max:13|min:10',
+        'name' => 'required|max:75',
+        'last_name1' => 'required|max:50',
+        'last_name2' => 'required|max:50',
+        'email' => 'required|max:100',
+        'address' => 'max:2500',
+        'phone' => 'digits:10',
+    ];
+
     /**
      * The accessors to append to the model's array form.
      *
