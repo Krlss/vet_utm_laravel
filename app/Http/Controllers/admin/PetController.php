@@ -297,14 +297,20 @@ class PetController extends Controller
 
             if (isset($input['childrensSeleted'])) {
                 $result = Pet::where('specie', $input['specie'])
-                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where(function ($query) use ($input) {
+                        $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                            ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
+                    })
                     ->where('sex', $input['sex'])
                     ->where('pet_id', '<>', $input['pet_id'])
                     ->whereNotIn('pet_id', $input['childrensSeleted'])
                     ->select('name', 'pet_id')->get()->take(25);
             } else {
                 $result = Pet::where('specie', $input['specie'])
-                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where(function ($query) use ($input) {
+                        $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                            ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
+                    })
                     ->where('sex', $input['sex'])
                     ->where('pet_id', '<>', $input['pet_id'])
                     ->select('name', 'pet_id')->get()->take(25);
