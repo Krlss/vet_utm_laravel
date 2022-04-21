@@ -415,7 +415,10 @@ class PetController extends Controller
 
             if ($is_null_parent) {
                 $pets = Pet::where('specie', $input['specie'])
-                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where(function ($query) use ($input) {
+                        $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                            ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
+                    })
                     ->where('pet_id', '<>', $input['pather_seleted'])
                     ->where('pet_id', '<>', $input['mother_seleted'])
                     ->where('pet_id', '<>', $input['pet_id'])
@@ -423,7 +426,10 @@ class PetController extends Controller
                     ->select('name', 'pet_id')->get()->take(25);
             } else {
                 $pets = Pet::where('specie', $input['specie'])
-                    ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
+                    ->where(function ($query) use ($input) {
+                        $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                            ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
+                    })
                     ->where('pet_id', '<>', $input['pather_seleted'])
                     ->where('pet_id', '<>', $input['mother_seleted'])
                     ->where('pet_id', '<>', $input['pet_id'])
