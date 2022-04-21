@@ -150,6 +150,17 @@
         placeholder: "Digite la cedula o RUC del dueño",
         minimumInputLength: 2,
         allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
+            }
+        },
         ajax: {
             url: "{{url('dashboard/pet/user')}}",
             method: "POST",

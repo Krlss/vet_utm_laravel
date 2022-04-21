@@ -1,7 +1,32 @@
 <div>
 
     @if ($user)
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_owner') }}</div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">
+        <div>{{ trans('lang.data_owner') }}</div>
+        @can('dashboard.users.show')
+        <button>
+            <a href="{{ route('dashboard.users.show', $user) }}" class="">
+                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.users.edit')
+        <button>
+            <a href="{{ route('dashboard.users.edit', $user) }}" class=''>
+                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.users.destroy')
+        {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
+        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+        'type' => 'submit',
+        'class' => '',
+        'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
+        ]) !!}
+        {!! Form::close() !!}
+        @endcan
+    </h6>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {{-- User ID --}}
@@ -133,7 +158,25 @@
     </div>
     @endif
 
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_pet') }}</div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">
+        <div>{{ trans('lang.data_pet') }}</div>
+        @can('dashboard.pets.edit')
+        <button>
+            <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
+                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.pets.destroy')
+        {!! Form::open(['route' => ['dashboard.pets.destroy', $pet], 'method' => 'delete']) !!}
+        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+        'type' => 'submit',
+        'class' => '',
+        'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name')",
+        ]) !!}
+        {!! Form::close() !!}
+        @endcan
+    </h6>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         {{-- Pet ID --}}
@@ -242,7 +285,7 @@
     </div>
 
     @if (count($images) > 0)
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.photos_report') }}</div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">{{ trans('lang.photos_report') }}</h6>
     @else
     <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">
         {{ trans('lang.not_photos_report') }}
