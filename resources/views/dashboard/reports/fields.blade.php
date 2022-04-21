@@ -131,9 +131,6 @@
         <div class="flex flex-col px-2">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.owner_id_type') }}
-            </div>
             @error('user_id')
             <span class="text-danger">{{ $message }}</span>
             @enderror
