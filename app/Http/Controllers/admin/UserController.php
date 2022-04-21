@@ -61,6 +61,7 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
+            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
             User::create($input)->assignRole($request['roles']);
 
             if (isset($input['pets'])) {
@@ -131,6 +132,7 @@ class UserController extends Controller
 
             //All pets this current user!
             $pets_exist = Pet::where('user_id', $user->user_id)->pluck('pet_id');
+            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 
             foreach ($pets_exist as $current) {
                 $exist = null;
@@ -181,7 +183,11 @@ class UserController extends Controller
         $input = $request->all();
 
         try {
-            $users = User::where('user_id', 'like', '%' . $input['search'] . '%')->select('name', 'last_name1', 'last_name2', 'user_id')->get()->take(25);
+            $users = User::where('user_id', 'like', '%' . $input['search'] . '%')
+                ->orWhere('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                ->orWhere('last_name1', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                ->orWhere('last_name2', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                ->select('name', 'last_name1', 'last_name2', 'user_id')->get()->take(25);
             return response()->json($users);
         } catch (\Throwable $e) {
             return null;

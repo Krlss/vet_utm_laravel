@@ -87,6 +87,7 @@ class UserApiController extends Controller
 
         try {
             DB::beginTransaction();
+            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 
             User::create($input);
 
@@ -147,6 +148,7 @@ class UserApiController extends Controller
                     ->first();
                 if ($userFindE) return response()->json(['message' => 'El correo ya está registrado', 'data' => []], 301);
                 if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 301);
+                if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 
                 $pet = Pet::where('user_id', $user->user_id)->get();
                 $canton = Canton::where('id', $user->id_canton)->first();
