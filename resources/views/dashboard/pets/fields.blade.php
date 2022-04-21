@@ -135,17 +135,28 @@
 
     </div>
 
-    <div class="grid grid-cols-1 mb-4">
-        <div class="flex flex-col px-2">
+    <div class="grid grid-cols-1  mb-4">
+        <div class="flex flex-col col-span-2 px-2">
             {{-- childres --}}
-
-            {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
-
-            @error('pather')
-            <span class="text-danger">{{ $message }}</span>
-            @enderror
-
+            <div x-data="{ open: true }">
+                <div class="flex items-start">
+                    <div>
+                        {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    </div>
+                    <div class="ml-2 cursor-pointer">
+                        <button @click="open=!open" type="button">
+                            <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                            <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
+                        </button>
+                    </div>
+                </div>
+                <div x-show="open">
+                    {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
+                    @error('pather')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
         </div>
     </div>
 
@@ -164,6 +175,7 @@
     </div>
 
     @push('scripts_lib')
+    <script src="//unpkg.com/alpinejs"></script>
     <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
     <script>
         $("[name='specie']").on('change', function() {
