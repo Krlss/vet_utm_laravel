@@ -118,9 +118,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('pather', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('pather', $pather, $pet->id_pet_pather, ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.pather_id_type') }}
-            </div>
+
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -129,9 +127,7 @@
         <div class="flex flex-col px-2">
             {!! Form::label('mother', trans('lang.mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('mother', $mother, $pet->id_pet_mother, ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.mother_id_type') }}
-            </div>
+
             @error('mother')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -139,16 +135,13 @@
 
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+    <div class="grid grid-cols-1 mb-4">
         <div class="flex flex-col px-2">
             {{-- childres --}}
 
             {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
 
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.pather_id_type_ad') }}
-            </div>
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -161,9 +154,6 @@
         <div class="flex flex-col px-2">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
-            <div class="text-gray-500 text-sm mb-2">
-                {{ trans('lang.owner_id_type') }}
-            </div>
             @error('user_id')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -204,7 +194,7 @@
                     return "Buscando..";
                 },
                 inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras...";
+                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
                 }
             },
             ajax: {
@@ -250,7 +240,7 @@
                     return "Buscando..";
                 },
                 inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras...";
+                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
                 }
             },
             ajax: {
@@ -295,7 +285,7 @@
                     return "Buscando..";
                 },
                 inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras...";
+                    return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
                 }
             },
             allowClear: true,
@@ -336,7 +326,7 @@
                     return "Buscando..";
                 },
                 inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras...";
+                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
                 }
             },
             ajax: {

@@ -61,6 +61,9 @@ class PetController extends Controller
 
         if (isset($input['mother'])) $input['id_pet_mother'] = $input['mother'] == 'null' ? null : $input['mother'];
         unset($input['mother']);
+
+        if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
+
         DB::beginTransaction();
         try {
             Pet::create($input);
@@ -142,6 +145,7 @@ class PetController extends Controller
             $input['n_lost'] = $pet->n_lost + 1;
         }
 
+        if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
 
         DB::beginTransaction();
         try {
@@ -380,9 +384,13 @@ class PetController extends Controller
     {
         try {
             $input = $request->all();
-            $pets = Pet::where('user_id', null)
-                ->where('pet_id', 'like', '%' . strtoupper($input['search']) . '%')
-                ->select('name', 'pet_id')->get()->take(25);
+
+            $pets  = Pet::where('user_id', '=', null)
+                ->where(function ($query) use ($input) {
+                    $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
+                        ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
+                })->select('name', 'pet_id')->get()->take(25);
+
             $result = ['pets' => $pets];
             return response()->json($result);
         } catch (\Throwable $th) {

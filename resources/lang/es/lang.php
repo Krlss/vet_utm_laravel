@@ -20,7 +20,7 @@ return [
      'last_name1' => 'Primer Apellido',
      'last_name2' => 'Segundo Apellido',
      'address' => 'Dirección',
-     'createUser' => 'Crear usuario',
+     'createUser' => 'Registrar usuario',
      'province' => 'Provincia',
      'canton' => 'Canton',
      'parishe' => 'Parroquia',
@@ -60,7 +60,8 @@ return [
      'mother' => 'Mascota madre',
      'select_mother' => 'Seleccione una madre',
      'not_required' => 'No es obligatorio',
-     'childs' => 'Hijos',
+     'childs' => 'Hijos de esta mascota',
+     'childs_doesnt_have' => 'Esta mascota no tiene hijos.',
      'it_doesnt_have' => 'No tiene',
 
      'namePet' => 'Nombre de la mascota',

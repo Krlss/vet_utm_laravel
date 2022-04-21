@@ -7,11 +7,20 @@
 @endpush
 
 @section('content_header')
-<div class="flex justify-between items-center">
+<div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 space-y-2">
     <div class="text-lg font-bold">{{trans('lang.edit_user')}}</div>
-    <a href="{{ route('dashboard.users.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-        {{trans('lang.list_user')}}
-    </a>
+    <div class="flex flex-col sm:space-x-2 sm:flex-row sm:items-center items-start sm:space-y-0 space-y-1">
+        @can('dashboard.users.index')
+        <a href="{{ route('dashboard.users.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+            {{trans('lang.list_user')}}
+        </a>
+        @endcan
+        @can('dashboard.users.create')
+        <a href="{{ route('dashboard.users.create') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-md font-semibold px-4 ">
+            {{trans('lang.createUser')}}
+        </a>
+        @endcan
+    </div>
 </div>
 @endsection
 
@@ -69,14 +78,14 @@
                                 </a>
                                 @endcan
 
-                                {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}
+                                <!-- {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}
                                 {!! Form::hidden('pet_id', $pet->pet_id, null) !!}
-                                {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+                                {!! Form::button('<i class="fa fa-times-circle text-gray-500 hover:text-red-700"></i>', [
                                 'type' => 'submit',
                                 'class' => '',
                                 'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name de este usuario?')",
                                 ]) !!}
-                                {!! Form::close() !!}
+                                {!! Form::close() !!} -->
 
                             </div>
                         </div>

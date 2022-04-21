@@ -285,7 +285,7 @@
                 return "Buscando..";
             },
             inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras...";
+                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
             }
         },
         ajax: {

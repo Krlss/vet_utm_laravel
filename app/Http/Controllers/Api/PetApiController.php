@@ -64,7 +64,7 @@ class PetApiController extends Controller
                     DB::beginTransaction();
 
                     $input['pet_id'] = $this->genaretePetId($input['public_ip']);
-
+                    if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
                     Pet::create($input);
 
                     $pet = Pet::where('user_id', $user->user_id)->get();
@@ -242,7 +242,7 @@ class PetApiController extends Controller
 
                     DB::beginTransaction();
                     $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
-
+                    if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
                     if (isset($input['images']))
                         foreach ($imagesCurrent as $imgC) {
                             $exist = array_search($imgC->url, array_column($input['images'], 'url'));
@@ -401,6 +401,7 @@ class PetApiController extends Controller
             }
             $pet['name'] = $input['namepet'];
             unset($input['namepet']);
+            if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
             $pet['birth'] = $input['birth'];
             unset($input['birth']);
             $pet['sex'] = $input['sex'];

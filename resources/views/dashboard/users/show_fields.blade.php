@@ -153,7 +153,7 @@
 
 </div>
 
-@if($pets)
+@if(count($pets))
 <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
     {!!trans('lang.label_data_user_pets')!!} ({!! count($pets) !!})
 </h6>
@@ -183,7 +183,7 @@
                 {!! Form::button('<li class="text-gray-500 hover:text-red-700 fa fa-times-circle"></li>', [
                 'type' => 'submit',
                 'class' => '',
-                'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name de este usuario?')",
+                'onclick' => "return confirm('Estás seguro que deseas quitar a $pet->name de este usuario?')",
                 ]) !!}
                 {!! Form::close() !!}
 

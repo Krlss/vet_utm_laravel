@@ -13,16 +13,39 @@
     @endif
 
     @if ($user)
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_owner') }}</div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">
+        <div>{{ trans('lang.data_owner') }}</div>
+        @can('dashboard.users.show')
+        <button>
+            <a href="{{ route('dashboard.users.show', $user) }}" class="">
+                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.users.edit')
+        <button>
+            <a href="{{ route('dashboard.users.edit', $user) }}" class=''>
+                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.users.destroy')
+        {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
+        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+        'type' => 'submit',
+        'class' => '',
+        'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
+        ]) !!}
+        {!! Form::close() !!}
+        @endcan
+    </h6>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
         {{-- User ID --}}
         <div class="form-group flex-col">
             {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => ' ']) !!}
             <div class="">
-                <a href={{ route('dashboard.users.show', $user) }}>
-                    {!! $user->user_id !!}
-                </a>
+                {!! $user->user_id !!}
             </div>
         </div>
         {{-- User first_name --}}
@@ -145,7 +168,25 @@
     </div>
     @endif
 
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">{{ trans('lang.data_pet') }}</div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">
+        <div>{{ trans('lang.data_pet') }}</div>
+        @can('dashboard.pets.edit')
+        <button>
+            <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
+                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            </a>
+        </button>
+        @endcan
+        @can('dashboard.pets.destroy')
+        {!! Form::open(['route' => ['dashboard.pets.destroy', $pet], 'method' => 'delete']) !!}
+        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+        'type' => 'submit',
+        'class' => '',
+        'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name')",
+        ]) !!}
+        {!! Form::close() !!}
+        @endcan
+    </h6>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         {{-- Pet ID --}}
@@ -186,8 +227,6 @@
         </div>
 
     </div>
-
-
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5">
 
@@ -243,7 +282,6 @@
 
     </div>
 
-
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
         <div class="form-group flex-col">
             {!! Form::label('pather', trans('lang.pather'), ['class' => ' ']) !!}
@@ -272,9 +310,8 @@
         </div>
     </div>
 
-
-    @if($childs)
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold mt-2">{!!trans('lang.childs')!!} ({!! count($childs) !!})</div>
+    @if(count($childs))
+    <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs')!!} ({!! count($childs) !!})</div>
 
     <div class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
         @foreach ($childs as $child)
@@ -284,27 +321,31 @@
                     <h4 class="uppercase font-bold">{!! $child->name !!}</h4>
                     <small class="uppercase">{!! $child->pet_id !!}</small>
                 </div>
-                <div class="flex items-center justify-center">
-                    @can('dashboard.pets.show')
-                    <a href="{{ route('dashboard.pets.show', $child) }}">
-                        <i class="fas fa-eye text-gray-500 hover:text-gray-700 cursor-pointer"></i>
-                    </a>
-                    @endcan
-                    @can('dashboard.pets.edit')
-                    <a href="{{ route('dashboard.pets.edit', $child) }}" class='btn btn-link'>
-                        <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
-                    </a>
-                    @endcan
+                <div class="flex items-center justify-center space-x-2">
 
+                    @can('dashboard.users.show')
+                    <button>
+                        <a href="{{ route('dashboard.pets.show', $child) }}" class="">
+                            <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+                        </a>
+                    </button>
+                    @endcan
+                    @can('dashboard.users.edit')
+                    <button>
+                        <a href="{{ route('dashboard.pets.edit', $child) }}" class=''>
+                            <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+                        </a>
+                    </button>
+                    @endcan
+                    @can('dashboard.users.destroy')
                     {!! Form::open(['route' => ['dashboard.deletePetChildren', $child], 'method' => 'delete']) !!}
-                    {!! Form::hidden('pet_id', $child->pet_id, null) !!}
-                    {!! Form::hidden('sex', $pet->sex, null) !!}
-                    {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
+                    {!! Form::button('<i class="fa fa-times-circle text-gray-500 hover:text-red-700"></i>', [
                     'type' => 'submit',
                     'class' => '',
-                    'onclick' => "return confirm('Estás seguro que deseas eliminar a $child->name de esta mascota?')",
+                    'onclick' => "return confirm('¿Estás seguro que deseas quitar este hijo $child->name de este padre $pet->name? ')",
                     ]) !!}
                     {!! Form::close() !!}
+                    @endcan
 
                 </div>
             </div>
@@ -312,6 +353,8 @@
         </div>
         @endforeach
     </div>
+    @else
+    <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs_doesnt_have')!!}</div>
     @endif
 
 </div>
