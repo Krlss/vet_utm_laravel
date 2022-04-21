@@ -6,12 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Models\Canton;
+use App\Models\Image;
 use App\Models\Parish;
 use App\Models\Pet;
 use App\Models\Province;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class PetController extends Controller
 {
@@ -81,14 +84,53 @@ class PetController extends Controller
                 }
             }
 
+            if ($request->hasFile('images')) {
+                $this->uploadImages($request->file('images'), $input['pet_id'], false);
+            }
+
             DB::commit();
             return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_created'));
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()->back()->with('error', trans('lang.pet_errpr') . $e->getMessage());
         }
+    }
 
-        dd($input);
+    public function uploadImages($files, $pet_id, $updated)
+    {
+        try {
+            /* Hay que arreglar esto */
+            if ($updated) {
+                $imagesCurrent = Image::where('pet_id', $pet_id)->get();
+                if ($files)
+                    foreach ($imagesCurrent as $imgC) {
+                        $exist = array_search($imgC->name, array_column($files, 'url'));
+                        if (is_numeric($exist)) {
+                            continue;
+                        } else {
+                            Storage::disk("google")->delete($imgC->id_image);
+                            $imgC->delete();
+                        }
+                    }
+            } else {
+                foreach ($files as $file) {
+                    $filename = $file->getClientOriginalName();
+                    Storage::disk("google")->put($filename, file_get_contents($file));
+                    $urlGoogleImage = Storage::disk("google")->url($filename);
+                    $urlG = explode('=', $urlGoogleImage);
+                    $id_img = explode('&', $urlG[1]);
+
+                    $image['id_image'] = $id_img[0];
+                    $image['url'] = $urlGoogleImage;
+                    $image['name'] = $filename;
+                    $image['pet_id'] = $pet_id;
+
+                    Image::create($image);
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+        }
     }
 
     public function show(Pet $pet)
@@ -127,7 +169,9 @@ class PetController extends Controller
 
         $childrensSelected = is_null($childrens) ? [] : $childrens->all();
 
-        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected'));
+        $images = Image::where('pet_id', $pet->pet_id)->get();
+
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -149,6 +193,9 @@ class PetController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->hasFile('images')) {
+                $this->uploadImages($request->file('images'), $pet->pet_id, true);
+            }
             if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
 
             if (isset($input['childrens'])) {
@@ -196,7 +243,11 @@ class PetController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            $imagesCurrent = Image::where('pet_id', $pet->pet_id)->get();
+            foreach ($imagesCurrent as $imgC) {
+                Storage::disk("google")->delete($imgC->id_image);
+                $imgC->delete();
+            }
             $pet->delete();
             DB::commit();
             return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_deleted'));

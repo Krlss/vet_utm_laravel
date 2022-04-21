@@ -143,7 +143,37 @@
                 </div>
                 <div x-show="open">
                     {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
-                    @error('pather')
+                    @error('childrens')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1  mb-4">
+        <div class="flex flex-col col-span-2 px-2">
+            {{-- photos pet --}}
+            <div x-data="{ open: true }">
+                <div class="flex items-start">
+                    <div>
+                        {!! Form::label('photo_pet', trans('lang.photo_pet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    </div>
+                    <div class="ml-2 cursor-pointer">
+                        <button @click="open=!open" type="button">
+                            <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                            <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
+                        </button>
+                    </div>
+                </div>
+                <div x-show="open">
+                    <input max="6" onchange="preview()" type="file" accept="image/*" multiple class="hidden" id="images" name="images[]" />
+                    <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-64 rounded-md">
+                        <i class="fa fa-upload"></i>
+                        <div>{{trans('lang.select_images')}}</div>
+                    </label>
+                    <div id="container_images" class="w-11/12 relative m-auto flex justify-evenly gap-5 flex-wrap"></div>
+                    @error('images')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -164,11 +194,61 @@
 
     <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{trans('lang.save')}}</button>
 
+    <style>
+        figure {
+            width: 15%;
+        }
+
+        img {
+            width: 100%;
+        }
+
+        figcaption {
+            text-align: center;
+            font-size: 2.4vmin;
+            margin-top: 0.5vmin;
+        }
+    </style>
 
 </div>
 
 
 @push('scripts_lib')
+<script>
+    let fileInput = document.getElementById('images');
+    let imageContainer = document.getElementById('container_images');
+    let extPer = /(image\/png|image\/jpg|image\/jpeg|image\/PNG|image\/JPEG|image\/JPG)$/i;
+
+    function preview() {
+        let num = fileInput.files.length;
+        imageContainer.innerHTML = "";
+        if (fileInput.files.length > 6) {
+            alert('Solo se pueden seleccionar máximo 6 imagenes');
+            return false;
+        }
+
+        for (i of fileInput.files) {
+            if (!extPer.exec(i.type)) {
+                alert('Asegurate de solo elegir imagenes');
+                i = null;
+                return false;
+            }
+            let reader = new FileReader();
+            let figure = document.createElement("figure");
+            let figCap = document.createElement("figcaption");
+
+            figCap.innerText = i.name;
+            figure.appendChild(figCap);
+            reader.onload = () => {
+                let img = document.createElement("img");
+                img.setAttribute("src", reader.result);
+                figure.insertBefore(img, figCap);
+            }
+            imageContainer.appendChild(figure);
+            reader.readAsDataURL(i);
+        }
+    }
+</script>
 <script src="//unpkg.com/alpinejs"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>

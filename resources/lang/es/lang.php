@@ -17,6 +17,8 @@ return [
      'email' => 'Correo eletrónico',
      'phone' => 'Teléfono',
      'required' => 'Campo obligatorio',
+     'photo_pet' => 'Fotos de la mascota',
+     'select_images' => 'Seleccionar imagenes',
      'last_name1' => 'Primer Apellido',
      'last_name2' => 'Segundo Apellido',
      'address' => 'Dirección',

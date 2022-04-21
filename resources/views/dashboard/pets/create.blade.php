@@ -24,7 +24,7 @@
         </div>
         @endif
 
-        {!! Form::open(['route' => 'dashboard.pets.store']) !!}
+        {!! Form::open(['route' => 'dashboard.pets.store', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.pets.fields_create')
         {!! Form::close() !!}
     </div>
