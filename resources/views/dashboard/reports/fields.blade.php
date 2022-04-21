@@ -173,7 +173,7 @@
                 return {
                     results: $.map(data, function(user) {
                         return {
-                            text: user.user_id,
+                            text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
                             id: user.user_id
                         }
                     })
