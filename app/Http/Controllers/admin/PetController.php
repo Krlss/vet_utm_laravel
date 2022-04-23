@@ -99,19 +99,29 @@ class PetController extends Controller
     public function uploadImages($files, $pet_id, $updated)
     {
         try {
-            /* Hay que arreglar esto */
             if ($updated) {
+                //Imagenes que le llegan 
+                $filesCurrent = [];
+
+                foreach ($files as $file) {
+                    $file_['name'] = $file->getClientOriginalName();
+                    $file_['ext'] = $file->getClientOriginalExtension();
+                    array_push($filesCurrent, $file_);
+                };
+                //Imagenes de la base de datos
                 $imagesCurrent = Image::where('pet_id', $pet_id)->get();
-                if ($files)
-                    foreach ($imagesCurrent as $imgC) {
-                        $exist = array_search($imgC->name, array_column($files, 'url'));
-                        if (is_numeric($exist)) {
-                            continue;
-                        } else {
-                            Storage::disk("google")->delete($imgC->id_image);
-                            $imgC->delete();
-                        }
+
+                foreach ($imagesCurrent as $imgC) {
+                    //Si la imagen de la base de datos se encuentra en las imagenes que le llegan
+                    //no se elimina, si no se encuentra en las imagenes que llegan se elimina.
+                    $exist = array_search($imgC->id_image, array_column($filesCurrent, 'name'));
+                    if (is_numeric($exist)) {
+                        continue;
+                    } else {
+                        Storage::disk("google")->delete($imgC->id_image);
+                        $imgC->delete();
                     }
+                }
             } else {
                 foreach ($files as $file) {
                     $filename = $file->getClientOriginalName();
@@ -169,9 +179,9 @@ class PetController extends Controller
 
         $childrensSelected = is_null($childrens) ? [] : $childrens->all();
 
-        $images = Image::where('pet_id', $pet->pet_id)->get();
+        $images_ = Image::where('pet_id', $pet->pet_id)->select('id_image', 'name', 'url')->get()->toArray();
 
-        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images'));
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images_'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)

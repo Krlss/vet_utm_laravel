@@ -202,12 +202,6 @@
         img {
             width: 100%;
         }
-
-        figcaption {
-            text-align: center;
-            font-size: 2.4vmin;
-            margin-top: 0.5vmin;
-        }
     </style>
 
 </div>
@@ -235,14 +229,10 @@
             }
             let reader = new FileReader();
             let figure = document.createElement("figure");
-            let figCap = document.createElement("figcaption");
-
-            figCap.innerText = i.name;
-            figure.appendChild(figCap);
             reader.onload = () => {
                 let img = document.createElement("img");
                 img.setAttribute("src", reader.result);
-                figure.insertBefore(img, figCap);
+                figure.appendChild(img);
             }
             imageContainer.appendChild(figure);
             reader.readAsDataURL(i);
