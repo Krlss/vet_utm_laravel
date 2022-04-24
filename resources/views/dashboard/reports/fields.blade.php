@@ -37,7 +37,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
 
         {{-- Sex --}}
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 mt-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
             @error('sex')
@@ -45,7 +45,7 @@
             @enderror
         </div>
 
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 mt-2">
             <!-- Birth pet -->
             {!! Form::label('birth', trans('lang.birth'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d')]) !!}
@@ -126,6 +126,29 @@
 
     </div>
 
+    <div class="grid grid-cols-1  mb-4">
+        <div class="flex flex-col col-span-2 px-2">
+            {{-- photos pet --}}
+            <div x-data="{ open: true }">
+                <div class="flex items-start">
+                    <div>
+                        {!! Form::label('photo_pet', trans('lang.photo_pet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    </div>
+                    <div class="ml-2 cursor-pointer">
+                        <button @click="open=!open" type="button">
+                            <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                            <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
+                        </button>
+                    </div>
+                </div>
+                <div x-show="open">
+                    @livewire('images-edit', ['currentFiles' => $images_])
+                    <livewire:scripts />
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
         {{-- Owner --}}
         <div class="flex flex-col px-2">
@@ -137,9 +160,12 @@
         </div>
     </div>
 
+    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
+
 </div>
 
 @push('scripts_lib')
+<script src="//unpkg.com/alpinejs"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>
     $('#user_id').select2({

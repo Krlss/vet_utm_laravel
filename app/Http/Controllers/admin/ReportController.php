@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\Controller;
 use App\Models\Canton;
 use App\Models\Pet;
@@ -36,8 +37,6 @@ class ReportController extends Controller
 
     public function create()
     {
-        $users = User::pluck('user_id', 'user_id');
-        return view('dashboard.reports.create', compact('users'));
     }
 
     public function store(CreatePetRequest $request)
@@ -66,10 +65,9 @@ class ReportController extends Controller
     {
         $pet = Pet::where('pet_id', $id)->first();
         $users = User::pluck('user_id', 'user_id');
-        $images = Image::where('pet_id', $pet->pet_id)->get();
-        if (count($images) <= 0) $images = [];
+        $images_ = Image::where('pet_id', $pet->pet_id)->select('id_image', 'name', 'url')->get()->toArray();
 
-        return view('dashboard.reports.edit', compact('pet', 'users', 'images'));
+        return view('dashboard.reports.edit', compact('pet', 'users', 'images_'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -81,6 +79,20 @@ class ReportController extends Controller
 
         DB::beginTransaction();
         try {
+            if ($request->hasFile('images')) {
+                $request->validate([
+                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                ]);
+                $controllerPet = new PetController();
+                $controllerPet->uploadImages($request->file('images'), $petUpdated->pet_id);
+            } else {
+                //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
+                $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
+                foreach ($imagesCurrent as $imgC) {
+                    Storage::disk("google")->delete($imgC->id_image);
+                    $imgC->delete();
+                }
+            }
 
             if ($petUpdated->published == 0 && $input['published'] == 1) {
 

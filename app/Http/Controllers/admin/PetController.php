@@ -215,7 +215,15 @@ class PetController extends Controller
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
                 $this->uploadImages($request->file('images'), $pet->pet_id);
+            } else {
+                //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
+                $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
+                foreach ($imagesCurrent as $imgC) {
+                    Storage::disk("google")->delete($imgC->id_image);
+                    $imgC->delete();
+                }
             }
+
             if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
 
             if (isset($input['childrens'])) {
