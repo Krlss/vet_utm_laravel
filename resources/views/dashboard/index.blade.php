@@ -10,9 +10,9 @@
 <div class="content">
     <!-- Small boxes (Stat box) -->
     <div class="flex flex-row flex-wrap items-center justify-end pt-4">
+        @can('dashboard.users.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            @can('dashboard.users.index')
             <a href="{{route('dashboard.users.index')}}">
                 <div class="small-box bg-info">
                     <div class="inner">
@@ -24,13 +24,13 @@
                     </div>
                 </div>
             </a>
-            @endcan
         </div>
+        @endcan
 
         <!-- ./col -->
+        @can('dashboard.pets.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            @can('dashboard.pets.index')
             <a href="{{ route('dashboard.pets.index') }}">
                 <div class="small-box bg-success">
                     <div class="inner">
@@ -42,12 +42,12 @@
                     </div>
                 </div>
             </a>
-            @endcan
         </div>
+        @endcan
         <!-- ./col -->
+        @can('dashboard.reports.index')
         <div class="col-lg-3 col-6">
             <!-- small box -->
-            @can('dashboard.reports.index')
             <a href="{{ route('dashboard.reports.index') }}">
                 <div class="small-box bg-warning">
                     <div class="inner">
@@ -59,8 +59,8 @@
                     </div>
                 </div>
             </a>
-            @endcan
         </div>
+        @endcan
 
     </div>
 
