@@ -54,16 +54,18 @@
                     <td>{{ $role->name }}</td>
                     <!-- <td>{{ $role->guard_name }}</td> -->
 
-                    <td class="flex items-center justify-center">
+                    <td class="flex items-center justify-center space-x-2">
                         @can('dashboard.roles.edit')
-                        <a href="{{ route('dashboard.roles.edit', $role) }}" class='btn btn-link'>
-                            <i class="fas fa-edit text-gray-500 hover:text-gray-700  cursor-pointer"></i>
-                        </a>
+                        <button>
+                            <a href="{{ route('dashboard.roles.edit', $role) }}" class='btn btn-link'>
+                                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+                            </a>
+                        </button>
                         @endcan
 
                         @can('dashboard.roles.destroy')
                         {!! Form::open(['route' => ['dashboard.roles.destroy', $role], 'method' => 'delete']) !!}
-                        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-gray-700"></i>', [
+                        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
                         'type' => 'submit',
                         'class' => '',
                         'onclick' => "return confirm('Estás seguro que deseas eliminar a $role->name')",

@@ -166,16 +166,22 @@
                 <h4 class="uppercase font-bold">{!! $pet->name !!}</h4>
                 <small class="uppercase">{!! $pet->pet_id !!}</small>
             </div>
-            <div class="flex items-center justify-center">
+
+            <div class="flex items-center justify-center space-x-3">
+
                 @can('dashboard.pets.show')
-                <a href="{{ route('dashboard.pets.show', $pet) }}">
-                    <i class="fas fa-eye text-gray-500 hover:text-blue-700 cursor-pointer"></i>
-                </a>
+                <button>
+                    <a href="{{ route('dashboard.pets.show', $pet) }}" class="">
+                        <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+                    </a>
+                </button>
                 @endcan
                 @can('dashboard.pets.edit')
-                <a href="{{ route('dashboard.pets.edit', $pet) }}" class='btn btn-link'>
-                    <i class="fas fa-edit text-gray-500 hover:text-green-700  cursor-pointer"></i>
-                </a>
+                <button>
+                    <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
+                        <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+                    </a>
+                </button>
                 @endcan
 
                 {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}

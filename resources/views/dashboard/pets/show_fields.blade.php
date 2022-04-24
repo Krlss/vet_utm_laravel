@@ -346,21 +346,21 @@
                 </div>
                 <div class="flex items-center justify-center space-x-2">
 
-                    @can('dashboard.users.show')
+                    @can('dashboard.pets.show')
                     <button>
                         <a href="{{ route('dashboard.pets.show', $child) }}" class="">
                             <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
                         </a>
                     </button>
                     @endcan
-                    @can('dashboard.users.edit')
+                    @can('dashboard.pets.edit')
                     <button>
                         <a href="{{ route('dashboard.pets.edit', $child) }}" class=''>
                             <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
                         </a>
                     </button>
                     @endcan
-                    @can('dashboard.users.destroy')
+
                     {!! Form::open(['route' => ['dashboard.deletePetChildren', $child], 'method' => 'delete']) !!}
                     {!! Form::button('<i class="fa fa-times-circle text-gray-500 hover:text-red-700"></i>', [
                     'type' => 'submit',
@@ -368,7 +368,6 @@
                     'onclick' => "return confirm('¿Estás seguro que deseas quitar este hijo $child->name de este padre $pet->name? ')",
                     ]) !!}
                     {!! Form::close() !!}
-                    @endcan
 
                 </div>
             </div>
