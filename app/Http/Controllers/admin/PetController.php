@@ -86,7 +86,7 @@ class PetController extends Controller
 
             if ($request->hasFile('images')) {
                 $request->validate([
-                    'images' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
                 $this->uploadImages($request->file('images'), $input['pet_id'], false);
             }
@@ -211,7 +211,7 @@ class PetController extends Controller
         try {
             if ($request->hasFile('images')) {
                 $request->validate([
-                    'images' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
                 $this->uploadImages($request->file('images'), $pet->pet_id, true);
             }
