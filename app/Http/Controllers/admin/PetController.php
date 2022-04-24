@@ -99,18 +99,19 @@ class PetController extends Controller
     public function uploadImages($files, $pet_id, $updated)
     {
         try {
-            if ($updated) {
-                //Imagenes que le llegan 
-                $filesCurrent = [];
 
+            //Imagenes que le llegan 
+            $filesCurrent = [];
+
+            //Imagenes de la base de datos
+            $imagesCurrent = Image::where('pet_id', $pet_id)->get();
+
+            if ($imagesCurrent) {
                 foreach ($files as $file) {
                     $file_['name'] = $file->getClientOriginalName();
                     $file_['ext'] = $file->getClientOriginalExtension();
                     array_push($filesCurrent, $file_);
                 };
-                //Imagenes de la base de datos
-                $imagesCurrent = Image::where('pet_id', $pet_id)->get();
-
                 foreach ($imagesCurrent as $imgC) {
                     //Si la imagen de la base de datos se encuentra en las imagenes que le llegan
                     //no se elimina, si no se encuentra en las imagenes que llegan se elimina.
@@ -122,8 +123,10 @@ class PetController extends Controller
                         $imgC->delete();
                     }
                 }
-            } else {
-                foreach ($files as $file) {
+            }
+
+            foreach ($files as $file) {
+                if ($file->getClientOriginalExtension() <> '') {
                     $filename = $file->getClientOriginalName();
                     Storage::disk("google")->put($filename, file_get_contents($file));
                     $urlGoogleImage = Storage::disk("google")->url($filename);

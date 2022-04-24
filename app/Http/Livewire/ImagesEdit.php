@@ -3,13 +3,10 @@
 namespace App\Http\Livewire;
 
 use Livewire\Component;
-use Livewire\WithFileUploads;
 use Exception;
 
 class ImagesEdit extends Component
 {
-    use WithFileUploads;
-
 
     public $images = [];
 
@@ -18,8 +15,6 @@ class ImagesEdit extends Component
         "clear_files" => 'clearFiles',
         "clear_file" => 'clearFile',
     ];
-
-    public $validation_errors = [];
 
     public function mount($currentFiles)
     {
@@ -30,15 +25,18 @@ class ImagesEdit extends Component
     {
         try {
             if (count($this->images) >= 6) {
+                $this->emit('get_images', $this->images);
                 session()->flash("error", "Solo se pueden máximo 6 imagenes");
             } elseif ($this->getFileInfo($image)["file_type"] == "image") {
                 array_push($this->images, $image);
-                //Envia el array a la vista
                 $this->emit('get_images', $this->images);
             } else {
+                $this->emit('get_images', $this->images);
                 session()->flash("error", "Solo se pueden subir imagenes");
             }
         } catch (Exception $ex) {
+            $this->emit('get_images', $this->images);
+            session()->flash("error", "Hubo un error");
         }
     }
 

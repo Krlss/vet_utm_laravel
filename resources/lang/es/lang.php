@@ -10,6 +10,7 @@ return [
      'confi_pass' => 'Confirma la contraseña',
 
      'Desconocido' => 'Desconocido',
+     'just_6_files' => 'Solo se pueden seleccionar 6 imagenes',
      'tableUserID' => 'Cedula o RUC',
      'namesUser' => 'Nombres',
      'last_names' => 'Apellidos',
