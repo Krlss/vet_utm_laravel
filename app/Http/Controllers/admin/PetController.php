@@ -180,15 +180,17 @@ class PetController extends Controller
         $pather = $pets->where('sex', 'M')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
         $mother = $pets->where('sex', 'F')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
 
-        $childrens = Pet::where('id_pet_pather', $pet->pet_id)
+        $childs = Pet::where('id_pet_pather', $pet->pet_id)
             ->orWhere('id_pet_mother', $pet->pet_id)
-            ->pluck('pet_id', 'pet_id');
+            ->get();
+
+        $childrens =  $childs->pluck('pet_id', 'pet_id');
 
         $childrensSelected = is_null($childrens) ? [] : $childrens->all();
 
         $images_ = Image::where('pet_id', $pet->pet_id)->select('id_image', 'name', 'url')->get()->toArray();
 
-        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images_'));
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images_', 'childs'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)

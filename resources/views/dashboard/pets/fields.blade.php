@@ -160,8 +160,58 @@
         </div>
     </div>
 
+    @if(count($childs))
+    <div x-data="{ open: false }" class="px-2">
+        <div class="flex items-start">
+            <div>
+                {!! Form::label('photo_pet', trans('lang.childs').' ('.count($childs).')', ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            </div>
+            <div class="ml-2 cursor-pointer">
+                <button @click="open=!open" type="button">
+                    <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
+                </button>
+            </div>
+        </div>
+
+        <div x-show="open" class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
+            @foreach ($childs as $child)
+            <div class="p-2 col-lg-4">
+                <div class="border px-4 py-2 rounded-lg flex flex-row justify-between">
+                    <div class="flex flex-col">
+                        <h4 class="uppercase font-bold">{!! $child->name !!}</h4>
+                        <small class="uppercase">{!! $child->pet_id !!}</small>
+                    </div>
+                    <div class="flex items-center justify-center space-x-2">
+
+                        @can('dashboard.pets.show')
+                        <button>
+                            <a href="{{ route('dashboard.pets.show', $child) }}" class="">
+                                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+                            </a>
+                        </button>
+                        @endcan
+                        @can('dashboard.pets.edit')
+                        <button>
+                            <a href="{{ route('dashboard.pets.edit', $child) }}" class=''>
+                                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+                            </a>
+                        </button>
+                        @endcan
+
+                    </div>
+                </div>
+
+            </div>
+            @endforeach
+        </div>
+        @else
+        <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs_doesnt_have')!!}</div>
+    </div>
+    @endif
+
     <div class="grid grid-cols-1  mb-4">
-        <div class="flex flex-col col-span-2 px-2">
+        <div class="flex flex-col col-span-2">
             {{-- photos pet --}}
             <div x-data="{ open: true }">
                 <div class="flex items-start">
@@ -185,7 +235,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
         {{-- Owner --}}
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
             @error('user_id')
