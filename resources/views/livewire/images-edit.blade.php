@@ -7,11 +7,14 @@
         </div>
     </div>
     @endif
-    <input wire:change="$emit('multiple_file_choosed')" hidden type="file" accept="image/*" multiple id="images" name="images[]" />
+    <input wire:change="$emit('multiple_file_choosed')" type="file" accept="image/*" multiple id="images" name="images[]" />
     <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-full md:w-64 rounded-md">
         <i class="fa fa-upload"></i>
         <div>{{trans('lang.select_images')}}</div>
     </label>
+    @error('images')
+    <span class="text-danger">{{ $message }}</span>
+    @enderror
     @if(!empty($images)) <button type="button" wire:click="$emit('confirm_remove_files')" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md float-right mb-4 w-full md:w-auto">Remover todas las {{count($images)}} imagenes</button> @endif
 
     <div id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">
@@ -23,7 +26,7 @@
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
         @else
-        <figure>
+        <figure class="md:w-2/12 sm:w-1/4 w-2/4">
             <img src="{{$elem}}" class="mb-1" />
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
@@ -92,7 +95,6 @@
     window.livewire.on('multiple_file_choosed', function() {
         try {
             let files = event.target.files;
-            let fileInput = document.getElementById('images');
             container.items.clear();
 
             if (files.length > 0 && files.length < 7) {

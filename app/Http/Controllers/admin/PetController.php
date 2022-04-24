@@ -85,6 +85,9 @@ class PetController extends Controller
             }
 
             if ($request->hasFile('images')) {
+                $request->validate([
+                    'images' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                ]);
                 $this->uploadImages($request->file('images'), $input['pet_id'], false);
             }
 
@@ -207,6 +210,9 @@ class PetController extends Controller
         DB::beginTransaction();
         try {
             if ($request->hasFile('images')) {
+                $request->validate([
+                    'images' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                ]);
                 $this->uploadImages($request->file('images'), $pet->pet_id, true);
             }
             if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
