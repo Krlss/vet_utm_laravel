@@ -166,8 +166,9 @@ class PetController extends Controller
             ->orWhere('id_pet_mother', $pet->pet_id)
             ->get();
 
+        $images = Image::where('pet_id', $pet->pet_id)->get();
 
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish'));
+        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish', 'images'));
     }
 
     public function edit(Pet $pet)

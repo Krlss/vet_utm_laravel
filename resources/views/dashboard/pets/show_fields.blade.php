@@ -310,6 +310,29 @@
         </div>
     </div>
 
+    @if(count($images))
+    <div x-data="{ open: false }">
+        <div class="flex items-center">
+            <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.photo_pet') }} </h6>
+            <div class="ml-2 cursor-pointer">
+                <button @click="open=!open" type="button" class="text-gray-400">
+                    <div x-show="!open"><i class="fa fa-angle-down text-sm"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-sm"></i></div>
+                </button>
+            </div>
+        </div>
+        <div x-show="open" id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">
+            @foreach ($images as $image)
+            <figure class="md:w-2/12 sm:w-1/4 w-2/4">
+                <img src="{{$image->url}}" class="mb-2" />
+            </figure>
+            @endforeach
+        </div>
+    </div>
+    @else
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.not_photos_report') }} </h6>
+    @endif
+
     @if(count($childs))
     <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs')!!} ({!! count($childs) !!})</div>
 
@@ -357,4 +380,7 @@
     <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs_doesnt_have')!!}</div>
     @endif
 
+    @push('scripts_lib')
+    <script src="//unpkg.com/alpinejs"></script>
+    @endpush
 </div>

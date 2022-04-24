@@ -97,7 +97,7 @@ return [
      '##########' => 'Indefinido',
      'published' => 'Publicado en la app',
      'photos_report' => 'Fotos del reporte',
-     'not_photos_report' => 'No tiene fotos',
+     'not_photos_report' => 'La mascota no tiene fotos',
      'image_pet_reporte_deleted' => 'La imagen del reporte fué eliminada.',
 
      'show_pet_lost' => 'Datos de mascota perdida',
