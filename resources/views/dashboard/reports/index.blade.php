@@ -52,7 +52,7 @@
                     <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
 
                     <td>{{ $pet->updated_at->diffForHumans() }}</td>
-                    <td class="flex items-center justify-center space-x-2">
+                    <td class="flex items-center justify-center space-x-1">
                         @can('dashboard.reports.show')
                         <button>
                             <a href="{{ route('dashboard.reports.show', $pet) }}">
