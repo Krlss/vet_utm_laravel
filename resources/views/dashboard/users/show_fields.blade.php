@@ -167,7 +167,7 @@
                 <small class="uppercase">{!! $pet->pet_id !!}</small>
             </div>
 
-            <div class="flex items-center justify-center space-x-3">
+            <div class="flex items-center justify-center space-x-2">
 
                 @can('dashboard.pets.show')
                 <button>
