@@ -88,7 +88,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                $this->uploadImages($request->file('images'), $input['pet_id'], false);
+                $this->uploadImages($request->file('images'), $input['pet_id']);
             }
 
             DB::commit();
@@ -99,7 +99,7 @@ class PetController extends Controller
         }
     }
 
-    public function uploadImages($files, $pet_id, $updated)
+    public function uploadImages($files, $pet_id)
     {
         try {
 
@@ -214,7 +214,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                $this->uploadImages($request->file('images'), $pet->pet_id, true);
+                $this->uploadImages($request->file('images'), $pet->pet_id);
             }
             if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
 

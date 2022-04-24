@@ -284,21 +284,31 @@
         </div>
     </div>
 
-    @if (count($images) > 0)
-    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center space-x-2">{{ trans('lang.photos_report') }}</h6>
+    @if(count($images))
+    <div x-data="{ open: false }">
+        <div class="flex items-center">
+            <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.photo_pet') }} </h6>
+            <div class="ml-2 cursor-pointer">
+                <button @click="open=!open" type="button" class="text-gray-400">
+                    <div x-show="!open"><i class="fa fa-angle-down text-sm"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-sm"></i></div>
+                </button>
+            </div>
+        </div>
+        <div x-show="open" id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">
+            @foreach ($images as $image)
+            <figure class="md:w-2/12 sm:w-1/4 w-2/4">
+                <img src="{{$image->url}}" class="mb-2" />
+            </figure>
+            @endforeach
+        </div>
+    </div>
     @else
-    <div class="uppercase w-full text-center mb-2 text-lg font-extrabold">
-        {{ trans('lang.not_photos_report') }}
-    </div>
-    <div class="w-full text-left">
-        {{ trans('lang.recommendable_not_published') }}
-    </div>
+    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.not_photos_report') }} </h6>
+    <div class="w-full text-left"> {{ trans('lang.recommendable_not_published') }} </div>
     @endif
 
-    <div class="flex flex-wrap w-full h-full">
-        @foreach ($images as $img)
-        <img class="w-60 object-cover p-2" src={{ $img->url }} />
-        @endforeach
-    </div>
-
+    @push('scripts_lib')
+    <script src="//unpkg.com/alpinejs"></script>
+    @endpush
 </div>
