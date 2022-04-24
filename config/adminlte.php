@@ -262,6 +262,12 @@ return [
             'can'          => 'dashboard.reports.index'
         ],
         [
+            'header' => 'Super usuario',
+            'can' => [
+                'dashboard.roles.index'
+            ]
+        ],
+        [
             'text'      => 'Roles y permisos',
             'icon'      => 'fas fa-list-alt',
             'active'    => ['dashboard/roles*', 'dashboard/permissions*'],
