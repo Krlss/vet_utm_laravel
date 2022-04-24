@@ -167,15 +167,8 @@
                     </div>
                 </div>
                 <div x-show="open">
-                    <input max="6" onchange="preview()" type="file" accept="image/*" multiple class="hidden" id="images" name="images[]" />
-                    <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-64 rounded-md">
-                        <i class="fa fa-upload"></i>
-                        <div>{{trans('lang.select_images')}}</div>
-                    </label>
-                    <div id="container_images" class="w-11/12 relative m-auto flex justify-evenly gap-5 flex-wrap"></div>
-                    @error('images')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
+                    @livewire('images-edit' , ['currentFiles' => []])
+                    <livewire:scripts />
                 </div>
             </div>
         </div>
@@ -208,37 +201,6 @@
 
 
 @push('scripts_lib')
-<script>
-    let fileInput = document.getElementById('images');
-    let imageContainer = document.getElementById('container_images');
-    let extPer = /(image\/png|image\/jpg|image\/jpeg|image\/PNG|image\/JPEG|image\/JPG)$/i;
-
-    function preview() {
-        let num = fileInput.files.length;
-        imageContainer.innerHTML = "";
-        if (fileInput.files.length > 6) {
-            alert('Solo se pueden seleccionar máximo 6 imagenes');
-            return false;
-        }
-
-        for (i of fileInput.files) {
-            if (!extPer.exec(i.type)) {
-                alert('Asegurate de solo elegir imagenes');
-                i = null;
-                return false;
-            }
-            let reader = new FileReader();
-            let figure = document.createElement("figure");
-            reader.onload = () => {
-                let img = document.createElement("img");
-                img.setAttribute("src", reader.result);
-                figure.appendChild(img);
-            }
-            imageContainer.appendChild(figure);
-            reader.readAsDataURL(i);
-        }
-    }
-</script>
 <script src="//unpkg.com/alpinejs"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>

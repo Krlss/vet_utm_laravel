@@ -22,12 +22,12 @@
         @foreach ($images as $key => $elem)
         @if(is_array($elem))
         <figure class="md:w-2/12 sm:w-1/4 w-2/4">
-            <img src="{{end($elem)}}" class="mb-1" />
+            <img src="{{end($elem)}}" class="mb-2" />
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
         @else
         <figure class="md:w-2/12 sm:w-1/4 w-2/4">
-            <img src="{{$elem}}" class="mb-1" />
+            <img src="{{$elem}}" class="mb-2" />
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
         @endif

@@ -178,7 +178,6 @@
                 <div x-show="open">
                     @livewire('images-edit', ['currentFiles' => $images_])
                     <livewire:scripts />
-                    <!-- <input onchange="preview()" type="file" accept="image/*" multiple class="hidden" id="images" name="images[]" /> -->
                 </div>
             </div>
         </div>
