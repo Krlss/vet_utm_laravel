@@ -7,7 +7,7 @@
         </div>
     </div>
     @endif
-    <input wire:change="$emit('multiple_file_choosed')" type="file" multiple hidden accept="image/*" id="images" name="images[]" />
+    <input wire:change="$emit('multiple_file_choosed')" type="file" multiple accept="image/*" id="images" name="images[]" />
     <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-full md:w-64 rounded-md">
         <i class="fa fa-upload"></i>
         <div>{{trans('lang.select_images')}}</div>
@@ -54,7 +54,7 @@
         document.getElementById("images").files = container.files;
 
         //Recibir datos desde el servidor
-        Livewire.on('get_images', (DATA) => {
+        window.livewire.on('get_images', (DATA) => {
             container.items.clear();
             if (typeof DATA === "object") {
                 const arrOb = Object.values(DATA);
