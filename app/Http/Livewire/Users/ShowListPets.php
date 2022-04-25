@@ -17,7 +17,7 @@ class ShowListPets extends Component
         $this->search = '';
         $this->currents = $currentsPets;
         $this->user_id = $user_id;
-        $this->$delete = $delete;
+        $this->delete = $delete;
     }
 
     public function reset_search()
