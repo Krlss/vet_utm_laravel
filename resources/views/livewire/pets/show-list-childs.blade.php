@@ -21,7 +21,7 @@
     </div>
     <div x-show="open" class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
         @forelse ($pets as $pet)
-        <div wire:loading.class="opacity-75" class="p-2 col-lg-4">
+        <div wire:loading.class="animate-pulse" class="p-2 col-lg-4">
             <div class="border px-4 py-2 rounded-lg flex flex-row justify-between">
                 <div class="flex flex-col">
                     <h4 class="uppercase font-bold">{!! $pet->name !!}</h4>

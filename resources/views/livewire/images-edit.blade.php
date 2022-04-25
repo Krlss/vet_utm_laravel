@@ -7,11 +7,15 @@
         </div>
     </div>
     @endif
-    <input wire:change="$emit('multiple_file_choosed')" type="file" hidden accept="image/*" multiple id="images" name="images[]" />
+    <input wire:change="$emit('multiple_file_choosed')" type="file" multiple hidden accept="image/*" id="images" name="images[]" />
     <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-full md:w-64 rounded-md">
         <i class="fa fa-upload"></i>
         <div>{{trans('lang.select_images')}}</div>
     </label>
+
+    <div wire:loading class="w-full md:w-64 text-center mb-2 text-lg hidden">
+        <i class="fa fa-spinner animate-spin"></i>
+    </div>
     @error('images')
     <span class="text-danger">{{ $message }}</span>
     @enderror
