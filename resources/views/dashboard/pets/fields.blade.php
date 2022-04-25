@@ -1,3 +1,4 @@
+<div>
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
         {!! trans('lang.label_info_pet_create') !!}
     </h6>
@@ -135,8 +136,8 @@
 
     </div>
 
-    <div class="grid grid-cols-1  mb-4">
-        <div class="flex flex-col col-span-2 px-2">
+    <div class="grid grid-cols-1 mb-4 px-2">
+        <div class="flex flex-col col-span-2">
             {{-- childres --}}
             <div x-data="{ open: true }">
                 <div class="flex items-start">
@@ -201,7 +202,6 @@
 
                     </div>
                 </div>
-
             </div>
             @endforeach
         </div>
@@ -210,7 +210,7 @@
     </div>
     @endif
 
-    <div class="grid grid-cols-1  mb-4">
+    <div class="grid grid-cols-1 mb-4 px-2">
         <div class="flex flex-col col-span-2">
             {{-- photos pet --}}
             <div x-data="{ open: true }">
@@ -233,7 +233,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4 px-2">
         {{-- Owner --}}
         <div class="flex flex-col">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -246,241 +246,239 @@
 
     <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
 
-    </div>
+</div>
+@push('scripts_lib')
+<script src="//unpkg.com/alpinejs"></script>
+<script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script>
+    $("[name='specie']").on('change', function() {
+        $('#pather').val(null).trigger('change');
+        $('#pather').html('');
+        $('#mother').val(null).trigger('change');
+        $('#mother').html('');
+        $('#childrens').val(null).trigger('change');
+        $('#childrens').html('');
+    });
 
-    @push('scripts_lib')
-
-    <script src="//unpkg.com/alpinejs"></script>
-    <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-    <script>
-        $("[name='specie']").on('change', function() {
-            $('#pather').val(null).trigger('change');
-            $('#pather').html('');
-            $('#mother').val(null).trigger('change');
-            $('#mother').html('');
-            $('#childrens').val(null).trigger('change');
-            $('#childrens').html('');
-        });
-
-        $("[name='sex']").on('change', function() {
-            $('#childrens').val(null).trigger('change');
-            $('#childrens').html('');
-        });
+    $("[name='sex']").on('change', function() {
+        $('#childrens').val(null).trigger('change');
+        $('#childrens').html('');
+    });
 
 
-        $('#pather').select2({
-            width: '100%',
-            placeholder: "Digite el identificador del padre",
-            minimumInputLength: 2,
-            allowClear: true,
-            language: {
-                noResults: function() {
-                    return "No hay resultado";
-                },
-                searching: function() {
-                    return "Buscando..";
-                },
-                inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
-                }
+    $('#pather').select2({
+        width: '100%',
+        placeholder: "Digite el identificador del padre",
+        minimumInputLength: 2,
+        allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
             },
-            ajax: {
-                url: "{{url('dashboard/parents')}}",
-                method: "POST",
-                data: function(params) {
-                    var specieValue = $("[name='specie']").val();
-                    var childrensSeleted = $("#childrens").val();
-                    var query = {
-                        search: params.term,
-                        specie: specieValue,
-                        pet_id: $("[name='pet_id']").val(),
-                        childrensSeleted: childrensSeleted,
-                        sex: 'M',
-                        "_token": "{{csrf_token()}}"
-                    }
-                    return query;
-                },
-                dataType: "json",
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(pet) {
-                            return {
-                                text: pet.name + " - " + pet.pet_id,
-                                id: pet.pet_id
-                            }
-                        })
-                    };
-                }
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
             }
-        });
-
-        $('#mother').select2({
-            width: '100%',
-            placeholder: "Digite el identificador de la madre",
-            minimumInputLength: 2,
-            allowClear: true,
-            language: {
-                noResults: function() {
-                    return "No hay resultado";
-                },
-                searching: function() {
-                    return "Buscando..";
-                },
-                inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
+        },
+        ajax: {
+            url: "{{url('dashboard/parents')}}",
+            method: "POST",
+            data: function(params) {
+                var specieValue = $("[name='specie']").val();
+                var childrensSeleted = $("#childrens").val();
+                var query = {
+                    search: params.term,
+                    specie: specieValue,
+                    pet_id: $("[name='pet_id']").val(),
+                    childrensSeleted: childrensSeleted,
+                    sex: 'M',
+                    "_token": "{{csrf_token()}}"
                 }
+                return query;
             },
-            ajax: {
-                url: "{{url('dashboard/parents')}}",
-                method: "POST",
-                data: function(params) {
-                    var specieValue = $("[name='specie']").val();
-                    var childrensSeleted = $("#childrens").val();
-                    var query = {
-                        search: params.term,
-                        specie: specieValue,
-                        pet_id: $("[name='pet_id']").val(),
-                        childrensSeleted: childrensSeleted,
-                        sex: 'F',
-                        "_token": "{{csrf_token()}}"
-                    }
-                    return query;
-                },
-                dataType: "json",
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(pet) {
-                            return {
-                                text: pet.name + " - " + pet.pet_id,
-                                id: pet.pet_id
-                            }
-                        })
-                    };
-                }
-            }
-        });
-
-        $('#user_id').select2({
-            width: '100%',
-            placeholder: "Digite la cedula o RUC del dueño",
-            minimumInputLength: 2,
-            language: {
-                noResults: function() {
-                    return "No hay resultado";
-                },
-                searching: function() {
-                    return "Buscando..";
-                },
-                inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
-                }
-            },
-            allowClear: true,
-            ajax: {
-                url: "{{url('dashboard/pet/user')}}",
-                method: "POST",
-                data: function(params) {
-                    var query = {
-                        search: params.term,
-                        "_token": "{{csrf_token()}}"
-                    }
-                    return query;
-                },
-                dataType: "json",
-                processResults: function(data) {
-                    return {
-                        results: $.map(data, function(user) {
-                            return {
-                                text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
-                                id: user.user_id
-                            }
-                        })
-                    };
-                }
-            }
-        });
-
-        $('#childrens').select2({
-            width: '100%',
-            placeholder: "Digita los identificadores de las mascotas",
-            minimumInputLength: 2,
-            allowClear: true,
-            language: {
-                noResults: function() {
-                    return "No hay resultado";
-                },
-                searching: function() {
-                    return "Buscando..";
-                },
-                inputTooShort: function() {
-                    return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
-                }
-            },
-            ajax: {
-                url: "{{url('dashboard/childrens')}}",
-                dataType: 'json',
-                method: "POST",
-                data: function(params) {
-                    var specieValue = $("[name='specie']").val();
-                    var query = {
-                        search: params.term,
-                        specie: specieValue,
-                        pet_id: $("[name='pet_id']").val(),
-                        pather_seleted: $("[name='pather']").val(),
-                        mother_seleted: $("[name='mother']").val(),
-                        sex: $("[name='sex']").val(),
-                        "_token": "{{csrf_token()}}"
-                    }
-                    return query;
-                },
-                processResults: function(data) {
-                    data.pets = data.pets.map(function(obj) {
+            dataType: "json",
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(pet) {
                         return {
-                            "text": obj.name + " - " + obj.pet_id,
-                            "id": obj.pet_id
-                        };
-                    });
-                    return {
-                        results: data.pets
-                    };
-                },
-                cache: true
+                            text: pet.name + " - " + pet.pet_id,
+                            id: pet.pet_id
+                        }
+                    })
+                };
             }
-        });
+        }
+    });
 
-        /*        $(document).ready(() => {
+    $('#mother').select2({
+        width: '100%',
+        placeholder: "Digite el identificador de la madre",
+        minimumInputLength: 2,
+        allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
+            }
+        },
+        ajax: {
+            url: "{{url('dashboard/parents')}}",
+            method: "POST",
+            data: function(params) {
+                var specieValue = $("[name='specie']").val();
+                var childrensSeleted = $("#childrens").val();
+                var query = {
+                    search: params.term,
+                    specie: specieValue,
+                    pet_id: $("[name='pet_id']").val(),
+                    childrensSeleted: childrensSeleted,
+                    sex: 'F',
+                    "_token": "{{csrf_token()}}"
+                }
+                return query;
+            },
+            dataType: "json",
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(pet) {
+                        return {
+                            text: pet.name + " - " + pet.pet_id,
+                            id: pet.pet_id
+                        }
+                    })
+                };
+            }
+        }
+    });
+
+    $('#user_id').select2({
+        width: '100%',
+        placeholder: "Digite la cedula o RUC del dueño",
+        minimumInputLength: 2,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
+            }
+        },
+        allowClear: true,
+        ajax: {
+            url: "{{url('dashboard/pet/user')}}",
+            method: "POST",
+            data: function(params) {
+                var query = {
+                    search: params.term,
+                    "_token": "{{csrf_token()}}"
+                }
+                return query;
+            },
+            dataType: "json",
+            processResults: function(data) {
+                return {
+                    results: $.map(data, function(user) {
+                        return {
+                            text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
+                            id: user.user_id
+                        }
+                    })
+                };
+            }
+        }
+    });
+
+    $('#childrens').select2({
+        width: '100%',
+        placeholder: "Digita los identificadores de las mascotas",
+        minimumInputLength: 2,
+        allowClear: true,
+        language: {
+            noResults: function() {
+                return "No hay resultado";
+            },
+            searching: function() {
+                return "Buscando..";
+            },
+            inputTooShort: function() {
+                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
+            }
+        },
+        ajax: {
+            url: "{{url('dashboard/childrens')}}",
+            dataType: 'json',
+            method: "POST",
+            data: function(params) {
+                var specieValue = $("[name='specie']").val();
+                var query = {
+                    search: params.term,
+                    specie: specieValue,
+                    pet_id: $("[name='pet_id']").val(),
+                    pather_seleted: $("[name='pather']").val(),
+                    mother_seleted: $("[name='mother']").val(),
+                    sex: $("[name='sex']").val(),
+                    "_token": "{{csrf_token()}}"
+                }
+                return query;
+            },
+            processResults: function(data) {
+                data.pets = data.pets.map(function(obj) {
+                    return {
+                        "text": obj.name + " - " + obj.pet_id,
+                        "id": obj.pet_id
+                    };
+                });
+                return {
+                    results: data.pets
+                };
+            },
+            cache: true
+        }
+    });
+
+    /*        $(document).ready(() => {
 
 
-                   $.ajax({
-                       url: "{{url('dashboard/pet/childrens')}}",
-                       dataType: 'json',
-                       method: "POST",
-                       data: {
-                           "_token": "{{csrf_token()}}",
-                           pet_id: $('#pet_id').val()
-                       },
-                       xhr: () => {
-                           let xhr = new XMLHttpRequest();
-                           xhr.upload.onprogress = (e) => {
-                               let percent = (e.loaded / e.total) * 100;
-                               percent = percent - 2;
-                               document.getElementById('progress_childrens').style.width = percent + '%';
-                           };
-                           return xhr;
-                       },
-                   }).done(function(data) {
-                       console.log(data);
-                       document.getElementById('progress_childrens').style.width = '0%';
-                       let petsOptions = '';
-                       $('#childrens').val(null).trigger('change');
-                       $.each(data.pets, function(i, pets) {
-                           petsOptions += '<option value="' + pets.pet_id + '">' + pets.pet_id + '</option>';
-                       });
-                       $('#childrens').html(petsOptions);
-                   }).fail((xhr, textStatus) => {
-                       console.log(xhr);
-                       console.log(textStatus)
+               $.ajax({
+                   url: "{{url('dashboard/pet/childrens')}}",
+                   dataType: 'json',
+                   method: "POST",
+                   data: {
+                       "_token": "{{csrf_token()}}",
+                       pet_id: $('#pet_id').val()
+                   },
+                   xhr: () => {
+                       let xhr = new XMLHttpRequest();
+                       xhr.upload.onprogress = (e) => {
+                           let percent = (e.loaded / e.total) * 100;
+                           percent = percent - 2;
+                           document.getElementById('progress_childrens').style.width = percent + '%';
+                       };
+                       return xhr;
+                   },
+               }).done(function(data) {
+                   console.log(data);
+                   document.getElementById('progress_childrens').style.width = '0%';
+                   let petsOptions = '';
+                   $('#childrens').val(null).trigger('change');
+                   $.each(data.pets, function(i, pets) {
+                       petsOptions += '<option value="' + pets.pet_id + '">' + pets.pet_id + '</option>';
                    });
-               }) */
-    </script>
-    @endpush
+                   $('#childrens').html(petsOptions);
+               }).fail((xhr, textStatus) => {
+                   console.log(xhr);
+                   console.log(textStatus)
+               });
+           }) */
+</script>
+@endpush
