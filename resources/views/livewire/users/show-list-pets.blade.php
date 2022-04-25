@@ -31,14 +31,14 @@
                 <div class="flex items-center justify-center space-x-2">
 
                     @can('dashboard.pets.show')
-                    <button>
+                    <button type="button">
                         <a href="{{ route('dashboard.pets.show', $pet) }}" class="">
                             <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
                         </a>
                     </button>
                     @endcan
                     @can('dashboard.pets.edit')
-                    <button>
+                    <button type="button">
                         <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
                             <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
                         </a>
