@@ -310,6 +310,10 @@
         </div>
     </div>
 
+    <!-- CHILDS -->
+    <livewire:pets.show-list-childs :currentsPets="$childs" :pet_id="$pet->pet_id" :pet_name="$pet->name" :pet_sex="$pet->sex" :delete="true" />
+    @livewireScripts
+
     @if(count($images))
     <div x-data="{ open: false }">
         <div class="flex items-center">
@@ -331,52 +335,6 @@
     </div>
     @else
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.not_photos_report') }} </h6>
-    @endif
-
-    @if(count($childs))
-    <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs')!!} ({!! count($childs) !!})</div>
-
-    <div class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
-        @foreach ($childs as $child)
-        <div class="p-2 col-lg-4">
-            <div class="border px-4 py-2 rounded-lg flex flex-row justify-between">
-                <div class="flex flex-col">
-                    <h4 class="uppercase font-bold">{!! $child->name !!}</h4>
-                    <small class="uppercase">{!! $child->pet_id !!}</small>
-                </div>
-                <div class="flex items-center justify-center space-x-2">
-
-                    @can('dashboard.pets.show')
-                    <button>
-                        <a href="{{ route('dashboard.pets.show', $child) }}" class="">
-                            <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
-                        </a>
-                    </button>
-                    @endcan
-                    @can('dashboard.pets.edit')
-                    <button>
-                        <a href="{{ route('dashboard.pets.edit', $child) }}" class=''>
-                            <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
-                        </a>
-                    </button>
-                    @endcan
-
-                    {!! Form::open(['route' => ['dashboard.deletePetChildren', $child], 'method' => 'delete']) !!}
-                    {!! Form::button('<i class="fa fa-times-circle text-gray-500 hover:text-red-700"></i>', [
-                    'type' => 'submit',
-                    'class' => '',
-                    'onclick' => "return confirm('¿Estás seguro que deseas quitar este hijo $child->name de este padre $pet->name? ')",
-                    ]) !!}
-                    {!! Form::close() !!}
-
-                </div>
-            </div>
-
-        </div>
-        @endforeach
-    </div>
-    @else
-    <div class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">{!!trans('lang.childs_doesnt_have')!!}</div>
     @endif
 
     @push('scripts_lib')
