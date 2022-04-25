@@ -163,8 +163,9 @@ return [
      'select_province' => 'Selecciona la provincia',
 
      'label_data_user' => 'Datos del usuario',
+     'data_not_found' => 'No se encontró ese registro',
      'label_data_user_pets' => 'Mascotas del usuario',
-     'label_data_user_pets_without' => 'El usuario no tiene mascostas.',
+     'label_data_user_pets_without' => 'El usuario no tiene mascotas.',
      'pet_user_delete' => 'Ha sido eliminada la mascota del usuario',
      'pet_children_delete' => 'Ha sido eliminada un hijo de esta mascota',
      'type_user_id' => 'Digita la cedula o RUC de la persona',

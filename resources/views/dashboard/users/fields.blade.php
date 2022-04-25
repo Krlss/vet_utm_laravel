@@ -192,10 +192,13 @@
             <div class="px-2 mt-4">
                 <a href="{{ route('dashboard.pets.create') }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:underline">Crear una nueva mascota</a>
             </div>
-
         </div>
-
     </div>
+
+    <livewire:users.show-list-pets :currentsPets="$pets" :user_id="$user->user_id" :delete="false" />
+    @livewireScripts
+
+    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-4 mb-2 rounded-md text-whire font-medium text-white">Guardar</button>
 
     <style>
         input[type=number]::-webkit-inner-spin-button,

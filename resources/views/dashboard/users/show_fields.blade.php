@@ -153,55 +153,5 @@
 
 </div>
 
-@if(count($pets))
-<h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-    {!!trans('lang.label_data_user_pets')!!} ({!! count($pets) !!})
-</h6>
-
-<div class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
-    @foreach ($pets as $pet)
-    <div class="p-2 col-lg-4">
-        <div class="border px-4 py-2 rounded-lg flex flex-row justify-between">
-            <div class="flex flex-col">
-                <h4 class="uppercase font-bold">{!! $pet->name !!}</h4>
-                <small class="uppercase">{!! $pet->pet_id !!}</small>
-            </div>
-
-            <div class="flex items-center justify-center space-x-2">
-
-                @can('dashboard.pets.show')
-                <button>
-                    <a href="{{ route('dashboard.pets.show', $pet) }}" class="">
-                        <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
-                    </a>
-                </button>
-                @endcan
-                @can('dashboard.pets.edit')
-                <button>
-                    <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
-                        <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
-                    </a>
-                </button>
-                @endcan
-
-                {!! Form::open(['route' => ['dashboard.deletePetUser', $pet], 'method' => 'delete']) !!}
-                {!! Form::hidden('pet_id', $pet->pet_id, null) !!}
-                {!! Form::button('<li class="text-gray-500 hover:text-red-700 fa fa-times-circle"></li>', [
-                'type' => 'submit',
-                'class' => '',
-                'onclick' => "return confirm('Estás seguro que deseas quitar a $pet->name de este usuario?')",
-                ]) !!}
-                {!! Form::close() !!}
-
-            </div>
-        </div>
-
-    </div>
-    @endforeach
-</div>
-
-@else
-<h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-    {!!trans('lang.label_data_user_pets_without')!!}
-</h6>
-@endif
+<livewire:users.show-list-pets :currentsPets="$pets" :user_id="$user->user_id" :delete="true" />
+@livewireScripts
