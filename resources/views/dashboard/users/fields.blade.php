@@ -59,10 +59,10 @@
 
 
             <!-- 3 row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 space-y-2 sm:space-y-0">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
 
                 <!-- email -->
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('email', trans('lang.email'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.email'), 'required' => true, 'type' => 'email']) !!}
                     @error('email')
@@ -71,7 +71,7 @@
                 </div>
 
                 <!-- phone -->
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
                     @error('phone')
