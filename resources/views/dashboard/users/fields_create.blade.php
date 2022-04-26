@@ -1,18 +1,21 @@
 <div>
 
     <div x-data="{ open: true }">
-        <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
-            {!! trans('lang.label_info_user_create') !!}
-            <div class="ml-2 cursor-pointer">
+
+        <div class="flex items-center space-x-2 my-3">
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_create') !!}</p>
+            <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
-        </h6>
+        </div>
 
-        <div x-show="open">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
+        <div x-show="open" class="space-y-2">
+            <!-- 1 row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:space-y-0 space-y-2">
+                <!-- user id -->
                 <div class="flex flex-col px-2">
                     {!! Form::label('user_id', trans('lang.tableUserID'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
 
@@ -22,6 +25,7 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+                <!-- names -->
                 <div class="flex flex-col px-2">
                     {!! Form::label('name', trans('lang.namesUser'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.namesUser'), 'required' => true]) !!}
@@ -29,6 +33,11 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
+            </div>
+
+            <!-- 2 row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:space-y-0 space-y-2">
+                <!-- lastnames -->
                 <div class="flex flex-col px-2">
                     {!! Form::label('last_name1', trans('lang.last_name1'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::text('last_name1', old('last_name1'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name1'), 'required' => true]) !!}
@@ -36,7 +45,6 @@
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-
                 <div class="flex flex-col px-2">
                     {!! Form::label('last_name2', trans('lang.last_name2'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::text('last_name2', old('last_name2'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name2'), 'required' => true]) !!}
@@ -46,8 +54,10 @@
                 </div>
             </div>
 
-            {{-- --}}
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2">
+            <!-- 3 row -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 space-y-2 sm:space-y-0">
+
+                <!-- email -->
                 <div class="flex flex-col px-2">
                     {!! Form::label('email', trans('lang.email'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.email'), 'required' => true, 'type' => 'email']) !!}
@@ -56,6 +66,7 @@
                     @enderror
                 </div>
 
+                <!-- phone -->
                 <div class="flex flex-col px-2">
                     {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
@@ -64,6 +75,7 @@
                     @enderror
                 </div>
 
+                <!-- role -->
                 @can('dashboard.users.role')
                 <div class="flex flex-col px-2">
                     {!! Form::label('roles', trans('lang.role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -79,19 +91,18 @@
 
     <div x-data="{ open: true }">
 
-        <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
-            {!! trans('lang.label_info_user_contact') !!}
-            <div class="ml-2 cursor-pointer">
+        <div class="flex items-center space-x-2 my-3">
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_contact') !!}</p>
+            <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
-        </h6>
-
+        </div>
 
         <div x-show="open">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2 sm:space-y-0 space-y-2">
 
                 <div class="flex flex-col px-2">
                     {!! Form::label('id_province', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
@@ -170,15 +181,16 @@
 
 
     <div x-data="{open: true}">
-        <h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
-            {!! trans('lang.label_info_user_pets') !!}
-            <div class="ml-2 cursor-pointer">
+
+        <div class="flex items-center space-x-2 my-3">
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_pets') !!}</p>
+            <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
-        </h6>
+        </div>
 
         <div x-show="open">
             <div class="grid grid-cols-1 mb-2">
