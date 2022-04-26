@@ -3,10 +3,11 @@
         {!! trans('lang.label_info_pet_create') !!}
     </h6>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-2">
+    <!-- 1 row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4">
 
         <!-- Pet_id -->
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('pet_id', trans('lang.pet_id'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::text('pet_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
             @error('pet_id')
@@ -15,7 +16,7 @@
         </div>
 
         <!-- Pet name -->
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('name', trans('lang.namePet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'required' => true]) !!}
             @error('name')
@@ -24,7 +25,7 @@
         </div>
 
         <!-- Pet Specie -->
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('specie', ['canine' => trans('lang.canine'), 'feline' => trans('lang.feline')], $pet->specie ? $pet->specie : 'canine', ['class' => 'select2 form-control', 'required' => true]) !!}
             @error('specie')
@@ -33,7 +34,7 @@
         </div>
 
         <!-- Pet Race -->
-        <div class="flex flex-col px-2">
+        <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('race', trans('lang.race'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::text('race', old('race'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name2'), 'required' => true]) !!}
             @error('race')
@@ -43,8 +44,9 @@
 
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 mb-2">
-        {{-- Sex --}}
+    <!-- 2 row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 sm:space-y-0 space-y-2 mb-2">
+        <!-- sex -->
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
@@ -68,7 +70,8 @@
         {!! trans('lang.label_info_pet_create_not_Required') !!}
     </h6>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <!-- 3 row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 sm:space-y-0 space-y-2 mb-2">
 
         <!-- Pet castrated -->
         <div class="flex flex-col px-2">
@@ -114,21 +117,22 @@
 
     </div>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4">
-        {{-- parents --}}
+    <!-- 4 row -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-3 sm:space-y-0 space-y-2">
+
+        <!-- pather -->
         <div class="flex flex-col px-2">
             {!! Form::label('pather', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('pather', $pather, $pet->id_pet_pather, ['placeholder' => '']) !!}
-
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
             @enderror
         </div>
 
+        <!-- mother -->
         <div class="flex flex-col px-2">
             {!! Form::label('mother', trans('lang.mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('mother', $mother, $pet->id_pet_mother, ['placeholder' => '']) !!}
-
             @error('mother')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -136,9 +140,10 @@
 
     </div>
 
-    <div class="grid grid-cols-1 mb-4 px-2">
+    <!-- 5 row -->
+    <div class="grid grid-cols-1 sm:space-y-0 space-y-2 mb-3 px-2">
         <div class="flex flex-col col-span-2">
-            {{-- childres --}}
+            <!-- childrens -->
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
@@ -161,13 +166,15 @@
         </div>
     </div>
 
+    <!-- 6 row -->
     <!-- CHILDS -->
     <livewire:pets.show-list-childs :currentsPets="$childs" :pet_id="$pet->pet_id" :pet_name="$pet->name" :pet_sex="$pet->sex" :delete="false" />
     @livewireScripts
 
-    <div class="grid grid-cols-1 mb-4 px-2">
+    <!-- 7 row -->
+    <div class="grid grid-cols-1 sm:space-y-0 space-y-2 mb-3 px-2">
         <div class="flex flex-col col-span-2">
-            {{-- photos pet --}}
+            <!-- photos -->
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
@@ -188,8 +195,9 @@
         </div>
     </div>
 
+    <!-- 8 row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-4 px-2">
-        {{-- Owner --}}
+        <!-- owner -->
         <div class="flex flex-col">
             {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}

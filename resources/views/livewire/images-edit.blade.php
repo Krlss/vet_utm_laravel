@@ -8,7 +8,7 @@
     </div>
     @endif
     <input wire:change="$emit('multiple_file_choosed')" type="file" hidden multiple accept="image/*" id="images" name="images[]" />
-    <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white w-full md:w-64 rounded-md">
+    <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white md:w-64 rounded-md">
         <i class="fa fa-upload"></i>
         <div>{{trans('lang.select_images')}}</div>
     </label>
