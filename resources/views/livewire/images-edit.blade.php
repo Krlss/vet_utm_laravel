@@ -25,13 +25,13 @@
         @if($images)
         @foreach ($images as $key => $elem)
         @if(is_array($elem))
-        <figure class="md:w-2/12 sm:w-1/4 w-2/4">
-            <img src="{{end($elem)}}" class="mb-2" />
+        <figure class="w-64">
+            <div class="bg-cover bg-center h-48 w-64 mb-2" style="background-image: url('{{end($elem)}}')"></div>
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
         @else
-        <figure class="md:w-2/12 sm:w-1/4 w-2/4">
-            <img src="{{$elem}}" class="mb-2" />
+        <figure class="w-64">
+            <div class="bg-cover bg-center h-48 w-64 mb-2" style="background-image: url('{{$elem}}')"></div>
             <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
         </figure>
         @endif

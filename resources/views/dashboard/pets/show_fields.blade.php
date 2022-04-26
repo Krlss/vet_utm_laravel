@@ -354,9 +354,7 @@
         </div>
         <div x-show="open" id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">
             @foreach ($images as $image)
-            <figure class="md:w-2/12 sm:w-1/4 w-2/4">
-                <img src="{{$image->url}}" class="mb-2" />
-            </figure>
+            <div class="bg-cover bg-center h-48 w-64" style="background-image: url('{{$image->url}}')"></div>
             @endforeach
         </div>
     </div>
