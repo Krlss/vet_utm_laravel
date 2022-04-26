@@ -25,15 +25,18 @@
 @endsection
 <div class="card">
     <div class="card-body">
-        @if (session('info'))
-        <div class="alert alert-info">
-            <strong>{{ session('info') }}</strong>
+        
+        @if (session('error'))
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ session('error') }}
         </div>
         @endif
 
-        @if (session('error'))
-        <div class="alert alert-danger">
-            <strong>{{ session('error') }}</strong>
+        @if (session('info'))
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            {{ session('info') }}
         </div>
         @endif
 

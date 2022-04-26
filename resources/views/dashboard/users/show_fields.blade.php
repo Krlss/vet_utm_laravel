@@ -1,15 +1,3 @@
-@if (session('info'))
-<div class="alert alert-info">
-    <strong>{{ session('info') }}</strong>
-</div>
-@endif
-
-@if (session('error'))
-<div class="alert alert-danger">
-    <strong>{{ session('error') }}</strong>
-</div>
-@endif
-
 <!-- Head -->
 <div class="flex items-center space-x-2 my-3">
     <p class="text-gray-400 text-sm font-bold uppercase">{!!trans('lang.label_data_user')!!}</p>

@@ -1,17 +1,4 @@
 <div>
-
-    @if (session('info'))
-    <div class="alert alert-info">
-        <strong>{{ session('info') }}</strong>
-    </div>
-    @endif
-
-    @if (session('error'))
-    <div class="alert alert-danger">
-        <strong>{{ session('error') }}</strong>
-    </div>
-    @endif
-
     <!-- User data -->
     @if ($user)
     <div x-data="{ open: true}">

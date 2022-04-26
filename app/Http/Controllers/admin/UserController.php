@@ -11,6 +11,7 @@ use App\Models\Parish;
 use App\Models\Pet;
 use App\Models\Province;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -58,6 +59,13 @@ class UserController extends Controller
         $input['password'] = Hash::make($password);
         $input['api_token'] = Str::random(25);
         $input['email_verified_at'] = null;
+
+
+        try {
+            validateUserID($input['user_id']);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
 
         DB::beginTransaction();
         try {

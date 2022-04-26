@@ -14,9 +14,9 @@
 
         <div x-show="open" class="space-y-2">
             <!-- 1 row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:space-y-0 space-y-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                 <!-- user id -->
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('user_id', trans('lang.tableUserID'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
 
                     {!! Form::input('number', 'user_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
@@ -26,19 +26,15 @@
                     @enderror
                 </div>
                 <!-- names -->
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('name', trans('lang.namesUser'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.namesUser'), 'required' => true]) !!}
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
-            </div>
-
-            <!-- 2 row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 sm:space-y-0 space-y-2">
                 <!-- lastnames -->
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('last_name1', trans('lang.last_name1'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::text('last_name1', old('last_name1'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name1'), 'required' => true]) !!}
                     @error('last_name1')
