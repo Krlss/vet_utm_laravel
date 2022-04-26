@@ -5,8 +5,8 @@
             {!! trans('lang.label_info_user_create') !!}
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open" class="text-gray-400"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open" class="text-gray-400"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
         </h6>
@@ -80,8 +80,8 @@
             {!!trans('lang.label_info_user_contact')!!}
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open" class="text-gray-400"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open" class="text-gray-400"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
         </h6>
@@ -169,8 +169,8 @@
             {!! trans('lang.label_info_user_pets') !!}
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">
-                    <div x-show="!open"><i class="fa fa-angle-down text-lg"></i></div>
-                    <div x-show="open"><i class="fa fa-angle-left text-lg"></i></div>
+                    <div x-show="!open" class="text-gray-400"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open" class="text-gray-400"><i class="fa fa-angle-left text-xs"></i></div>
                 </button>
             </div>
         </h6>
@@ -190,7 +190,11 @@
             </div>
 
             <div class="px-2 mt-4">
-                <a href="{{ route('dashboard.pets.create') }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:underline">Crear una nueva mascota</a>
+                <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:underline">Crear una nueva mascota</a>
+                <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {{trans('lang.create_new_pet_tooltip')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
             </div>
         </div>
     </div>

@@ -11,12 +11,12 @@
     <div class="text-lg font-bold">{{trans('lang.edit_user')}}</div>
     <div class="flex flex-col sm:space-x-2 sm:flex-row sm:items-center items-start sm:space-y-0 space-y-1">
         @can('dashboard.users.index')
-        <a href="{{ route('dashboard.users.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.users.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 truncate">
             {{trans('lang.list_user')}}
         </a>
         @endcan
         @can('dashboard.users.create')
-        <a href="{{ route('dashboard.users.create') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.users.create') }}" class="bg-yellow-500 hover:bg-yellow-600 text-white p-2 rounded-md font-semibold px-4 truncate">
             {{trans('lang.createUser')}}
         </a>
         @endcan

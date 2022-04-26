@@ -13,36 +13,48 @@
             </div>
         </div>
         @if(count($currents) > 5)
-        <div x-show="open" class="relative md:w-96 w-full ">
+        <div x-show="open" class="relative md:w-96">
             <input class="form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm md:max-w-sm max-w-none pr-5" placeholder="Busca por nombre o código de la mascota..." wire:model="search" />
-            @if($search <> '') <div wire:click="reset_search" class="cursor-pointer transform rotate-45 absolute top-1 right-2 text-lg">+</div> @endif
+            @if($search <> '') <div wire:click="reset_search" class="cursor-pointer absolute top-2 right-3 text-sm text-gray-600">x</div> @endif
         </div>
         @endif
     </div>
-    <div x-show="open" class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll">
+    <div x-show="open" class="w-full max-h-80 flex flex-row flex-wrap overflow-y-scroll overflow-x-hidden">
         @forelse ($pets as $pet)
         <div wire:loading.class="animate-pulse" class="p-2 col-lg-4">
-            <div class="border px-4 py-2 rounded-lg flex flex-row justify-between">
-                <div class="flex flex-col">
-                    <h4 class="uppercase font-bold">{!! $pet->name !!}</h4>
-                    <small class="uppercase">{!! $pet->pet_id !!}</small>
+            <div class="border px-4 py-2 rounded-lg grid grid-cols-3">
+                <div class="flex flex-col col-span-2">
+                    <h4 class="uppercase font-bold truncate">{!! $pet->name !!}</h4>
+                    <small class="uppercase truncate">{!! $pet->pet_id !!}</small>
                 </div>
 
                 <div class="flex items-center justify-center space-x-2">
 
                     @can('dashboard.pets.show')
-                    <button type="button">
-                        <a href="{{ route('dashboard.pets.show', $pet) }}" class="">
-                            <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
-                        </a>
-                    </button>
+                    <div>
+                        <button data-tooltip-target="show" data-tooltip-placement="left" type="button">
+                            <a href="{{ route('dashboard.pets.show', $pet) }}" class="">
+                                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+                            </a>
+                        </button>
+                        <div id="show" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            {{trans('lang.show_data')}}
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
                     @endcan
                     @can('dashboard.pets.edit')
-                    <button type="button">
-                        <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
-                            <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
-                        </a>
-                    </button>
+                    <div>
+                        <button data-tooltip-target="edit" data-tooltip-placement="left" type="button">
+                            <a href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
+                                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+                            </a>
+                        </button>
+                        <div id="edit" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                            {{trans('lang.edit_data')}}
+                            <div class="tooltip-arrow" data-popper-arrow></div>
+                        </div>
+                    </div>
                     @endcan
 
                     @if($delete)
@@ -51,9 +63,14 @@
                     {!! Form::hidden('sex', $pet_sex, null) !!}
                     {!! Form::button('<li class="text-gray-500 hover:text-red-700 fa fa-times-circle"></li>', [
                     'type' => 'submit',
-                    '' => '',
+                    'data-tooltip-target' => 'tooltip-remove-child-to-pet',
+                    'data-tooltip-placement' => 'left',
                     'onclick' => "return confirm('¿Estás seguro que deseas quitar este hijo $pet->name de este padre $pet_name?')",
                     ]) !!}
+                    <div id="tooltip-remove-child-to-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        {{trans('lang.remove')}}
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                     {!! Form::close() !!}
                     @endif
 

@@ -10,11 +10,16 @@
 </div>
 @endif
 
-<h6 class="text-gray-400 text-sm my-3 font-bold uppercase flex items-center">
-    {!!trans('lang.label_data_user')!!}
+<!-- Head -->
+<div class="flex items-center space-x-2 my-3">
+    <p class="text-gray-400 text-sm font-bold uppercase">{!!trans('lang.label_data_user')!!}</p>
     @can('dashboard.users.edit')
-    <a href="{{ route('dashboard.users.edit', $user) }}" class='btn btn-link text-gray-500 hover:text-green-700'>
+    <a data-tooltip-target="tooltip-edit-user" href="{{ route('dashboard.users.edit', $user) }}" class='text-gray-500 hover:text-green-700'>
         <i class="fas fa-edit cursor-pointer"></i>
+        <div id="tooltip-edit-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+            {{trans('lang.edit_this_user')}}
+            <div class="tooltip-arrow" data-popper-arrow></div>
+        </div>
     </a>
     @endcan
     @can('dashboard.users.destroy')
@@ -22,135 +27,130 @@
     {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
     'type' => 'submit',
     'class' => '',
+    'data-tooltip-target' => 'tooltip-delete-user',
     'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
     ]) !!}
+    <div id="tooltip-delete-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        {{trans('lang.delete_user')}}
+        <div class="tooltip-arrow" data-popper-arrow></div>
+    </div>
     {!! Form::close() !!}
     @endcan
-</h6>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-
-    <div class="form-group flex-col">
-        {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->user_id !!}
-            </p>
-        </div>
-    </div>
-
-    <div class="form-group flex-col">
-        {!! Form::label('namesUser', trans('lang.namesUser'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->name !!}
-            </p>
-        </div>
-    </div>
-
-    <div class="form-group flex-col">
-        {!! Form::label('last_names', trans('lang.last_names'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->last_name1 !!} {!! $user->last_name2 !!}
-            </p>
-        </div>
-    </div>
-
-
-
 </div>
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2">
-    <div class="form-group flex-col">
-        {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->email !!}
-            </p>
+
+<!-- 1 ROW -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <!-- Names -->
+    <div>
+        {!! Form::label('namesUser', trans('lang.namesUser'), ['class' => '']) !!}
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->name !!} </p>
         </div>
     </div>
-    <div class="form-group flex-col">
+    <!-- Last name -->
+    <div>
+        {!! Form::label('last_names', trans('lang.last_names'), ['class' => '']) !!}
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->last_name1 !!} {!! $user->last_name2 !!}</p>
+        </div>
+    </div>
+    <!-- User ID -->
+    <div>
+        {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => '']) !!}
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate">{!! $user->user_id !!}</p>
+        </div>
+    </div>
+</div>
+
+<!-- 2 ROW -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+    <!-- PHONE -->
+    <div>
         {!! Form::label('phone', trans('lang.phone'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->phone !!}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
+            <p class="truncate pr-2"> {!! $user->phone !!} </p>
+        </div>
+    </div>
+    <!-- EMAIL -->
+    <div>
+        {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
+            <p class="truncate pr-2"> {!! $user->email !!} </p>
+            @if($user->email_verified_at == null)
+            <a href="#">
+                <i data-tooltip-target="tooltip-email" class="fa fa-check-circle text-gray-500"></i>
+                <div id="tooltip-email" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                    {{trans('lang.email_no_veri')}}
+                    <div class="tooltip-arrow" data-popper-arrow></div>
+                </div>
+            </a>
+            @else
+            <i data-tooltip-target="tooltip-dark" class="fa fa-check-circle text-green-500"></i>
+            <div id="tooltip-dark" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                {{trans('lang.email_veri')}}
+                <div class="tooltip-arrow" data-popper-arrow></div>
+            </div>
+            @endif
         </div>
     </div>
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-
-    <div class="form-group flex-col">
+<!-- 3 ROW -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
+    <!-- PROVINCE -->
+    <div>
         {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {{ $province ? $province->name : trans('lang.without_province') }}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {{ $province ? $province->name : trans('lang.without_province') }} </p>
         </div>
     </div>
-
-    <div class="form-group flex-col">
+    <!-- CANTON -->
+    <div>
         {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {{ $canton ? $canton->name : trans('lang.without_canton')}}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {{ $canton ? $canton->name : trans('lang.without_canton')}} </p>
         </div>
     </div>
-
-    <div class="form-group flex-col">
+    <!-- PARISH -->
+    <div>
         {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {{ $parish ? $parish->name : trans('lang.without_parishe')}}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {{ $parish ? $parish->name : trans('lang.without_parishe')}} </p>
         </div>
     </div>
-
 </div>
 
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 ">
-
-    <div class="form-group flex-col">
+<!-- 4 ROW -->
+<div class="grid grid-cols-1 gap-3 mt-2">
+    <!-- ADDRESS MAIN -->
+    <div>
         {!! Form::label('main_street', trans('lang.main_street'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->main_street ? $user->main_street : trans('lang.without_main_street') !!}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->main_street ? $user->main_street : trans('lang.without_main_street') !!} </p>
         </div>
     </div>
-
-    <div class="form-group flex-col">
+    <!-- ADDRES 1 -->
+    <div>
         {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->street_1_sec ? $user->street_1_sec : trans('lang.without_street_1_sec') !!}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->street_1_sec ? $user->street_1_sec : trans('lang.without_street_1_sec') !!} </p>
         </div>
     </div>
-
-</div>
-
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 ">
-
-    <div class="form-group flex-col">
+    <!-- ADDRESS 2 -->
+    <div>
         {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->street_2_sec ? $user->street_2_sec : trans('lang.without_street_2_sec') !!}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->street_2_sec ? $user->street_2_sec : trans('lang.without_street_2_sec') !!} </p>
         </div>
     </div>
-
-    <div class="form-group flex-col">
+    <!-- REFF -->
+    <div>
         {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => ' ']) !!}
-        <div class="">
-            <p>
-                {!! $user->address_ref ? $user->address_ref : trans('lang.without_address_ref') !!}
-            </p>
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate"> {!! $user->address_ref ? $user->address_ref : trans('lang.without_address_ref') !!} </p>
         </div>
     </div>
-
 </div>
 
 <livewire:users.show-list-pets :currentsPets="$pets" :user_id="$user->user_id" :delete="true" />
