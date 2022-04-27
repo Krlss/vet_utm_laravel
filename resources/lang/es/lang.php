@@ -33,6 +33,8 @@ return [
      'delete_user' => 'Eliminar usuario',
      'email_veri' => 'Correo verificado',
      'email_no_veri' => 'Correo no verificado',
+     'email_no_veri_loading' => 'Se está enviando un correo para verificar',
+     'envoy_email' => 'Se envió un correo al usuario. Que revise para verificar su correo',
      'delete_user' => 'Eliminar usuario',
      'remove' => 'Remover',
      'user_updated' => 'Los datos del usuario fueron actualizados correctamente!',

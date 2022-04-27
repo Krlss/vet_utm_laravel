@@ -92,21 +92,8 @@
                     {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
                         <p class="truncate pr-2"> {!! $user->email !!} </p>
-                        @if($user->email_verified_at == null)
-                        <a href="#">
-                            <i data-tooltip-target="tooltip-email" class="fa fa-check-circle text-gray-500"></i>
-                            <div id="tooltip-email" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                {{trans('lang.email_no_veri')}}
-                                <div class="tooltip-arrow" data-popper-arrow></div>
-                            </div>
-                        </a>
-                        @else
-                        <i data-tooltip-target="tooltip-dark" class="fa fa-check-circle text-green-500"></i>
-                        <div id="tooltip-dark" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            {{trans('lang.email_veri')}}
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                        @endif
+                        <livewire:email-is-check :email_verified_at="$user->email_verified_at" :api_token="$user->api_token" :email="$user->email" />
+                        @livewireScripts
                     </div>
                 </div>
             </div>

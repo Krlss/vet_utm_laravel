@@ -29,5 +29,12 @@
             $(this).addClass('submitted');
         }
     });
+    $("#email_verificate").on("click", function() {
+        if ($(this).hasClass('submitted')) {
+            event.preventDefault();
+        } else {
+            $(this).prop("disabled", true);
+        }
+    });
 </script>
 @stop
