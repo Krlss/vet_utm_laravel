@@ -55,6 +55,7 @@ return [
      'permissions' => 'Permisos',
      'permission' => 'Permiso',
      'role_table' => 'Lista de roles',
+     'audit_table' => 'Registro de auditoria',
      'permission_create' => 'Crear permiso',
      'edit_role' => 'Editar rol',
      'role_deleted' => 'Rol eliminado',
@@ -152,6 +153,7 @@ return [
      'dashboard.roles.destroy' => 'Eliminar rol',
      'dashboard.permissions' => 'Ver lista de permisos',
      'dashboard.users.role' => 'Dar rol',
+     'dashboard.audit.index' => 'Ver auditoria',
 
      'forgot_password_msg' => '¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.',
      'send_email_forgot_password' => 'Enviar enlace al correo',

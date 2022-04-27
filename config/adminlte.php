@@ -262,10 +262,17 @@ return [
             'can'          => 'dashboard.reports.index'
         ],
         [
-            'header' => 'Super usuario',
+            'header' => 'Administración de la página',
             'can' => [
                 'dashboard.roles.index'
             ]
+        ],
+        [
+            'text'      => 'Auditoria',
+            'icon'      => 'fas fa-eye',
+            'active'    => ['dashboard/audit*'],
+            'route'         => 'dashboard.audit.index',
+            'can'          => 'dashboard.audit.index'
         ],
         [
             'text'      => 'Roles y permisos',

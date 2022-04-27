@@ -12,6 +12,7 @@ use App\Models\Pet;
 use App\Models\Province;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
@@ -82,6 +83,12 @@ class UserApiController extends Controller
         $userFindP = User::where('phone', $input['phone'])->first();
         if ($userFindC) return response()->json(['message' => 'La cédula/RUC ya está registrada', 'data' => []], 401);
         if ($userFindE) return response()->json(['message' => 'El correo ya está registrado', 'data' => []], 401);
+        try {
+            if (isset($input['user_id']))
+                validateUserID($input['user_id']);
+        } catch (Exception $e) {
+            return response()->json(['message' => $e->getMessage(), 'data' => []], 401);
+        }
         if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 401);
         $input['email'] = strtolower($input['email']);
 
@@ -147,6 +154,12 @@ class UserApiController extends Controller
                     ->where('api_token', '!=', $header)
                     ->first();
                 if ($userFindE) return response()->json(['message' => 'El correo ya está registrado', 'data' => []], 301);
+                try {
+                    if (isset($input['user_id']))
+                        validateUserID($input['user_id']);
+                } catch (Exception $e) {
+                    return response()->json(['message' => $e->getMessage(), 'data' => []], 401);
+                }
                 if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 301);
                 if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 

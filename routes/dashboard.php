@@ -8,6 +8,7 @@ use App\Http\Controllers\admin\ProvinceController;
 use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\RolesController;
 use App\Http\Controllers\admin\PermissionController;
+use App\Http\Controllers\admin\Audit;
 
 use Illuminate\Support\Facades\Route;
 
@@ -35,6 +36,8 @@ Route::delete('destroyImgGoogle', [ReportController::class, 'destroyImageGoogle'
 Route::resource('roles', RolesController::class)->names('dashboard.roles');
 
 Route::resource('permissions', PermissionController::class)->names('dashboard.permissions');
+
+Route::resource('audit', Audit::class)->names('dashboard.audit');
 
 Route::post('permissions/revoke-permission-to-role', [PermissionController::class, 'revokePermissionToRole']);
 Route::post('permissions/give-permission-to-role', [PermissionController::class, 'givePermissionToRole']);

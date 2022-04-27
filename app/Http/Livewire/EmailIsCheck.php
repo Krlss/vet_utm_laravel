@@ -25,7 +25,7 @@ class EmailIsCheck extends Component
 
     public function send_verification()
     {
-        sleep(10);
+        sleep(5);
 
         //host
         $url = substr_replace(explode('dashboard', url()->previous())[0], "", -1);

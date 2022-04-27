@@ -8,6 +8,7 @@ use App\Models\Image;
 use App\Models\Pet;
 use App\Models\Province;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -397,6 +398,11 @@ class PetApiController extends Controller
                 $input['user']['password'] = Hash::make($newUser['user_id']);
                 $input['user']['api_token'] = Str::random(25);
                 $pet['user_id'] = $newUser['user_id'];
+                try {
+                    validateUserID($pet['user_id']);
+                } catch (Exception $e) {
+                    return redirect()->back()->with('error', $e->getMessage());
+                }
                 User::create($input['user']);
             }
             $pet['name'] = $input['namepet'];

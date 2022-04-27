@@ -133,6 +133,12 @@ class UserController extends Controller
     {
         $input = $request->all();
 
+        try {
+            validateUserID($input['user_id']);
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+
         DB::beginTransaction();
         try {
 
