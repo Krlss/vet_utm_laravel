@@ -36,5 +36,9 @@
             $(this).prop("disabled", true);
         }
     });
+
+    $(document).ready(function() {
+        $(".d-md-inline") && $(".d-md-inline").removeClass('d-md-inline');
+    });
 </script>
 @stop

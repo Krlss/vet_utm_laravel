@@ -26,7 +26,7 @@ class UserSeeder extends Seeder
         $id_province = Province::where('id', $id_canton->id_province)->first();
 
         User::create([
-            'user_id' => '0000000000',
+            'user_id' => '0103250726',
             'name' => 'root',
             'last_name1' => 'Apellido1',
             'last_name2' => 'Apellido2',

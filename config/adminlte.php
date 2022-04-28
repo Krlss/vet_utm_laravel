@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Dashboard Veterinaria UTM',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -66,8 +66,8 @@ return [
 
     'usermenu_enabled' => true,
     'usermenu_header' => true,
-    'usermenu_header_class' => 'bg-secondary',
-    'usermenu_image' => false,
+    'usermenu_header_class' => 'flex flex-col items-center justify-center bg-secondary',
+    'usermenu_image' => true,
     'usermenu_desc' => true,
     'usermenu_profile_url' => false,
 

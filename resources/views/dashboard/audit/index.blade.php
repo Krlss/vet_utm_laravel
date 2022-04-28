@@ -9,9 +9,8 @@
 @endsection
 <div class="card">
     <div class="card-body">
-        @foreach($audits as $audit)
-        {{$audit->getMetaData()}}
-        @endforeach
+        <livewire:auditions :currentsAudit="$currentsAudit" />
+        @livewireScripts
     </div>
 </div>
 @endsection

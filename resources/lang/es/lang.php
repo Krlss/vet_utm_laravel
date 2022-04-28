@@ -153,7 +153,8 @@ return [
      'dashboard.roles.destroy' => 'Eliminar rol',
      'dashboard.permissions' => 'Ver lista de permisos',
      'dashboard.users.role' => 'Dar rol',
-     'dashboard.audit.index' => 'Ver auditoria',
+     'dashboard.audit.index' => 'Ver lista de auditoria',
+     'dashboard.audit.show' => 'Ver datos auditoria',
 
      'forgot_password_msg' => '¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.',
      'send_email_forgot_password' => 'Enviar enlace al correo',
@@ -204,6 +205,25 @@ return [
      'without_address_ref' => 'Sin referencia',
 
      'pets' => 'Mascotas',
+     'audit_show' => 'Datos de una auditoria',
      'edit_this_user' => 'Editar los datos de este usuario',
-     'edit_this_pet' => 'Editar los datos de esta mascota'
+     'edit_this_pet' => 'Editar los datos de esta mascota',
+
+     'App\Models\User' => 'Usuario',
+     'App\Models\Pet' => 'Mascota',
+     'App\Models\Image' => 'Imagen',
+     'created' => 'Creación',
+     'updated' => 'Actualización',
+     'deleted' => 'Eliminación',
+     'audit_count' => 'Registros de auditoria',
+
+     'previous' => 'Anterior',
+     'next' => 'Siguiente',
+     'showing' => 'Mostrando',
+     'to' => 'para',
+     'of' => 'de',
+     'results' => 'resultados',
+
+     'user_guilty' => 'Usuario que alteró los datos',
+     'name_complete' => 'Nombre completo',
 ];

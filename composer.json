@@ -16,6 +16,7 @@
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.5",
         "nao-pon/flysystem-google-drive": "^1.1",
+        "owen-it/laravel-auditing": "^13.0",
         "spatie/laravel-permission": "^5.4"
     },
     "require-dev": {

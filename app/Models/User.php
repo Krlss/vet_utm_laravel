@@ -10,8 +10,9 @@ use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use OwenIt\Auditing\Contracts\Auditable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements Auditable
 {
     use HasApiTokens;
     use HasFactory;
@@ -20,12 +21,14 @@ class User extends Authenticatable
     use TwoFactorAuthenticatable;
     use HasRoles;
 
-
+    use \OwenIt\Auditing\Auditable;
     /**
      * The attributes that are mass assignable.
      *
      * @var string[]
      */
+    protected $primaryKey = 'user_id';
+    public $incrementing = false;
     protected $fillable = [
         'user_id',
         'name',
@@ -111,5 +114,16 @@ class User extends Authenticatable
     public function adminlte_desc()
     {
         return 'Rol: ' . $this->roles[0]->name;
+    }
+
+    //Para que el usuario pueda actualizar su perfil
+    /* public function adminlte_profile_url()
+    {
+        return $this->profile_photo_url;
+    } */
+
+    public function adminlte_image()
+    {
+        return $this->profile_photo_url;
     }
 }

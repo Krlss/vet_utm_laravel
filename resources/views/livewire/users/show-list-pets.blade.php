@@ -78,7 +78,7 @@
 
         </div>
         @empty
-        <small>{{trans('lang.data_not_found')}}</small>
+        <small wire:loading.class="animate-pulse">{{trans('lang.data_not_found')}}</small>
         @endforelse
     </div>
 
