@@ -66,6 +66,7 @@ return [
      'role_created' => 'Rol creado correctamente.',
      'guard_name' => 'Guard name',
      'save' => 'Guardar',
+     'cancele' => 'Cancelar',
      'roles' => 'Roles',
      'without_address' => 'Sin dirección',
      'pather' => 'Mascota padre',
@@ -85,6 +86,7 @@ return [
      'duenio' => 'Dueño',
      'list_pets' => 'Lista de mascotas',
      'create_new_pet_tooltip' => 'Se abrirá una nueva pestaña para crear una nueva mascota',
+     'create_new_fur_tooltip' => 'Se abrirá una nueva pestaña para crear un nuevo pelaje',
      'createPet' => 'Registrar Mascota',
      'pet_registration' => 'Registro de mascotas',
      'specie' => 'Especie',
@@ -127,9 +129,6 @@ return [
      'pets_count' => 'Cantindad de mascotas',
      'reports_count' => 'Cantindad de mascotas perdidas',
 
-
-
-
      'dashboard.home'      => 'Ver dashboard',
      'dashboard.users.index' => 'Ver lista de usuarios',
      'dashboard.users.create'      => 'Registrar usuario',
@@ -155,6 +154,19 @@ return [
      'dashboard.users.role' => 'Dar rol',
      'dashboard.audit.index' => 'Ver lista de auditoria',
      'dashboard.audit.show' => 'Ver datos auditoria',
+
+     'dashboard.species.index' => 'Ver lista de especies',
+     'dashboard.species.create' => 'Crear especie',
+     'dashboard.species.edit' => 'Editar especie',
+     'dashboard.species.destroy' => 'Eliminar especie',
+     'dashboard.races.index' => 'Ver lista de razas',
+     'dashboard.races.create' => 'Crear raza',
+     'dashboard.races.edit' => 'Editar raza',
+     'dashboard.races.destroy' => 'Eliminar raza',
+     'dashboard.furs.index' => 'Ver lista de pelajes',
+     'dashboard.furs.create' => 'Crear pelaje',
+     'dashboard.furs.edit' => 'Editar pelaje',
+     'dashboard.furs.destroy' => 'Eliminar pelaje',
 
      'forgot_password_msg' => '¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.',
      'send_email_forgot_password' => 'Enviar enlace al correo',
@@ -187,6 +199,7 @@ return [
      'type_user_id_empty' => 'No hay personas registradas.',
      'label_info_user_create' => 'Información obligatoria',
      'label_info_pet_create' => 'Información obligatoria',
+     'label_info_user_contact_required' => 'Información domiciliaria obligatoria',
      'label_info_user_contact' => 'Información domiciliaria (no obligatoria)',
      'label_info_user_pets' => 'Información de las mascotas (no obligatoria)',
      'label_info_pet_create_not_Required' => 'Información no obligatoria',
@@ -208,10 +221,14 @@ return [
      'audit_show' => 'Datos de una auditoria',
      'edit_this_user' => 'Editar los datos de este usuario',
      'edit_this_pet' => 'Editar los datos de esta mascota',
+     'label_data_audit_without' => 'No existe ninguna auditoría',
 
      'App\Models\User' => 'Usuario',
      'App\Models\Pet' => 'Mascota',
      'App\Models\Image' => 'Imagen',
+     'App\Models\Specie' => 'Especie',
+     'App\Models\Race' => 'Raza',
+     'App\Models\Fur' => 'Pelaje',
      'created' => 'Creación',
      'updated' => 'Actualización',
      'deleted' => 'Eliminación',
@@ -226,4 +243,61 @@ return [
 
      'user_guilty' => 'Usuario que alteró los datos',
      'name_complete' => 'Nombre completo',
+
+     'id' => 'ID',
+     'fur' => 'Pelaje',
+     'created_at' => 'Creado',
+     'list_provinces' => 'Lista de provincias',
+     'add_province' => 'Crear provincia',
+     'province_created' => 'Provincia creada',
+     'province_deleted' => 'Provincia eliminada!',
+     'letter' => 'Letra',
+     'edit_province' => 'Editar datos de una provincia',
+     'create_new_user_tooltip' => 'Se abrirá una nueva pestaña para crear un nuevo usuario',
+     'create_new_specie_tooltip' => 'Se abrirá una nueva pestaña para crear una nueva especie',
+
+     'create_new_pather_tooltip' => 'Se abrirá una nueva pestaña para crear una nueva mascota macho',
+     'create_new_mother_tooltip' => 'Se abrirá una nueva pestaña para crear una nueva mascota hembra',
+
+     'create_new_race_tooltip' => 'Se abrirá una nueva pestaña para crear una nueva raza',
+     'characteristic' => 'Características',
+
+     'createSpecie' => 'Crear especie',
+     'list_species' => 'Lista de especies',
+     'specie_registration' => 'Registro de una nueva especie',
+     'specie_created' => 'Especie creada',
+     'specie_errpr' => 'Verifica que los campos cumplan con los requisitos',
+     'edit_specie' => 'Editado datos de una especie',
+     'specie_updated' => 'Especie actualizada',
+     'specie_deleted' => 'Especie eliminada',
+     'selected_specie' => 'Seleccione una especie',
+     'first_selected_specie' => 'Primero seleccione una especie',
+
+     'withoutSpecie' => 'Sin especie',
+     'list_races' => 'Lista de razas',
+     'createRace' => 'Crear raza',
+     'select_race' => 'Seleccione una raza',
+     'select_specie' => 'Seleccione una especie',
+
+     'race_errpr' => 'Verifica que los campos cumplan con los requisitos',
+     'race_created' => 'Raza creada con existo',
+     'race_registration' => 'Registrar una nueva raza',
+     'edit_race' => 'Editar datos de una raza',
+     'race_updated' => 'Raza actualizada',
+     'race_deleted' => 'Raza eliminada',
+
+     'select_fur' => 'Seleccione un pelaje',
+     'withoutFur' => 'Sin pelaje',
+     'list_furs' => 'Lista de pelajes',
+     'createFur' => 'Crear pelaje',
+
+     'fur_errpr' => 'Verifica que los campos cumplan con los requisitos',
+     'fur_created' => 'Pelaje creado con existo',
+     'fur_registration' => 'Registrar un nuevo pelaje',
+     'edit_fur' => 'Editar datos de un pelaje',
+     'fur_updated' => 'Pelaje actualizado',
+     'fur_deleted' => 'Pelaje eliminado',
+     'withouthFur' => 'Sin tipo de pelaje',
+
+
 ];

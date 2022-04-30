@@ -27,6 +27,21 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'dashboard.users.edit'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.users.destroy'])->syncRoles([$role2]);
 
+        Permission::create(['name' => 'dashboard.species.index'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.species.create'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.species.edit'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.species.destroy'])->syncRoles([$role2]);
+        
+        Permission::create(['name' => 'dashboard.races.index'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.races.create'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.races.edit'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.races.destroy'])->syncRoles([$role2]);
+
+        Permission::create(['name' => 'dashboard.furs.index'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.furs.create'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.furs.edit'])->syncRoles([$role3, $role2]);
+        Permission::create(['name' => 'dashboard.furs.destroy'])->syncRoles([$role2]);
+
         Permission::create(['name' => 'dashboard.pets.index'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.pets.create'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.pets.show'])->syncRoles([$role3, $role2]);

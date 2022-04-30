@@ -19,13 +19,15 @@ class Pet extends Model implements Auditable
         'name',
         'birth',
         'sex',
-        'specie',
-        'race',
         'lost',
         'n_lost',
         'pet_id',
+        'characteristic',
         'published',
         'castrated',
+        'id_specie',
+        'id_race',
+        'id_fur',
         'id_pet_pather',
         'id_pet_mother',
         'user_id',
@@ -34,44 +36,38 @@ class Pet extends Model implements Auditable
     public static $rules = [
         'pet_id' => 'required|max:8|min:7',
         'name' => 'required',
-        'specie' => 'required',
+        'id_specie' => 'required',
+        'id_race' => 'required',
         'sex' => 'required',
-        'race' => 'required',
-        'birth' => 'required'
     ];
 
     public function user()
     {
-        return $this->belongsTo(User::class);
-    }
-
-    public function childrenPetPather()
-    {
-        return $this->hasMany(Pet::class, 'pet_id', 'pet_pather_id');
-    }
-
-    public function allChildrenPetPather()
-    {
-        return $this->childrenPetPather()->with('allChildrenPetPather');
-    }
-
-    public function childrenPetMother()
-    {
-        return $this->hasMany(Pet::class, 'pet_id', 'pet_mother_id');
-    }
-
-    public function allChildrenPetMother()
-    {
-        return $this->childrenPetMother()->with('allChildrenPetMother');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     public function images()
     {
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Image::class, 'pet_id');
     }
 
     public function getFullNameAttribute()
     {
         return $this->name . ' - ' . $this->pet_id;
+    }
+
+    public function specie()
+    {
+        return $this->belongsTo(Specie::class, 'id_specie');
+    }
+
+    public function race()
+    {
+        return $this->belongsTo(Race::class, 'id_race');
+    }
+
+    public function fur()
+    {
+        return $this->belongsTo(Fur::class, 'id_fur');
     }
 }

@@ -25,6 +25,7 @@ class UserController extends Controller
     {
         $this->middleware('can:dashboard.users.index')->only('index');
         $this->middleware('can:dashboard.users.destroy')->only('destroy');
+        $this->middleware('can:dashboard.users.show')->only('show');
         $this->middleware('can:dashboard.users.create')->only('create', 'store');
         $this->middleware('can:dashboard.users.edit')->only('edit', 'update');
     }
@@ -92,28 +93,11 @@ class UserController extends Controller
 
     public function show(User $user)
     {
-
-        $pets = Pet::where('user_id', $user->user_id)->get();
-
-        $parish = Parish::where('id', $user->id_parish)->first();
-
-        $canton = Canton::where('id', $user->id_canton)->first();
-
-        $province = Province::where('id', $user->id_province)->first();
-
-        return view('dashboard.users.show', compact('pets', 'user', 'canton', 'province', 'parish'));
+        return view('dashboard.users.show', compact('user'));
     }
 
     public function edit(User $user)
     {
-        $pets = Pet::where('user_id', $user->user_id)->get();
-
-        $parish = Parish::where('id', $user->id_parish)->first();
-
-        $canton = Canton::where('id', $user->id_canton)->first();
-
-        $province = Province::where('id', $user->id_province)->first();
-
         $provinces = Province::pluck('name', 'id');
 
         $cantons = [];
@@ -122,11 +106,11 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'id');
 
-        $pets_array = $pets->pluck('pet_id', 'pet_id');
+        $pets_array = $user->pets ? $user->pets->pluck('pet_id', 'pet_id') : [];
 
         $petsSelected = is_null($pets_array) ? [] : $pets_array->all();
 
-        return view('dashboard.users.edit', compact('pets', 'user', 'canton', 'province', 'provinces', 'cantons', 'roles', 'parish', 'parishes', 'petsSelected', 'pets_array'));
+        return view('dashboard.users.edit', compact('user', 'provinces', 'cantons', 'roles', 'parishes', 'petsSelected', 'pets_array'));
     }
 
     public function update(UpdateUserRequest $request, User $user)

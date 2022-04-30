@@ -18,7 +18,7 @@
 @endsection
 <div class="card">
     <div class="card-body">
-        
+
         @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">×</button>
@@ -54,7 +54,7 @@
                     <td>{{ $pet->name }}</td>
                     <td>{{ $pet->castrated == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
                     <td>{{ $pet->lost == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
-                    <td>{{ trans('lang.' . $pet->specie) }}</td>
+                    <td>{{ $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') }}</td>
                     <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
 
                     <td>{{ $pet->updated_at->diffForHumans() }}</td>

@@ -69,6 +69,7 @@ class User extends Authenticatable implements Auditable
         'email' => 'required|max:100|unique:users',
         'address' => 'max:2500',
         'phone' => 'digits:10|unique:users',
+        'id_province' => 'required'
     ];
 
     public static $rules_updated = [
@@ -79,6 +80,7 @@ class User extends Authenticatable implements Auditable
         'email' => 'required|max:100',
         'address' => 'max:2500',
         'phone' => 'digits:10',
+        'id_province' => 'required'
     ];
 
     /**
@@ -93,22 +95,22 @@ class User extends Authenticatable implements Auditable
 
     public function pets()
     {
-        return $this->hasMany(Pet::class);
+        return $this->hasMany(Pet::class, 'user_id');
     }
 
     public function parish()
     {
-        return $this->belongsTo(Parish::class);
+        return $this->belongsTo(Parish::class, 'id_parish');
     }
 
     public function canton()
     {
-        return $this->belongsTo(Canton::class);
+        return $this->belongsTo(Canton::class, 'id_canton');
     }
 
     public function province()
     {
-        return $this->belongsTo(Province::class);
+        return $this->belongsTo(Province::class, 'id_province');
     }
 
     public function adminlte_desc()

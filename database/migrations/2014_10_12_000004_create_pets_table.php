@@ -19,17 +19,22 @@ class CreatePetsTable extends Migration
             $table->string('name');
             $table->date('birth');
             $table->string('sex')->default(null)->nullable();
-            $table->string('specie');
             $table->boolean('castrated')->default(false);
-            $table->string('race');
             $table->boolean('lost')->default(false);
             $table->integer('n_lost');
             $table->boolean('published')->default(true);
             $table->string('id_pet_pather', 15)->unsigned()->nullable();
             $table->string('id_pet_mother', 15)->unsigned()->nullable();
+            $table->unsignedBigInteger('id_specie')->nullable();
+            $table->unsignedBigInteger('id_race')->nullable();
+            $table->unsignedBigInteger('id_fur')->nullable();
             $table->string('user_id', 13)->unsigned()->nullable();
             $table->timestamps();
+
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('id_fur')->references('id')->on('furs')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('id_specie')->references('id')->on('species')->onDelete('set null')->onUpdate('cascade');
+            $table->foreign('id_race')->references('id')->on('races')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

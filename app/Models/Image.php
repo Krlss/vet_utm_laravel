@@ -14,6 +14,6 @@ class Image extends Model
 
     public function pet()
     {
-        return $this->belongsTo(Pet::class);
+        return $this->belongsTo(Pet::class, 'pet_id');
     }
 }

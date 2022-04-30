@@ -236,8 +236,7 @@ return [
             'can' => [
                 'dashboard.users.index',
                 'dashboard.pets.index',
-                'dashboard.reports.index',
-                'dashboard.roles.index'
+                'dashboard.reports.index'
             ]
         ],
         [
@@ -264,7 +263,11 @@ return [
         [
             'header' => 'Administración de la página',
             'can' => [
-                'dashboard.roles.index'
+                'dashboard.roles.index',
+                'dashboard.audit.index',
+                'dashboard.species.index',
+                'dashboard.races.index',
+                'dashboard.furs.index'
             ]
         ],
         [
@@ -273,6 +276,35 @@ return [
             'active'    => ['dashboard/audit*'],
             'route'         => 'dashboard.audit.index',
             'can'          => 'dashboard.audit.index'
+        ],
+        [
+            'text' => 'Mascotas',
+            'icon'      => 'fas fa-paw',
+            'active'    => ['dashboard/species*', 'dashboard/races*', 'dashboard/furs*'],
+            'can'          => ['dashboard.species.index', 'dashboard.races.index', 'dashboard.furs.index'],
+            'submenu' => [
+                [
+                    'text' => 'Especies',
+                    'icon' => 'fas fa-list-alt',
+                    'route' => 'dashboard.species.index',
+                    'active'    => ['dashboard/species*'],
+                    'can'          => 'dashboard.species.index',
+                ],
+                [
+                    'text' => 'Pelajes',
+                    'icon' => 'fas fa-list-alt',
+                    'route' => 'dashboard.furs.index',
+                    'active'    => ['dashboard/furs*'],
+                    'can'          => 'dashboard.furs.index',
+                ],
+                [
+                    'text' => 'Razas',
+                    'icon' => 'fas fa-list-alt',
+                    'route' => 'dashboard.races.index',
+                    'active'    => ['dashboard/races*'],
+                    'can'          => 'dashboard.races.index',
+                ],
+            ]
         ],
         [
             'text'      => 'Roles y permisos',

@@ -9,10 +9,6 @@
 @section('content_header')
 <div class="flex justify-between items-center">
     <div class="text-lg font-bold">{{ trans('lang.list_pets_lost') }}</div>
-    {{-- <a href="{{ route('dashboard.reports.create') }}"
-    class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-    {{ trans('lang.createPet') }}
-    </a> --}}
 </div>
 @endsection
 <div class="card">
@@ -49,7 +45,7 @@
                 <tr>
                     <td>{{ $pet->pet_id }}</td>
                     <td>{{ $pet->name }}</td>
-                    <td>{{ trans('lang.' . $pet->specie) }}</td>
+                    <td>{{ $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') }}</td>
                     <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
                     <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
 
@@ -68,13 +64,6 @@
                             </a>
                         </button>
                         @endcan
-                        {{-- {!! Form::open(['route' => ['dashboard.reports.destroy', $pet], 'method' => 'delete']) !!}
-                            {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
-                                'type' => 'submit',
-                                'class' => '',
-                                'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name')",
-                                ]) !!}
-                            {!! Form::close() !!} --}}
                     </td>
                 </tr>
                 @endforeach

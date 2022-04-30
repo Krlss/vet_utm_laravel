@@ -16,7 +16,7 @@
         </a>
         @endcan
         @can('dashboard.pets.create')
-        <a href="{{ route('dashboard.pets.create') }}" class="bg-yellow-400 hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.pets.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
             {{trans('lang.createPet')}}
         </a>
         @endcan

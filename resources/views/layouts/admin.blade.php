@@ -39,6 +39,7 @@
 
     $(document).ready(function() {
         $(".d-md-inline") && $(".d-md-inline").removeClass('d-md-inline');
+        document.querySelector("html").style.overflowX = "hidden";
     });
 </script>
 @stop

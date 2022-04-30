@@ -88,6 +88,36 @@
     <div x-data="{ open: true }">
 
         <div class="flex items-center space-x-2 my-3">
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_contact_required') !!}</p>
+            <div class="cursor-pointer text-gray-400">
+                <button @click="open=!open" type="button">
+                    <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
+                    <div x-show="open"><i class="fa fa-angle-left text-xs"></i></div>
+                </button>
+            </div>
+        </div>
+
+        <div x-show="open">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
+
+                <div class="flex flex-col col-span-2 px-2">
+                    {!! Form::label('id_province', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::select('id_province', $provinces, null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province'), 'required' => true]) !!}
+                    @error('id_province')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div x-data="{ open: true }">
+
+        <div class="flex items-center space-x-2 my-3">
             <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_contact') !!}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
@@ -98,17 +128,9 @@
         </div>
 
         <div x-show="open">
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 mb-2 sm:space-y-0 space-y-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
 
-                <div class="flex flex-col px-2">
-                    {!! Form::label('id_province', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::select('id_province', $provinces, null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province')]) !!}
-                    @error('id_province')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col col-span-2 px-2">
                     {!! Form::label('id_canton', trans('lang.canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('id_canton', $cantons, null, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_province')]) !!}
                     @error('id_canton')
@@ -188,8 +210,8 @@
             </div>
         </div>
 
-        <div x-show="open">
-            <div class="grid grid-cols-1 mb-2">
+        <div x-show="open" class="flex items-center justify-between">
+            <div class="grid grid-cols-1 mb-2 w-full">
                 <div class="flex flex-col col-span-2 px-2">
                     {{-- pets --}}
 
@@ -202,13 +224,17 @@
                 </div>
             </div>
 
-            <div class="px-2 mt-4">
-                <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:underline">Crear una nueva mascota</a>
+            @can('dashboard.pets.create')
+            <div class="px-2 mt-3">
+                <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank">
+                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                </a>
                 <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {{trans('lang.create_new_pet_tooltip')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
+            @endcan
 
         </div>
 

@@ -22,7 +22,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->integer('id_parish')->unsigned()->nullable();
             $table->integer('id_canton')->unsigned()->nullable();
-            $table->integer('id_province')->unsigned()->nullable();
+            $table->integer('id_province')->unsigned();
             $table->string('address')->nullable();
             $table->string('phone', 12)->unique();
             $table->timestamp('email_verified_at')->nullable();

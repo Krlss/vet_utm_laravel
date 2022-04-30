@@ -77,21 +77,21 @@
     <div>
         {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $province ? $province->name : trans('lang.without_province') }} </p>
+            <p class="truncate"> {{ $user->province ? $user->province->name : trans('lang.without_province') }} </p>
         </div>
     </div>
     <!-- CANTON -->
     <div>
         {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $canton ? $canton->name : trans('lang.without_canton')}} </p>
+            <p class="truncate"> {{ $user->canton ? $user->canton->name : trans('lang.without_canton')}} </p>
         </div>
     </div>
     <!-- PARISH -->
     <div>
         {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $parish ? $parish->name : trans('lang.without_parishe')}} </p>
+            <p class="truncate"> {{ $user->parish ? $user->parish->name : trans('lang.without_parishe')}} </p>
         </div>
     </div>
 </div>
@@ -128,5 +128,5 @@
     </div>
 </div>
 
-<livewire:users.show-list-pets :currentsPets="$pets" :user_id="$user->user_id" :delete="true" />
+<livewire:users.show-list-pets :currentsPets="$user->pets" :user_id="$user->user_id" :delete="true" />
 @livewireScripts

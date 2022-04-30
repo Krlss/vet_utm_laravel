@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers\admin;
 
-use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\Controller;
-use App\Models\Canton;
 use App\Models\Pet;
-use App\Models\Province;
 use App\Models\User;
 use App\Models\Image;
 use Illuminate\Http\Request;
@@ -16,7 +13,10 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\NewReport;
+use App\Models\Fur;
 use App\Models\Parish;
+use App\Models\Race;
+use App\Models\Specie;
 
 class ReportController extends Controller
 {
@@ -46,28 +46,21 @@ class ReportController extends Controller
     public function show($id)
     {
         $pet = Pet::where('pet_id', $id)->first();
-        $images = Image::where('pet_id', $id)->get();
-        if (count($images) <= 0) $images = [];
-        $user = User::where('user_id', $pet->user_id)->first();
-        $canton = null;
-        $province = null;
-        $parish = null;
 
-        if ($user) {
-            $canton = Canton::where('id', $user->id_canton)->first();
-            $province = Province::where('id', $user->id_province)->first();
-            $parish = Parish::where('id', $user->id_parish)->first();
-        }
-        return view('dashboard.reports.show', compact('pet', 'user', 'canton', 'province', 'images', 'parish'));
+        return view('dashboard.reports.show', compact('pet'));
     }
 
     public function edit($id)
     {
         $pet = Pet::where('pet_id', $id)->first();
         $users = User::pluck('user_id', 'user_id');
-        $images_ = Image::where('pet_id', $pet->pet_id)->select('id_image', 'name', 'url')->get()->toArray();
+        $images_ = $pet->images()->select('id_image', 'name', 'url')->get()->toArray();
 
-        return view('dashboard.reports.edit', compact('pet', 'users', 'images_'));
+        $species = Specie::orderBy('name', 'asc')->pluck('name', 'id');
+        $races = Race::where('id_specie', $pet->id_specie)->orderBy('name', 'asc')->pluck('name', 'id');
+        $furs = Fur::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('dashboard.reports.edit', compact('pet', 'users', 'images_', 'species', 'races', 'furs'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -83,8 +76,7 @@ class ReportController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                $controllerPet = new PetController();
-                $controllerPet->uploadImages($request->file('images'), $petUpdated->pet_id);
+                uploadImages($request->file('images'), $petUpdated->pet_id);
             } else {
                 //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
                 $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
@@ -95,25 +87,7 @@ class ReportController extends Controller
             }
 
             if ($petUpdated->published == 0 && $input['published'] == 1) {
-
-                $users = User::where('email_verified_at', '!=', null)
-                    ->join('pets', 'users.user_id', '=', 'pets.user_id')
-                    ->where('pets.race', $input['race'])
-                    ->orWhere('pets.specie', $input['specie'])
-                    ->pluck('email');
-
-                $data['name'] = $input['name'];
-                $data['specie'] = $input['specie'];
-                $data['race'] = $input['race'];
-                $data['user_id'] = $input['user_id'];
-
-                $detail = [
-                    'title' => 'Clínica veterinaria de la universidad técnica de manabí',
-                    'body' => 'Hay un nuevo reporte de una mascota perdida.',
-                    'data' => $data
-                ];
-
-                Mail::to($users)->send(new NewReport($detail));
+                sendNotificationEmailToPetLost($input);
             }
 
             $petUpdated->update($input);
@@ -127,16 +101,6 @@ class ReportController extends Controller
 
     public function destroy(Pet $pet)
     {
-        DB::beginTransaction();
-        try {
-
-            $pet->delete();
-            DB::commit();
-            return redirect()->route('dashboard.reports.index')->with('info', trans('lang.pet_deleted'));
-        } catch (\Throwable $e) {
-            DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
-        }
     }
     public function destroyImageGoogle(Request $request)
     {

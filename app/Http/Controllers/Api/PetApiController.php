@@ -314,7 +314,7 @@ class PetApiController extends Controller
         if (isset($input['user_id'])) {
             $user = User::where('user_id', $input['user_id'])->pluck('id_province');
             $letter_user = Province::where('id', $user)->pluck('letter');
-            if ($letter_user) $region = $letter_user[0];
+            if (count($letter_user)) $region = $letter_user[0];
         }
 
         $provinces_letter = Province::pluck('letter');
@@ -331,7 +331,7 @@ class PetApiController extends Controller
 
         if (!$last_pet) {
             //Letter[0] is AA (?). First pet register.
-            $last_pet = strtoupper($region . $letters[0] . '-' . '001');
+            $last_pet = strtoupper($region . $letters[0] . '-' . '0001');
         } else {
             //pet_id convert to array ['MGF', '065];
             $array_petID = explode("-", $last_pet);
@@ -343,7 +343,7 @@ class PetApiController extends Controller
             $newCombination = '';
             $array_letter = [];
 
-            if ($num_int == 999) {
+            if ($num_int == 9999) {
                 //get last combination for generate new
                 $array_letter = explode($region, $array_petID[0]);
 
@@ -353,15 +353,16 @@ class PetApiController extends Controller
                         $newCombination = $letters[$i + 1];
                     }
                 }
-                $last_pet = strtoupper($region . $newCombination . "-" . '001');
+                $last_pet = strtoupper($region . $newCombination . "-" . '0001');
             } else {
                 $num_int = $num_int + 1;
 
                 //get last combination
                 $array_letter = explode($region, $array_petID[0]);
 
-                if ($num_int < 10) $new_num = '00' . $num_int;
-                elseif ($num_int < 100) $new_num = '0' . $num_int;
+                if ($num_int < 10) $new_num = '000' . $num_int;
+                elseif ($num_int < 100) $new_num = '00' . $num_int;
+                elseif ($num_int < 1000) $new_num = '0' . $num_int;
                 else $new_num = '' . $new_num;
 
                 $last_pet = strtoupper($region . $array_letter[1] . "-" . $new_num);

@@ -9,7 +9,9 @@ use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\RolesController;
 use App\Http\Controllers\admin\PermissionController;
 use App\Http\Controllers\admin\Audit;
-
+use App\Http\Controllers\admin\FurController;
+use App\Http\Controllers\admin\RaceController;
+use App\Http\Controllers\admin\SpecieController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->middleware('can:dashboard.home')->name('dashboard.home');
@@ -20,6 +22,13 @@ Route::delete('pet/children/delete', [PetController::class, 'deletePetToChildren
 
 Route::resource('users', UserController::class)->names('dashboard.users');
 Route::resource('pets', PetController::class)->names('dashboard.pets');
+
+Route::resource('species', SpecieController::class)->names('dashboard.species');
+Route::resource('races', RaceController::class)->names('dashboard.races');
+Route::post('getFurs', [FurController::class, 'getFursToAjax']);
+Route::resource('furs', FurController::class)->names('dashboard.furs');
+
+Route::get('getRacesToSpeciesAjax', [SpecieController::class, 'getRacesToSpeciesAjax']);
 
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']);
 Route::get('provinces/cantons/parishes', [ProvinceController::class, 'AllParishesByCanton']);

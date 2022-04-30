@@ -6,10 +6,13 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use App\Models\Canton;
+use App\Models\Fur;
 use App\Models\Image;
 use App\Models\Parish;
 use App\Models\Pet;
 use App\Models\Province;
+use App\Models\Race;
+use App\Models\Specie;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -22,6 +25,7 @@ class PetController extends Controller
     {
         $this->middleware('can:dashboard.pets.index')->only('index');
         $this->middleware('can:dashboard.pets.destroy')->only('destroy');
+        $this->middleware('can:dashboard.pets.show')->only('show');
         $this->middleware('can:dashboard.pets.create')->only('create', 'store');
         $this->middleware('can:dashboard.pets.edit')->only('edit', 'update');
     }
@@ -29,6 +33,7 @@ class PetController extends Controller
     public function index()
     {
         $pets = Pet::orderBy('updated_at', 'DESC')->get();
+
         return view('dashboard.pets.index', compact('pets'));
     }
 
@@ -37,24 +42,26 @@ class PetController extends Controller
         $users = User::pluck('user_id', 'user_id');
         $pets = Pet::all();
         $father = $pets->where('sex', 'M')
-            ->where('specie', 'canine')
             ->pluck('pet_id', 'pet_id');
         $mother = $pets->where('sex', 'F')
-            ->where('specie', 'canine')
             ->pluck('pet_id', 'pet_id');
 
         $childrens = [];
         $childrensSelected = [];
-        return view('dashboard.pets.create', compact('users', 'pets', 'childrens', 'childrensSelected'))->with('pather', $father)->with('mother', $mother);
+
+        $species = Specie::orderBy('name', 'asc')->pluck('name', 'id');
+        $races = [];
+
+        $furs = Fur::orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('dashboard.pets.create', compact('users', 'pets', 'childrens', 'childrensSelected', 'species', 'races', 'furs'))->with('pather', $father)->with('mother', $mother);
     }
 
     public function store(CreatePetRequest $request)
     {
         $input = $request->all();
 
-        do {
-            $input['pet_id'] = $this->genaretePetId($input);
-        } while (Pet::where('pet_id', '==', $input['pet_id'])->first());
+        $input['pet_id'] = genaretePetId($input);
 
         //1 if created as lost
         $input['n_lost'] = $input['lost'] ? 1 : 0;
@@ -88,7 +95,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                $this->uploadImages($request->file('images'), $input['pet_id']);
+                uploadImages($request->file('images'), $input['pet_id']);
             }
 
             DB::commit();
@@ -99,76 +106,14 @@ class PetController extends Controller
         }
     }
 
-    public function uploadImages($files, $pet_id)
-    {
-        try {
-
-            //Imagenes que le llegan 
-            $filesCurrent = [];
-
-            //Imagenes de la base de datos
-            $imagesCurrent = Image::where('pet_id', $pet_id)->get();
-
-            if ($imagesCurrent) {
-                foreach ($files as $file) {
-                    $file_['name'] = $file->getClientOriginalName();
-                    $file_['ext'] = $file->getClientOriginalExtension();
-                    array_push($filesCurrent, $file_);
-                };
-                foreach ($imagesCurrent as $imgC) {
-                    //Si la imagen de la base de datos se encuentra en las imagenes que le llegan
-                    //no se elimina, si no se encuentra en las imagenes que llegan se elimina.
-                    $exist = array_search($imgC->id_image, array_column($filesCurrent, 'name'));
-                    if (is_numeric($exist)) {
-                        continue;
-                    } else {
-                        Storage::disk("google")->delete($imgC->id_image);
-                        $imgC->delete();
-                    }
-                }
-            }
-
-            foreach ($files as $file) {
-                if ($file->getClientOriginalExtension() <> '') {
-                    $filename = $file->getClientOriginalName();
-                    Storage::disk("google")->put($filename, file_get_contents($file));
-                    $urlGoogleImage = Storage::disk("google")->url($filename);
-                    $urlG = explode('=', $urlGoogleImage);
-                    $id_img = explode('&', $urlG[1]);
-
-                    $image['id_image'] = $id_img[0];
-                    $image['url'] = $urlGoogleImage;
-                    $image['name'] = $filename;
-                    $image['pet_id'] = $pet_id;
-
-                    Image::create($image);
-                }
-            }
-        } catch (\Throwable $th) {
-            //throw $th;
-        }
-    }
-
     public function show(Pet $pet)
     {
-        $user = User::where('user_id', $pet->user_id)->first();
-        $canton = null;
-        $province = null;
-        $parish = null;
-
-        if ($user) {
-            $canton = Canton::where('id', $user->id_canton)->first();
-            $province = Province::where('id', $user->id_province)->first();
-            $parish = Parish::where('id', $user->id_parish)->first();
-        }
 
         $childs = Pet::where('id_pet_pather', $pet->pet_id)
             ->orWhere('id_pet_mother', $pet->pet_id)
             ->get();
 
-        $images = Image::where('pet_id', $pet->pet_id)->get();
-
-        return view('dashboard.pets.show', compact('pet', 'user', 'canton', 'province', 'childs', 'parish', 'images'));
+        return view('dashboard.pets.show', compact('pet', 'childs'));
     }
 
     public function edit(Pet $pet)
@@ -177,8 +122,8 @@ class PetController extends Controller
         $users = User::pluck('user_id', 'user_id');
         $pets = Pet::all();
 
-        $pather = $pets->where('sex', 'M')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
-        $mother = $pets->where('sex', 'F')->where('specie', $pet->specie)->pluck('pet_id', 'pet_id');
+        $pather = $pets->where('sex', 'M')->where('id_specie', $pet->id_specie)->pluck('pet_id', 'pet_id');
+        $mother = $pets->where('sex', 'F')->where('id_specie', $pet->id_specie)->pluck('pet_id', 'pet_id');
 
         $childs = Pet::where('id_pet_pather', $pet->pet_id)
             ->orWhere('id_pet_mother', $pet->pet_id)
@@ -188,9 +133,13 @@ class PetController extends Controller
 
         $childrensSelected = is_null($childrens) ? [] : $childrens->all();
 
-        $images_ = Image::where('pet_id', $pet->pet_id)->select('id_image', 'name', 'url')->get()->toArray();
+        $images_ = $pet->images()->select('id_image', 'name', 'url')->get()->toArray();
 
-        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images_', 'childs'));
+        $species = Specie::orderBy('name', 'asc')->pluck('name', 'id');
+        $furs = Fur::orderBy('name', 'asc')->pluck('name', 'id');
+        $races = Race::where('id_specie', $pet->id_specie)->orderBy('name', 'asc')->pluck('name', 'id');
+
+        return view('dashboard.pets.edit', compact('pet', 'users', 'pather', 'mother', 'childrens', 'childrensSelected', 'images_', 'childs', 'species', 'races', 'furs'));
     }
 
     public function update(UpdatePetRequest $request, Pet $pet)
@@ -216,10 +165,10 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                $this->uploadImages($request->file('images'), $pet->pet_id);
+                uploadImages($request->file('images'), $pet->pet_id);
             } else {
                 //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
-                $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
+                $imagesCurrent = $pet->images;
                 foreach ($imagesCurrent as $imgC) {
                     Storage::disk("google")->delete($imgC->id_image);
                     $imgC->delete();
@@ -273,7 +222,7 @@ class PetController extends Controller
     {
         DB::beginTransaction();
         try {
-            $imagesCurrent = Image::where('pet_id', $pet->pet_id)->get();
+            $imagesCurrent = $pet->images;
             foreach ($imagesCurrent as $imgC) {
                 Storage::disk("google")->delete($imgC->id_image);
                 $imgC->delete();
@@ -287,97 +236,13 @@ class PetController extends Controller
         }
     }
 
-
-    public function genaretePetId($input)
-    {
-
-        /* FIRST letter of province + secuencial two letter a-z more secuencial number 001-999*/
-        /* MAA-001 */
-        /* MZZ-999 */
-
-        $ip = isset($_SERVER['HTTP_CLIENT_IP'])
-            ? $_SERVER['HTTP_CLIENT_IP']
-            : (isset($_SERVER['HTTP_X_FORWARDED_FOR'])
-                ? $_SERVER['HTTP_X_FORWARDED_FOR']
-                : $_SERVER['REMOTE_ADDR']);
-
-        $url = "http://ip-api.com/json/" . $ip;
-        $region = json_decode(file_get_contents($url));
-        $letter_user = null;
-
-        if ($region->status == "success") {
-            $region = $region->region ? $region->region : 'D';
-        } else {
-            $region = 'D';
-        }
-
-        if ($input['user_id']) {
-            $user = User::where('user_id', $input['user_id'])->pluck('id_province');
-            $letter_user = Province::where('id', $user)->pluck('letter');
-            if (count($letter_user)) $region = $letter_user[0];
-        }
-
-        $provinces_letter = Province::pluck('letter');
-
-        $letters = [];
-
-        foreach ($provinces_letter as $i) {
-            foreach ($provinces_letter as $j) {
-                array_push($letters, $i . $j);
-            }
-        }
-
-        $last_pet = Pet::where('pet_id', 'like', strtoupper($region) . '%')->orderBy('pet_id', 'DESC')->pluck('pet_id')->first();
-
-        if (!$last_pet) {
-            //Letter[0] is AA (?). First pet register.
-            $last_pet = strtoupper($region . $letters[0] . '-' . '001');
-        } else {
-            //pet_id convert to array ['MGF', '065];
-            $array_petID = explode("-", $last_pet);
-
-            //get number
-            $num_int = intval($array_petID[1]);
-            $new_num = '';
-
-            $newCombination = '';
-            $array_letter = [];
-
-            if ($num_int == 999) {
-                //get last combination for generate new
-                $array_letter = explode($region, $array_petID[0]);
-
-                for ($i = 0; $i < count($letters); $i++) {
-                    //get next combination
-                    if ($letters[$i] == $array_letter[1]) {
-                        $newCombination = $letters[$i + 1];
-                    }
-                }
-                $last_pet = strtoupper($region . $newCombination . "-" . '001');
-            } else {
-                $num_int = $num_int + 1;
-
-                //get last combination
-                $array_letter = explode($region, $array_petID[0]);
-
-                if ($num_int < 10) $new_num = '00' . $num_int;
-                elseif ($num_int < 100) $new_num = '0' . $num_int;
-                else $new_num = '' . $new_num;
-
-                $last_pet = strtoupper($region . $array_letter[1] . "-" . $new_num);
-            }
-        }
-
-        return $last_pet;
-    }
-
     public function getParents(Request $request)
     {
         try {
             $input = $request->all();
 
             if (isset($input['childrensSeleted'])) {
-                $result = Pet::where('specie', $input['specie'])
+                $result = Pet::where('id_specie', $input['specie'])
                     ->where(function ($query) use ($input) {
                         $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
                             ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
@@ -387,7 +252,7 @@ class PetController extends Controller
                     ->whereNotIn('pet_id', $input['childrensSeleted'])
                     ->select('name', 'pet_id')->get()->take(25);
             } else {
-                $result = Pet::where('specie', $input['specie'])
+                $result = Pet::where('id_specie', $input['specie'])
                     ->where(function ($query) use ($input) {
                         $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
                             ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
@@ -495,7 +360,7 @@ class PetController extends Controller
             if ($input['sex'] == null) $is_null_parent = null;
 
             if ($is_null_parent) {
-                $pets = Pet::where('specie', $input['specie'])
+                $pets = Pet::where('id_specie', $input['specie'])
                     ->where(function ($query) use ($input) {
                         $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
                             ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
@@ -506,7 +371,7 @@ class PetController extends Controller
                     ->where($is_null_parent, null)
                     ->select('name', 'pet_id')->get()->take(25);
             } else {
-                $pets = Pet::where('specie', $input['specie'])
+                $pets = Pet::where('id_specie', $input['specie'])
                     ->where(function ($query) use ($input) {
                         $query->where('name', 'LIKE', '%' .  ucwords(strtolower($input['search'])) . '%')
                             ->orWhere('pet_id', 'LIKE', '%' . strtoupper($input['search']) . '%');
