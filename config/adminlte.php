@@ -30,7 +30,7 @@ return [
     |
     */
 
-    'use_ico_only' => false,
+    'use_ico_only' => true,
     'use_full_favicon' => false,
 
     /*
@@ -87,7 +87,7 @@ return [
     'layout_boxed' => null,
     'layout_fixed_sidebar' => true,
     'layout_fixed_navbar' => true,
-    'layout_fixed_footer' => null,
+    'layout_fixed_footer' => true,
     'layout_dark_mode' => null,
 
     /*
@@ -285,7 +285,7 @@ return [
             'submenu' => [
                 [
                     'text' => 'Especies',
-                    'icon' => 'fas fa-list-alt',
+                    'icon' => 'fas fa-otter',
                     'route' => 'dashboard.species.index',
                     'active'    => ['dashboard/species*'],
                     'can'          => 'dashboard.species.index',
@@ -299,7 +299,7 @@ return [
                 ],
                 [
                     'text' => 'Razas',
-                    'icon' => 'fas fa-list-alt',
+                    'icon' => 'fas fa-tag',
                     'route' => 'dashboard.races.index',
                     'active'    => ['dashboard/races*'],
                     'can'          => 'dashboard.races.index',

@@ -11,6 +11,13 @@
 @yield('content')
 @stop
 
+@section('footer')
+<div class="float-right d-none d-md-block">
+    <b>Version</b> 1.0.0
+</div>
+<strong>Copyright © Facultad de Ciencias informáticas UTM.</strong> Todos los derechos reservados.
+@endsection
+
 @section('css')
 <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 <link rel="stylesheet" href="https://unpkg.com/flowbite@1.4.3/dist/flowbite.min.css" />
@@ -35,11 +42,6 @@
         } else {
             $(this).prop("disabled", true);
         }
-    });
-
-    $(document).ready(function() {
-        $(".d-md-inline") && $(".d-md-inline").removeClass('d-md-inline');
-        document.querySelector("html").style.overflowX = "hidden";
     });
 </script>
 @stop
