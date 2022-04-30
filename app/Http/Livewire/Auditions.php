@@ -33,7 +33,7 @@ class Auditions extends Component
     {
         $audits = ModelsAudit::where('id', 'LIKE', '%' .  $this->search . '%')
             ->orWhere('user_id', 'LIKE', '%' .  $this->search . '%')
-            ->orWhere('auditable_id', 'LIKE', '%' .  $this->search . '%')
+            ->orWhere('auditable_id', 'LIKE', '%' . strtoupper($this->search) . '%')
             ->orWhere('event', 'LIKE', '%' .  strtolower($this->search) . '%')->orderBy('id', 'desc')->paginate(25);
 
         return view('livewire.auditions', ['audits' => $audits]);
