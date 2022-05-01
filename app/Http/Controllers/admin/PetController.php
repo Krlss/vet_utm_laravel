@@ -95,7 +95,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                uploadImages($request->file('images'), $input['pet_id']);
+                uploadImagesDashboard($request->file('images'), $input['pet_id']);
             }
 
             DB::commit();
@@ -155,6 +155,7 @@ class PetController extends Controller
         //if it changes from false to true
         if (!$pet->lost && $input['lost']) {
             $input['n_lost'] = $pet->n_lost + 1;
+            sendNotificationEmailToPetLost($pet);
         }
 
         if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
@@ -165,7 +166,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                uploadImages($request->file('images'), $pet->pet_id);
+                uploadImagesDashboard($request->file('images'), $pet->pet_id);
             } else {
                 //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
                 $imagesCurrent = $pet->images;

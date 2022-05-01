@@ -11,32 +11,58 @@
 <body>
 
     <style>
-        table, th, td {
-            border: 1px solid black;
-            padding: 5px;
+        h1 {
+            color: rgb(26, 134, 26);
         }
     </style>
 
     <h1>{{ $detail['title'] }}</h1>
     <p>{{ $detail['body'] }}</p>
 
-    <table>
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Especie</th>
-                <th>Raza</th>
-                <th>Dueño</th>
-            </tr>
-        </thead>
-        <tbody>
-            <td>{{ $detail['data']['name'] }}</td>  
-            <td>{{ $detail['data']['specie'] }}</td>  
-            <td>{{ $detail['data']['race'] }}</td>  
-            <td>{{ $detail['data']['user_id'] }}</td>  
-        </tbody>
-    </table>
 
+    <div id="container">
+        <p>Nombre de la mascota: {{ $detail['data']['name']}} </p>
+        <p>Especie de la mascota: {{ $detail['data']['specie']}} </p>
+        <p>Raza de la mascota: {{ $detail['data']['race']}}</p>
+        <p>Sexo de la mascota: {{ $detail['data']['sex']}}</p>
+
+        @if($detail['data']['fur'])
+        <p>Pelaje de la mascota: {{ $detail['data']['fur']}}</p>
+        @endif
+
+        @if($detail['data']['user_id'])
+        <p>CI/RUC del dueño de la mascota: {{ $detail['data']['user_id']}}</p>
+        @endif
+
+        @if($detail['data']['user_name'])
+        <p>Nombres del dueño de la mascota: {{ $detail['data']['user_name']}}</p>
+        @endif
+
+        @if($detail['data']['user_lastname'])
+        <p>Apellidos del dueño de la mascota: {{ $detail['data']['user_lastname']}}</p>
+        @endif
+
+        @if($detail['data']['user_email'])
+        <p>Correo del dueño de la mascota: {{ $detail['data']['user_email']}} </p>
+        @endif
+
+        @if($detail['data']['user_phone'])
+        <p>Teléfono del dueño de la mascota: {{ $detail['data']['user_phone']}} </p>
+        @endif
+
+        @if($detail['data']['province'])
+        <p>Provincia del dueño de la mascota: {{ $detail['data']['province']}} </p>
+        @endif
+
+        @if($detail['data']['canton'])
+        <p>Cantón del dueño de la mascota: {{ $detail['data']['canton']}}</p>
+        @endif
+
+        @if($detail['data']['parish'])
+        <p>Parroquia del dueño de la mascota: {{ $detail['data']['parish']}}</p>
+        @endif
+
+    </div>
 
 </body>
 

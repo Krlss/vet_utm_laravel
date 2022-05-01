@@ -52,8 +52,6 @@ class PetApiController extends Controller
             $user = User::where('api_token', $header)->first();
             if ($user) {
                 try {
-                    $canton = Canton::where('id', $user->id_canton)->first();
-                    $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
                     if ($input['lost']) {
                         $input['n_lost'] = 1;
@@ -64,18 +62,12 @@ class PetApiController extends Controller
 
                     DB::beginTransaction();
 
-                    $input['pet_id'] = $this->genaretePetId($input['public_ip']);
+                    $input['pet_id'] = genaretePetId($input);
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
                     Pet::create($input);
 
-                    $pet = Pet::where('user_id', $user->user_id)->get();
-
-                    $user['pet'] = $pet;
-                    $user['canton'] = $canton;
-                    $user['province'] = $province;
-
                     DB::commit();
-                    return response()->json(['message' => 'Pet created!', 'data' => $user], 200);
+                    return response()->json(['message' => 'Pet created!', 'data' => []], 200);
                 } catch (\Throwable $th) {
                     return response()->json(['message' => 'Something went error', 'data' => $th], 500);
                 }
@@ -139,13 +131,24 @@ class PetApiController extends Controller
                 ->where('published', true)
                 ->first();
 
-            $user = User::where('user_id', $pet->user_id)->first();
-            $canton = $user ? Canton::where('id', $user->id_canton)->first() : null;
-            $user['canton'] = $canton;
+            $user = $pet->user;
+            $canton = $user ? $user->canton : null;
+            $province = $user ? $user->province : null;
+            $parish = $user ? $user->parish : null;
+            $specie = $pet->specie;
+            $race = $pet->race;
+
+            $user['canton'] = $canton ? $canton->name : null;
+            $user['province'] = $province ? $province->name : null;
+            $user['parish'] = $parish ? $parish->name : null;
+
+            $pet['specie'] = $specie ? $specie->name : null;
+            if ($specie)
+                $pet['image_specie'] = $specie->image ? $specie->image->url : null;
+            $pet['race'] = $race ? $race->name : null;
             $pet['user'] = $user;
-            $images = Image::where('pet_id', $pet->pet_id)->get();
             $data['pet'] = $pet;
-            $data['images'] = $images;
+            $data['images'] = $pet->images;
             if ($pet) return response()->json(['message' => 'Profile of pet lost', 'data' => $data], 200);
             return response()->json(['message' => 'pet not found', 'data' => []], 404);
         } catch (\Throwable $th) {
@@ -157,6 +160,11 @@ class PetApiController extends Controller
     {
         try {
             $pets = Pet::where('lost', true)->where('published', true)->get();
+
+            for ($i = 0; $i < count($pets); $i++) {
+                $pets[$i]['image_specie'] = $pets[$i]->specie ? $pets[$i]->specie->image : null;
+            }
+
             if ($pets) {
                 return response()->json(['message' => 'All pets lost', 'data' => $pets], 200);
             }
@@ -173,8 +181,7 @@ class PetApiController extends Controller
         $arrName = explode("-", $input['images'][0]['name']); // ['.....' - '.....' - '......']
         $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
         $arridWithJpg = explode(".", $idWithJpg); // without .jpg
-        $pet['pet_id'] = $this->genaretePetId($input['public_ip']); //Last ID
-        unset($input['public_ip']);
+        $pet['pet_id'] = genaretePetId($input); //Last ID 
         $pet['name'] = 'Desconocido';
         $pet['birth'] = date('Y-m-d');
         $pet['sex'] = null;
@@ -203,7 +210,7 @@ class PetApiController extends Controller
                 $image['id_image'] = $id_img[0];
                 $image['url'] = $urlGoogleImage;
                 $image['name'] = $input['images'][$i]['name'];
-                $image['pet_id'] = $pet['pet_id'];
+                $image['external_id'] = $pet['pet_id'];
 
                 Image::create($image);
             }
@@ -231,9 +238,6 @@ class PetApiController extends Controller
                         if (!$user) return response()->json(['message' => 'User not found', 'data' => []], 404);
                     }
 
-                    $user = User::where('user_id', $pet->user_id)->first();
-                    $canton = Canton::where('id', $user->id_canton)->first();
-                    $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
                     $input['updated_at'] = now();
 
 
@@ -242,7 +246,7 @@ class PetApiController extends Controller
                     }
 
                     DB::beginTransaction();
-                    $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
+                    $imagesCurrent = $pet->images;
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
                     if (isset($input['images']))
                         foreach ($imagesCurrent as $imgC) {
@@ -269,7 +273,7 @@ class PetApiController extends Controller
                                 $image['id_image'] = $id_img[0];
                                 $image['url'] = $urlGoogleImage;
                                 $image['name'] = $input['images'][$i]['name'];
-                                $image['pet_id'] = $pet['pet_id'];
+                                $image['external_id'] = $pet['pet_id'];
 
                                 Image::create($image);
                             }
@@ -278,12 +282,8 @@ class PetApiController extends Controller
 
                     $pet->update($input);
 
-                    $user['pet'] = $pet;
-                    $user['canton'] = $canton;
-                    $user['province'] = $province;
-
                     DB::commit();
-                    return response()->json(['message' => 'Pet updated!', 'data' => $user], 200);
+                    return response()->json(['message' => 'Pet updated!', 'data' => []], 200);
                 } catch (\Throwable $th) {
                     return response()->json(['message' => 'Something went error', 'data' => $th], 500);
                 }
@@ -293,83 +293,6 @@ class PetApiController extends Controller
         } else {
             return response()->json(['message' => 'you are not authorized to update that profile', 'data' => []], 401);
         }
-    }
-
-    public function genaretePetId($input)
-    {
-        /* FIRST letter of province + secuencial two letter a-z more secuencial number 001-999*/
-        /* MAA-001 */
-        /* MZZ-999 */
-
-        $url = "http://ip-api.com/json/" . $input;
-        $region = json_decode(file_get_contents($url));
-        $letter_user = null;
-
-        if ($region->status == "success") {
-            $region = $region->region ? $region->region : 'D';
-        } else {
-            $region = 'D';
-        }
-
-        if (isset($input['user_id'])) {
-            $user = User::where('user_id', $input['user_id'])->pluck('id_province');
-            $letter_user = Province::where('id', $user)->pluck('letter');
-            if (count($letter_user)) $region = $letter_user[0];
-        }
-
-        $provinces_letter = Province::pluck('letter');
-
-        $letters = [];
-
-        foreach ($provinces_letter as $i) {
-            foreach ($provinces_letter as $j) {
-                array_push($letters, $i . $j);
-            }
-        }
-
-        $last_pet = Pet::where('pet_id', 'like', strtoupper($region) . '%')->orderBy('pet_id', 'DESC')->pluck('pet_id')->first();
-
-        if (!$last_pet) {
-            //Letter[0] is AA (?). First pet register.
-            $last_pet = strtoupper($region . $letters[0] . '-' . '0001');
-        } else {
-            //pet_id convert to array ['MGF', '065];
-            $array_petID = explode("-", $last_pet);
-
-            //get number
-            $num_int = intval($array_petID[1]);
-            $new_num = '';
-
-            $newCombination = '';
-            $array_letter = [];
-
-            if ($num_int == 9999) {
-                //get last combination for generate new
-                $array_letter = explode($region, $array_petID[0]);
-
-                for ($i = 0; $i < count($letters); $i++) {
-                    //get next combination
-                    if ($letters[$i] == $array_letter[1]) {
-                        $newCombination = $letters[$i + 1];
-                    }
-                }
-                $last_pet = strtoupper($region . $newCombination . "-" . '0001');
-            } else {
-                $num_int = $num_int + 1;
-
-                //get last combination
-                $array_letter = explode($region, $array_petID[0]);
-
-                if ($num_int < 10) $new_num = '000' . $num_int;
-                elseif ($num_int < 100) $new_num = '00' . $num_int;
-                elseif ($num_int < 1000) $new_num = '0' . $num_int;
-                else $new_num = '' . $new_num;
-
-                $last_pet = strtoupper($region . $array_letter[1] . "-" . $new_num);
-            }
-        }
-
-        return $last_pet;
     }
 
     public function reportPet(Request $request)
@@ -405,6 +328,7 @@ class PetApiController extends Controller
                     return redirect()->back()->with('error', $e->getMessage());
                 }
                 User::create($input['user']);
+                DB::commit();
             }
             $pet['name'] = $input['namepet'];
             unset($input['namepet']);
@@ -415,12 +339,14 @@ class PetApiController extends Controller
             unset($input['sex']);
             $pet['castrated'] = $input['castrated'];
             unset($input['castrated']);
-            $pet['specie'] = $input['specie'];
-            unset($input['specie']);
-            $pet['race'] = $input['race'];
-            unset($input['race']);
+            $pet['id_specie'] = $input['specie'];
+            unset($input['id_specie']);
+            $pet['id_race'] = $input['race'];
+            unset($input['id_race']);
+            $pet['characteristic'] = $input['characteristic'];
+            unset($input['characteristic']);
 
-            $pet['pet_id'] = $this->genaretePetId($input['user']['public_ip']); //Last ID
+            $pet['pet_id'] = genaretePetId($newUser); //Last ID
             $pet['lost'] = true;
             $pet['published'] = true;
             $pet['n_lost'] = 1;
@@ -441,7 +367,7 @@ class PetApiController extends Controller
                 $image['id_image'] = $id_img[0];
                 $image['url'] = $urlGoogleImage;
                 $image['name'] = $input['images'][$i]['name'];
-                $image['pet_id'] = $pet['pet_id'];
+                $image['external_id'] = $pet['pet_id'];
 
                 Image::create($image);
             }

@@ -16,6 +16,8 @@ function validateUserID($user_id)
             validateCI($user_id);
         } elseif (strlen($user_id) == 13) {
             validateRUC($user_id);
+        } else {
+            throw new Exception('La cudula o RUC es 10 o 13 dígitos.');
         }
     } catch (Exception $e) {
         throw new Exception($e->getMessage());
@@ -370,7 +372,7 @@ function getConvination_letters()
     return array("AA", "AB", "AU", "AC", "AX", "AH", "AO", "AE", "AG", "AI", "AL", "AR", "AM", "AV", "AN", "AS", "AP", "AT", "AZ", "AW", "AK", "AQ", "AJ", "AY", "BA", "BB", "BU", "BC", "BX", "BH", "BO", "BE", "BG", "BI", "BL", "BR", "BM", "BV", "BN", "BS", "BP", "BT", "BZ", "BW", "BK", "BQ", "BJ", "BY", "UA", "UB", "UU", "UC", "UX", "UH", "UO", "UE", "UG", "UI", "UL", "UR", "UM", "UV", "UN", "US", "UP", "UT", "UZ", "UW", "UK", "UQ", "UJ", "UY", "CA", "CB", "CU", "CC", "CX", "CH", "CO", "CE", "CG", "CI", "CL", "CR", "CM", "CV", "CN", "CS", "CP", "CT", "CZ", "CW", "CK", "CQ", "CJ", "CY", "XA", "XB", "XU", "XC", "XX", "XH", "XO", "XE", "XG", "XI", "XL", "XR", "XM", "XV", "XN", "XS", "XP", "XT", "XZ", "XW", "XK", "XQ", "XJ", "XY", "HA", "HB", "HU", "HC", "HX", "HH", "HO", "HE", "HG", "HI", "HL", "HR", "HM", "HV", "HN", "HS", "HP", "HT", "HZ", "HW", "HK", "HQ", "HJ", "HY", "OA", "OB", "OU", "OC", "OX", "OH", "OO", "OE", "OG", "OI", "OL", "OR", "OM", "OV", "ON", "OS", "OP", "OT", "OZ", "OW", "OK", "OQ", "OJ", "OY", "EA", "EB", "EU", "EC", "EX", "EH", "EO", "EE", "EG", "EI", "EL", "ER", "EM", "EV", "EN", "ES", "EP", "ET", "EZ", "EW", "EK", "EQ", "EJ", "EY", "GA", "GB", "GU", "GC", "GX", "GH", "GO", "GE", "GG", "GI", "GL", "GR", "GM", "GV", "GN", "GS", "GP", "GT", "GZ", "GW", "GK", "GQ", "GJ", "GY", "IA", "IB", "IU", "IC", "IX", "IH", "IO", "IE", "IG", "II", "IL", "IR", "IM", "IV", "IN", "IS", "IP", "IT", "IZ", "IW", "IK", "IQ", "IJ", "IY", "LA", "LB", "LU", "LC", "LX", "LH", "LO", "LE", "LG", "LI", "LL", "LR", "LM", "LV", "LN", "LS", "LP", "LT", "LZ", "LW", "LK", "LQ", "LJ", "LY", "RA", "RB", "RU", "RC", "RX", "RH", "RO", "RE", "RG", "RI", "RL", "RR", "RM", "RV", "RN", "RS", "RP", "RT", "RZ", "RW", "RK", "RQ", "RJ", "RY", "MA", "MB", "MU", "MC", "MX", "MH", "MO", "ME", "MG", "MI", "ML", "MR", "MM", "MV", "MN", "MS", "MP", "MT", "MZ", "MW", "MK", "MQ", "MJ", "MY", "VA", "VB", "VU", "VC", "VX", "VH", "VO", "VE", "VG", "VI", "VL", "VR", "VM", "VV", "VN", "VS", "VP", "VT", "VZ", "VW", "VK", "VQ", "VJ", "VY", "NA", "NB", "NU", "NC", "NX", "NH", "NO", "NE", "NG", "NI", "NL", "NR", "NM", "NV", "NN", "NS", "NP", "NT", "NZ", "NW", "NK", "NQ", "NJ", "NY", "SA", "SB", "SU", "SC", "SX", "SH", "SO", "SE", "SG", "SI", "SL", "SR", "SM", "SV", "SN", "SS", "SP", "ST", "SZ", "SW", "SK", "SQ", "SJ", "SY", "PA", "PB", "PU", "PC", "PX", "PH", "PO", "PE", "PG", "PI", "PL", "PR", "PM", "PV", "PN", "PS", "PP", "PT", "PZ", "PW", "PK", "PQ", "PJ", "PY", "TA", "TB", "TU", "TC", "TX", "TH", "TO", "TE", "TG", "TI", "TL", "TR", "TM", "TV", "TN", "TS", "TP", "TT", "TZ", "TW", "TK", "TQ", "TJ", "TY", "ZA", "ZB", "ZU", "ZC", "ZX", "ZH", "ZO", "ZE", "ZG", "ZI", "ZL", "ZR", "ZM", "ZV", "ZN", "ZS", "ZP", "ZT", "ZZ", "ZW", "ZK", "ZQ", "ZJ", "ZY", "WA", "WB", "WU", "WC", "WX", "WH", "WO", "WE", "WG", "WI", "WL", "WR", "WM", "WV", "WN", "WS", "WP", "WT", "WZ", "WW", "WK", "WQ", "WJ", "WY", "KA", "KB", "KU", "KC", "KX", "KH", "KO", "KE", "KG", "KI", "KL", "KR", "KM", "KV", "KN", "KS", "KP", "KT", "KZ", "KW", "KK", "KQ", "KJ", "KY", "QA", "QB", "QU", "QC", "QX", "QH", "QO", "QE", "QG", "QI", "QL", "QR", "QM", "QV", "QN", "QS", "QP", "QT", "QZ", "QW", "QK", "QQ", "QJ", "QY", "JA", "JB", "JU", "JC", "JX", "JH", "JO", "JE", "JG", "JI", "JL", "JR", "JM", "JV", "JN", "JS", "JP", "JT", "JZ", "JW", "JK", "JQ", "JJ", "JY", "YA", "YB", "YU", "YC", "YX", "YH", "YO", "YE", "YG", "YI", "YL", "YR", "YM", "YV", "YN", "YS", "YP", "YT", "YZ", "YW", "YK", "YQ", "YJ", "YY");
 }
 
-function uploadImages($files, $pet_id)
+function uploadImagesDashboard($files, $external_id)
 {
     try {
 
@@ -378,7 +380,7 @@ function uploadImages($files, $pet_id)
         $filesCurrent = [];
 
         //Imagenes de la base de datos
-        $imagesCurrent = Image::where('pet_id', $pet_id)->get();
+        $imagesCurrent = Image::where('external_id', $external_id)->get();
 
         if ($imagesCurrent) {
             foreach ($files as $file) {
@@ -410,7 +412,7 @@ function uploadImages($files, $pet_id)
                 $image['id_image'] = $id_img[0];
                 $image['url'] = $urlGoogleImage;
                 $image['name'] = $filename;
-                $image['pet_id'] = $pet_id;
+                $image['external_id'] = $external_id;
 
                 Image::create($image);
             }
@@ -420,19 +422,80 @@ function uploadImages($files, $pet_id)
     }
 }
 
-function sendNotificationEmailToPetLost($input)
+function uploadImageDashboard($file, $external_id)
 {
     try {
-        $users = User::where('email_verified_at', '!=', null)
+
+        //Imagenes que le llegan 
+        $fileCurrent = [];
+
+        //Imagenes de la base de datos
+        $imageCurrent = Image::where('external_id', $external_id)->get();
+
+        if (count($imageCurrent)) {
+
+            $file_['name'] = $file->getClientOriginalName();
+            $file_['ext'] = $file->getClientOriginalExtension();
+            array_push($fileCurrent, $file_);
+
+            $exist = array_search($imageCurrent[0]->id_image, array_column($fileCurrent, 'name'));
+            if (!is_numeric($exist)) {
+                Storage::disk("google")->delete($imageCurrent[0]->id_image);
+                $imageCurrent[0]>delete();
+            }
+        }
+
+        if ($file->getClientOriginalExtension() <> '') {
+            $filename = $file->getClientOriginalName();
+            Storage::disk("google")->put($filename, file_get_contents($file));
+            $urlGoogleImage = Storage::disk("google")->url($filename);
+            $urlG = explode('=', $urlGoogleImage);
+            $id_img = explode('&', $urlG[1]);
+
+            $image['id_image'] = $id_img[0];
+            $image['url'] = $urlGoogleImage;
+            $image['name'] = $filename;
+            $image['external_id'] = $external_id;
+
+            Image::create($image);
+        }
+    } catch (\Throwable $th) {
+        //throw $th;
+    }
+}
+
+
+function sendNotificationEmailToPetLost($pet)
+{
+    try {
+        $users_ = User::where('email_verified_at', '!=', null)
             ->join('pets', 'users.user_id', '=', 'pets.user_id')
-            ->where('pets.race', $input['race'])
-            ->orWhere('pets.specie', $input['specie'])
+            ->where('pets.id_race', $pet->id_race)
+            ->orWhere('pets.id_specie', $pet->id_specie)
             ->pluck('email');
 
-        $data['name'] = $input['name'];
-        $data['specie'] = $input['specie'];
-        $data['race'] = $input['race'];
-        $data['user_id'] = $input['user_id'];
+        $users = array_unique($users_->all());
+        if ($pet->user) {
+            $pos = array_search($pet->user->email, $users);
+            unset($users[$pos]);
+        }
+
+        $data['name'] = $pet->name;
+        $data['specie'] = $pet->specie->name;
+        $data['race'] = $pet->race->name;
+        $data['user_id'] = $pet->user_id;
+        $data['sex'] = $pet->sex;
+        $data['fur'] = $pet->fur ? $pet->fur->name : null;
+
+        if ($pet->user) {
+            $data['user_name'] = $pet->user->name;
+            $data['user_lastname'] = $pet->user->last_name1 . ' ' . $pet->user->last_name2;
+            $data['user_email'] = $pet->user->email;
+            $data['user_phone'] = $pet->user->phone;
+            $data['province'] = $pet->user->province ? $pet->user->province->name : null;
+            $data['canton'] = $pet->user->canton ? $pet->user->canton->name : null;
+            $data['parish'] = $pet->user->parish ? $pet->user->parish->name : null;
+        }
 
         $detail = [
             'title' => 'Clínica veterinaria de la universidad técnica de manabí',

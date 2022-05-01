@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateUserApiRequest;
+use App\Http\Requests\CreateUserRequest;
 use App\Mail\VerifyEmail;
 use App\Models\Canton;
 use App\Models\Image;
@@ -49,14 +50,15 @@ class UserApiController extends Controller
                 } else {
                     $passwordD = Hash::check($password, $user->password);
                     if ($passwordD) {
-                        $pet = Pet::where('user_id', $user->user_id)->get();
-                        $canton = Canton::where('id', $user->id_canton)->first();
-
-                        $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
+                        $pet = $user->pets;
+                        $canton = $user->canton;
+                        $province = $user->province;
+                        $parish = $user->parish;
 
                         $user['pet'] = $pet;
                         $user['canton'] = $canton;
                         $user['province'] = $province;
+                        $user['parish '] = $parish;
                         return response()->json(['message' => 'Welcome', 'data' => $user], 200);
                     } else {
                         return response()->json(['message' => 'Password incorrect', 'data' => null], 401);
@@ -71,31 +73,30 @@ class UserApiController extends Controller
     }
 
 
-    function Register(Request $request)
+    function Register(CreateUserApiRequest $request)
     {
 
         $input = $request->all();
         $input['api_token'] = Str::random(25);
         $input['password'] = Hash::make($input['password']);
 
-        $userFindC = User::where('user_id', $input['user_id'])->first();
-        $userFindE = User::where('email', $input['email'])->first();
-        $userFindP = User::where('phone', $input['phone'])->first();
-        if ($userFindC) return response()->json(['message' => 'La cédula/RUC ya está registrada', 'data' => []], 401);
-        if ($userFindE) return response()->json(['message' => 'El correo ya está registrado', 'data' => []], 401);
         try {
             if (isset($input['user_id']))
                 validateUserID($input['user_id']);
         } catch (Exception $e) {
             return response()->json(['message' => $e->getMessage(), 'data' => []], 401);
         }
-        if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 401);
+
         $input['email'] = strtolower($input['email']);
+
+        //Por defecto manabí...
+        $input['id_province'] = 13;
 
         try {
             DB::beginTransaction();
             if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
-
+            if (isset($input['last_name1']))  $input['last_name1'] = ucwords(strtolower($input['last_name1']));
+            if (isset($input['last_name2']))  $input['last_name2'] = ucwords(strtolower($input['last_name2']));
             User::create($input);
 
             DB::commit();
@@ -112,14 +113,17 @@ class UserApiController extends Controller
         if ($header) {
             $user = User::where('api_token', $header)->first();
             if ($user) {
-                $pet = Pet::where('user_id', $user->user_id)->get();
-                $canton = Canton::where('id', $user->id_canton)->first();
-                $province = Province::where('id', $user->id_province)->first();
-                $parish = Parish::where('id', $user->id_parish)->first();
+                $pet = $user->pets;
+                $canton = $user->canton;
+                $province = $user->province;
+                $parish = $user->parish;
 
                 for ($i = 0; $i < count($pet); $i++) {
-                    $images = Image::where('pet_id', $pet[$i]->pet_id)->get();
-                    $pet[$i]['images'] = $images;
+                    if ($pet[$i]->specie)
+                        $pet[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                    $pet[$i]['images'] = $pet[$i]->images;
+                    $pet[$i]['specie'] = $pet[$i]->specie->name;
+                    $pet[$i]['race'] = $pet[$i]->race->name;
                 }
 
                 $user['pet'] = $pet;

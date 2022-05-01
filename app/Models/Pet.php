@@ -48,7 +48,7 @@ class Pet extends Model implements Auditable
 
     public function images()
     {
-        return $this->hasMany(Image::class, 'pet_id');
+        return $this->hasMany(Image::class, 'external_id');
     }
 
     public function getFullNameAttribute()

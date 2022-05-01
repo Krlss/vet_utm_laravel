@@ -76,7 +76,7 @@ class ReportController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                uploadImages($request->file('images'), $petUpdated->pet_id);
+                uploadImagesDashboard($request->file('images'), $petUpdated->pet_id);
             } else {
                 //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
                 $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();

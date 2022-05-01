@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ParishApiController;
 use App\Http\Controllers\Api\PetApiController;
 use App\Http\Controllers\Api\ProvinceApiController;
+use App\Http\Controllers\Api\SpeciesApiController;
 use App\Http\Controllers\Api\UserApiController;
 use Google\Service\Storage;
 use Google\Service\Docs\Request;
@@ -32,7 +33,7 @@ use Illuminate\Support\Facades\Route;
     $url = Storage::disk('google')->url($firstFileName);
     dump($url);
 }); */
- 
+
 
 
 Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
@@ -46,11 +47,14 @@ Route::post('register', [UserApiController::class, 'Register']);
 Route::get('users/{id}', [UserApiController::class, 'getProfile']);
 Route::put('updatedUser/', [UserApiController::class, 'updateDataUser']);
 Route::put('updatedPassword/', [UserApiController::class, 'updatedPassword']);
-Route::put('updatedPet/', [PetApiController::class, 'updateDataPet']);  
-Route::post('createdPet', [PetApiController::class, 'store']); 
+Route::put('updatedPet/', [PetApiController::class, 'updateDataPet']);
+Route::post('createdPet', [PetApiController::class, 'store']);
 
-Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']); 
+Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']);
 
 Route::get('provinces', [ProvinceApiController::class, 'getAllProvinces']);
 Route::get('provinces/cantons/{id}', [ProvinceApiController::class, 'getCantonsByProvince']);
 Route::get('cantons/parish/{id}', [ParishApiController::class, 'getParishesByCanton']);
+
+Route::get('species', [SpeciesApiController::class, 'getAllSpecies']);
+Route::get('species/races/{id}', [SpeciesApiController::class, 'getRacesBySpecie']);

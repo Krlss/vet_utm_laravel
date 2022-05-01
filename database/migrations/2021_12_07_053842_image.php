@@ -18,7 +18,7 @@ class Image extends Migration
 	    $table->string('id_image');
 	    $table->string('url');
 	    $table->string('name'); 
-        $table->string('pet_id', 15);
+        $table->string('external_id');
         $table->timestamps();
         });
     }

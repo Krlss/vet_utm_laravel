@@ -36,7 +36,7 @@
         </div>
         @endif
 
-        {!! Form::open(['route' => 'dashboard.species.store']) !!}
+        {!! Form::open(['route' => 'dashboard.species.store', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.species.fields_create')
         {!! Form::close() !!}
     </div>

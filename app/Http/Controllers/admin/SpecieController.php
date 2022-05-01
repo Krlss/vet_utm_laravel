@@ -38,7 +38,15 @@ class SpecieController extends Controller
         DB::beginTransaction();
         try {
             $input['name'] = ucfirst(ucwords($input['name']));
-            Specie::create($input);
+            $specie = Specie::create($input);
+
+            if ($request->hasFile('image')) {
+                $request->validate([
+                    'image' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                ]);
+                uploadImageDashboard($request->file('image'), $specie->id);
+            }
+
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('info', trans('lang.specie_created'));
         } catch (\Throwable $e) {
@@ -63,6 +71,10 @@ class SpecieController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             $specie = Specie::find($id);
             $specie->update($input);
+
+            if ($request->hasFile('image')) {
+                uploadImageDashboard($request->file('image'), $specie->id);
+            }
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('info', trans('lang.specie_updated'));
         } catch (\Throwable $e) {

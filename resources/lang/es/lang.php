@@ -274,11 +274,12 @@ return [
      'first_selected_specie' => 'Primero seleccione una especie',
 
      'withoutSpecie' => 'Sin especie',
+     'withoutRace' => 'Sin raza',
      'list_races' => 'Lista de razas',
      'createRace' => 'Crear raza',
      'select_race' => 'Seleccione una raza',
      'select_specie' => 'Seleccione una especie',
-
+     'withoutCharacteristic' => 'Sin características',
      'race_errpr' => 'Verifica que los campos cumplan con los requisitos',
      'race_created' => 'Raza creada con existo',
      'race_registration' => 'Registrar una nueva raza',

@@ -10,10 +10,15 @@ class Image extends Model
     use HasFactory;
 
     // Habilitar asignacion masiva
-    protected $fillable = ['id_image', 'pet_id', 'url', 'name'];
+    protected $fillable = ['id_image', 'external_id', 'url', 'name'];
 
     public function pet()
     {
-        return $this->belongsTo(Pet::class, 'pet_id');
+        return $this->belongsTo(Pet::class, 'external_id');
+    }
+
+    public function specie()
+    {
+        return $this->belongsTo(Specie::class, 'external_id');
     }
 }

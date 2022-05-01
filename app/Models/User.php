@@ -72,6 +72,15 @@ class User extends Authenticatable implements Auditable
         'id_province' => 'required'
     ];
 
+    public static $rules_create_movil = [
+        'user_id' => 'required|max:13|min:10|unique:users',
+        'name' => 'required|max:75',
+        'last_name1' => 'required|max:50',
+        'last_name2' => 'required|max:50',
+        'email' => 'required|max:100|unique:users',
+        'phone' => 'digits:10|unique:users'
+    ];
+
     public static $rules_updated = [
         'user_id' => 'required|max:13|min:10',
         'name' => 'required|max:75',

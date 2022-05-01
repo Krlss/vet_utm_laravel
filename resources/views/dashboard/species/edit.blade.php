@@ -45,7 +45,7 @@
         </div>
         @endif
 
-        {!! Form::model($specie, ['route' => ['dashboard.species.update', $specie], 'autocomplete' => 'off', 'method' => 'put']) !!}
+        {!! Form::model($specie, ['route' => ['dashboard.species.update', $specie], 'autocomplete' => 'off', 'method' => 'put', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.species.fields')
         {!! Form::close() !!}
     </div>

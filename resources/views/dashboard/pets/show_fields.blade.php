@@ -223,7 +223,7 @@
                 <div>
                     {!! Form::label('specie', trans('lang.specie'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->specie->name !!} </p>
+                        <p class="truncate"> {!! $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') !!} </p>
                     </div>
                 </div>
 
@@ -231,7 +231,7 @@
                 <div>
                     {!! Form::label('race', trans('lang.race'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->race->name !!} </p>
+                        <p class="truncate"> {!! $pet->race ? $pet->race->name : trans('lang.withoutRace') !!} </p>
                     </div>
                 </div>
             </div>
@@ -326,6 +326,17 @@
                     {!! Form::label('n_lost', trans('lang.n_lost'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->n_lost !!} </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4 ROW -->
+            <div class="grid grid-cols-1 mt-2">
+                <!-- characteristic -->
+                <div>
+                    {!! Form::label('characteristic', trans('lang.characteristic'), ['class' => ' ']) !!}
+                    <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+                        <p class="truncate"> {!! $pet->characteristic ? $pet->characteristic : trans('lang.withoutCharacteristic') !!} </p>
                     </div>
                 </div>
             </div>

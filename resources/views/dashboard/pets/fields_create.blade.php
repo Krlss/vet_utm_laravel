@@ -244,7 +244,7 @@
                 </div>
                 <div x-show="open">
                     @livewire('images-edit' , ['currentFiles' => []])
-                    <livewire:scripts />
+                    <livewire:scripts :currentFiles="" />
                 </div>
             </div>
         </div>
