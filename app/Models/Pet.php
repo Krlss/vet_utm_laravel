@@ -39,6 +39,7 @@ class Pet extends Model implements Auditable
         'id_specie' => 'required',
         'id_race' => 'required',
         'sex' => 'required',
+        'birth' => 'required'
     ];
 
     public function user()

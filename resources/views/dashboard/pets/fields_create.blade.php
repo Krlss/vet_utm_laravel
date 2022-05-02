@@ -67,7 +67,7 @@
         <!-- sex -->
         <div class="flex flex-col px-2">
             {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], null, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo']) !!}
+            {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], null, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo', 'required' => true]) !!}
             @error('sex')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -76,7 +76,7 @@
         <!-- Birth -->
         <div class="flex flex-col px-2">
             {!! Form::label('birth', trans('lang.birth'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d')]) !!}
+            {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d'), 'required' => true]) !!}
             @error('birth')
             <span class="text-danger">{{ $message }}</span>
             @enderror
