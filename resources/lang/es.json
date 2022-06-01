@@ -166,5 +166,25 @@
     "Childrens": "Hijos",
     "Remove all photos": "Eliminar todas las fotos",
     "Remove photo": "Eliminar foto",
-    "Reports list" : "Lista de reportes"
+    "Reports list" : "Lista de reportes",
+    "Audits list": "Lista de auditorías",
+    "Audits quantity": "Cantidad de auditorías",
+    "You can search for events (English), responsible, Affected o ID of the auditory": "Puede buscar eventos (Inglés), responsable, afectado o ID de la auditoría",
+    "Audit ID": "ID",
+    "Event": "Evento",
+    "Event undefined": "Evento no definido",
+    "Responsible": "Responsable",
+    "Responsible undefined": "Responsable no definido",
+    "Affected": "Afectado",
+    "Affected undefined": "Afectado no definido",
+    "Audit data": "Datos de la auditoría",
+    "Show data audit": "Mostrar datos de la auditoría",
+    "Audit": "Auditoría",
+    "Audit not found": "Auditoría no encontrada",
+    "Model": "Modelo",
+    "updated": "actualizado",
+    "created": "creado",
+    "deleted": "eliminado",
+    "Pet": "Mascota"
+    
 }

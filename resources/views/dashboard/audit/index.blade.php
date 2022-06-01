@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.audit_table') }}</div>
+    <div class="text-lg font-bold">{{ __('Audits list') }}</div>
 </div>
 @endsection
 <div class="card">

@@ -1,9 +1,9 @@
 <div>
     @if(count($audits) || count($currents))
     <div class="flex flex-col my-3">
-        {!! Form::label('audit_count', trans('lang.audit_count').' ('.count($currents).')', ['class' => 'text-gray-400 text-sm font-bold uppercase']) !!}
+        {!! Form::label('audit_count', __('Audits quantity').' ('.count($currents).')', ['class' => '']) !!}
         <div class="relative">
-            <input class="form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm w-full pr-5" placeholder="Busca por evento (inglés), responsable, afectado o id de la auditoria" wire:model="search" />
+            <input class="form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm w-full pr-5" placeholder="{{__('You can search for events (English), responsible, Affected o ID of the auditory')}}" wire:model="search" />
             @if($search <> '') <div wire:click="reset_search" class="cursor-pointer absolute top-2 right-3 text-sm text-gray-600">x</div> @endif
         </div>
     </div>
@@ -12,8 +12,8 @@
         <div wire:loading.class="animate-pulse" class="max-w-xs p-3 rounded-md bg-gray-100 w-56 relative">
             <div class="flex flex-row justify-between">
                 <div class="flex flex-row space-x-1">
-                    <strong>Registro ID: </strong>
-                    <p class="truncate w-20">{{$audit->id}}</p>
+                    <strong>{{__('Audit ID')}}: </strong>
+                    <p class="truncate w-20">{{shortenNumber($audit->id)}}</p>
                 </div>
 
                 <button type="button" data-toggle="modal" data-target="#exampleModal" data-id="{{$audit->id}}" data-user_type="{{$audit->user_type}}" data-user_id="{{$audit->user_id}}" data-event="{{$audit->event}}" data-auditable_id="{{$audit->auditable_id}}" data-auditable_type="{{$audit->auditable_type}}" data-url="{{$audit->url}}" data-ip_address="{{$audit->ip_address}}" data-user_agent="{{$audit->user_agent}}" data-tags="{{json_encode($audit->tags)}}" data-created_at="{{$audit->created_at}}" data-old_values="{{json_encode($audit->old_values)}}" data-new_values="{{json_encode($audit->new_values)}}">
@@ -22,25 +22,26 @@
 
             </div>
             <div class="flex flex-row space-x-1">
-                <strong>Evento: </strong>
-                <p> {{trans('lang.'.$audit->event)}}</p>
-            </div>
-            <div class="flex flex-row space-x-1">
-                <strong>Responsable: </strong>
-                <p class="truncate w-24">{{$audit->user_id}}</p>
-            </div>
-            <div class="flex flex-row space-x-1">
-                <strong>Afectado: </strong>
+                <strong>{{__('Affected')}}: </strong>
                 <p class="truncate w-23">{{$audit->auditable_id}}</p>
             </div>
             <div class="flex flex-row space-x-1">
-                <strong>Modelo: </strong>
-                <p>{{trans('lang.'.$audit->auditable_type)}}</p>
+                <strong>{{__('Event')}}: </strong>
+                <p> {{__($audit->event)}}</p>
             </div>
+            <div class="flex flex-row space-x-1">
+                <strong>{{__('Model')}}: </strong>
+                <p>{{__(getModelName($audit->auditable_type))}}</p>
+            </div>
+            <div class="flex flex-row space-x-1">
+                <strong>{{__('Responsible')}}: </strong>
+                <p class="truncate w-24">{{$audit->user_id}}</p>
+            </div>
+
         </div>
 
         @empty
-        <small wire:loading.class="animate-pulse">{{trans('lang.data_not_found')}}</small>
+        <small wire:loading.class="animate-pulse">{{__('Audit not found')}}</small>
         @endforelse
     </div>
 

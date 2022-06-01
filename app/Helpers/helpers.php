@@ -513,3 +513,21 @@ function generateProfilePhotoPath($string)
 {
     return 'https://ui-avatars.com/api/?name=' . $string . '&color=fff&background=FFB509&bold=true&length=1';
 }
+
+function shortenNumber($number, $precision = 2)
+{
+    if ($number < 1000) {
+        return $number;
+    }
+
+    $suffixes = array('', 'k', 'm', 'b', 't');
+    $exponent = floor(log($number) / log(1000));
+
+    return round($number / pow(1000, $exponent), $precision) . $suffixes[$exponent];
+}
+
+function getModelName($model)
+{
+    $modelName = explode('\\', $model);
+    return $modelName[count($modelName) - 1];
+}
