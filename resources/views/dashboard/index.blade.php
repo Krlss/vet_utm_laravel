@@ -17,7 +17,7 @@
                 <div class="small-box bg-info">
                     <div class="inner">
                         <h3>{{$users}}</h3>
-                        <p>{{trans('lang.users_count')}}</p>
+                        <p>{{__('Users quantity')}}</p>
                     </div>
                     <div class="icon">
                         <i class="fa fa-users"></i>
@@ -35,7 +35,7 @@
                 <div class="small-box bg-success">
                     <div class="inner">
                         <h3>{{$pets}}</h3>
-                        <p>{{trans('lang.pets_count')}}</p>
+                        <p>{{__('Pets quantity')}}</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-paw"></i>
@@ -52,7 +52,7 @@
                 <div class="small-box bg-warning">
                     <div class="inner">
                         <h3>{{$petsReport}}</h3>
-                        <p>{{trans('lang.reports_count')}}</p>
+                        <p>{{__('Reports quantity')}}</p>
                     </div>
                     <div class="icon">
                         <i class="fas fa-question"></i>

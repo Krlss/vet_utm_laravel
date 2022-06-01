@@ -15,7 +15,7 @@
         <div x-show="open" class="space-y-2">
 
             <!-- 1 row  -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
 
                 <!-- user id -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
@@ -62,15 +62,6 @@
                     {!! Form::label('email', __('Email'), ['class' => '']) !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Email'), 'required' => true, 'type' => 'email']) !!}
                     @error('email')
-                    <span class="text-danger">{{ $message }}</span>
-                    @enderror
-                </div>
-
-                <!-- phone -->
-                <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('phone', __('Phone'), ['class' => '']) !!}
-                    {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Phone')]) !!}
-                    @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
@@ -135,9 +126,9 @@
         <div x-show="open">
 
             <!-- 4 row -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-2">
+            <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 mb-2">
                 <!-- cantons -->
-                <div class="flex flex-col col-span-2 px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('id_canton', __('Canton'), ['class' => '']) !!}
                     {!! Form::select('id_canton', $cantons, $user->id_canton, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_canton')]) !!}
                     @error('id_canton')
@@ -145,15 +136,19 @@
                     @enderror
                 </div>
 
-            </div>
-
-            <!-- Parroquias -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-2">
-
-                <div class="flex flex-col col-span-2 px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('id_parish', __('Parish'), ['class' => '']) !!}
                     {!! Form::select('id_parish', $parishes, $user->id_parish, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_canton')]) !!}
                     @error('id_parishes')
+                    <span class="text-danger">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- phone -->
+                <div class="flex flex-col px-2 md:mb-0">
+                    {!! Form::label('phone', __('Phone'), ['class' => '']) !!}
+                    {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Phone')]) !!}
+                    @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>

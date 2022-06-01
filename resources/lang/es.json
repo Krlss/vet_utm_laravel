@@ -91,5 +91,8 @@
     "Remove pet to user": "Eliminar mascota del usuario",
     "Pet not found": "Mascota no encontrada",
     "This user has no pets": "Este usuario no tiene mascotas",
-    "Edit data a user": "Editar datos de un usuario"
+    "Edit data a user": "Editar datos de un usuario",
+    "Users quantity": "Cantidad de usuarios",
+    "Pets quantity": "Cantidad de mascotas",
+    "Reports quantity": "Cantidad de reportes"
 }
