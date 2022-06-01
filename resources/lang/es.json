@@ -134,6 +134,7 @@
     "Birth date": "Fecha de nacimiento",
     "Pather": "Padre",
     "Mother": "Madre",
+    "Published": "Publicado",
     "Pather undefined": "Padre no definido",
     "Mother undefined": "Madre no definida",
     "Lost": "Perdido",
@@ -151,6 +152,8 @@
     "Registration a pet": "Registrar una mascota",
     "Showing data pet": "Mostrando datos de la mascota",
     "Editing data pet": "Editando datos de la mascota",
+    "Showing data report pet": "Mostrando datos del reporte de la mascota",
+    "Editing data report pet": "Editando datos del reporte de la mascota",
     "Pet data": "Datos de la mascota",
     "Sex": "Sexo",
     "Male pet": "Macho",
@@ -162,5 +165,6 @@
     "Pet photos undefined": "Fotos de la mascota no definidas",
     "Childrens": "Hijos",
     "Remove all photos": "Eliminar todas las fotos",
-    "Remove photo": "Eliminar foto"
+    "Remove photo": "Eliminar foto",
+    "Reports list" : "Lista de reportes"
 }

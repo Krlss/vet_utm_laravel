@@ -92,10 +92,10 @@ class ReportController extends Controller
 
             $petUpdated->update($input);
             DB::commit();
-            return redirect()->route('dashboard.reports.index')->with('info', trans('lang.pet_updated'));
+            return redirect()->route('dashboard.reports.show', $petUpdated)->with('success', __('Pet updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error updating pet') . ' ' . $e->getMessage())->withInput();
         }
     }
 

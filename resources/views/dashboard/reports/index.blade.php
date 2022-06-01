@@ -8,36 +8,25 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.list_pets_lost') }}</div>
+    <div class="text-lg font-bold">{{ __('Reports list') }}</div>
 </div>
 @endsection
 <div class="card">
     <div class="card-body">
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
 
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ trans('lang.pet_id') }}</th>
-                    <th>{{ trans('lang.name') }}</th>
-                    <th>{{ trans('lang.specie') }}</th>
-                    <th>{{ trans('lang.published') }}</th>
-                    <th>{{ trans('lang.duenio') }}</th>
-                    <th>{{ trans('lang.updated_at') }}</th>
+                    <th>{{ __('Pet ID') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Species') }}</th>
+                    <th>{{ __('Published') }}</th>
+                    <th>{{ __('Owner') }}</th>
+                    <th>{{ __('update ago') }}</th>
 
-                    <th>Acciones</th>
+                    <th>{{ __('Actions')}}</th>
                 </tr>
             </thead>
             <tbody>
@@ -45,9 +34,9 @@
                 <tr>
                     <td>{{ $pet->pet_id }}</td>
                     <td>{{ $pet->name }}</td>
-                    <td>{{ $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') }}</td>
-                    <td>{{ $pet->published == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
-                    <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
+                    <td>{{ $pet->specie ? $pet->specie->name : __('Specie undefined') }}</td>
+                    <td>{{ $pet->published == 1 ? __('Yes') : __('No') }}</td>
+                    <td>{{ $pet->user_id ?? __('Owner undefined') }}</td>
 
                     <td>{{ $pet->updated_at->diffForHumans() }}</td>
                     <td class="flex items-center justify-center space-x-1">

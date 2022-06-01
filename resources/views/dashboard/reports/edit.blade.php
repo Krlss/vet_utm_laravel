@@ -9,10 +9,10 @@
 @section('content_header')
 <div class="flex justify-between lg:items-center items-start lg:flex-row flex-col">
 
-    <div class="text-lg font-bold">{{ trans('lang.edit_pet_report') }}</div>
+    <div class="text-lg font-bold">{{ __('Editing data report pet') }}</div>
 
     <a href="{{ route('dashboard.reports.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-        {{ trans('lang.list_pets_lost') }}
+        {{ __('Reports list') }}
     </a>
 
 </div>
@@ -21,19 +21,7 @@
 <div class="card">
     <div class="card-body">
 
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
-
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         {!! Form::model($pet, ['route' => ['dashboard.reports.update', $pet], 'autocomplete' => 'off', 'method' => 'put', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.reports.fields')
