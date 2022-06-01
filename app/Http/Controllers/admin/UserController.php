@@ -90,7 +90,7 @@ class UserController extends Controller
             return redirect()->route('dashboard.users.show', $user)->with('success', __('User created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error creating user'))->withInput();
+            return redirect()->back()->with('error', __('Error creating user') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -160,10 +160,10 @@ class UserController extends Controller
             $user->update($input);
 
             DB::commit();
-            return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_updated'));
+            return redirect()->route('dashboard.users.show', $user)->with('success', __('User updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error updating user') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -174,10 +174,10 @@ class UserController extends Controller
 
             $user->delete();
             DB::commit();
-            return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_deleted'));
+            return redirect()->route('dashboard.users.index')->with('success', __('User deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error deleting user') . ' ' . $e->getMessage());
         }
     }
 

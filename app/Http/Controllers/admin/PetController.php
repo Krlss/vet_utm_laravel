@@ -76,7 +76,7 @@ class PetController extends Controller
 
         DB::beginTransaction();
         try {
-            Pet::create($input);
+            $pet = Pet::create($input);
 
             if (isset($input['childrens'])) {
                 $childrens = $input['childrens'];
@@ -99,10 +99,10 @@ class PetController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_created'));
+            return redirect()->route('dashboard.pets.show', $pet)->with('success', __('Pet created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.pet_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error creating pet') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -212,10 +212,10 @@ class PetController extends Controller
             $pet->update($input);
 
             DB::commit();
-            return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_updated'));
+            return redirect()->route('dashboard.pets.show', $pet)->with('success', __('Pet updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error updating pet') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -230,10 +230,10 @@ class PetController extends Controller
             }
             $pet->delete();
             DB::commit();
-            return redirect()->route('dashboard.pets.index')->with('info', trans('lang.pet_deleted'));
+            return redirect()->route('dashboard.pets.index')->with('success', __('Pet deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error deleting pet') . ' ' . $e->getMessage());
         }
     }
 
@@ -283,10 +283,10 @@ class PetController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('info', trans('lang.pet_user_delete'));
-        } catch (\Throwable $th) {
+            return redirect()->back()->with('success', __('Pet deleted to user successfully'));
+        } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error deleting pet to user') . ' ' . $e->getMessage());
         }
     }
 
@@ -310,10 +310,10 @@ class PetController extends Controller
 
             DB::commit();
 
-            return redirect()->back()->with('info', trans('lang.pet_children_delete'));
-        } catch (\Throwable $th) {
+            return redirect()->back()->with('success', __('Child deleted to pet successfully'));
+        } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('"Error deleting child to pet') . ' ' . $e->getMessage());
         }
     }
 

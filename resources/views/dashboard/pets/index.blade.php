@@ -8,10 +8,10 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.list_pets') }}</div>
+    <div class="text-lg font-bold">{{ __('Pets list') }}</div>
     @can('dashboard.pets.create')
     <a href="{{ route('dashboard.pets.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
-        {{ trans('lang.createPet') }}
+        {{ __('Add pet') }}
     </a>
     @endcan
 </div>
@@ -19,32 +19,19 @@
 <div class="card">
     <div class="card-body">
 
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
-
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ trans('lang.pet_id') }}</th>
-                    <th>{{ trans('lang.name') }}</th>
-                    <th>{{ trans('lang.castrated') }}</th>
-                    <th>{{ trans('lang.lost') }}</th>
-                    <th>{{ trans('lang.specie') }}</th>
-                    <th>{{ trans('lang.duenio') }}</th>
-                    <th>{{ trans('lang.updated_at') }}</th>
-
-                    <th>Acciones</th>
+                    <th>{{ __('Pet ID') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Castrated') }}</th>
+                    <th>{{ __('Lost') }}</th>
+                    <th>{{ __('Species') }}</th>
+                    <th>{{ __('Owner') }}</th>
+                    <th>{{ __('Updated ago') }}</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -52,10 +39,10 @@
                 <tr>
                     <td>{{ $pet->pet_id }}</td>
                     <td>{{ $pet->name }}</td>
-                    <td>{{ $pet->castrated == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
-                    <td>{{ $pet->lost == 1 ? trans('lang.yep') : trans('lang.nop') }}</td>
-                    <td>{{ $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') }}</td>
-                    <td>{{ $pet->user_id ? $pet->user_id : trans('lang.withoutOwner') }}</td>
+                    <td>{{ $pet->castrated == 1 ? __('Yes') : __('No') }}</td>
+                    <td>{{ $pet->lost == 1 ? __('Yes') : __('No') }}</td>
+                    <td>{{ $pet->specie ? $pet->specie->name : __('Specie undefined') }}</td>
+                    <td>{{ $pet->user_id ?? __('Owner undefined') }}</td>
 
                     <td>{{ $pet->updated_at->diffForHumans() }}</td>
                     <td class="flex items-center justify-center space-x-3">

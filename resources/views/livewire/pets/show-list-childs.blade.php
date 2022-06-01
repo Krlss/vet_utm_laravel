@@ -1,9 +1,9 @@
-<div x-data="{ open: false }">
+<div x-data="{ open: true }">
     @if(count($pets) || count($currents))
     <div class="flex md:flex-row flex-col md:items-center md:justify-between my-3">
         <div class="flex items-start">
             <div>
-                {!! Form::label('pets_user', trans('lang.childs').' ('.count($currents).')', ['class' => 'text-gray-400 text-sm font-bold uppercase']) !!}
+                {!! Form::label('pets_user', __('Pets of user').' ('.count($currents).')', ['class' => 'text-gray-400 text-sm font-bold uppercase']) !!}
             </div>
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">
@@ -14,7 +14,7 @@
         </div>
         @if(count($currents) > 5)
         <div x-show="open" class="relative md:w-96">
-            <input class="form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm md:max-w-sm max-w-none pr-5" placeholder="Busca por nombre o código de la mascota..." wire:model="search" />
+            <input class="form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm md:max-w-sm max-w-none pr-5" placeholder="{{__('Search for name pet or code')}}" wire:model="search" />
             @if($search <> '') <div wire:click="reset_search" class="cursor-pointer absolute top-2 right-3 text-sm text-gray-600">x</div> @endif
         </div>
         @endif
@@ -38,7 +38,7 @@
                             </a>
                         </button>
                         <div id="show" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            {{trans('lang.show_data')}}
+                            {{__('Show data pet')}}
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
@@ -51,7 +51,7 @@
                             </a>
                         </button>
                         <div id="edit" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            {{trans('lang.edit_data')}}
+                            {{__('Edit data pet')}}
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
@@ -68,7 +68,7 @@
                     'onclick' => "return confirm('¿Estás seguro que deseas quitar este hijo $pet->name de este padre $pet_name?')",
                     ]) !!}
                     <div id="tooltip-remove-child-to-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{trans('lang.remove')}}
+                        {{ __('Remove child') }}
                         <div class="tooltip-arrow" data-popper-arrow></div>
                     </div>
                     {!! Form::close() !!}
@@ -79,13 +79,13 @@
 
         </div>
         @empty
-        <small wire:loading.class="animate-pulse">{{trans('lang.data_not_found')}}</small>
+        <small wire:loading.class="animate-pulse">{{__('Pet not found')}}</small>
         @endforelse
     </div>
 
     @elseif(!count($pets) && !count($currents))
-    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!!trans('lang.childs_doesnt_have')!!}
+    <h6 class="text-yellow-400 text-sm my-3 font-bold uppercase">
+        {{__('This pet has no childs')}}
     </h6>
     @endif
 

@@ -166,6 +166,19 @@ return [
         'street_1_sec' => 'Calle secundaria 1',
         'street_2_sec' => 'Calle secundaria 2',
         'address_ref' => 'Referencia',
-        'pets' => 'Mascotas'
+        'pets' => 'Mascotas',
+        'password' => 'Contraseña',
+        'birth' => 'Fecha de nacimiento',
+        'sex' => 'Sexo',
+        'lost' => 'Perdido',
+        'pet_id' => 'Identificación',
+        'characteristic' => 'Caracteristica',
+        'published' => 'Publicado en la App Móvil',
+        'castrated' => 'Castrado',
+        'id_specie' => 'Especie',
+        'id_race' => 'Raza',
+        'id_fur' => 'Pelaje',
+        'id_pet_pather' => 'Identificación del padre',
+        'id_pet_mother' => 'Identificación de la madre'
     ],
 ];

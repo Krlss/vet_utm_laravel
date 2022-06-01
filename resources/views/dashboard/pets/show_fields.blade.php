@@ -5,7 +5,7 @@
         <!-- Head + actions -->
         <div class="flex items-center space-x-2 my-3">
 
-            <p class="text-gray-400 text-sm font-bold uppercase">{{ trans('lang.data_owner') }}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{{ __('Ower data') }}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -15,19 +15,19 @@
 
             @can('dashboard.users.show')
             <a data-tooltip-target="tooltip-show-user" href="{{ route('dashboard.users.show', $pet->user) }}" class="">
-                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i>
+                <i class="fas fa-eye text-white bg-blue-600 hover:bg-blue-500 p-1 rounded shadow-sm"></i>
                 <div id="tooltip-show-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.show_data')}}
+                    {{ __('Show data user') }}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </a>
             @endcan
 
             @can('dashboard.users.edit')
-            <a data-tooltip-target="tooltip-edit-user" href="{{ route('dashboard.users.edit', $pet->user) }}" class=''>
-                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            <a data-tooltip-target="tooltip-edit-user" href="{{ route('dashboard.users.edit', $pet->user) }}" class='bg-green-600 hover:bg-green-500 text-white p-1 rounded shadow-sm'>
+                <x-icon icon="pencil" class="cursor-pointer" width=16 height=16 viewBox="16 16" strokeWidth=0 fill="white" />
                 <div id="tooltip-edit-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.edit_this_user')}}
+                    {{ __('Edit data user') }}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </a>
@@ -35,14 +35,14 @@
 
             @can('dashboard.users.destroy')
             {!! Form::open(['route' => ['dashboard.users.destroy', $pet->user], 'method' => 'delete']) !!}
-            {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+            {!! Form::button('<i class="fa fa-trash text-white"></i>', [
             'type' => 'submit',
-            'class' => '',
+            'class' => 'bg-red-700 hover:bg-red-500 text-white px-1 rounded shadow-sm',
             'data-tooltip-target' => 'tooltip-delete-user',
             'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->user->name')",
             ]) !!}
             <div id="tooltip-delete-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                {{trans('lang.delete_user')}}
+                {{ __('Delete user') }}
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
             {!! Form::close() !!}
@@ -54,25 +54,25 @@
 
             <!-- 1 ROW -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- User ID -->
+                <div>
+                    {!! Form::label('tableUserID', __('CI/RUC'), ['class' => '']) !!}
+                    <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+                        <p class="truncate">{!! $pet->user->user_id !!}</p>
+                    </div>
+                </div>
                 <!-- Names -->
                 <div>
-                    {!! Form::label('namesUser', trans('lang.namesUser'), ['class' => '']) !!}
+                    {!! Form::label('namesUser', __('Names'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->user->name !!} </p>
                     </div>
                 </div>
                 <!-- Last name -->
                 <div>
-                    {!! Form::label('last_names', trans('lang.last_names'), ['class' => '']) !!}
+                    {!! Form::label('last_names', __('Last names'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->user->last_name1 !!} {!! $pet->user->last_name2 !!}</p>
-                    </div>
-                </div>
-                <!-- User ID -->
-                <div>
-                    {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => '']) !!}
-                    <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate">{!! $pet->user->user_id !!}</p>
                     </div>
                 </div>
             </div>
@@ -81,14 +81,14 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                 <!-- PHONE -->
                 <div>
-                    {!! Form::label('phone', trans('lang.phone'), ['class' => ' ']) !!}
+                    {!! Form::label('phone', __('Phone'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
-                        <p class="truncate pr-2"> {!! $pet->user->phone !!} </p>
+                        <p class="truncate pr-2"> {!! $pet->user->phone ?? __('Phone undefined') !!} </p>
                     </div>
                 </div>
                 <!-- EMAIL -->
                 <div>
-                    {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
+                    {!! Form::label('email', __('Email'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
                         <p class="truncate pr-2"> {!! $pet->user->email !!} </p>
                         <livewire:email-is-check :email_verified_at="$pet->user->email_verified_at" :api_token="$pet->user->api_token" :email="$pet->user->email" />
@@ -101,23 +101,23 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
                 <!-- PROVINCE -->
                 <div>
-                    {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
+                    {!! Form::label('province', __('Province'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {{ $pet->user->province ? $pet->user->province->name : trans('lang.without_province') }} </p>
+                        <p class="truncate"> {{ $pet->user->province ? $pet->user->province->name : __('Province undefined') }} </p>
                     </div>
                 </div>
                 <!-- CANTON -->
                 <div>
-                    {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
+                    {!! Form::label('canton', __('Canton'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {{ $pet->user->canton ? $pet->user->canton->name : trans('lang.without_canton')}} </p>
+                        <p class="truncate"> {{ $pet->user->canton ? $pet->user->canton->name : __('Canton undefined') }} </p>
                     </div>
                 </div>
                 <!-- PARISH -->
                 <div>
-                    {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
+                    {!! Form::label('parish', __('Parish'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {{ $pet->user->parish ? $pet->user->parish->name : trans('lang.without_parishe')}} </p>
+                        <p class="truncate"> {{ $pet->user->parish ? $pet->user->parish->name : __('Parish undefined') }} </p>
                     </div>
                 </div>
             </div>
@@ -126,30 +126,30 @@
             <div class="grid grid-cols-1 gap-3 mt-2">
                 <!-- ADDRESS MAIN -->
                 <div>
-                    {!! Form::label('main_street', trans('lang.main_street'), ['class' => ' ']) !!}
+                    {!! Form::label('main_street', __('Street main'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->user->main_street ? $pet->user->main_street : trans('lang.without_main_street') !!} </p>
+                        <p class="truncate"> {!! $pet->user->main_street ?? __('Street main undefined') !!} </p>
                     </div>
                 </div>
                 <!-- ADDRES 1 -->
                 <div>
-                    {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => ' ']) !!}
+                    {!! Form::label('street_1_sec', __('Street secondary one'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->user->street_1_sec ? $pet->user->street_1_sec : trans('lang.without_street_1_sec') !!} </p>
+                        <p class="truncate"> {!! $pet->user->street_1_sec ?? __('Street secondary one undefined') !!} </p>
                     </div>
                 </div>
                 <!-- ADDRESS 2 -->
                 <div>
-                    {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => ' ']) !!}
+                    {!! Form::label('street_2_sec', __('Street secondary two'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->user->street_2_sec ? $pet->user->street_2_sec : trans('lang.without_street_2_sec') !!} </p>
+                        <p class="truncate"> {!! $pet->user->street_2_sec ?? __('Street secondary two undefined') !!} </p>
                     </div>
                 </div>
                 <!-- REFF -->
                 <div>
-                    {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => ' ']) !!}
+                    {!! Form::label('address_ref', __('Reference'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->user->address_ref ? $pet->user->address_ref : trans('lang.without_address_ref') !!} </p>
+                        <p class="truncate"> {!! $pet->user->address_ref ?? __('Reference undefined') !!} </p>
                     </div>
                 </div>
             </div>
@@ -163,7 +163,7 @@
         <!-- Header + actions -->
         <div class="flex items-center space-x-2 my-3">
 
-            <p class="text-gray-400 text-sm font-bold uppercase">{{ trans('lang.data_pet') }}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{{ __('Pet data') }}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -172,10 +172,10 @@
             </div>
 
             @can('dashboard.pets.edit')
-            <a data-tooltip-target="tooltip-edit-pet" href="{{ route('dashboard.pets.edit', $pet) }}" class=''>
-                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
+            <a data-tooltip-target="tooltip-edit-pet" href="{{ route('dashboard.pets.edit', $pet) }}" class='bg-green-600 hover:bg-green-500 text-white p-1 rounded shadow-sm'>
+                <x-icon icon="pencil" class="cursor-pointer" width=16 height=16 viewBox="16 16" strokeWidth=0 fill="white" />
                 <div id="tooltip-edit-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.edit_pet_data')}}
+                    {{ __('Edit data pet') }}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </a>
@@ -183,14 +183,14 @@
 
             @can('dashboard.pets.destroy')
             {!! Form::open(['route' => ['dashboard.pets.destroy', $pet], 'method' => 'delete']) !!}
-            {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+            {!! Form::button('<i class="fa fa-trash text-white"></i>', [
             'type' => 'submit',
-            'class' => '',
+            'class' => 'bg-red-700 hover:bg-red-500 text-white px-1 rounded shadow-sm',
             'data-tooltip-target' => 'tooltip-delete-pet',
             'onclick' => "return confirm('Estás seguro que deseas eliminar a $pet->name')",
             ]) !!}
             <div id="tooltip-delete-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                {{trans('lang.delete_pet')}}
+                {{ __('Delete pet') }}
                 <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
             {!! Form::close() !!}
@@ -205,7 +205,7 @@
 
                 <!-- pet id -->
                 <div>
-                    {!! Form::label('pet_id', trans('lang.pet_id'), ['class' => '']) !!}
+                    {!! Form::label('pet_id', __('Pet ID'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->pet_id !!} </p>
                     </div>
@@ -213,7 +213,7 @@
 
                 <!-- pet name -->
                 <div>
-                    {!! Form::label('namePet', trans('lang.name'), ['class' => '']) !!}
+                    {!! Form::label('namePet', __('Name'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->name !!} </p>
                     </div>
@@ -221,17 +221,17 @@
 
                 <!-- Pet Specie -->
                 <div>
-                    {!! Form::label('specie', trans('lang.specie'), ['class' => '']) !!}
+                    {!! Form::label('specie', __('Species'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->specie ? $pet->specie->name : trans('lang.withoutSpecie') !!} </p>
+                        <p class="truncate"> {!! $pet->specie ? $pet->specie->name : __('Specie undefined') !!} </p>
                     </div>
                 </div>
 
                 <!-- Pet race -->
                 <div>
-                    {!! Form::label('race', trans('lang.race'), ['class' => '']) !!}
+                    {!! Form::label('race', __('Race'), ['class' => '']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->race ? $pet->race->name : trans('lang.withoutRace') !!} </p>
+                        <p class="truncate"> {!! $pet->race ? $pet->race->name : __('Race undefined') !!} </p>
                     </div>
                 </div>
             </div>
@@ -241,13 +241,13 @@
 
                 <!-- pet sex -->
                 <div>
-                    {!! Form::label('sex', trans('lang.sexP'), ['class' => ' ']) !!}
+                    {!! Form::label('sex', __('Sex'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate">
                             @if ($pet->sex == '##########')
                             {{ $pet->sex }}
                             @else
-                            {{ $pet->sex == 'M' ? trans('lang.maleP') : trans('lang.femaleP') }}
+                            {{ $pet->sex == 'M' ? __('Male pet') : __('Female pet') }}
                             @endif
                         </p>
                     </div>
@@ -255,25 +255,25 @@
 
                 <!-- pet castr -->
                 <div>
-                    {!! Form::label('castrated', trans('lang.castrated'), ['class' => ' ']) !!}
+                    {!! Form::label('castrated', __('Castrated'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->castrated ? trans('lang.yep') : trans('lang.nop') !!} </p>
+                        <p class="truncate"> {!! $pet->castrated ? __('Yes') : __('No') !!} </p>
                     </div>
                 </div>
 
                 <!-- Pet lost -->
                 <div>
-                    {!! Form::label('lost', trans('lang.lost'), ['class' => ' ']) !!}
+                    {!! Form::label('lost', __('Lost'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->lost ? trans('lang.yep') : trans('lang.nop') !!} </p>
+                        <p class="truncate"> {!! $pet->lost ? __('Yes') : __('No') !!} </p>
                     </div>
                 </div>
 
                 <!-- Pet birth -->
                 <div>
-                    {!! Form::label('fur', trans('lang.fur'), ['class' => ' ']) !!}
+                    {!! Form::label('fur', __('Fur'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->fur ? $pet->fur->name : trans('lang.withouthFur') !!} </p>
+                        <p class="truncate"> {!! $pet->fur ? $pet->fur->name : __('Fur undefined') !!} </p>
                     </div>
                 </div>
             </div>
@@ -283,7 +283,7 @@
 
                 <!-- Pet birth -->
                 <div>
-                    {!! Form::label('birth', trans('lang.birth'), ['class' => ' ']) !!}
+                    {!! Form::label('birth', __('Birth date'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->birth !!} </p>
                     </div>
@@ -291,7 +291,7 @@
 
                 <!-- pet pather -->
                 <div>
-                    {!! Form::label('pather', trans('lang.pather'), ['class' => ' ']) !!}
+                    {!! Form::label('pather', __('Pather'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate">
                             @if ($pet->id_pet_pather)
@@ -299,7 +299,7 @@
                                 {!! $pet->id_pet_pather !!}
                             </a>
                             @else
-                        <p>{{ trans('lang.it_doesnt_have') }}</p>
+                        <p>{{ __('Pather undefined') }}</p>
                         @endif
                         </p>
                     </div>
@@ -307,7 +307,7 @@
 
                 <!-- pet mother -->
                 <div>
-                    {!! Form::label('mother', trans('lang.mother'), ['class' => ' ']) !!}
+                    {!! Form::label('mother', __('Mother'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate">
                             @if ($pet->id_pet_mother)
@@ -315,7 +315,7 @@
                                 {!! $pet->id_pet_mother !!}
                             </a>
                             @else
-                        <p>{{ trans('lang.it_doesnt_have') }}</p>
+                        <p>{{ __('Mother undefined') }}</p>
                         @endif
                         </p>
                     </div>
@@ -323,7 +323,7 @@
 
                 <!-- Pet n lost -->
                 <div>
-                    {!! Form::label('n_lost', trans('lang.n_lost'), ['class' => ' ']) !!}
+                    {!! Form::label('n_lost', __('N° of lost'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate"> {!! $pet->n_lost !!} </p>
                     </div>
@@ -334,9 +334,9 @@
             <div class="grid grid-cols-1 mt-2">
                 <!-- characteristic -->
                 <div>
-                    {!! Form::label('characteristic', trans('lang.characteristic'), ['class' => ' ']) !!}
+                    {!! Form::label('characteristic', __('Characteristic'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->characteristic ? $pet->characteristic : trans('lang.withoutCharacteristic') !!} </p>
+                        <p class="truncate"> {!! $pet->characteristic ?? __('Characteristic undefined') !!} </p>
                     </div>
                 </div>
             </div>
@@ -348,9 +348,9 @@
     @livewireScripts
 
     @if(count($pet->images))
-    <div x-data="{ open: false }">
+    <div x-data="{ open: true }">
         <div class="flex items-center">
-            <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.photo_pet') }} </h6>
+            <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ __('Pet photos') }} </h6>
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button" class="text-gray-400">
                     <div x-show="!open"><i class="fa fa-angle-down text-sm"></i></div>
@@ -365,7 +365,7 @@
         </div>
     </div>
     @else
-    <h6 class="text-gray-400 text-sm my-3 font-bold uppercase"> {{ trans('lang.not_photos_report') }} </h6>
+    <h6 class="text-yellow-400 text-sm my-3 font-bold uppercase"> {{ __('Pet photos undefined') }} </h6>
     @endif
 
     @push('scripts_lib')
