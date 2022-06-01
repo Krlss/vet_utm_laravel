@@ -18,7 +18,7 @@
         @endcan
 
         @can('dashboard.species.create')
-        <a href="{{ route('dashboard.species.create') }}" class="bg-yellow-logo hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.species.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
             {{trans('lang.createSpecie')}}
         </a>
         @endcan
