@@ -8,10 +8,10 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.list_user') }}</div>
+    <div class="text-lg font-bold">{{ __('Users list') }}</div>
     @can('dashboard.users.create')
     <a href="{{ route('dashboard.users.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
-        {{ trans('lang.createUser') }}
+        {{ __('Add user') }}
     </a>
     @endcan
 </div>
@@ -36,12 +36,12 @@
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ trans('lang.tableUserID') }}</th>
-                    <th>{{ trans('lang.namesUser') }}</th>
-                    <th>{{ trans('lang.last_names') }}</th>
-                    <th>{{ trans('lang.emailTable') }}</th>
-                    <th>{{ trans('lang.updated_at') }}</th>
-                    <th>Acciones</th>
+                    <th>{{ __('CI/RUC') }}</th>
+                    <th>{{ __('Names') }}</th>
+                    <th>{{ __('Last names') }}</th>
+                    <th>{{ __('Email') }}</th>
+                    <th>{{ __('Updated ago') }}</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>
