@@ -1,6 +1,6 @@
 <div>
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!! trans('lang.label_info_pet_create') !!}
+        {!! __('Pet information') !!}
     </h6>
 
     <!-- 1 row -->
@@ -8,8 +8,8 @@
 
         <!-- Pet_id -->
         <div class="flex flex-col px-2 md:mb-0 mb-2">
-            {!! Form::label('pet_id', trans('lang.pet_id'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::text('pet_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
+            {!! Form::label('pet_id', __('Pet ID'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::text('pet_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Pet ID'), 'maxlength' => 13, 'required' => true]) !!}
             @error('pet_id')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -17,8 +17,8 @@
 
         <!-- Pet name -->
         <div class="flex flex-col px-2 md:mb-0 mb-2">
-            {!! Form::label('name', trans('lang.namePet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'required' => true]) !!}
+            {!! Form::label('name', __('Name'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Name'), 'required' => true]) !!}
             @error('name')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -27,8 +27,8 @@
         <!-- Pet Specie -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_specie', trans('lang.specie'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                {!! Form::select('id_specie', $species, $pet->id_specie ? $pet->id_specie : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => trans('lang.select_specie')]) !!}
+                {!! Form::label('id_specie', __('Species'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::select('id_specie', $species, $pet->id_specie ? $pet->id_specie : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => __('Select a specie')]) !!}
                 @error('id_specie')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -38,7 +38,7 @@
                     <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-specie" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.create_new_specie_tooltip')}}
+                    {{__('A new tab will be open to add a specie')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
@@ -47,8 +47,8 @@
         <!-- Pet Race -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_race', trans('lang.race'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                {!! Form::select('id_race', $races, $pet->id_race ? $pet->id_race : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => trans('lang.select_race')]) !!}
+                {!! Form::label('id_race', __('Race'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::select('id_race', $races, $pet->id_race ? $pet->id_race : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => __('Select a race')]) !!}
                 @error('id_race')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -58,7 +58,7 @@
                     <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-race" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.create_new_race_tooltip')}}
+                    {{__('A new tab will be open to add a race')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
@@ -70,8 +70,8 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 sm:space-y-0 space-y-2 mb-2">
         <!-- sex -->
         <div class="flex flex-col px-2">
-            {!! Form::label('sex', trans('lang.sexP'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::select('sex', ['M' => trans('lang.maleP'), 'F' => trans('lang.femaleP')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => 'Selecciona el sexo', 'required' => true]) !!}
+            {!! Form::label('sex', __('Sex'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::select('sex', ['M' => __('Male pet'), 'F' => __('Female pet')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => __('Select a sex'), 'required' => true]) !!}
             @error('sex')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -79,7 +79,7 @@
 
         <!-- Birth pet -->
         <div class="flex flex-col px-2">
-            {!! Form::label('birth', trans('lang.birth'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('birth', __('Birth date'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d'), 'required' => true]) !!}
             @error('birth')
             <span class="text-danger">{{ $message }}</span>
@@ -89,14 +89,14 @@
     </div>
 
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!! trans('lang.label_info_pet_create_not_Required') !!}
+        {!! __('Pet information not required') !!}
     </h6>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex items-center justify-between w-full col-span-2">
             <div class="flex flex-col px-2 md:mb-0 mb-2 w-full">
-                {!! Form::label('id_fur', trans('lang.fur'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                {!! Form::select('id_fur', $furs, $pet->id_fur, ['placeholder' => '']) !!}
+                {!! Form::label('id_fur', __('Fur'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::select('id_fur', $furs, $pet->id_fur, ['placeholder' => __('Select a fur')]) !!}
                 @error('id_fur')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -107,7 +107,7 @@
                     <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-fur" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.create_new_fur_tooltip')}}
+                    {{__('A new tab will be open to add a fur')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
@@ -116,8 +116,8 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col px-2 md:mb-0 mb-2 col-span-2">
-            {!! Form::label('characteristic', trans('lang.characteristic'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-            {!! Form::textarea('characteristic', old('characteristic'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.characteristic'), 'rows' => 2]) !!}
+            {!! Form::label('characteristic', __('Characteristic'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::textarea('characteristic', old('characteristic'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Characteristic'), 'rows' => 2]) !!}
             @error('characteristic')
             <span class="text-danger">{{ $message }}</span>
             @enderror
@@ -131,14 +131,14 @@
         <div class="flex flex-col px-2">
 
             <div class="form-group">
-                <p class="font-weight-bold">{{ trans('lang.castrated') }}</p>
+                <p class="font-weight-bold">{{ __('Castrated') }}</p>
                 <label>
                     {!! Form::radio('castrated', 0, $pet->castrated ? true : false) !!}
-                    {{ trans('lang.nop') }}
+                    {{ __('No') }}
                 </label>
                 <label>
                     {!! Form::radio('castrated', 1, $pet->castrated ? true : false) !!}
-                    {{ trans('lang.yep') }}
+                    {{ __('Yes') }}
                 </label>
                 @error('castrated')
                 <br>
@@ -152,14 +152,14 @@
         <div class="flex flex-col px-2">
 
             <div class="form-group">
-                <p class="font-weight-bold">{{ trans('lang.lost') }}</p>
+                <p class="font-weight-bold">{{ __('Lost') }}</p>
                 <label>
                     {!! Form::radio('lost', 0, $pet->lost ? true : false) !!}
-                    {{ trans('lang.nop') }}
+                    {{ __('No') }}
                 </label>
                 <label>
                     {!! Form::radio('lost', 1, $pet->lost ? true : false) !!}
-                    {{ trans('lang.yep') }}
+                    {{ __('Yes') }}
                 </label>
                 @error('lost')
                 <br>
@@ -176,7 +176,7 @@
 
         <!-- pather -->
         <div class="flex flex-col px-2">
-            {!! Form::label('pather', trans('lang.pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('pather', __('Pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('pather', $pather, $pet->id_pet_pather, ['placeholder' => '']) !!}
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
@@ -185,7 +185,7 @@
 
         <!-- mother -->
         <div class="flex flex-col px-2">
-            {!! Form::label('mother', trans('lang.mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('mother', __('Mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
             {!! Form::select('mother', $mother, $pet->id_pet_mother, ['placeholder' => '']) !!}
             @error('mother')
             <span class="text-danger">{{ $message }}</span>
@@ -202,7 +202,7 @@
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
-                        {!! Form::label('childrens', trans('lang.childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                        {!! Form::label('childrens', __('Childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     </div>
                     <div class="ml-2 cursor-pointer">
                         <button @click="open=!open" type="button">
@@ -223,7 +223,7 @@
                             <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                         </a>
                         <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            {{trans('lang.create_new_pet_tooltip')}}
+                            {{__('A new tab will be open to add a pet')}}
                             <div class="tooltip-arrow" data-popper-arrow></div>
                         </div>
                     </div>
@@ -244,7 +244,7 @@
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
-                        {!! Form::label('photo_pet', trans('lang.photo_pet'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                        {!! Form::label('photo_pet', __('Pet photos'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     </div>
                     <div class="ml-2 cursor-pointer">
                         <button @click="open=!open" type="button">
@@ -267,7 +267,7 @@
         <!-- owner -->
         <div class="flex items-center w-full">
             <div class="flex flex-col px-2 w-full">
-                {!! Form::label('user_id', trans('lang.duenio'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::label('user_id', __('Owner'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                 {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
                 @error('user_id')
                 <span class="text-danger">{{ $message }}</span>
@@ -278,7 +278,7 @@
                     <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.create_new_user_tooltip')}}
+                    {{__('A new tab will be open to add a user')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>
@@ -286,7 +286,7 @@
     </div>
 
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">Guardar</button>
+    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
 
 </div>
 @push('scripts_lib')

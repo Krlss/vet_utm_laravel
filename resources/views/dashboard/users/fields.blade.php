@@ -241,7 +241,7 @@
     <livewire:users.show-list-pets :currentsPets="$user->pets" :user_id="$user->user_id" :delete="false" />
     @livewireScripts
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-4 mb-2 rounded-md text-whire font-medium text-white">Guardar</button>
+    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-4 mb-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
 
     <style>
         input[type=number]::-webkit-inner-spin-button,

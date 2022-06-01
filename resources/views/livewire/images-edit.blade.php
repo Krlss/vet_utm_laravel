@@ -1,16 +1,8 @@
 <div>
-    @if(session()->has('error'))
-    <div>
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-    </div>
-    @endif
     <input wire:change="$emit('multiple_file_choosed')" type="file" hidden multiple accept="image/*" id="images" name="images[]" />
     <label for="images" class="flex items-center justify-center space-x-2 p-2 bg-blue-500 hover:bg-blue-600 cursor-pointer text-white md:w-64 rounded-md">
         <i class="fa fa-upload"></i>
-        <div>{{trans('lang.select_images')}}</div>
+        <div>{{ __('Select images') }}</div>
     </label>
 
     <div wire:loading class="w-full md:w-64 text-center mb-2 text-lg hidden">
@@ -19,7 +11,7 @@
     @error('images')
     <span class="text-danger">{{ $message }}</span>
     @enderror
-    @if(!empty($images)) <button type="button" wire:click="$emit('confirm_remove_files')" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md float-right mb-4 w-full md:w-auto">Remover todas las {{count($images)}} imagenes</button> @endif
+    @if(!empty($images)) <button type="button" wire:click="$emit('confirm_remove_files')" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md float-right mb-4 w-full md:w-auto">{{__('Remove all photos')}} ({{count($images)}})</button> @endif
 
     <div id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">
         @if($images)
@@ -27,12 +19,12 @@
         @if(is_array($elem))
         <figure class="w-64">
             <div class="bg-cover bg-center h-48 w-64 mb-2" style="background-image: url('{{end($elem)}}')"></div>
-            <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
+            <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">{{__('Remove photo')}}</button>
         </figure>
         @else
         <figure class="w-64">
             <div class="bg-cover bg-center h-48 w-64 mb-2" style="background-image: url('{{$elem}}')"></div>
-            <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">Remover</button>
+            <button type="button" wire:click="$emit('confirm_remove_file', {{ $key }})" class="w-full bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md">{{__('Remove photo')}}</button>
         </figure>
         @endif
         @endforeach
