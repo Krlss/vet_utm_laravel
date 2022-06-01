@@ -1,5 +1,5 @@
    @if($email_verified_at)
-   <i data-tooltip-target="tooltip-dark" class="fa fa-check-circle text-yellow-logo"></i>
+   <i data-tooltip-target="tooltip-dark" class="fa fa-check-circle text-green-500"></i>
    <div id="tooltip-dark" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
        {{__('Email verificated')}}
        <div class="tooltip-arrow" data-popper-arrow></div>
