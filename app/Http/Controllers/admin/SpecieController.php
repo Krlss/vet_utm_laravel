@@ -48,10 +48,10 @@ class SpecieController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.species.index')->with('info', trans('lang.specie_created'));
+            return redirect()->route('dashboard.species.index')->with('success', __('Specie created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.specie_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in create specie') . $e->getMessage())->withInput();
         }
     }
 
@@ -76,10 +76,10 @@ class SpecieController extends Controller
                 uploadImageDashboard($request->file('image'), $specie->id);
             }
             DB::commit();
-            return redirect()->route('dashboard.species.index')->with('info', trans('lang.specie_updated'));
+            return redirect()->route('dashboard.species.index')->with('success', __('Specie updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.specie_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in update specie') . $e->getMessage())->withInput();
         }
     }
 
@@ -91,10 +91,10 @@ class SpecieController extends Controller
             $specie = Specie::find($id);
             $specie->delete();
             DB::commit();
-            return redirect()->route('dashboard.species.index')->with('info', trans('lang.specie_deleted'));
+            return redirect()->route('dashboard.species.index')->with('success', __('Specie deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.specie_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in delete specie') . $e->getMessage());
         }
     }
 

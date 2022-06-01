@@ -56,6 +56,7 @@
     "Select a sex": "Seleccione un sexo",
     "Select a fur": "Seleccione un pelaje",
     "Select images": "Seleccione las imagenes",
+    "Select a image": "Seleccione una imagen",
     "First select a province": "Primero seleccione una provincia",
     "First select a canton": "Primero seleccione un cantón",
     "First select a parish": "Primero seleccione una parroquia",
@@ -154,6 +155,7 @@
     "Editing data pet": "Editando datos de la mascota",
     "Showing data report pet": "Mostrando datos del reporte de la mascota",
     "Editing data report pet": "Editando datos del reporte de la mascota",
+    "Editing data specie": "Editando datos de la especie",
     "Pet data": "Datos de la mascota",
     "Sex": "Sexo",
     "Male pet": "Macho",
@@ -185,6 +187,19 @@
     "updated": "actualizado",
     "created": "creado",
     "deleted": "eliminado",
-    "Pet": "Mascota"
+    "Pet": "Mascota",
+    "Species list": "Lista de especies",
+    "Add species": "Agregar especie",
+    "Species ID": "ID de la especie",
+    "Species name": "Nombre de la especie",
+    "Register a species": "Registrar una especie",
+    "This image will be displayed in app mobile, is required selected one": "Esta imagen se mostrará en la aplicación móvil, es obligatoria seleccionar una",
+    "Specie created successfully": "Especie creada con éxito",
+    "Specie updated successfully": "Especie actualizada con éxito",
+    "Specie deleted successfully": "Especie eliminada con éxito",
+    "Specie not found": "Especie no encontrada",
+    "Error in create specie": "Error al crear especie",
+    "Error in update specie": "Error al actualizar especie",
+    "Error in delete specie": "Error al eliminar especie"
     
 }
