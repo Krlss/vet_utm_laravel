@@ -8,11 +8,11 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.list_furs') }}</div>
+    <div class="text-lg font-bold">{{ __('Furs list') }}</div>
 
     @can('dashboard.furs.create')
     <a href="{{ route('dashboard.furs.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
-        {{ trans('lang.createFur') }}
+        {{ __('Add fur') }}
     </a>
     @endcan
 
@@ -21,29 +21,17 @@
 <div class="card">
     <div class="card-body">
 
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
-
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>{{ trans('lang.id') }}</th>
-                    <th>{{ trans('lang.name') }}</th>
-                    <th>{{ trans('lang.created_at') }}</th>
-                    <th>{{ trans('lang.updated_at') }}</th>
+                    <th>{{ __('Fur ID') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Created_at') }}</th>
+                    <th>{{ __('Updated_at') }}</th>
 
-                    <th>Acciones</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>

@@ -8,11 +8,11 @@
 
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{trans('lang.fur_registration')}}</div>
+    <div class="text-lg font-bold">{{__('Register a fur')}}</div>
 
     @can('dashboard.furs.index')
     <a href="{{ route('dashboard.furs.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-        {{trans('lang.list_furs')}}
+        {{__('Furs list')}}
     </a>
     @endcan
 
@@ -23,19 +23,7 @@
 <div class="card">
     <div class="card-body">
 
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
-
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         {!! Form::open(['route' => 'dashboard.furs.store']) !!}
         @include('dashboard.furs.fields_create')
