@@ -60,6 +60,7 @@ class UserController extends Controller
         $input['password'] = Hash::make($password);
         $input['api_token'] = Str::random(25);
         $input['email_verified_at'] = null;
+        $input['profile_photo_path'] = generateProfilePhotoPath($input['name']);
 
 
         try {
