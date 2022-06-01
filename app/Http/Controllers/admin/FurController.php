@@ -55,10 +55,10 @@ class FurController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             Fur::create($input);
             DB::commit();
-            return redirect()->route('dashboard.furs.index')->with('info', trans('lang.fur_created'));
+            return redirect()->route('dashboard.furs.index')->with('success', __('Pelaje creado con éxito'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.fur_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error al crear pelaje') . $e->getMessage())->withInput();
         }
     }
 
@@ -100,10 +100,10 @@ class FurController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             $fur->update($input);
             DB::commit();
-            return redirect()->route('dashboard.furs.index')->with('info', trans('lang.fur_updated'));
+            return redirect()->route('dashboard.furs.index')->with('success', __('Fur updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.fur_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in update fur') . $e->getMessage())->withInput();
         }
     }
 
@@ -119,10 +119,10 @@ class FurController extends Controller
         try {
             $fur->delete();
             DB::commit();
-            return redirect()->route('dashboard.furs.index')->with('info', trans('lang.fur_deleted'));
+            return redirect()->route('dashboard.furs.index')->with('success', __('Fur deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.fur_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in delete fur') . $e->getMessage());
         }
     }
 
