@@ -1,3 +1,21 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+.bg-yellow-logo {
+    background: #FFB509;
+}
+
+.text-yellow-logo {
+    color: #FFB509;
+}
+
+.py-0\.2 {
+    padding-top: 0.031rem
+        /* .5px */
+    ;
+    padding-bottom: 0.031rem
+        /* .5px */
+    ;
+}

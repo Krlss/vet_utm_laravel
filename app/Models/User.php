@@ -62,34 +62,34 @@ class User extends Authenticatable implements Auditable
 
 
     public static $rules = [
-        'user_id' => 'required|max:13|min:10|unique:users',
+        'user_id' => 'required|digits_between:10,13|unique:users|numeric',
         'name' => 'required|max:75',
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
-        'email' => 'required|max:100|unique:users',
+        'email' => 'required|max:100|unique:users|email',
         'address' => 'max:2500',
-        'phone' => 'digits:10|unique:users',
-        'id_province' => 'required'
+        'phone' => 'digits:10|unique:users|numeric',
+        'id_province' => 'required|numeric',
     ];
 
     public static $rules_create_movil = [
-        'user_id' => 'required|max:13|min:10|unique:users',
+        'user_id' => 'required|digits_between:10,13|unique:users|numeric',
         'name' => 'required|max:75',
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
-        'email' => 'required|max:100|unique:users',
-        'phone' => 'digits:10|unique:users'
+        'email' => 'required|max:100|unique:users|email',
+        'phone' => 'digits:10|unique:users|numeric',
     ];
 
     public static $rules_updated = [
-        'user_id' => 'required|max:13|min:10',
+        'user_id' => 'required|digits_between:10,13|numeric',
         'name' => 'required|max:75',
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
-        'email' => 'required|max:100',
+        'email' => 'required|max:100|email',
         'address' => 'max:2500',
-        'phone' => 'digits:10',
-        'id_province' => 'required'
+        'phone' => 'digits:10|numeric',
+        'id_province' => 'required|numeric',
     ];
 
     /**

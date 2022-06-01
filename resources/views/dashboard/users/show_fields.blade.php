@@ -1,25 +1,25 @@
 <!-- Head -->
 <div class="flex items-center space-x-2 my-3">
-    <p class="text-gray-400 text-sm font-bold uppercase">{!!trans('lang.label_data_user')!!}</p>
+    <p class="text-gray-400 text-sm font-bold uppercase">{{__('User data')}}</p>
     @can('dashboard.users.edit')
-    <a data-tooltip-target="tooltip-edit-user" href="{{ route('dashboard.users.edit', $user) }}" class='text-gray-500 hover:text-green-700'>
-        <i class="fas fa-edit cursor-pointer"></i>
+    <a data-tooltip-target="tooltip-edit-user" href="{{ route('dashboard.users.edit', $user) }}" class='bg-green-600 hover:bg-green-500 text-white p-1 rounded shadow-sm'>
+        <x-icon icon="pencil" class="cursor-pointer" width=16 height=16 viewBox="16 16" strokeWidth=0 fill="white" />
         <div id="tooltip-edit-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            {{trans('lang.edit_this_user')}}
+            {{__('Edit user data')}}
             <div class="tooltip-arrow" data-popper-arrow></div>
         </div>
     </a>
     @endcan
     @can('dashboard.users.destroy')
     {!! Form::open(['route' => ['dashboard.users.destroy', $user], 'method' => 'delete']) !!}
-    {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
+    {!! Form::button('<i class="fa fa-trash text-white text-sm"></i>', [
     'type' => 'submit',
-    'class' => '',
+    'class' => 'bg-red-700 hover:bg-red-500 text-white px-1 rounded shadow-sm',
     'data-tooltip-target' => 'tooltip-delete-user',
     'onclick' => "return confirm('Estás seguro que deseas eliminar a $user->name')",
     ]) !!}
     <div id="tooltip-delete-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        {{trans('lang.delete_user')}}
+        {{__('Delete user')}}
         <div class="tooltip-arrow" data-popper-arrow></div>
     </div>
     {!! Form::close() !!}
@@ -28,25 +28,25 @@
 
 <!-- 1 ROW -->
 <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+    <!-- User ID -->
+    <div>
+        {!! Form::label('tableUserID', __('CI/RUC'), ['class' => '']) !!}
+        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
+            <p class="truncate">{!! $user->user_id !!}</p>
+        </div>
+    </div>
     <!-- Names -->
     <div>
-        {!! Form::label('namesUser', trans('lang.namesUser'), ['class' => '']) !!}
+        {!! Form::label('namesUser', __('Names'), ['class' => '']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
             <p class="truncate"> {!! $user->name !!} </p>
         </div>
     </div>
     <!-- Last name -->
     <div>
-        {!! Form::label('last_names', trans('lang.last_names'), ['class' => '']) !!}
+        {!! Form::label('last_names', __('Last names'), ['class' => '']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
             <p class="truncate"> {!! $user->last_name1 !!} {!! $user->last_name2 !!}</p>
-        </div>
-    </div>
-    <!-- User ID -->
-    <div>
-        {!! Form::label('tableUserID', trans('lang.tableUserID'), ['class' => '']) !!}
-        <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate">{!! $user->user_id !!}</p>
         </div>
     </div>
 </div>
@@ -55,14 +55,14 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
     <!-- PHONE -->
     <div>
-        {!! Form::label('phone', trans('lang.phone'), ['class' => ' ']) !!}
+        {!! Form::label('phone', __('Phone'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
             <p class="truncate pr-2"> {!! $user->phone !!} </p>
         </div>
     </div>
     <!-- EMAIL -->
     <div>
-        {!! Form::label('email', trans('lang.email'), ['class' => ' ']) !!}
+        {!! Form::label('email', __('Email'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
             <p class="truncate pr-2"> {!! $user->email !!} </p>
             <livewire:email-is-check :email_verified_at="$user->email_verified_at" :api_token="$user->api_token" :email="$user->email" />
@@ -75,23 +75,23 @@
 <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-2">
     <!-- PROVINCE -->
     <div>
-        {!! Form::label('province', trans('lang.province'), ['class' => ' ']) !!}
+        {!! Form::label('province', __('Province'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $user->province ? $user->province->name : trans('lang.without_province') }} </p>
+            <p class="truncate"> {{ $user->province ? $user->province->name : __('Province undefined') }} </p>
         </div>
     </div>
     <!-- CANTON -->
     <div>
-        {!! Form::label('canton', trans('lang.canton'), ['class' => ' ']) !!}
+        {!! Form::label('canton', __('Canton'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $user->canton ? $user->canton->name : trans('lang.without_canton')}} </p>
+            <p class="truncate"> {{ $user->canton ? $user->canton->name : __('Canton undefined') }} </p>
         </div>
     </div>
     <!-- PARISH -->
     <div>
-        {!! Form::label('parish', trans('lang.parishe'), ['class' => ' ']) !!}
+        {!! Form::label('parish', __('Parish'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {{ $user->parish ? $user->parish->name : trans('lang.without_parishe')}} </p>
+            <p class="truncate"> {{ $user->parish ? $user->parish->name : __('Parish undefined') }} </p>
         </div>
     </div>
 </div>
@@ -100,30 +100,30 @@
 <div class="grid grid-cols-1 gap-3 mt-2">
     <!-- ADDRESS MAIN -->
     <div>
-        {!! Form::label('main_street', trans('lang.main_street'), ['class' => ' ']) !!}
+        {!! Form::label('main_street', __('Street main'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->main_street ? $user->main_street : trans('lang.without_main_street') !!} </p>
+            <p class="truncate"> {!! $user->main_street ? $user->main_street : __('Street main undefined') !!} </p>
         </div>
     </div>
     <!-- ADDRES 1 -->
     <div>
-        {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => ' ']) !!}
+        {!! Form::label('street_1_sec', __('Street secondary one'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->street_1_sec ? $user->street_1_sec : trans('lang.without_street_1_sec') !!} </p>
+            <p class="truncate"> {!! $user->street_1_sec ? $user->street_1_sec : __('Street secondary one undefined') !!} </p>
         </div>
     </div>
     <!-- ADDRESS 2 -->
     <div>
-        {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => ' ']) !!}
+        {!! Form::label('street_2_sec', __('Street secondary two'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->street_2_sec ? $user->street_2_sec : trans('lang.without_street_2_sec') !!} </p>
+            <p class="truncate"> {!! $user->street_2_sec ? $user->street_2_sec : __('Street secondary two undefined') !!} </p>
         </div>
     </div>
     <!-- REFF -->
     <div>
-        {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => ' ']) !!}
+        {!! Form::label('address_ref', __('Reference'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->address_ref ? $user->address_ref : trans('lang.without_address_ref') !!} </p>
+            <p class="truncate"> {!! $user->address_ref ? $user->address_ref : __('Reference undefined') !!} </p>
         </div>
     </div>
 </div>

@@ -3,7 +3,7 @@
     <div x-data="{ open: true }">
 
         <div class="flex items-center space-x-2 my-3">
-            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_create') !!}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! __('Information required') !!}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -19,8 +19,8 @@
 
                 <!-- user id -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('user_id', trans('lang.tableUserID'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::input('number', 'user_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
+                    {!! Form::label('user_id', __('CI/RU'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::input('number', 'user_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('CI/RU'), 'maxlength' => 13, 'required' => true]) !!}
                     @error('user_id')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -28,8 +28,8 @@
 
                 <!-- names -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('name', trans('lang.namesUser'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'required' => true]) !!}
+                    {!! Form::label('name', __('Names'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Names'), 'required' => true]) !!}
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -37,16 +37,16 @@
 
                 <!-- last name -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('last_name1', trans('lang.last_name1'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('last_name1', old('last_name1'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name1'), 'required' => true]) !!}
+                    {!! Form::label('last_name1', __('First last name'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('last_name1', old('last_name1'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('First last name'), 'required' => true]) !!}
                     @error('last_name1')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <div class="flex flex-col px-2">
-                    {!! Form::label('last_name2', trans('lang.last_name2'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('last_name2', old('last_name2'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.last_name2'), 'required' => true]) !!}
+                    {!! Form::label('last_name2', __('Second last name'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('last_name2', old('last_name2'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Second last name'), 'required' => true]) !!}
                     @error('last_name2')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -59,8 +59,8 @@
 
                 <!-- email -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('email', trans('lang.email'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.email'), 'required' => true, 'type' => 'email']) !!}
+                    {!! Form::label('email', __('Email'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Email'), 'required' => true, 'type' => 'email']) !!}
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -68,8 +68,8 @@
 
                 <!-- phone -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('phone', trans('lang.phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.phone')]) !!}
+                    {!! Form::label('phone', __('Phone'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::input('number', 'phone', old('phone'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Phone')]) !!}
                     @error('phone')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -78,7 +78,7 @@
                 <!-- roles -->
                 @can('dashboard.users.role')
                 <div class="flex flex-col px-2">
-                    {!! Form::label('roles', trans('lang.role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::label('roles', __('Role'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('roles', $roles, count($user->roles) ? $user->roles[0]->id : null, ['class' => 'select2 form-control', 'required' => true]) !!}
                     @error('roles')
                     <span class="text-danger">{{ $message }}</span>
@@ -93,7 +93,7 @@
     <div x-data="{ open: true }">
 
         <div class="flex items-center space-x-2 my-3">
-            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_contact_required') !!}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! __('Home information required') !!}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -107,7 +107,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-2">
 
                 <div class="flex flex-col col-span-2 px-2">
-                    {!! Form::label('id_province', trans('lang.province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::label('id_province', __('Province'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('id_province', $provinces, $user->id_province, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_province'), 'required' => true]) !!}
                     @error('id_province')
                     <span class="text-danger">{{ $message }}</span>
@@ -123,7 +123,7 @@
     <div x-data="{ open: true }">
 
         <div class="flex items-center space-x-2 my-3">
-            <p class="text-gray-400 text-sm font-bold uppercase">{!!trans('lang.label_info_user_contact')!!}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{!!__('Home information not required')!!}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -138,7 +138,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-2">
                 <!-- cantons -->
                 <div class="flex flex-col col-span-2 px-2">
-                    {!! Form::label('id_canton', trans('lang.canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::label('id_canton', __('Canton'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('id_canton', $cantons, $user->id_canton, ['class' => 'select2 form-control', 'placeholder' => trans('lang.select_canton')]) !!}
                     @error('id_canton')
                     <span class="text-danger">{{ $message }}</span>
@@ -151,7 +151,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 my-2">
 
                 <div class="flex flex-col col-span-2 px-2">
-                    {!! Form::label('id_parish', trans('lang.parishe'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::label('id_parish', __('Parish'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('id_parish', $parishes, $user->id_parish, ['class' => 'select2 form-control', 'placeholder' => trans('lang.fist_selected_canton')]) !!}
                     @error('id_parishes')
                     <span class="text-danger">{{ $message }}</span>
@@ -163,8 +163,8 @@
             <!-- Street and refe -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
                 <div class="flex flex-col col-span-3 px-2">
-                    {!! Form::label('main_street', trans('lang.main_street'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('main_street', old('main_street'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.main_street')]) !!}
+                    {!! Form::label('main_street', __('Street main'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('main_street', old('main_street'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Street main')]) !!}
                     @error('main_street')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -173,8 +173,8 @@
             <!-- sec 1 -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
                 <div class="flex flex-col col-span-3 px-2">
-                    {!! Form::label('street_1_sec', trans('lang.street_1_sec'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('street_1_sec', old('street_1_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.street_1_sec')]) !!}
+                    {!! Form::label('street_1_sec', __('Street secondary one'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('street_1_sec', old('street_1_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Street secondary one')]) !!}
                     @error('street_1_sec')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -183,8 +183,8 @@
             <!-- sec 2 -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
                 <div class="flex flex-col col-span-3 px-2">
-                    {!! Form::label('street_2_sec', trans('lang.street_2_sec'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::text('street_2_sec', old('street_2_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.street_2_sec')]) !!}
+                    {!! Form::label('street_2_sec', __('Street secondary two'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::text('street_2_sec', old('street_2_sec'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Street secondary two')]) !!}
                     @error('street_2_sec')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -193,8 +193,8 @@
             <!-- address ref -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
                 <div class="flex flex-col col-span-3 px-2">
-                    {!! Form::label('address_ref', trans('lang.address_ref'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
-                    {!! Form::textarea('address_ref', old('address_ref'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.address_ref'), 'rows' => 3]) !!}
+                    {!! Form::label('address_ref', __('Reference'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::textarea('address_ref', old('address_ref'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Reference'), 'rows' => 3]) !!}
                     @error('address_ref')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -205,7 +205,7 @@
 
     <div x-data="{open: true}">
         <div class="flex items-center space-x-2 my-3">
-            <p class="text-gray-400 text-sm font-bold uppercase">{!! trans('lang.label_info_user_pets') !!}</p>
+            <p class="text-gray-400 text-sm font-bold uppercase">{!! __('Pets information not required') !!}</p>
             <div class="cursor-pointer text-gray-400">
                 <button @click="open=!open" type="button">
                     <div x-show="!open"><i class="fa fa-angle-down text-xs"></i></div>
@@ -219,7 +219,7 @@
                 <div class="flex flex-col col-span-2 px-2">
                     {{-- pets --}}
 
-                    {!! Form::label('pets_array', trans('lang.pets'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                    {!! Form::label('pets_array', __('Pets'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
                     {!! Form::select('pets_array[]', $pets_array, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets_array']) !!}
                     @error('pets_array')
                     <span class="text-danger">{{ $message }}</span>
@@ -231,10 +231,10 @@
             @can('dashboard.pets.create')
             <div class="px-2 mt-3">
                 <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{trans('lang.create_new_pet_tooltip')}}
+                    {{__('A new tab will be open to add a pet')}}
                     <div class="tooltip-arrow" data-popper-arrow></div>
                 </div>
             </div>

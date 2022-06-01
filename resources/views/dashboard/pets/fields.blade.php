@@ -35,7 +35,7 @@
             </div>
             <div class="mt-4 pl-2">
                 <a data-tooltip-target="tooltip-create-specie" href="{{ route('dashboard.species.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-specie" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {{trans('lang.create_new_specie_tooltip')}}
@@ -55,7 +55,7 @@
             </div>
             <div class="mt-4 pl-2">
                 <a data-tooltip-target="tooltip-create-race" href="{{ route('dashboard.races.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-race" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {{trans('lang.create_new_race_tooltip')}}
@@ -104,7 +104,7 @@
 
             <div class="mt-3">
                 <a data-tooltip-target="tooltip-create-fur" href="{{ route('dashboard.furs.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-fur" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {{trans('lang.create_new_fur_tooltip')}}
@@ -220,7 +220,7 @@
                     </div>
                     <div class="ml-2">
                         <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank">
-                            <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                            <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                         </a>
                         <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                             {{trans('lang.create_new_pet_tooltip')}}
@@ -275,7 +275,7 @@
             </div>
             <div class="mt-4">
                 <a data-tooltip-target="tooltip-create-user" href="{{ route('dashboard.users.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <i class="fa fa-plus bg-yellow-logo hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
                 </a>
                 <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                     {{trans('lang.create_new_user_tooltip')}}

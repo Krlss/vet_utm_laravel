@@ -325,7 +325,7 @@ class PetApiController extends Controller
                 try {
                     validateUserID($pet['user_id']);
                 } catch (Exception $e) {
-                    return redirect()->back()->with('error', $e->getMessage());
+                    return redirect()->back()->with('error', __('CI/RUC is invalid'));
                 }
                 User::create($input['user']);
                 DB::commit();

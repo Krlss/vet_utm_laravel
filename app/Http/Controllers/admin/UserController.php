@@ -66,7 +66,7 @@ class UserController extends Controller
         try {
             validateUserID($input['user_id']);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', __('CI/RUC is invalid'))->withInput();
         }
 
         DB::beginTransaction();
@@ -74,7 +74,7 @@ class UserController extends Controller
             if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
             if (isset($input['last_name1']))  $input['last_name1'] = ucwords(strtolower($input['last_name1']));
             if (isset($input['last_name2']))  $input['last_name2'] = ucwords(strtolower($input['last_name2']));
-            User::create($input)->assignRole($request['roles']);
+            $user = User::create($input)->assignRole($request['roles']);
 
             if (isset($input['pets'])) {
                 $pets = $input['pets'];
@@ -87,10 +87,10 @@ class UserController extends Controller
 
 
             DB::commit();
-            return redirect()->route('dashboard.users.index')->with('info', trans('lang.user_created'));
+            return redirect()->route('dashboard.users.show', $user)->with('success', __('User created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error creating user'))->withInput();
         }
     }
 
@@ -123,7 +123,7 @@ class UserController extends Controller
         try {
             validateUserID($input['user_id']);
         } catch (Exception $e) {
-            return redirect()->back()->with('error', $e->getMessage());
+            return redirect()->back()->with('error', __('CI/RUC is invalid'))->withInput();
         }
 
         DB::beginTransaction();

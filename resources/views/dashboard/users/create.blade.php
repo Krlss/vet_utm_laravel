@@ -8,9 +8,9 @@
 
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">Creación de un usuario</div>
+    <div class="text-lg font-bold">{{__('Creating a user')}}</div>
     <a href="{{ route('dashboard.users.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 ">
-        Lista de usuarios
+        {{__('Users list')}}
     </a>
 </div>
 @endsection
@@ -18,19 +18,7 @@
 <div class="card">
     <div class="card-body">
 
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
-
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         {!! Form::open(['route' => 'dashboard.users.store']) !!}
         @include('dashboard.users.fields_create')

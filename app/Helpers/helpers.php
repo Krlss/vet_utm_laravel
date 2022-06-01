@@ -17,7 +17,7 @@ function validateUserID($user_id)
         } elseif (strlen($user_id) == 13) {
             validateRUC($user_id);
         } else {
-            throw new Exception('La cudula o RUC es 10 o 13 dígitos.');
+            throw new Exception('La cedula o RUC es 10 o 13 dígitos.');
         }
     } catch (Exception $e) {
         throw new Exception($e->getMessage());

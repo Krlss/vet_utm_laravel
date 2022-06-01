@@ -84,7 +84,7 @@ class UserApiController extends Controller
             if (isset($input['user_id']))
                 validateUserID($input['user_id']);
         } catch (Exception $e) {
-            return response()->json(['message' => $e->getMessage(), 'data' => []], 401);
+            return response()->json(['message' => __('CI/RUC is invalid'), 'data' => []], 401);
         }
 
         $input['email'] = strtolower($input['email']);
@@ -162,7 +162,7 @@ class UserApiController extends Controller
                     if (isset($input['user_id']))
                         validateUserID($input['user_id']);
                 } catch (Exception $e) {
-                    return response()->json(['message' => $e->getMessage(), 'data' => []], 401);
+                    return response()->json(['message' => __('CI/RUC is invalid'), 'data' => []], 401);
                 }
                 if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 301);
                 if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));

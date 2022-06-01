@@ -12,7 +12,7 @@
         </a>
         @endcan
         @can('dashboard.pets.create')
-        <a href="{{ route('dashboard.pets.create') }}" class="bg-yellow-300 hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
+        <a href="{{ route('dashboard.pets.create') }}" class="bg-yellow-logo hover:bg-yellow-500 text-white p-2 rounded-md font-semibold px-4 ">
             {{trans('lang.createPet')}}
         </a>
         @endcan
@@ -22,7 +22,7 @@
 
 <div class="card">
     <div class="card-body">
-        
+
         @if (session('error'))
         <div class="alert alert-danger alert-dismissible fade show">
             <button type="button" class="close" data-dismiss="alert">×</button>
