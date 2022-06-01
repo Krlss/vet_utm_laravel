@@ -24,7 +24,7 @@ class CreateUsersTable extends Migration
             $table->integer('id_canton')->unsigned()->nullable();
             $table->integer('id_province')->unsigned();
             $table->string('address')->nullable();
-            $table->string('phone', 12)->unique();
+            $table->string('phone', 12)->nullable()->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('api_token');

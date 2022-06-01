@@ -57,7 +57,7 @@
     <div>
         {!! Form::label('phone', __('Phone'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
-            <p class="truncate pr-2"> {!! $user->phone !!} </p>
+            <p class="truncate pr-2"> {!! $user->phone ?? __('Phone undefined') !!} </p>
         </div>
     </div>
     <!-- EMAIL -->
@@ -102,28 +102,28 @@
     <div>
         {!! Form::label('main_street', __('Street main'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->main_street ? $user->main_street : __('Street main undefined') !!} </p>
+            <p class="truncate"> {!! $user->main_street ?? __('Street main undefined') !!} </p>
         </div>
     </div>
     <!-- ADDRES 1 -->
     <div>
         {!! Form::label('street_1_sec', __('Street secondary one'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->street_1_sec ? $user->street_1_sec : __('Street secondary one undefined') !!} </p>
+            <p class="truncate"> {!! $user->street_1_sec ?? __('Street secondary one undefined') !!} </p>
         </div>
     </div>
     <!-- ADDRESS 2 -->
     <div>
         {!! Form::label('street_2_sec', __('Street secondary two'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->street_2_sec ? $user->street_2_sec : __('Street secondary two undefined') !!} </p>
+            <p class="truncate"> {!! $user->street_2_sec ?? __('Street secondary two undefined') !!} </p>
         </div>
     </div>
     <!-- REFF -->
     <div>
         {!! Form::label('address_ref', __('Reference'), ['class' => ' ']) !!}
         <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-            <p class="truncate"> {!! $user->address_ref ? $user->address_ref : __('Reference undefined') !!} </p>
+            <p class="truncate"> {!! $user->address_ref ?? __('Reference undefined') !!} </p>
         </div>
     </div>
 </div>
