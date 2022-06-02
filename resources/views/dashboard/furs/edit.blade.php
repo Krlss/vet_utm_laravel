@@ -35,6 +35,10 @@
         {!! Form::model($fur, ['route' => ['dashboard.furs.update', $fur], 'autocomplete' => 'off', 'method' => 'put']) !!}
         @include('dashboard.furs.fields')
         {!! Form::close() !!}
+
+        @include('dashboard.species.modal')
+
+
     </div>
 </div>
 

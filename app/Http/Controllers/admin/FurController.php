@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateFurRequest;
 use App\Models\Fur;
+use App\Models\Specie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -38,7 +39,9 @@ class FurController extends Controller
      */
     public function create()
     {
-        return view('dashboard.furs.create');
+        $species = Specie::orderBy('name')->pluck('name', 'id');
+        $speciesSelected = [];
+        return view('dashboard.furs.create', compact('species', 'speciesSelected'));
     }
 
     /**
@@ -54,7 +57,12 @@ class FurController extends Controller
         DB::beginTransaction();
         try {
             $input['name'] = ucfirst(ucwords($input['name']));
-            Fur::create($input);
+            $fur = Fur::create($input);
+
+            if ($request->has('species')) {
+                $fur->species()->sync($request->species);
+            }
+
             DB::commit();
             return redirect()->route('dashboard.furs.index')->with('success', __('Pelaje creado con éxito'));
         } catch (\Throwable $e) {
@@ -82,7 +90,10 @@ class FurController extends Controller
      */
     public function edit(Fur $fur)
     {
-        return view('dashboard.furs.edit', compact('fur'));
+        $species = Specie::orderBy('name')->pluck('name', 'id');
+        $speciesSelected = $fur->species()->pluck('species.id')->toArray();
+
+        return view('dashboard.furs.edit', compact('fur', 'species', 'speciesSelected'));
     }
 
     /**
@@ -100,6 +111,9 @@ class FurController extends Controller
         try {
             $input['name'] = ucfirst(ucwords($input['name']));
             $fur->update($input);
+
+            $fur->species()->sync($request->species);
+
             DB::commit();
             return redirect()->route('dashboard.furs.index')->with('success', __('Fur updated successfully'));
         } catch (\Throwable $e) {

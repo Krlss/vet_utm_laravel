@@ -28,6 +28,9 @@
         {!! Form::open(['route' => 'dashboard.furs.store']) !!}
         @include('dashboard.furs.fields_create')
         {!! Form::close() !!}
+
+        @include('dashboard.species.modal')
+
     </div>
 </div>
 

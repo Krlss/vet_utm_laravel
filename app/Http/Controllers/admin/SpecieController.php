@@ -10,6 +10,7 @@ use App\Models\Fur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class SpecieController extends Controller
 {
@@ -131,6 +132,24 @@ class SpecieController extends Controller
             return response()->json($result);
         } catch (\Throwable $th) {
             return json_encode(['species' => []]);
+        }
+    }
+
+    public function addSpecieModal(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:species',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $specie = Specie::create([
+                'name' => $request->name,
+            ]);
+
+            return response()->json($specie);
         }
     }
 }

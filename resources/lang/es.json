@@ -204,6 +204,7 @@
     "Error in update specie": "Error al actualizar especie",
     "Error in delete specie": "Error al eliminar especie",
     "Create a fur": "Crear un pelaje",
+    "Create a specie": "Crear una especie",
     "Fur ID": "ID del pelaje",
     "Furs list": "Lista de pelajes",
     "Add fur": "Agregar pelaje",
@@ -268,6 +269,7 @@
     "No results": "No hay resultados",
     "Furs": "Pelajes",
     "Quick creation of a new fur": "Creación rápida de un nuevo pelaje",
+    "Quick creation of a new specie": "Creación rápida de una nueva especie",
 
 
 
