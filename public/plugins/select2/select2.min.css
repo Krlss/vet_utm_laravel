@@ -246,6 +246,9 @@
     padding-bottom: 5px;
     padding-right: 5px;
     position: relative;
+    max-height: 100px;
+    overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .select2-container--default .select2-selection--multiple.select2-selection--clearable {

@@ -8,6 +8,7 @@ use App\Models\Race;
 use App\Models\Specie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class RaceController extends Controller
 {
@@ -149,6 +150,25 @@ class RaceController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()->back()->with('error', trans('Error in delete Race') . $e->getMessage());
+        }
+    }
+
+    public function addRaceModal(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:races',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $race = Race::create([
+                'name' => $request->name,
+                'id_specie' => $request->id_specie
+            ]);
+
+            return response()->json($race);
         }
     }
 }

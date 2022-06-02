@@ -16,8 +16,8 @@
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('furs[]', $furs, $fursSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'furs']) !!}
                 <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalFur" data-tooltip-target="tooltip-create-fur">
-                        <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    <button type="button" data-toggle="modal" data-target="#ModalFur" data-tooltip-target="tooltip-create-fur" class="shadow-sm">
+                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-full"></i>
                     </button>
                     <div id="tooltip-create-fur" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
                         {{__('Create a fur')}}
@@ -48,7 +48,7 @@
         </div>
     </div>
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
+    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
 
 </div>
 
@@ -117,6 +117,8 @@
             },
             error: function(data) {
                 console.log(data);
+                $('.add_fur').removeAttr('disabled');
+                $('.add_fur').html('Guardar');
             }
         })
     });

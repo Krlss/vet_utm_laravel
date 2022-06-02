@@ -54,3 +54,4 @@ Route::post('permissions/give-permission-to-role', [PermissionController::class,
 
 Route::post('add-fur-modal', [FurController::class, 'addFurModal']);
 Route::post('add-specie-modal', [SpecieController::class, 'addSpecieModal']);
+Route::post('add-race-modal', [RaceController::class, 'addRaceModal']);

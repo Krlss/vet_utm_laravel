@@ -27,6 +27,7 @@
         {!! Form::open(['route' => 'dashboard.races.store']) !!}
         @include('dashboard.races.fields_create')
         {!! Form::close() !!}
+        @include('dashboard.species.modal')
     </div>
 </div>
 

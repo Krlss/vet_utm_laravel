@@ -36,6 +36,7 @@
         {!! Form::model($race, ['route' => ['dashboard.races.update', $race], 'autocomplete' => 'off', 'method' => 'put']) !!}
         @include('dashboard.races.fields')
         {!! Form::close() !!}
+        @include('dashboard.species.modal')
     </div>
 </div>
 

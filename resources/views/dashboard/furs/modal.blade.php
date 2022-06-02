@@ -19,7 +19,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="bg-green-500 hover:bg-green-600 p-2 px-4 mt-2 rounded-md text-whire font-medium text-white add_fur">{{__('Save')}}</button>
+                    <button type="button" class="bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-2 rounded-md text-whire font-medium text-white add_fur">{{__('Save')}}</button>
                 </div>
             </div>
         </div>
