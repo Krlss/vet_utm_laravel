@@ -212,6 +212,18 @@
     "Fur not found": "Pelaje no encontrado",
     "Error in create fur": "Error al crear pelaje",
     "Error in update fur": "Error al actualizar pelaje",
-    "Error in delete fur": "Error al eliminar pelaje"
+    "Error in delete fur": "Error al eliminar pelaje",
+    "Race ID": "ID de la raza",
+    "Races list": "Lista de razas",
+    "Add race": "Agregar raza",
+    "Register a race": "Registrar una raza",
+    "Edit data a race": "Editar datos de una raza",
+    "Race created successfully": "Raza creada con éxito",
+    "Race updated successfully": "Raza actualizada con éxito",
+    "Race deleted successfully": "Raza eliminada con éxito",
+    "Race not found": "Raza no encontrada",
+    "Error in create Race": "Error al crear raza",
+    "Error in update Race": "Error al actualizar raza",
+    "Error in delete Race": "Error al eliminar raza"
     
 }
