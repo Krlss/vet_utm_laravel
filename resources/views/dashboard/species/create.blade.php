@@ -27,6 +27,8 @@
         {!! Form::open(['route' => 'dashboard.species.store', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.species.fields_create')
         {!! Form::close() !!}
+
+        @include('dashboard.furs.modal')
     </div>
 </div>
 

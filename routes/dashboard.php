@@ -50,3 +50,6 @@ Route::resource('audit', Audit::class)->names('dashboard.audit');
 
 Route::post('permissions/revoke-permission-to-role', [PermissionController::class, 'revokePermissionToRole']);
 Route::post('permissions/give-permission-to-role', [PermissionController::class, 'givePermissionToRole']);
+
+
+Route::post('add-fur-modal', [FurController::class, 'addFurModal']);

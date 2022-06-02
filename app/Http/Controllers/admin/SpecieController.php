@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateSpecieRequest;
 use App\Models\Race;
 use App\Models\Specie;
+use App\Models\Fur;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class SpecieController extends Controller
 {
@@ -27,7 +29,9 @@ class SpecieController extends Controller
 
     public function create()
     {
-        return view('dashboard.species.create');
+        $furs = Fur::orderBy('name')->pluck('name', 'id');
+        $fursSelected = [];
+        return view('dashboard.species.create', compact('furs', 'fursSelected'));
     }
 
     public function store(CreateSpecieRequest $request)
@@ -47,6 +51,10 @@ class SpecieController extends Controller
                 uploadImageDashboard($request->file('image'), $specie->id);
             }
 
+            if ($request->has('furs')) {
+                $specie->furs()->sync($request->furs);
+            }
+
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('success', __('Specie created successfully'));
         } catch (\Throwable $e) {
@@ -59,7 +67,10 @@ class SpecieController extends Controller
     {
         $specie = Specie::find($id);
 
-        return view('dashboard.species.edit', compact('specie'));
+        $furs = Fur::orderBy('name')->pluck('name', 'id')->toArray();
+        $fursSelected = $specie->furs()->pluck('furs.id')->toArray();
+
+        return view('dashboard.species.edit', compact('specie', 'furs', 'fursSelected'));
     }
 
     public function update(CreateSpecieRequest $request, $id)
@@ -75,6 +86,9 @@ class SpecieController extends Controller
             if ($request->hasFile('image')) {
                 uploadImageDashboard($request->file('image'), $specie->id);
             }
+
+            $specie->furs()->sync($request->furs);
+
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('success', __('Specie updated successfully'));
         } catch (\Throwable $e) {
@@ -89,6 +103,12 @@ class SpecieController extends Controller
         DB::beginTransaction();
         try {
             $specie = Specie::find($id);
+
+            if ($specie->image) {
+                Storage::disk("google")->delete($specie->image->id_image);
+                $specie->image->delete();
+            }
+
             $specie->delete();
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('success', __('Specie deleted successfully'));

@@ -36,6 +36,8 @@
         {!! Form::model($specie, ['route' => ['dashboard.species.update', $specie], 'autocomplete' => 'off', 'method' => 'put', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.species.fields')
         {!! Form::close() !!}
+
+        @include('dashboard.furs.modal')
     </div>
 </div>
 

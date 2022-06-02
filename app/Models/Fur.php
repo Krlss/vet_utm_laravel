@@ -21,4 +21,9 @@ class Fur extends Model implements Auditable
     {
         return $this->hasMany(Pet::class, 'id_fur');
     }
+
+    public function species()
+    {
+        return $this->belongsToMany(Specie::class, 'species_furs', 'species_id', 'furs_id');
+    }
 }

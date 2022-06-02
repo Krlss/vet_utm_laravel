@@ -31,4 +31,9 @@ class Specie extends Model implements Auditable
     {
         return $this->hasOne(Image::class, 'external_id');
     }
+
+    public function furs()
+    {
+        return $this->belongsToMany(Fur::class, 'species_furs', 'species_id', 'furs_id');
+    }
 }

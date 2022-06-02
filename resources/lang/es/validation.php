@@ -148,6 +148,10 @@ return [
             'integer'  => 'La cantidad debe ser un número entero.',
             'min'      => 'La cantidad debe ser mayor a 0.',
         ],
+        'name' => [
+            'required' => 'El :attribute es obligatorio.',
+            'unique'   => 'El :attribute ya ha sido registrado.',
+        ],
     ],
     'attributes' => [
         'detail' => 'Detalle',
