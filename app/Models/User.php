@@ -68,7 +68,7 @@ class User extends Authenticatable implements Auditable
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100|unique:users|email',
         'address' => 'max:2500',
-        'phone' => 'max:10|numeric|nullable',
+        'phone' => 'numeric|nullable|digits:10',
         'id_province' => 'required|numeric',
     ];
 
@@ -78,7 +78,7 @@ class User extends Authenticatable implements Auditable
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100|unique:users|email',
-        'phone' => 'max:10|numeric|nullable',
+        'phone' => 'numeric|nullable|digits:10',
     ];
 
     public static $rules_updated = [
@@ -88,7 +88,7 @@ class User extends Authenticatable implements Auditable
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100|email',
         'address' => 'max:2500',
-        'phone' => 'max:10|numeric|nullable',
+        'phone' => 'digits:10|numeric|nullable',
         'id_province' => 'required|numeric',
     ];
 
