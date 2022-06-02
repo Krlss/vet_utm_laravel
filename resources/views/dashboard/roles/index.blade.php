@@ -8,16 +8,16 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.role_table') }}</div>
+    <div class="text-lg font-bold">{{ __('Roles list') }}</div>
     <div class="flex items-center justify-between space-x-2">
         @can('dashboard.permissions')
-        <a href="{{ route('dashboard.permissions.index') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
-            {{ trans('lang.permission_look') }}
+        <a href="{{ route('dashboard.permissions.index') }}" class="bg-red-500 hover:bg-red-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
+            {{ __('Edit permissions') }}
         </a>
         @endcan
         @can('dashboard.roles.create')
         <a href="{{ route('dashboard.roles.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline">
-            {{ trans('lang.role_create') }}
+            {{ __('Add role') }}
         </a>
         @endcan
     </div>
@@ -25,29 +25,15 @@
 @endsection
 <div class="card">
     <div class="card-body">
-        
-        @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('error') }}
-        </div>
-        @endif
 
-        @if (session('info'))
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">×</button>
-            {{ session('info') }}
-        </div>
-        @endif
+        <x-flash-messages />
 
         <table id="table" class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>{{ trans('lang.name') }}</th>
-                    <!-- <th>{{ trans('lang.guard_name') }}</th> -->
-
-                    <th>Acciones</th>
+                    <th>{{ __('Role ID') }}</th>
+                    <th>{{ __('Name') }}</th>
+                    <th>{{ __('Actions') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,12 +41,11 @@
                 <tr>
                     <td>{{ $role->id }}</td>
                     <td>{{ $role->name }}</td>
-                    <!-- <td>{{ $role->guard_name }}</td> -->
 
                     <td class="flex items-center justify-center space-x-2">
                         @can('dashboard.roles.edit')
                         <button>
-                            <a href="{{ route('dashboard.roles.edit', $role) }}" class='btn btn-link'>
+                            <a href="{{ route('dashboard.roles.edit', $role) }}">
                                 <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
                             </a>
                         </button>

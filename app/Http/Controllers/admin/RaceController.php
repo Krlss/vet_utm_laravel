@@ -58,10 +58,10 @@ class RaceController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             Race::create($input);
             DB::commit();
-            return redirect()->route('dashboard.races.index')->with('info', trans('lang.race_created'));
+            return redirect()->route('dashboard.races.index')->with('success', __('Race created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.race_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in create Race') . $e->getMessage())->withInput();
         }
     }
 
@@ -106,10 +106,10 @@ class RaceController extends Controller
             $race->update($input);
 
             DB::commit();
-            return redirect()->route('dashboard.races.index')->with('info', trans('lang.race_updated'));
+            return redirect()->route('dashboard.races.index')->with('success', __('Race updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.race_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in update Race') . $e->getMessage())->withInput();
         }
     }
 
@@ -125,10 +125,10 @@ class RaceController extends Controller
         try {
             $race->delete();
             DB::commit();
-            return redirect()->route('dashboard.races.index')->with('info', trans('lang.race_deleted'));
+            return redirect()->route('dashboard.races.index')->with('success', trans('Race deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.race_errpr') . $e->getMessage());
+            return redirect()->back()->with('error', trans('Error in delete Race') . $e->getMessage());
         }
     }
 }

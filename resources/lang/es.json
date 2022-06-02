@@ -224,6 +224,92 @@
     "Race not found": "Raza no encontrada",
     "Error in create Race": "Error al crear raza",
     "Error in update Race": "Error al actualizar raza",
-    "Error in delete Race": "Error al eliminar raza"
+    "Error in delete Race": "Error al eliminar raza",
+    "Roles list": "Lista de rol",
+    "Edit permissions": "Editar permisos",
+    "Add role": "Agregar rol",
+    "Role ID": "ID del rol",
+    "Register a role": "Registrar un rol",
+    "Edit data role": "Editar datos del rol",
+    "Role created successfully": "Rol creado con éxito",
+    "Role updated successfully": "Rol actualizado con éxito",
+    "Role deleted successfully": "Rol eliminado con éxito",
+    "Role not found": "Rol no encontrado",
+    "Error in create role": "Error al crear rol",
+    "Error in update role": "Error al actualizar rol",
+    "Error in delete role": "Error al eliminar rol",
+    "Permissions list": "Lista de permisos",
+    "Add permission": "Agregar permiso",
+    "Permission": "Permiso",
+    "Permission ID": "ID del permiso",
+    "Register a permission": "Registrar un permiso",
+    "Edit data permission": "Editar datos del permiso",
+    "Permission created successfully": "Permiso creado con éxito",
+    "Permission updated successfully": "Permiso actualizado con éxito",
+    "Permission deleted successfully": "Permiso eliminado con éxito",
+    "Permission not found": "Permiso no encontrado",
+    "Error in create permission": "Error al crear permiso",
+    "Error in update permission": "Error al actualizar permiso",
+    "Error in delete permission": "Error al eliminar permiso",
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "dashboard.home": "Poder ver el dashboard",	
+
+    "dashboard.users.index" : "Lista de usuarios",
+    "dashboard.users.show" : "Ver datos de un usuario",
+    "dashboard.users.create" : "Crear un usuario",
+    "dashboard.users.edit" : "Editar datos de un usuario",
+    "dashboard.users.destroy" : "Eliminar un usuario",
+
+    "dashboard.species.index" : "Lista de especies",
+    "dashboard.species.create" : "Crear una especie",
+    "dashboard.species.edit" : "Editar datos de una especie",
+    "dashboard.species.destroy" : "Eliminar una especie",
+
+    "dashboard.races.index" : "Lista de razas",
+    "dashboard.races.create" : "Crear una raza",
+    "dashboard.races.edit" : "Editar datos de una raza",
+    "dashboard.races.destroy" : "Eliminar una raza",
+
+    "dashboard.furs.index" : "Lista de pelajes",
+    "dashboard.furs.create" : "Crear un pelaje",
+    "dashboard.furs.edit" : "Editar datos de un pelaje",
+    "dashboard.furs.destroy" : "Eliminar un pelaje",
+
+    "dashboard.pets.index" : "Lista de mascotas",
+    "dashboard.pets.create" : "Crear una mascota",
+    "dashboard.pets.show" : "Ver datos de una mascota",
+    "dashboard.pets.edit" : "Editar datos de una mascota",
+    "dashboard.pets.destroy" : "Eliminar una mascota",
+
+    "dashboard.reports.index" : "Lista de reportes",
+    "dashboard.reports.show" : "Ver datos de un reporte",
+    "dashboard.reports.edit" : "Editar datos de un reporte",
+
+    "dashboard.destroyImageGoogle" : "Eliminar imagen de Google",
+
+    "dashboard.users.role" : "Dar rol a un usuario",
+
+    "dashboard.roles.index" : "Lista de roles",
+    "dashboard.roles.create" : "Crear un rol",
+    "dashboard.roles.edit" : "Editar datos de un rol",
+    "dashboard.roles.destroy" : "Eliminar un rol",
+
+    "dashboard.permissions" : "Lista de permisos",
+
+    "dashboard.audit.index" : "Lista de auditorías",
+    "dashboard.audit.show" : "Ver datos de una auditoría"
     
 }

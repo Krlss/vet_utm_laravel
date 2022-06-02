@@ -4,7 +4,7 @@
 
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ trans('lang.permission_table') }}</div>
+    <div class="text-lg font-bold">{{ __('Permissions list') }}</div>
 </div>
 @endsection
 
@@ -12,8 +12,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="sort">{{ trans('lang.permission') }}</th>
-                <!-- <th>{{ trans('lang.guard_name') }}</th> -->
+                <th class="sort">{{ __('Permission') }}</th>
                 @foreach ($roles as $role)
                 <th class="sticky">{{ $role->name }}</th>
                 @endforeach
@@ -22,8 +21,7 @@
         <tbody>
             @foreach ($permissions as $permission)
             <tr>
-                <td>{{ trans('lang.' . $permission->name) }}</td>
-                <!-- <td>{{ $permission->guard_name }}</td> -->
+                <td>{{ __($permission->name) }}</td>
                 @foreach ($roles as $role)
                 <td>
                     @if ($role->hasPermissionTo($permission->name))

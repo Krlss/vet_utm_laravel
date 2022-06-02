@@ -50,10 +50,10 @@ class RolesController extends Controller
             Role::create($input);
             DB::commit();
 
-            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_created'));
+            return redirect()->route('dashboard.roles.index')->with('success', __('Role created successfully'));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error in create role'));
         }
     }
 
@@ -98,9 +98,9 @@ class RolesController extends Controller
             $role->update($request->all());
             DB::commit();
 
-            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_updated'));
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->route('dashboard.roles.index')->with('success', __('Role updated successfully'));
+        } catch (\Throwable $e) {
+            return redirect()->back()->with('error', __('Error in update role') . $e->getMessage())->withInput();
         }
     }
 
@@ -117,10 +117,10 @@ class RolesController extends Controller
             $role->delete();
             DB::commit();
 
-            return redirect()->route('dashboard.roles.index')->with('info', trans('lang.role_deleted'));
+            return redirect()->route('dashboard.roles.index')->with('success', __('Role deleted successfully'));
         } catch (\Throwable $th) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('lang.user_error'));
+            return redirect()->back()->with('error', __('Error in delete role'));
         }
     }
 }
