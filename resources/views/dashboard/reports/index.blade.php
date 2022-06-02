@@ -30,32 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($pets as $pet)
-                <tr>
-                    <td>{{ $pet->pet_id }}</td>
-                    <td>{{ $pet->name }}</td>
-                    <td>{{ $pet->specie ? $pet->specie->name : __('Specie undefined') }}</td>
-                    <td>{{ $pet->published == 1 ? __('Yes') : __('No') }}</td>
-                    <td>{{ $pet->user_id ?? __('Owner undefined') }}</td>
 
-                    <td>{{ $pet->updated_at->diffForHumans() }}</td>
-                    <td class="flex items-center justify-center space-x-1">
-                        @can('dashboard.reports.show')
-                        <button>
-                            <a href="{{ route('dashboard.reports.show', $pet) }}">
-                                <i class="fas fa-eye text-gray-500 hover:text-blue-700"></i> </a>
-                        </button>
-                        @endcan
-                        @can('dashboard.reports.edit')
-                        <button>
-                            <a href="{{ route('dashboard.reports.edit', $pet) }}" class='btn btn-link'>
-                                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
-                            </a>
-                        </button>
-                        @endcan
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
@@ -63,9 +38,5 @@
 @endsection
 
 @push('scripts_lib')
-<script src="{{ asset('plugins/datatable/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/datatable.js') }}"></script>
+@include('dashboard.reports.datatable')
 @endpush

@@ -29,9 +29,31 @@ class ReportController extends Controller
         $this->middleware('can:dashboard.destroyImageGoogle')->only('destroyImageGoogle');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $pets = Pet::where('lost', true)->orderBy('updated_at', 'DESC')->get();
+        if ($request->ajax()) {
+            $data = Pet::where('lost', true)->get();
+            return DataTables()->of($data)
+                ->editColumn('user', function ($pet) {
+                    return $pet->user ? $pet->user->user_id : __('Owner undefined');
+                })
+                ->editColumn('specie', function ($pet) {
+                    return $pet->specie ? $pet->specie->name : __('Specie undefined');
+                })
+                ->editColumn('published', function ($pet) {
+                    return $pet->published ? __('Yes') : __('No');
+                })
+                ->editColumn('updated_at', function ($pet) {
+                    $date = date_create($pet->updated_at);
+                    return date_format($date, "d/m/Y");
+                })
+                ->addColumn('actions', function ($pet) {
+                    return view('dashboard.reports.partials.actions', compact('pet'));
+                })
+                ->make(true);
+        }
+
+        $pets = [];
         return view('dashboard.reports.index', compact('pets'));
     }
 
