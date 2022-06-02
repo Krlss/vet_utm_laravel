@@ -12,7 +12,7 @@
         dataType: 'json',
         type: 'GET',
         order: [
-            [4, "desc"]
+            [4, "asc"]
         ],
         "dom": 'lfrtip',
         columnDefs: [{
@@ -21,19 +21,19 @@
         }],
         language: len,
         ajax: {
-            url: "{{ route('dashboard.users.index') }}",
+            url: "{{ route('dashboard.races.index') }}",
         },
         columns: [{
-                data: 'user_id',
+                data: 'id',
             },
             {
                 data: 'name',
             },
             {
-                data: 'lastnames',
+                data: 'specie',
             },
             {
-                data: 'email',
+                data: 'created_at',
             },
             {
                 data: 'updated_at',

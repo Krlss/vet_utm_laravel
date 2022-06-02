@@ -36,37 +36,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($races as $race)
-                <tr>
-                    <td>{{ $race->id }}</td>
-                    <td>{{ $race->name }}</td>
-                    <td>{{ $race->specie ? $race->specie->name : __('Specie undefined') }}</td>
-                    <td>{{ $race->updated_at->diffForHumans() }}</td>
-                    <td>{{ $race->updated_at->diffForHumans() }}</td>
 
-                    <td class="flex items-center justify-center space-x-3">
-
-                        @can('dashboard.races.edit')
-                        <button>
-                            <a href="{{ route('dashboard.races.edit', $race) }}" class=''>
-                                <i class="fas fa-edit text-gray-500 hover:text-green-700"></i>
-                            </a>
-                        </button>
-                        @endcan
-
-                        @can('dashboard.races.destroy')
-                        {!! Form::open(['route' => ['dashboard.races.destroy', $race], 'method' => 'delete']) !!}
-                        {!! Form::button('<i class="fa fa-trash text-gray-500 hover:text-red-700"></i>', [
-                        'type' => 'submit',
-                        'class' => '',
-                        'onclick' => "return confirm('Estás seguro que deseas eliminar a $race->name')",
-                        ]) !!}
-                        {!! Form::close() !!}
-                        @endcan
-
-                    </td>
-                </tr>
-                @endforeach
             </tbody>
         </table>
     </div>
@@ -74,9 +44,5 @@
 @endsection
 
 @push('scripts_lib')
-<script src="{{ asset('plugins/datatable/jquery.dataTables.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/dataTables.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/dataTables.responsive.min.js') }}"></script>
-<script src="{{ asset('plugins/datatable/responsive.bootstrap4.min.js') }}"></script>
-<script src="{{ asset('js/datatable.js') }}"></script>
+@include('dashboard.races.datatable')
 @endpush

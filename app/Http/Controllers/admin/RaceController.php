@@ -25,9 +25,29 @@ class RaceController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $races = Race::orderBy('updated_at', 'DESC')->get();
+        if ($request->ajax()) {
+            $data = Race::with('specie')->get();
+            return DataTables()->of($data)
+                ->editColumn('specie', function ($race) {
+                    return $race->specie->name;
+                })
+                ->editColumn('created_at', function ($race) {
+                    $date = date_create($race->created_at);
+                    return date_format($date, "d/m/Y");
+                })
+                ->editColumn('updated_at', function ($race) {
+                    $date = date_create($race->updated_at);
+                    return date_format($date, "d/m/Y");
+                })
+                ->addColumn('actions', function ($race) {
+                    return view('dashboard.races.partials.actions', compact('race'));
+                })
+                ->make(true);
+        }
+
+        $races = [];
         return view('dashboard.races.index', compact('races'));
     }
 
