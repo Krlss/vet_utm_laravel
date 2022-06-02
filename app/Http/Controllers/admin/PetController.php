@@ -30,9 +30,34 @@ class PetController extends Controller
         $this->middleware('can:dashboard.pets.edit')->only('edit', 'update');
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        $pets = Pet::orderBy('updated_at', 'DESC')->get();
+        if ($request->ajax()) {
+            $data = Pet::all();
+            return DataTables()->of($data)
+                ->editColumn('user', function ($pet) {
+                    return $pet->user ? $pet->user->user_id : __('Owner undefined');
+                })
+                ->editColumn('specie', function ($pet) {
+                    return $pet->specie ? $pet->specie->name : __('Specie undefined');
+                })
+                ->editColumn('castrated', function ($pet) {
+                    return $pet->castrated ? __('Yes') : __('No');
+                })
+                ->editColumn('lost', function ($pet) {
+                    return $pet->lost ? __('Yes') : __('No');
+                })
+                ->editColumn('updated_at', function ($pet) {
+                    $date = date_create($pet->updated_at);
+                    return date_format($date, "d/m/Y");
+                })
+                ->addColumn('actions', function ($pet) {
+                    return view('dashboard.pets.partials.actions', compact('pet'));
+                })
+                ->make(true);
+        }
+
+        $pets = [];
 
         return view('dashboard.pets.index', compact('pets'));
     }

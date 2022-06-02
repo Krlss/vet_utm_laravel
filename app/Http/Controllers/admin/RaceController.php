@@ -31,7 +31,7 @@ class RaceController extends Controller
             $data = Race::with('specie')->get();
             return DataTables()->of($data)
                 ->editColumn('specie', function ($race) {
-                    return $race->specie->name;
+                    return $race->specie ? $race->specie->name : __('Specie undefined');
                 })
                 ->editColumn('created_at', function ($race) {
                     $date = date_create($race->created_at);
