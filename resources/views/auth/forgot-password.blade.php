@@ -5,7 +5,7 @@
         </x-slot>
 
         <div class="mb-4 text-sm text-gray-600">
-            {{ trans('lang.forgot_password_msg') }}
+            {{ __('Password recovery via email') }}
         </div>
 
         @if (session('status'))
@@ -20,13 +20,13 @@
             @csrf
 
             <div class="block">
-                <x-jet-label for="email" value="{{ trans('lang.email') }}" />
+                <x-jet-label for="email" value="{{ __('Email') }}" />
                 <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
             </div>
 
             <div class="flex items-center justify-end mt-4">
                 <x-jet-button>
-                    {{ trans('lang.send_email_forgot_password') }}
+                    {{ __('Send recovery email') }}
                 </x-jet-button>
             </div>
         </form>

@@ -251,9 +251,11 @@
     "Error in create permission": "Error al crear permiso",
     "Error in update permission": "Error al actualizar permiso",
     "Error in delete permission": "Error al eliminar permiso",
-
-
-
+    "I forgot my password": "Olvidé mi contraseña",
+    "Login": "Iniciar sesión",
+    "Password recovery via email": "Recuperación de contraseña via email",
+    "Send recovery email": "Enviar email de recuperación",
+    "Oops, an error occurred": "Oops, un error ocurrió",
 
 
 

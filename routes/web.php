@@ -18,5 +18,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard.index');
 })->name('dashboard');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/',
-    [HomeController::class, 'index'])->name('dashboard');
+Route::middleware(['auth:sanctum', 'verified'])->get(
+    '/',
+    [HomeController::class, 'index']
+)->name('dashboard');
