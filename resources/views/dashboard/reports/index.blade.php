@@ -24,7 +24,7 @@
                     <th>{{ __('Species') }}</th>
                     <th>{{ __('Published') }}</th>
                     <th>{{ __('Owner') }}</th>
-                    <th>{{ __('update ago') }}</th>
+                    <th>{{ __('Updated ago') }}</th>
 
                     <th>{{ __('Actions')}}</th>
                 </tr>

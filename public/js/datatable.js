@@ -1,7 +1,7 @@
 $('#table').DataTable({
     columnDefs: [{
         orderable: false,
-        targets: ["Acciones", "Actions"],
+        targets: -1,
     }],
     responsive: true,
     autoWidth: false,

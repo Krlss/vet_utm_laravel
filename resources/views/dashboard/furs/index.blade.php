@@ -28,8 +28,8 @@
                 <tr>
                     <th>{{ __('Fur ID') }}</th>
                     <th>{{ __('Name') }}</th>
-                    <th>{{ __('Created_at') }}</th>
-                    <th>{{ __('Updated_at') }}</th>
+                    <th>{{ __('Created ago') }}</th>
+                    <th>{{ __('Updated ago') }}</th>
 
                     <th>{{ __('Actions') }}</th>
                 </tr>

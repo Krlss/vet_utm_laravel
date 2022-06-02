@@ -10,7 +10,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 ">
         <!-- Name pet -->
         <div class="flex flex-col px-2 md:mb-0 mb-2">
-            {!! Form::label('name', __('Name'), ['class' => '']) !!}
+            {!! Form::label('name', __('Name') . '*', ['class' => '']) !!}
             {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Name'), 'required' => true]) !!}
             @error('name')
             <span class="text-danger">{{ $message }}</span>
@@ -21,7 +21,7 @@
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
 
             <div class="flex flex-col w-full">
-                {!! Form::label('id_specie', __('Species'), ['class' => '']) !!}
+                {!! Form::label('id_specie', __('Species') . '*', ['class' => '']) !!}
                 {!! Form::select('id_specie', $species, null, ['class' => 'select2 form-control', 'placeholder' => __('Select a specie'), 'required' => true]) !!}
                 @error('id_specie')
                 <span class="text-danger">{{ $message }}</span>
@@ -42,7 +42,7 @@
         <!-- race of pet -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_race', __('Race'), ['class' => '']) !!}
+                {!! Form::label('id_race', __('Race') . '*', ['class' => '']) !!}
                 {!! Form::select('id_race', $races, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a specie'), 'required' => true]) !!}
                 @error('id_race')
                 <span class="text-danger">{{ $message }}</span>
@@ -66,7 +66,7 @@
 
         <!-- sex -->
         <div class="flex flex-col px-2">
-            {!! Form::label('sex', __('Sex'), ['class' => '']) !!}
+            {!! Form::label('sex', __('Sex') . '*', ['class' => '']) !!}
             {!! Form::select('sex', ['M' => __('Male pet'), 'F' => __('Female pet')], null, ['class' => 'select2 form-control', 'placeholder' => __('Select a sex'), 'required' => true]) !!}
             @error('sex')
             <span class="text-danger">{{ $message }}</span>
@@ -75,7 +75,7 @@
 
         <!-- Birth -->
         <div class="flex flex-col px-2">
-            {!! Form::label('birth', __('Birth date'), ['class' => '']) !!}
+            {!! Form::label('birth', __('Birth date') . '*', ['class' => '']) !!}
             {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d'), 'required' => true]) !!}
             @error('birth')
             <span class="text-danger">{{ $message }}</span>
@@ -92,7 +92,7 @@
         <div class="flex items-center justify-between w-full col-span-2">
             <div class="flex flex-col px-2 md:mb-0 mb-2 w-full">
                 {!! Form::label('id_fur', __('Fur'), ['class' => '']) !!}
-                {!! Form::select('id_fur', $furs, null, ['placeholder' => '']) !!}
+                {!! Form::select('id_fur', $furs, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a specie')]) !!}
                 @error('id_fur')
                 <span class="text-danger">{{ $message }}</span>
                 @enderror
@@ -170,6 +170,9 @@
         <!-- pather -->
         <div class="flex flex-col px-2">
             {!! Form::label('pather', __('Pather'), ['class' => '']) !!}
+            <div class="progress" class="progress_pather" style="max-height: 3px">
+                <div class="progress-bar bg-success" style="max-height: 3px" id="progress_pather" role="progressbar" style="width: 0%" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
             {!! Form::select('pather', $pather, null, ['placeholder' => '']) !!}
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
@@ -338,46 +341,6 @@
             }
             $('#id_race').html(raceOptions);
         });
-    });
-
-    $('#id_fur').select2({
-        width: '100%',
-        placeholder: "Digite el nombre del pelaje",
-        minimumInputLength: 2,
-        language: {
-            noResults: function() {
-                return "No hay resultado";
-            },
-            searching: function() {
-                return "Buscando..";
-            },
-            inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras...";
-            }
-        },
-        allowClear: true,
-        ajax: {
-            url: "{{url('dashboard/getFurs')}}",
-            method: "POST",
-            data: function(params) {
-                var query = {
-                    search: params.term,
-                    "_token": "{{csrf_token()}}"
-                }
-                return query;
-            },
-            dataType: "json",
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(fur) {
-                        return {
-                            text: fur.name,
-                            id: fur.id
-                        }
-                    })
-                };
-            }
-        }
     });
 
     $('#pather').select2({

@@ -8,7 +8,7 @@
         {!! Form::hidden('pet_id', old('pet_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => trans('lang.tableUserID'), 'maxlength' => 13, 'required' => true]) !!}
 
         <div class="flex flex-col px-2">
-            {!! Form::label('name', __('Name'), ['class' => '']) !!}
+            {!! Form::label('name', __('Name') . '*', ['class' => '']) !!}
             {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Name'), 'required' => true]) !!}
             @error('name')
             <span class="text-danger">{{ $message }}</span>
@@ -18,7 +18,7 @@
         <!-- Pet Specie -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_specie', __('Species'), ['class' => '']) !!}
+                {!! Form::label('id_specie', __('Species') . '*', ['class' => '']) !!}
                 {!! Form::select('id_specie', $species, $pet->id_specie ? $pet->id_specie : null, ['class' => 'select2 form-control', 'required' => true ,'placeholder' => __('Select a specie')]) !!}
                 @error('id_specie')
                 <span class="text-danger">{{ $message }}</span>
@@ -42,7 +42,7 @@
         <!-- Pet Race -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_race', __('Race'), ['class' => '']) !!}
+                {!! Form::label('id_race', __('Race') . '*', ['class' => '']) !!}
                 {!! Form::select('id_race', $races, $pet->id_race ? $pet->id_race : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => __('First select a specie')]) !!}
                 @error('id_race')
                 <span class="text-danger">{{ $message }}</span>
@@ -71,7 +71,7 @@
 
         {{-- Sex --}}
         <div class="flex flex-col px-2 mt-2">
-            {!! Form::label('sex', __('Sex'), ['class' => '']) !!}
+            {!! Form::label('sex', __('Sex') . '*', ['class' => '']) !!}
             {!! Form::select('sex', ['M' => __('Male pet'), 'F' => __('Female pet')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => __('Select a sex'), 'required' => true]) !!}
             @error('sex')
             <span class="text-danger">{{ $message }}</span>
@@ -80,7 +80,7 @@
 
         <div class="flex flex-col px-2 mt-2">
             <!-- Birth pet -->
-            {!! Form::label('birth', __('Birth date'), ['class' => '']) !!}
+            {!! Form::label('birth', __('Birth date') . '*', ['class' => '']) !!}
             {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d'), 'required' => true]) !!}
             @error('birth')
             <span class="text-danger">{{ $message }}</span>

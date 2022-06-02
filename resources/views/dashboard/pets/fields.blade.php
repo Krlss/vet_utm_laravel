@@ -8,7 +8,7 @@
 
         <!-- Pet_id -->
         <div class="flex flex-col px-2 md:mb-0 mb-2">
-            {!! Form::label('pet_id', __('Pet ID'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('pet_id', __('Pet ID') . '*', ['class' => '']) !!}
             {!! Form::text('pet_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Pet ID'), 'maxlength' => 13, 'required' => true]) !!}
             @error('pet_id')
             <span class="text-danger">{{ $message }}</span>
@@ -17,7 +17,7 @@
 
         <!-- Pet name -->
         <div class="flex flex-col px-2 md:mb-0 mb-2">
-            {!! Form::label('name', __('Name'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('name', __('Name') . '*', ['class' => '']) !!}
             {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Name'), 'required' => true]) !!}
             @error('name')
             <span class="text-danger">{{ $message }}</span>
@@ -27,7 +27,7 @@
         <!-- Pet Specie -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_specie', __('Species'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::label('id_specie', __('Species') . '*', ['class' => '']) !!}
                 {!! Form::select('id_specie', $species, $pet->id_specie ? $pet->id_specie : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => __('Select a specie')]) !!}
                 @error('id_specie')
                 <span class="text-danger">{{ $message }}</span>
@@ -47,7 +47,7 @@
         <!-- Pet Race -->
         <div class="px-2 md:mb-0 mb-2 flex items-center justify-between">
             <div class="flex flex-col w-full">
-                {!! Form::label('id_race', __('Race'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::label('id_race', __('Race') . '*', ['class' => '']) !!}
                 {!! Form::select('id_race', $races, $pet->id_race ? $pet->id_race : null, ['class' => 'select2 form-control', 'required' => true, 'placeholder' => __('Select a race')]) !!}
                 @error('id_race')
                 <span class="text-danger">{{ $message }}</span>
@@ -70,7 +70,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 sm:space-y-0 space-y-2 mb-2">
         <!-- sex -->
         <div class="flex flex-col px-2">
-            {!! Form::label('sex', __('Sex'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('sex', __('Sex') . '*', ['class' => '']) !!}
             {!! Form::select('sex', ['M' => __('Male pet'), 'F' => __('Female pet')], $pet->sex, ['class' => 'select2 form-control', 'placeholder' => __('Select a sex'), 'required' => true]) !!}
             @error('sex')
             <span class="text-danger">{{ $message }}</span>
@@ -79,7 +79,7 @@
 
         <!-- Birth pet -->
         <div class="flex flex-col px-2">
-            {!! Form::label('birth', __('Birth date'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('birth', __('Birth date') . '*', ['class' => '']) !!}
             {!! Form::date('birth', old('birth'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'max' => date('Y-m-d'), 'required' => true]) !!}
             @error('birth')
             <span class="text-danger">{{ $message }}</span>
@@ -95,7 +95,7 @@
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex items-center justify-between w-full col-span-2">
             <div class="flex flex-col px-2 md:mb-0 mb-2 w-full">
-                {!! Form::label('id_fur', __('Fur'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::label('id_fur', __('Fur'), ['class' => '']) !!}
                 {!! Form::select('id_fur', $furs, $pet->id_fur, ['placeholder' => __('Select a fur')]) !!}
                 @error('id_fur')
                 <span class="text-danger">{{ $message }}</span>
@@ -116,7 +116,7 @@
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3">
         <div class="flex flex-col px-2 md:mb-0 mb-2 col-span-2">
-            {!! Form::label('characteristic', __('Characteristic'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('characteristic', __('Characteristic'), ['class' => '']) !!}
             {!! Form::textarea('characteristic', old('characteristic'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Characteristic'), 'rows' => 2]) !!}
             @error('characteristic')
             <span class="text-danger">{{ $message }}</span>
@@ -176,7 +176,7 @@
 
         <!-- pather -->
         <div class="flex flex-col px-2">
-            {!! Form::label('pather', __('Pather'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('pather', __('Pather'), ['class' => '']) !!}
             {!! Form::select('pather', $pather, $pet->id_pet_pather, ['placeholder' => '']) !!}
             @error('pather')
             <span class="text-danger">{{ $message }}</span>
@@ -185,7 +185,7 @@
 
         <!-- mother -->
         <div class="flex flex-col px-2">
-            {!! Form::label('mother', __('Mother'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+            {!! Form::label('mother', __('Mother'), ['class' => '']) !!}
             {!! Form::select('mother', $mother, $pet->id_pet_mother, ['placeholder' => '']) !!}
             @error('mother')
             <span class="text-danger">{{ $message }}</span>
@@ -202,7 +202,7 @@
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
-                        {!! Form::label('childrens', __('Childrens'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                        {!! Form::label('childrens', __('Childrens'), ['class' => '']) !!}
                     </div>
                     <div class="ml-2 cursor-pointer">
                         <button @click="open=!open" type="button">
@@ -244,7 +244,7 @@
             <div x-data="{ open: true }">
                 <div class="flex items-start">
                     <div>
-                        {!! Form::label('photo_pet', __('Pet photos'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                        {!! Form::label('photo_pet', __('Pet photos'), ['class' => '']) !!}
                     </div>
                     <div class="ml-2 cursor-pointer">
                         <button @click="open=!open" type="button">
@@ -267,7 +267,7 @@
         <!-- owner -->
         <div class="flex items-center w-full">
             <div class="flex flex-col px-2 w-full">
-                {!! Form::label('user_id', __('Owner'), ['class' => 'uppercase text-xs font-bold mb-2']) !!}
+                {!! Form::label('user_id', __('Owner'), ['class' => '']) !!}
                 {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
                 @error('user_id')
                 <span class="text-danger">{{ $message }}</span>

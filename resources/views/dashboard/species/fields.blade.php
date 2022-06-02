@@ -16,7 +16,7 @@
     <div class="flex">
         <div class="px-2 md:mb-0 mb-2">
             <input type="file" id="image" accept="image/*" hidden name="image" required />
-            <label for="image" class="cursor-pointer uppercase text-xs font-bold flex items-center mb-2">
+            <label for="image" class="cursor-pointer flex items-center mb-2">
                 {{__('Select a image')}}*
                 <li class="fa fa-upload ml-2"></li>
             </label>

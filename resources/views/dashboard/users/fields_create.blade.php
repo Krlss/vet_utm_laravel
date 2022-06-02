@@ -17,7 +17,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-4">
                 <!-- user id -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('user_id', __('CI/RUC'), ['class' => '']) !!}
+                    {!! Form::label('user_id', __('CI/RUC') . '*', ['class' => '']) !!}
 
                     {!! Form::input('number', 'user_id', old('user_id'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('CI/RUC'), 'required' => true]) !!}
 
@@ -27,7 +27,7 @@
                 </div>
                 <!-- names -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('name', __('Names'), ['class' => '']) !!}
+                    {!! Form::label('name', __('Names') . '*', ['class' => '']) !!}
                     {!! Form::text('name', old('name'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Names'), 'required' => true]) !!}
                     @error('name')
                     <span class="text-danger">{{ $message }}</span>
@@ -35,14 +35,14 @@
                 </div>
                 <!-- lastnames -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('last_name1', __('First last name'), ['class' => '']) !!}
+                    {!! Form::label('last_name1', __('First last name') . '*', ['class' => '']) !!}
                     {!! Form::text('last_name1', old('last_name1'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('First last name'), 'required' => true]) !!}
                     @error('last_name1')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
                 <div class="flex flex-col px-2">
-                    {!! Form::label('last_name2', __('Second last name'), ['class' => '']) !!}
+                    {!! Form::label('last_name2', __('Second last name') . '*', ['class' => '']) !!}
                     {!! Form::text('last_name2', old('last_name2'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Second last name'), 'required' => true]) !!}
                     @error('last_name2')
                     <span class="text-danger">{{ $message }}</span>
@@ -55,7 +55,7 @@
 
                 <!-- email -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
-                    {!! Form::label('email', __('Email'), ['class' => '']) !!}
+                    {!! Form::label('email', __('Email') . '*', ['class' => '']) !!}
                     {!! Form::email('email', old('email'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Email'), 'required' => true, 'type' => 'email']) !!}
                     @error('email')
                     <span class="text-danger">{{ $message }}</span>
@@ -65,7 +65,7 @@
                 <!-- role -->
                 @can('dashboard.users.role')
                 <div class="flex flex-col px-2">
-                    {!! Form::label('roles', __('Role'), ['class' => '']) !!}
+                    {!! Form::label('roles', __('Role') . '*', ['class' => '']) !!}
                     {!! Form::select('roles', $roles, 'Cliente', ['class' => 'select2 form-control', 'required' => true]) !!}
                     @error('roles')
                     <span class="text-danger">{{ $message }}</span>
@@ -93,7 +93,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
 
                 <div class="flex flex-col col-span-2 px-2">
-                    {!! Form::label('id_province', __('Province'), ['class' => '']) !!}
+                    {!! Form::label('id_province', __('Province') . '*', ['class' => '']) !!}
                     {!! Form::select('id_province', $provinces, null, ['class' => 'select2 form-control', 'placeholder' => __('Select a province'), 'required' => true]) !!}
                     @error('id_province')
                     <span class="text-danger">{{ $message }}</span>

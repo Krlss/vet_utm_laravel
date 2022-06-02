@@ -30,11 +30,27 @@ class UserController extends Controller
         $this->middleware('can:dashboard.users.edit')->only('edit', 'update');
     }
 
-    public function index()
+    public function index(Request $request)
     {
+        $input = $request->all();
 
-        $users = User::orderBy('updated_at', 'DESC')->get();
+        if ($request->ajax()) {
+            $data = User::select('users.*');
+            return DataTables()->of($data)
+                ->addColumn('lastnames', function ($user) {
+                    return $user->last_name1 . ' ' . $user->last_name2;
+                })
+                ->editColumn('updated_at', function ($user) {
+                    $date = date_create($user->updated_at);
+                    return date_format($date, "d/m/Y");
+                })
+                ->addColumn('actions', function ($user) {
+                    return view('dashboard.users.partials.actions', compact('user'));
+                })
+                ->make(true);
+        }
 
+        $users = [];
         return view('dashboard.users.index', compact('users'));
     }
 
