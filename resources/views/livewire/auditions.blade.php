@@ -114,7 +114,7 @@
 
     @elseif(!count($audits) && !count($currents))
     <h6 class="text-gray-400 text-sm my-3 font-bold uppercase">
-        {!!trans('lang.label_data_audit_without')!!}
+        {!!__('Nothing audit')!!}
     </h6>
     @endif
 

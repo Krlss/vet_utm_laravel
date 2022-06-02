@@ -124,6 +124,7 @@
     "Remove child": "Remover hijo",
     "This pet has no childs": "Esta mascota no tiene hijos",
     "This user has no pets": "Este usuario no tiene mascotas",
+    "Nothing audit": "Nada para revisar",
     "Edit data a user": "Editar datos de un usuario",
     "Users quantity": "Cantidad de usuarios",
     "Pets quantity": "Cantidad de mascotas",
@@ -257,6 +258,14 @@
     "Password recovery via email": "Recuperación de contraseña via email",
     "Send recovery email": "Enviar email de recuperación",
     "Oops, an error occurred": "Oops, un error ocurrió",
+    "Previous": "Anterior",
+    "Next": "Siguiente",
+    "Showing": "Mostrando",
+    "to": "a",
+    "of": "de",
+    "results": "resultados",
+    "No results": "No hay resultados",
+    
 
 
 
