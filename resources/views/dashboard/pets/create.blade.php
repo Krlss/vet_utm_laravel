@@ -23,6 +23,10 @@
         {!! Form::open(['route' => 'dashboard.pets.store', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.pets.fields_create')
         {!! Form::close() !!}
+
+        @include('dashboard.species.modal')
+        @include('dashboard.races.modal')
+        @include('dashboard.furs.modal')
     </div>
 </div>
 

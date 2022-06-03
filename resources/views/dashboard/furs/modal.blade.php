@@ -2,7 +2,10 @@
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="font-bold">{{__('Quick creation of a new fur')}}</h5>
+                    <div class="flex flex-col">
+                        <h5 class="font-bold">{{__('Quick creation of a new fur')}}</h5>
+                        <small class="header-error text-red-500"></small>
+                    </div>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>

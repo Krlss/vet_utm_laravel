@@ -77,7 +77,7 @@ class PetController extends Controller
         $species = Specie::orderBy('name', 'asc')->pluck('name', 'id');
         $races = [];
 
-        $furs = Fur::orderBy('name', 'asc')->pluck('name', 'id');
+        $furs = [];
 
         return view('dashboard.pets.create', compact('users', 'pets', 'childrens', 'childrensSelected', 'species', 'races', 'furs'))->with('pather', $father)->with('mother', $mother);
     }

@@ -8,7 +8,7 @@
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_specie', $species, null, ['class' => 'select2 form-control', 'placeholder' => __('Select a specie'), 'required' => true]) !!}
                 <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalSpecie" data-tooltip-target="tooltip-create-specie">
+                    <button type="button" data-toggle="modal" data-target="#ModalSpecie" data-tooltip-target="tooltip-create-specie" class="shadow-sm">
                         <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
                     </button>
                     <div id="tooltip-create-specie" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">

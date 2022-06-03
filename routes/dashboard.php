@@ -30,6 +30,8 @@ Route::resource('furs', FurController::class)->names('dashboard.furs');
 
 Route::get('getRacesToSpeciesAjax', [SpecieController::class, 'getRacesToSpeciesAjax']);
 
+Route::get('getFursToSpeciesAjax', [SpecieController::class, 'getFursToSpeciesAjax']);
+
 Route::get('provinces/cantons', [ProvinceController::class, 'AllCantonsByProvince']);
 Route::get('provinces/cantons/parishes', [ProvinceController::class, 'AllParishesByCanton']);
 

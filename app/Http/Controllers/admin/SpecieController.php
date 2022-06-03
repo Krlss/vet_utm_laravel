@@ -135,6 +135,22 @@ class SpecieController extends Controller
         }
     }
 
+    public function getFursToSpeciesAjax(Request $request)
+    {
+        try {
+            $input = $request->all();
+
+            $result = Fur::whereRelation('species', 'species.id', $input['id_specie'])
+                ->select('name', 'id')
+                ->orderBy('name', 'asc')
+                ->get();
+
+            return response()->json($result);
+        } catch (\Throwable $th) {
+            return json_encode(['furs' => []]);
+        }
+    }
+
     public function addSpecieModal(Request $request)
     {
 
