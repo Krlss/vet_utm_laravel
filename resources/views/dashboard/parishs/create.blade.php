@@ -32,9 +32,9 @@
         @include('dashboard.parishs.fields')
         {!! Form::close() !!}
 
-        @can('dashboard.cantons.create')
+
         @include('dashboard.cantons.modal', ['provinces' => $provinces])
-        @endcan
+
 
     </div>
 </div>
