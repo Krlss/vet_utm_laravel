@@ -57,3 +57,7 @@ Route::post('permissions/give-permission-to-role', [PermissionController::class,
 Route::post('add-fur-modal', [FurController::class, 'addFurModal']);
 Route::post('add-specie-modal', [SpecieController::class, 'addSpecieModal']);
 Route::post('add-race-modal', [RaceController::class, 'addRaceModal']);
+
+Route::resource('provinces', ProvinceController::class)->names('dashboard.provinces');
+Route::resource('cantons', CantonController::class)->names('dashboard.cantons');
+Route::resource('parishs', ParishController::class)->names('dashboard.parishs');

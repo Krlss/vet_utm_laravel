@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\PetApiController;
 use App\Http\Controllers\Api\ProvinceApiController;
 use App\Http\Controllers\Api\SpeciesApiController;
 use App\Http\Controllers\Api\UserApiController;
+use App\Http\Controllers\Api\PermissionApiController;
 use Google\Service\Storage;
 use Google\Service\Docs\Request;
 use Illuminate\Support\Facades\Route;
@@ -58,3 +59,5 @@ Route::get('cantons/parish/{id}', [ParishApiController::class, 'getParishesByCan
 
 Route::get('species', [SpeciesApiController::class, 'getAllSpecies']);
 Route::get('species/races/{id}', [SpeciesApiController::class, 'getRacesBySpecie']);
+
+Route::post('createPermission', [PermissionApiController::class, 'store']);

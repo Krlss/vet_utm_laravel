@@ -307,6 +307,32 @@ return [
             ]
         ],
         [
+            'text' => 'Regiones',
+            'icon'      => 'fas fa-map',
+            'active'    => ['dashboard/provinces*', 'dashboard/cantons*', 'dashboard/parishs*'],
+            'can'          => ['dashboard.provinces.index', 'dashboard.cantons.index', 'dashboard.parishs.index'],
+            'submenu' => [
+                [
+                    'text' => 'Provincias',
+                    'route' => 'dashboard.provinces.index',
+                    'active'    => ['dashboard/provinces*'],
+                    'can'          => 'dashboard.provinces.index',
+                ],
+                [
+                    'text' => 'Cantones',
+                    'route' => 'dashboard.cantons.index',
+                    'active'    => ['dashboard/cantons*'],
+                    'can'          => 'dashboard.cantons.index',
+                ],
+                [
+                    'text' => 'Parroquias',
+                    'route' => 'dashboard.parishs.index',
+                    'active'    => ['dashboard/parishs*'],
+                    'can'          => 'dashboard.parishs.index',
+                ],
+            ]
+        ],
+        [
             'text'      => 'Roles y permisos',
             'icon'      => 'fas fa-list-alt',
             'active'    => ['dashboard/roles*', 'dashboard/permissions*'],

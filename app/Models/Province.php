@@ -9,6 +9,16 @@ class Province extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'letter'
+    ];
+
+    static $rules = [
+        'name' => 'required|string|max:255',
+        'letter' => 'required|string|max:1|unique:provinces'
+    ];
+
     public function cantons()
     {
         return $this->hasMany(Canton::class);
