@@ -171,6 +171,8 @@ class FurController extends Controller
                 'name' => $request->name,
             ]);
 
+            $fur->species()->sync($request->id_specie);
+
             return response()->json($fur);
         }
     }

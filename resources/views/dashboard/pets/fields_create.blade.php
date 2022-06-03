@@ -311,6 +311,8 @@
     $('#id_specie').on('change', function() {
         $('#id_race').html('');
         $("#id_race").val([]);
+        $('#id_fur').html('');
+        $("#id_fur").val([]);
         $('#pather').val(null).trigger('change');
         $('#pather').html('');
         $('#mother').val(null).trigger('change');

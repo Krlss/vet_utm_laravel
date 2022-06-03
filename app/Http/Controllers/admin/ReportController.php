@@ -80,7 +80,7 @@ class ReportController extends Controller
 
         $species = Specie::orderBy('name', 'asc')->pluck('name', 'id');
         $races = Race::where('id_specie', $pet->id_specie)->orderBy('name', 'asc')->pluck('name', 'id');
-        $furs = Fur::orderBy('name', 'asc')->pluck('name', 'id');
+        $furs = Fur::whereRelation('species', 'species.id', $pet->id_specie)->orderBy('name', 'asc')->pluck('name', 'id');
 
         return view('dashboard.reports.edit', compact('pet', 'users', 'images_', 'species', 'races', 'furs'));
     }

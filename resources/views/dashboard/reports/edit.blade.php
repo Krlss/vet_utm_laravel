@@ -27,6 +27,10 @@
         @include('dashboard.reports.fields')
         {!! Form::close() !!}
 
+        @include('dashboard.species.modal')
+        @include('dashboard.races.modal')
+        @include('dashboard.furs.modal')
+
     </div>
 </div>
 

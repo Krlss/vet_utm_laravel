@@ -268,23 +268,24 @@
     <!-- 8 row -->
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 sm:space-y-0 space-y-2 mb-3">
         <!-- owner -->
-        <div class="flex items-center w-full">
-            <div class="flex flex-col px-2 w-full">
-                {!! Form::label('user_id', __('Owner'), ['class' => '']) !!}
-                {!! Form::select('user_id', $users, $pet->user_id , ['placeholder' => '']) !!}
-                @error('user_id')
-                <span class="text-danger">{{ $message }}</span>
-                @enderror
-            </div>
-            <div class="mt-4">
-                <a data-tooltip-target="tooltip-create-user" href="{{ route('dashboard.users.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
-                </a>
-                <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{__('A new tab will be open to add a user')}}
-                    <div class="tooltip-arrow" data-popper-arrow></div>
+        <div class="flex flex-col px-2 md:mb-0 mb-2">
+            {!! Form::label('user_id', __('Owner'), ['class' => '']) !!}
+            <div class="flex items-center justify-between w-full gap-2">
+                {!! Form::select('user_id', $users, $pet->user_id, ['placeholder' => '']) !!}
+                <div class="">
+                    <a data-tooltip-target="tooltip-create-user" href="{{ route('dashboard.users.create') }}" target="_blank">
+                        <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
+                    </a>
+                    <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+                        {{__('A new tab will be open to add a user')}}
+                        <div class="tooltip-arrow" data-popper-arrow></div>
+                    </div>
                 </div>
             </div>
+
+            @error('user_id')
+            <span class="text-danger">{{ $message }}</span>
+            @enderror
         </div>
     </div>
 
@@ -493,6 +494,8 @@
     $('#id_specie').on('change', function() {
         $('#id_race').html('');
         $("#id_race").val([]);
+        $('#id_fur').html('');
+        $("#id_fur").val([]);
         $('#pather').val(null).trigger('change');
         $('#pather').html('');
         $('#mother').val(null).trigger('change');
@@ -512,16 +515,17 @@
             let raceOptions;
             if (msg.length <= 0) {
                 if (!$("#id_specie").val())
-                    raceOptions = "<option value>Primero seleccione una especie</option>"
+                    raceOptions = "<option selected value>Primero seleccione una especie</option>"
                 else
-                    raceOptions = "<option value>No hay razas para esa especie</option>"
+                    raceOptions = "<option selected value>No hay razas para esa especie</option>"
             } else {
-                raceOptions = "<option value>Seleccione una raza</option>";
+                raceOptions = "<option selected value>Seleccione una raza</option>";
                 $.each(msg, function(i, races) {
                     raceOptions += '<option value="' + races.id + '">' + races.name + '</option>';
                 });
             }
             $('#id_race').html(raceOptions);
+            $('#id_race').trigger('change')
         });
 
         $.ajax({
