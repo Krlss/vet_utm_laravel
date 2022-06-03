@@ -3,7 +3,7 @@
 @section('content')
 
 @push('css_lib')
-@can('dashboard.cantons.create')
+@can('dashboard.provinces.create')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
 @endcan
 @endpush
@@ -32,9 +32,9 @@
         @include('dashboard.parishs.fields')
         {!! Form::close() !!}
 
-
+        @can('dashboard.provinces.create')
         @include('dashboard.cantons.modal', ['provinces' => $provinces])
-
+        @endcan
 
     </div>
 </div>
