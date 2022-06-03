@@ -5,6 +5,7 @@ use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\CantonController;
 use App\Http\Controllers\admin\PetController;
 use App\Http\Controllers\admin\ProvinceController;
+use App\Http\Controllers\admin\ParishController;
 use App\Http\Controllers\admin\ReportController;
 use App\Http\Controllers\admin\RolesController;
 use App\Http\Controllers\admin\PermissionController;
@@ -57,6 +58,10 @@ Route::post('permissions/give-permission-to-role', [PermissionController::class,
 Route::post('add-fur-modal', [FurController::class, 'addFurModal']);
 Route::post('add-specie-modal', [SpecieController::class, 'addSpecieModal']);
 Route::post('add-race-modal', [RaceController::class, 'addRaceModal']);
+
+Route::post('add-canton-modal', [CantonController::class, 'addCantonModal']);
+Route::post('add-province-modal', [ProvinceController::class, 'addProvinceModal']);
+Route::post('add-parish-modal', [ParishController::class, 'addParishModal']);
 
 Route::resource('provinces', ProvinceController::class)->names('dashboard.provinces');
 Route::resource('cantons', CantonController::class)->names('dashboard.cantons');

@@ -8,11 +8,11 @@
 @endpush
 @section('content_header')
 <div class="flex justify-between items-center">
-    <div class="text-lg font-bold">{{ __('Cantons list') }}</div>
+    <div class="text-lg font-bold">{{ __('Parishs list') }}</div>
 
-    @can('dashboard.cantons.create')
-    <a href="{{ route('dashboard.cantons.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
-        {{ __('Add canton') }}
+    @can('dashboard.parishs.create')
+    <a href="{{ route('dashboard.parishs.create') }}" class="bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md font-semibold px-4 hover:no-underline ">
+        {{ __('Add parish') }}
     </a>
     @endcan
 
@@ -28,6 +28,7 @@
                 <tr>
                     <th>{{ __('Name') }}</th>
                     <th>{{ __('Province') }}</th>
+                    <th>{{ __('Canton') }}</th>
                     <th>{{ __('Created ago') }}</th>
                     <th>{{ __('Updated ago') }}</th>
 
@@ -42,5 +43,5 @@
 @endsection
 
 @push('scripts_lib')
-@include('dashboard.cantons.datatable')
+@include('dashboard.parishs.datatable')
 @endpush

@@ -9,6 +9,16 @@ class Parish extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'id_canton',
+    ];
+
+    static $rules = [
+        'name' => 'required|string|max:255',
+        'id_canton' => 'required|integer|exists:cantons,id',
+    ];
+
     public function users()
     {
         return $this->hasMany(User::class, 'id_parsh');
@@ -16,6 +26,6 @@ class Parish extends Model
 
     public function canton()
     {
-        return $this->belongsTo(Canton::class);
+        return $this->belongsTo(Canton::class, 'id_canton');
     }
 }

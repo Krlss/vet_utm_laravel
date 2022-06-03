@@ -12,7 +12,7 @@
         dataType: 'json',
         type: 'GET',
         order: [
-            [3, "asc"]
+            [4, "asc"]
         ],
         "dom": 'lfrtip',
         columnDefs: [{
@@ -21,13 +21,16 @@
         }],
         language: len,
         ajax: {
-            url: "{{ route('dashboard.cantons.index') }}",
+            url: "{{ route('dashboard.parishs.index') }}",
         },
         columns: [{
                 data: 'name',
             },
             {
                 data: 'province',
+            },
+            {
+                data: 'canton',
             },
             {
                 data: 'created_at',

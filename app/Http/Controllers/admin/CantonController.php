@@ -8,6 +8,7 @@ use App\Models\Canton;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CantonController extends Controller
 {
@@ -107,6 +108,26 @@ class CantonController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()->route('dashboard.cantons.index')->with('error', __('Error deleting canton') . $e->getMessage());
+        }
+    }
+
+    public function addCantonModal(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:cantons',
+            'id_province' => 'required|integer|exists:provinces,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $canton = Canton::create([
+                'name' => $request->name,
+                'id_province' => $request->id_province
+            ]);
+
+            return response()->json($canton);
         }
     }
 }
