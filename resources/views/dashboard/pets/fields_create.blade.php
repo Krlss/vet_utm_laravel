@@ -299,10 +299,6 @@
     window.onload = () => {
         document.querySelector("html").style.overflowX = "hidden";
     }
-    $("[name='id_specie']").on('change', function() {
-
-    });
-
     $("[name='sex']").on('change', function() {
         $('#childrens').val(null).trigger('change');
         $('#childrens').html('');
@@ -550,136 +546,10 @@
         }
     });
 </script>
-<script>
-    $('.add_specie').click(function(e) {
-        e.preventDefault();
-        var fur = $('#name_specie').val();
-        $('.add_specie').attr('disabled', 'disabled');
-        $('.add_specie').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
 
-        $.ajax({
-            type: "POST",
-            url: "{{url('dashboard/add-specie-modal')}}",
-            data: {
-                name: fur,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
-                if (data.error) {
-                    $('.error_specie').html(data.error[0]);
-                } else {
-                    $('#id_specie').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                    $('#id_specie').trigger('change');
-                    $('#name_specie').val('');
-                    $('#ModalSpecie').modal('hide');
-                }
-                $('.add_specie').removeAttr('disabled');
-                $('.add_specie').html('Guardar');
-            },
-            error: function(data) {
-                console.log(data);
-                $('.add_specie').removeAttr('disabled');
-                $('.add_specie').html('Guardar');
-            }
-        })
-    });
-</script>
 
-<script>
-    $('.add_fur').click(function(e) {
-        e.preventDefault();
-        $('.add_fur').attr('disabled', 'disabled');
-        $('.add_fur').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
+@include('partials.js_modals.fur')
+@include('partials.js_modals.race')
+@include('partials.js_modals.specie')
 
-        var fur = $('#name_fur').val();
-        var id_specie = $('#id_specie').val();
-        if (id_specie) {
-            $.ajax({
-                type: "POST",
-                url: "{{url('dashboard/add-fur-modal')}}",
-                data: {
-                    name: fur,
-                    id_specie,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function(data) {
-                    if (data.error) {
-                        $('.error_fur').html(data.error[0]);
-                    } else {
-                        $('#id_fur').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                        $('#id_fur').trigger('change');
-                        $('#name_fur').val('');
-                        $('#ModalFur').modal('hide');
-                    }
-                    $('.add_fur').removeAttr('disabled');
-                    $('.add_fur').html('Guardar');
-                },
-                error: function(data) {
-                    console.log(data);
-                    $('.add_fur').removeAttr('disabled');
-                    $('.add_fur').html('Guardar');
-                }
-            })
-        }
-    });
-    $('#ModalFur').on('show.bs.modal', function(event) {
-        var modal = $(this)
-        if (!$('#id_specie').val())
-            modal.find('.header-error').text('Primero debes seleccionar una especie');
-        else
-            modal.find('.header-error').text('');
-    })
-</script>
-
-<script>
-    $('#id_race').select2({
-        width: '100%'
-    });
-
-    $('.add_race').click(function(e) {
-        e.preventDefault();
-        var race = $('#name_race').val();
-        var id_specie = $('#id_specie').val();
-
-        if (id_specie) {
-            $('.add_race').attr('disabled', 'disabled');
-            $('.add_race').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
-
-            $.ajax({
-                type: "POST",
-                url: "{{url('dashboard/add-race-modal')}}",
-                data: {
-                    name: race,
-                    id_specie,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function(data) {
-                    if (data.error) {
-                        $('.error_race').html(data.error[0]);
-                    } else {
-                        $('#id_race').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                        $('#id_race').trigger('change');
-                        $('#name_race').val('');
-                        $('#ModalRace').modal('hide');
-                    }
-                    $('.add_race').removeAttr('disabled');
-                    $('.add_race').html('Guardar');
-                },
-                error: function(data) {
-                    console.log(data);
-                    $('.add_race').removeAttr('disabled');
-                    $('.add_race').html('Guardar');
-                }
-            })
-        }
-    });
-
-    $('#ModalRace').on('show.bs.modal', function(event) {
-        var modal = $(this)
-        if (!$('#id_specie').val())
-            modal.find('.header-error').text('Primero debes seleccionar una especie');
-        else
-            modal.find('.header-error').text('');
-    })
-</script>
 @endpush

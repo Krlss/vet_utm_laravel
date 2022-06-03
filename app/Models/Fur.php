@@ -24,6 +24,6 @@ class Fur extends Model implements Auditable
 
     public function species()
     {
-        return $this->belongsToMany(Specie::class, 'species_furs', 'furs_id', 'species_id')->withPivot('species_id', 'furs_id');
+        return $this->belongsToMany(Specie::class, 'species_furs', 'furs_id', 'species_id')->withPivot('furs_id', 'species_id');
     }
 }

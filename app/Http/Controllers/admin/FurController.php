@@ -167,13 +167,18 @@ class FurController extends Controller
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()]);
         } else {
-            $fur = Fur::create([
-                'name' => $request->name,
-            ]);
+            try {
+                DB::beginTransaction();
+                $fur = Fur::create([
+                    'name' => $request->name,
+                ]);
+                $fur->species()->sync($request->id_specie);
 
-            $fur->species()->sync($request->id_specie);
-
-            return response()->json($fur);
+                DB::commit();
+                return response()->json($fur);
+            } catch (\Throwable $th) {
+                return response()->json(['error' => $th]);
+            }
         }
     }
 }

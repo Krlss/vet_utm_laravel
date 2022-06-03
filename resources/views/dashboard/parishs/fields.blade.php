@@ -16,7 +16,7 @@
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_canton', $cantons, $parish->id_canton ?? null, ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'id'=>'id_canton', 'placeholder' => $cantons ? null : __('There are no cantons available... :(')]) !!}
 
-                @can('dashboard.provinces.create')
+                @can('dashboard.cantons.create')
                 <div class="">
                     <button type="button" data-toggle="modal" data-target="#ModalCanton" data-tooltip-target="tooltip-create-canton" class="shadow-sm">
                         <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
@@ -49,7 +49,7 @@
         width: '100%',
     });
 </script>
-@can('dashboard.provinces.create')
+@can('dashboard.cantons.create')
 <script>
     $('#id_province').select2({
         width: '100%',
