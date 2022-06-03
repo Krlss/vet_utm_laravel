@@ -3,9 +3,7 @@
 @section('content')
 
 @push('css_lib')
-@can('dashboard.provinces.create')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
-@endcan
 @endpush
 
 @section('content_header')

@@ -43,13 +43,14 @@
 
 
 @push('scripts_lib')
-@can('dashboard.provinces.create')
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>
     $('#id_canton').select2({
         width: '100%',
     });
-
+</script>
+@can('dashboard.provinces.create')
+<script>
     $('#id_province').select2({
         width: '100%',
         dropdownParent: $('#ModalCanton')
