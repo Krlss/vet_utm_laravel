@@ -40,7 +40,7 @@ return [
     |
     */
 
-    'debug' => (bool) env('APP_DEBUG', true),
+    'debug' => (bool) env('APP_DEBUG', false),
 
     /*
     |--------------------------------------------------------------------------
@@ -182,7 +182,6 @@ return [
 
         OwenIt\Auditing\AuditingServiceProvider::class,
         Yajra\DataTables\DataTablesServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
     ],
 
     /*
@@ -238,7 +237,6 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
-        'Debugbar' => Barryvdh\Debugbar\Facades\Debugbar::class,
 
     ],
 
