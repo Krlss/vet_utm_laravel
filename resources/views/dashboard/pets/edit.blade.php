@@ -32,6 +32,10 @@
         {!! Form::model($pet, ['route' => ['dashboard.pets.update', $pet], 'autocomplete' => 'off', 'method' => 'put','enctype' => 'multipart/form-data']) !!}
         @include('dashboard.pets.fields')
         {!! Form::close() !!}
+
+        @include('dashboard.species.modal')
+        @include('dashboard.races.modal')
+        @include('dashboard.furs.modal')
     </div>
 </div>
 
