@@ -36,6 +36,11 @@
 
 @push('js')
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script>
+    $('#id_specie').select2({
+        width: '100%'
+    });
+</script>
 
 @can('dashboard.species.create')
 <script src="{{ asset('js/flowbite.js') }}"></script>

@@ -51,6 +51,12 @@
 
 @push('js')
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script>
+    $('#id_fur').select2({
+        width: '100%',
+        allowClear: true
+    });
+</script>
 
 @can('dashboard.furs.create')
 <script src="{{ asset('js/flowbite.js') }}"></script>

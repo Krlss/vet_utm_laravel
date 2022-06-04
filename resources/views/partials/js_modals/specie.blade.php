@@ -1,9 +1,5 @@
 @can('dashboard.species.create')
 <script>
-    $('#id_specie').select2({
-        width: '100%'
-    });
-
     $('.add_specie').click(function(e) {
         e.preventDefault();
         var specie = $('#name_specie').val();

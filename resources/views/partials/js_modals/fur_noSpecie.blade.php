@@ -1,11 +1,5 @@
 @can('dashboard.furs.create')
 <script>
-    $('#id_fur').select2({
-        width: '100%',
-        allowClear: true
-    });
-
-
     $('.add_fur').click(function(e) {
         e.preventDefault();
         var fur = $('#name_fur').val();
