@@ -55,12 +55,8 @@ class ParishController extends Controller
     public function create()
     {
         $cantons = Canton::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        $provinces = [];
 
-        // ? Para crear canton se necesitas de las provincias
-        if (Auth::user()->hasPermissionTo('dashboard.cantons.create')) {
-            $provinces = Province::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        }
+        $provinces = Province::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         return view('dashboard.parishs.create', compact('cantons', 'provinces'));
     }
@@ -81,12 +77,8 @@ class ParishController extends Controller
     public function edit(Parish $parish)
     {
         $cantons = Canton::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        $provinces = [];
 
-        // ? Para crear canton se necesitas de las provincias
-        if (Auth::user()->hasPermissionTo('dashboard.cantons.create')) {
-            $provinces = Province::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
-        }
+        $provinces = Province::orderBy('name', 'asc')->pluck('name', 'id')->toArray();
 
         return view('dashboard.parishs.edit', compact('parish', 'cantons', 'provinces'));
     }

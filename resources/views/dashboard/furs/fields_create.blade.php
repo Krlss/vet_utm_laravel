@@ -13,7 +13,7 @@
         <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('id_specie', __('Species') , ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
-                {!! Form::select('id_specie[]', $species, $speciesSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'id_specie']) !!}
+                {!! Form::select('id_specie[]', $species, $speciesSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'id_specie', 'placeholder' => __('Select a specie')]) !!}
 
                 @can('dashboard.species.create')
                 <x-button-modal target="specie" />

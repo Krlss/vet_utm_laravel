@@ -52,11 +52,7 @@ class CantonController extends Controller
     {
         $provinces = Province::pluck('name', 'id');
 
-        $lettersAvailable = [];
-
-        if (Auth::user()->hasPermissionTo('dashboard.provinces.create')) {
-            $lettersAvailable = getLettersAvailable();
-        }
+        $lettersAvailable = getLettersAvailable();
 
         return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable'));
     }
@@ -86,11 +82,7 @@ class CantonController extends Controller
     {
         $provinces = Province::pluck('name', 'id');
 
-        $lettersAvailable = [];
-
-        if (Auth::user()->hasPermissionTo('dashboard.provinces.create')) {
-            $lettersAvailable = getLettersAvailable();
-        }
+        $lettersAvailable = getLettersAvailable();
 
         return view('dashboard.cantons.edit', compact('canton', 'provinces', 'lettersAvailable'));
     }
