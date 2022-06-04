@@ -31,7 +31,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'dashboard.species.create'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.species.edit'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.species.destroy'])->syncRoles([$role2]);
-        
+
         Permission::create(['name' => 'dashboard.races.index'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.races.create'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.races.edit'])->syncRoles([$role3, $role2]);
@@ -64,5 +64,23 @@ class RoleSeeder extends Seeder
 
         Permission::create(['name' => 'dashboard.audit.index'])->syncRoles([$role3, $role2]);
         Permission::create(['name' => 'dashboard.audit.show'])->syncRoles([$role3/*  */, $role2]);
+
+        Permission::create(['name' => 'dashboard.provinces.index'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.provinces.show'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.provinces.create'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.provinces.edit'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.provinces.destroy'])->syncRoles($role2);
+
+        Permission::create(['name' => 'dashboard.cantons.index'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.cantons.show'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.cantons.create'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.cantons.edit'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.cantons.destroy'])->syncRoles($role2);
+
+        Permission::create(['name' => 'dashboard.parishs.index'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.parishs.show'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.parishs.create'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.parishs.edit'])->syncRoles($role2);
+        Permission::create(['name' => 'dashboard.parishs.destroy'])->syncRoles($role2);
     }
 }

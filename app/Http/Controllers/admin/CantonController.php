@@ -55,7 +55,9 @@ class CantonController extends Controller
 
         $lettersAvailable = getLettersAvailable();
 
-        return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable'));
+        $canton = null;
+
+        return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable', 'canton'));
     }
 
 
@@ -81,7 +83,7 @@ class CantonController extends Controller
 
     public function edit(Canton $canton)
     {
-        $provinces = Province::pluck('name', 'id');
+        $provinces = Province::pluck('name', 'id')->toArray();
 
         $lettersAvailable = getLettersAvailable();
 
