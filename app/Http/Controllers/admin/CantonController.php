@@ -51,13 +51,9 @@ class CantonController extends Controller
 
     public function create()
     {
-        $lettersAvailable = [];
         $provinces = Province::pluck('name', 'id')->toArray();
-        try {
-            $lettersAvailable = getLettersAvailable();
-        } catch (Exception $e) {
-            return redirect()->back()->with('error', $e);
-        }
+
+        $lettersAvailable = getLettersAvailable();
 
         return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable'));
     }

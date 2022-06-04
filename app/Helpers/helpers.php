@@ -534,22 +534,18 @@ function getModelName($model)
 
 function getLettersAvailable($letterProvince = null)
 {
-    try {
-        //arrayletters same key and value
-        $arrayletters = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G', 'H' => 'H', 'I' => 'I', 'J' => 'J', 'K' => 'K', 'L' => 'L', 'M' => 'M', 'N' => 'N', 'O' => 'O', 'P' => 'P', 'Q' => 'Q', 'R' => 'R', 'S' => 'S', 'T' => 'T', 'U' => 'U', 'V' => 'V', 'W' => 'W', 'X' => 'X', 'Y' => 'Y', 'Z' => 'Z');
-        //recude arrayletters to letters available
-        $letters = Province::pluck('letter', 'letter')->toArray();
-        $lettersAvailable = array_diff($arrayletters, $letters);
+    //arrayletters same key and value
+    $arrayletters = array('A' => 'A', 'B' => 'B', 'C' => 'C', 'D' => 'D', 'E' => 'E', 'F' => 'F', 'G' => 'G', 'H' => 'H', 'I' => 'I', 'J' => 'J', 'K' => 'K', 'L' => 'L', 'M' => 'M', 'N' => 'N', 'O' => 'O', 'P' => 'P', 'Q' => 'Q', 'R' => 'R', 'S' => 'S', 'T' => 'T', 'U' => 'U', 'V' => 'V', 'W' => 'W', 'X' => 'X', 'Y' => 'Y', 'Z' => 'Z');
+    //recude arrayletters to letters available
+    $letters = Province::pluck('letter', 'letter')->toArray();
+    $lettersAvailable = array_diff($arrayletters, $letters);
 
-        if ($letterProvince) {
-            $letterCurrent = array($letterProvince => $letterProvince);
-            $lettersAvailable = array_merge($lettersAvailable, $letterCurrent);
-        }
-
-        return $lettersAvailable;
-    } catch (\Throwable $th) {
-        throw new Exception($th);
+    if ($letterProvince) {
+        $letterCurrent = array($letterProvince => $letterProvince);
+        $lettersAvailable = array_merge($lettersAvailable, $letterCurrent);
     }
+
+    return $lettersAvailable;
 }
 
 //function return good morning or good afternoon or good evening depending on time
