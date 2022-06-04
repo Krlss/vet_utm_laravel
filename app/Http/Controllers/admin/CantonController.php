@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\CantonRequest;
 use App\Models\Canton;
 use App\Models\Province;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -50,9 +51,13 @@ class CantonController extends Controller
 
     public function create()
     {
-        $provinces = Province::pluck('name', 'id');
-
-        $lettersAvailable = getLettersAvailable();
+        $lettersAvailable = [];
+        $provinces = Province::pluck('name', 'id')->toArray();
+        try {
+            $lettersAvailable = getLettersAvailable();
+        } catch (Exception $e) {
+            return redirect()->back()->with('error', $e);
+        }
 
         return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable'));
     }
