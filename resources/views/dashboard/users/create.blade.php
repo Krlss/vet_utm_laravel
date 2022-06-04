@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('content')
-
 @push('css_lib')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
 @endpush
@@ -15,6 +13,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
 
@@ -25,7 +24,4 @@
         {!! Form::close() !!}
     </div>
 </div>
-
-
-
 @endsection

@@ -1,8 +1,9 @@
 <script>
-    $('#pather').select2({
+    $('#user_id').select2({
         width: '100%',
-        placeholder: "Digite el identificador del padre",
+        placeholder: "Digite la cedula o RUC del dueño",
         minimumInputLength: 2,
+        allowClear: true,
         language: {
             noResults: function() {
                 return "No hay resultado";
@@ -11,22 +12,15 @@
                 return "Buscando..";
             },
             inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
+                return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
             }
         },
-        allowClear: true,
         ajax: {
-            url: "{{url('dashboard/parents')}}",
+            url: "{{url('dashboard/pet/user')}}",
             method: "POST",
             data: function(params) {
-                var specieValue = $("[name='id_specie']").val();
-                var childrensSeleted = $("#childrens").val();
                 var query = {
                     search: params.term,
-                    specie: specieValue,
-                    pet_id: $("[name='pet_id']").val(),
-                    childrensSeleted: childrensSeleted,
-                    sex: 'M',
                     "_token": "{{csrf_token()}}"
                 }
                 return query;
@@ -34,10 +28,10 @@
             dataType: "json",
             processResults: function(data) {
                 return {
-                    results: $.map(data, function(pet) {
+                    results: $.map(data, function(user) {
                         return {
-                            text: pet.name + " - " + pet.pet_id,
-                            id: pet.pet_id
+                            text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
+                            id: user.user_id
                         }
                     })
                 };

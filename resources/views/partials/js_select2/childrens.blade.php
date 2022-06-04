@@ -1,8 +1,9 @@
 <script>
-    $('#pather').select2({
+    $('#childrens').select2({
         width: '100%',
-        placeholder: "Digite el identificador del padre",
+        placeholder: "Digita los identificadores de las mascotas",
         minimumInputLength: 2,
+        allowClear: true,
         language: {
             noResults: function() {
                 return "No hay resultado";
@@ -14,34 +15,35 @@
                 return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
             }
         },
-        allowClear: true,
         ajax: {
-            url: "{{url('dashboard/parents')}}",
+            url: "{{url('dashboard/childrens')}}",
+            dataType: 'json',
             method: "POST",
             data: function(params) {
                 var specieValue = $("[name='id_specie']").val();
-                var childrensSeleted = $("#childrens").val();
                 var query = {
                     search: params.term,
                     specie: specieValue,
                     pet_id: $("[name='pet_id']").val(),
-                    childrensSeleted: childrensSeleted,
-                    sex: 'M',
+                    pather_seleted: $("[name='pather']").val(),
+                    mother_seleted: $("[name='mother']").val(),
+                    sex: $("[name='sex']").val(),
                     "_token": "{{csrf_token()}}"
                 }
                 return query;
             },
-            dataType: "json",
             processResults: function(data) {
+                data.pets = data.pets.map(function(obj) {
+                    return {
+                        "text": obj.name + " - " + obj.pet_id,
+                        "id": obj.pet_id
+                    };
+                });
                 return {
-                    results: $.map(data, function(pet) {
-                        return {
-                            text: pet.name + " - " + pet.pet_id,
-                            id: pet.pet_id
-                        }
-                    })
+                    results: data.pets
                 };
-            }
+            },
+            cache: true
         }
     });
 </script>

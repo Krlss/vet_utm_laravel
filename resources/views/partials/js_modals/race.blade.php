@@ -1,4 +1,4 @@
-@can('dashboard.furs.create')
+@can('dashboard.races.create')
 <script>
     $('#id_race').select2({
         width: '100%'

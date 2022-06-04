@@ -1,8 +1,9 @@
 <script>
-    $('#pather').select2({
+    $('#mother').select2({
         width: '100%',
-        placeholder: "Digite el identificador del padre",
+        placeholder: "Digite el identificador de la madre",
         minimumInputLength: 2,
+        allowClear: true,
         language: {
             noResults: function() {
                 return "No hay resultado";
@@ -14,7 +15,6 @@
                 return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
             }
         },
-        allowClear: true,
         ajax: {
             url: "{{url('dashboard/parents')}}",
             method: "POST",
@@ -26,7 +26,7 @@
                     specie: specieValue,
                     pet_id: $("[name='pet_id']").val(),
                     childrensSeleted: childrensSeleted,
-                    sex: 'M',
+                    sex: 'F',
                     "_token": "{{csrf_token()}}"
                 }
                 return query;

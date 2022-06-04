@@ -129,4 +129,3 @@
 </div>
 
 <livewire:users.show-list-pets :currentsPets="$user->pets" :user_id="$user->user_id" :delete="true" />
-@livewireScripts

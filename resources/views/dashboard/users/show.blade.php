@@ -1,7 +1,5 @@
 @extends('layouts.admin')
 
-@section('content')
-
 @section('content_header')
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 space-y-2">
     <div class="text-lg font-bold">{{__('User data')}}</div>
@@ -20,6 +18,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
 
@@ -28,7 +27,4 @@
         @include('dashboard.users.show_fields')
     </div>
 </div>
-
-
-
 @endsection

@@ -28,6 +28,9 @@
 @stack('scripts_lib')
 <script src="https://unpkg.com/flowbite@1.4.3/dist/flowbite.js"></script>
 <script>
+    window.onload = () => {
+        document.querySelector("html").style.overflowX = "hidden";
+    }
     $('form').submit(function(event) {
         if ($(this).hasClass('submitted')) {
             event.preventDefault();

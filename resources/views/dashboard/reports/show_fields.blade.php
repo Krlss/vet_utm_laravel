@@ -168,8 +168,8 @@
     </div>
 
     <x-pet-photos-show :pet=$pet />
-
-    @push('scripts_lib')
-    <script src="//unpkg.com/alpinejs"></script>
-    @endpush
 </div>
+
+@push('scripts_lib')
+<script src="//unpkg.com/alpinejs"></script>
+@endpush

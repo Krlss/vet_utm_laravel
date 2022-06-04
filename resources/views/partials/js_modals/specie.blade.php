@@ -1,4 +1,4 @@
-@can('dashboard.furs.create')
+@can('dashboard.species.create')
 <script>
     $('.add_specie').click(function(e) {
         e.preventDefault();
