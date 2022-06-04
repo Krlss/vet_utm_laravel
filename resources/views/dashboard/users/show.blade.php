@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@push('css')
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
+@endpush
+
 @section('content_header')
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 space-y-2">
     <div class="text-lg font-bold">{{__('User data')}}</div>

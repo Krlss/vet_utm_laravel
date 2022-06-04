@@ -169,7 +169,3 @@
 
     <x-pet-photos-show :pet=$pet />
 </div>
-
-@push('js')
-<script src="{{ asset('js/alpine.min.js') }}"></script>
-@endpush

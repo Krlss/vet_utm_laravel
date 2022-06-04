@@ -17,7 +17,7 @@ class RaceController extends Controller
     {
         $this->middleware('can:dashboard.races.index')->only('index');
         $this->middleware('can:dashboard.races.destroy')->only('destroy');
-        $this->middleware('can:dashboard.races.create')->only('create', 'store');
+        $this->middleware('can:dashboard.races.create')->only('create', 'store', 'addRaceModal');
         $this->middleware('can:dashboard.races.edit')->only('edit', 'update');
     }
 

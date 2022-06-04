@@ -17,7 +17,7 @@ class FurController extends Controller
     {
         $this->middleware('can:dashboard.furs.index')->only('index');
         $this->middleware('can:dashboard.furs.destroy')->only('destroy');
-        $this->middleware('can:dashboard.furs.create')->only('create', 'store');
+        $this->middleware('can:dashboard.furs.create')->only('create', 'store', 'addFurModal');
         $this->middleware('can:dashboard.furs.edit')->only('edit', 'update');
     }
 
@@ -59,8 +59,8 @@ class FurController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             $fur = Fur::create($input);
 
-            if ($request->has('species')) {
-                $fur->species()->sync($request->species);
+            if ($request->has('id_specie')) {
+                $fur->species()->sync($request->id_specie);
             }
 
             DB::commit();
@@ -112,7 +112,7 @@ class FurController extends Controller
             $input['name'] = ucfirst(ucwords($input['name']));
             $fur->update($input);
 
-            $fur->species()->sync($request->species);
+            $fur->species()->sync($request->id_specie);
 
             DB::commit();
             return redirect()->route('dashboard.furs.index')->with('success', __('Fur updated successfully'));

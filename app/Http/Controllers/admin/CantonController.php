@@ -7,6 +7,7 @@ use App\Http\Requests\CantonRequest;
 use App\Models\Canton;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,7 +16,7 @@ class CantonController extends Controller
     public function __construct()
     {
         $this->middleware('can:dashboard.cantons.index')->only('index');
-        $this->middleware('can:dashboard.cantons.create')->only(['create', 'store']);
+        $this->middleware('can:dashboard.cantons.create')->only(['create', 'store', 'addCantonModal']);
         $this->middleware('can:dashboard.cantons.edit')->only(['edit', 'update']);
         $this->middleware('can:dashboard.cantons.destroy')->only('destroy');
     }
@@ -51,7 +52,13 @@ class CantonController extends Controller
     {
         $provinces = Province::pluck('name', 'id');
 
-        return view('dashboard.Cantons.create', compact('provinces'));
+        $lettersAvailable = [];
+
+        if (Auth::user()->hasPermissionTo('dashboard.provinces.create')) {
+            $lettersAvailable = getLettersAvailable();
+        }
+
+        return view('dashboard.Cantons.create', compact('provinces', 'lettersAvailable'));
     }
 
 
@@ -79,7 +86,13 @@ class CantonController extends Controller
     {
         $provinces = Province::pluck('name', 'id');
 
-        return view('dashboard.cantons.edit', compact('canton', 'provinces'));
+        $lettersAvailable = [];
+
+        if (Auth::user()->hasPermissionTo('dashboard.provinces.create')) {
+            $lettersAvailable = getLettersAvailable();
+        }
+
+        return view('dashboard.cantons.edit', compact('canton', 'provinces', 'lettersAvailable'));
     }
 
 
@@ -120,7 +133,7 @@ class CantonController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()->all()]);
+            return response()->json(['error' => $validator->errors()]);
         } else {
             $canton = Canton::create([
                 'name' => $request->name,

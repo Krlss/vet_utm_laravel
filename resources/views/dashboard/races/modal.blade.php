@@ -1,4 +1,5 @@
-<div class="modal fade" id="ModalRace" tabindex="-1" role="dialog" aria-labelledby="ModalRace" aria-hidden="true">
+@can('dashboard.races.create')
+<div class="modal fade" id="Modalrace" tabindex="-1" role="dialog" aria-labelledby="Modalrace" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -27,3 +28,4 @@
         </div>
     </div>
 </div>
+@endcan

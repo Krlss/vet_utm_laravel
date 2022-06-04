@@ -10,14 +10,14 @@ use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
-
+use Illuminate\Support\Facades\Validator;
 
 class ParishController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:dashboard.parishs.index')->only('index');
-        $this->middleware('can:dashboard.parishs.create')->only(['create', 'store']);
+        $this->middleware('can:dashboard.parishs.create')->only(['create', 'store', 'addParishModal']);
         $this->middleware('can:dashboard.parishs.edit')->only(['edit', 'update']);
         $this->middleware('can:dashboard.parishs.destroy')->only('destroy');
     }
@@ -114,6 +114,23 @@ class ParishController extends Controller
         } catch (\Exception $e) {
             DB::rollback();
             return redirect()->back()->with('error', __('Error in delete parish') . $e->getMessage());
+        }
+    }
+
+    public function addParishModal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:parishes,name',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $parish = Parish::create([
+                'name' => $request->name,
+            ]);
+
+            return response()->json($parish);
         }
     }
 }

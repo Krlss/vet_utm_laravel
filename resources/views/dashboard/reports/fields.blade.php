@@ -20,15 +20,11 @@
             {!! Form::label('id_specie', __('Species') . '*', ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_specie', $species, $pet->id_specie ?? null, ['class' => 'select2 form-control', 'placeholder' => __('Select a specie'), 'required' => true]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalSpecie" data-tooltip-target="tooltip-create-specie" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-specie" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a specie')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+                @can('dashboard.species.create')
+                <x-button-modal target="specie" />
+                @endcan
+
             </div>
 
             @error('id_specie')
@@ -41,15 +37,11 @@
             {!! Form::label('id_race', __('Race') . '*', ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_race', $races, $pet->id_race ?? null, ['class' => 'select2 form-control', 'placeholder' => $pet->id_specie ? __('Select a specie') : __('First select a specie'), 'required' => true]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalRace" data-tooltip-target="tooltip-create-race" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-race" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a race')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+                @can('dashboard.races.create')
+                <x-button-modal target="race" />
+                @endcan
+
             </div>
 
             @error('id_race')
@@ -93,15 +85,11 @@
             {!! Form::label('id_fur', __('Fur'), ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_fur', $furs, $pet->id_fur, ['class' => 'select2 form-control', 'placeholder' => $pet->id_specie ? __('Select a fur') : __('First select a specie')]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalFur" data-tooltip-target="tooltip-create-fur" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-fur" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a fur')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+                @can('dashboard.furs.create')
+                <x-button-modal target="fur" />
+                @endcan
+
             </div>
 
             @error('id_fur')
@@ -218,15 +206,11 @@
             {!! Form::label('user_id', __('Owner'), ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('user_id', $users, $pet->user_id, ['placeholder' => '']) !!}
-                <div class="">
-                    <a data-tooltip-target="tooltip-create-user" href="{{ route('dashboard.users.create') }}" target="_blank">
-                        <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
-                    </a>
-                    <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('A new tab will be open to add a user')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+                @can('dashboard.users.create')
+                <x-button-new-tab-blank target="user" />
+                @endcan
+
             </div>
 
             @error('user_id')
@@ -242,240 +226,12 @@
 @push('js')
 <script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-<script>
-    $('#user_id').select2({
-        width: '100%',
-        placeholder: "Digite la cedula o RUC del dueño",
-        minimumInputLength: 2,
-        allowClear: true,
-        language: {
-            noResults: function() {
-                return "No hay resultado";
-            },
-            searching: function() {
-                return "Buscando..";
-            },
-            inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras... (cedula, ruc o nombres del usuario)";
-            }
-        },
-        ajax: {
-            url: "{{url('dashboard/pet/user')}}",
-            method: "POST",
-            data: function(params) {
-                var query = {
-                    search: params.term,
-                    "_token": "{{csrf_token()}}"
-                }
-                return query;
-            },
-            dataType: "json",
-            processResults: function(data) {
-                return {
-                    results: $.map(data, function(user) {
-                        return {
-                            text: user.name + " " + user.last_name1 + " " + user.last_name2 + " - " + user.user_id,
-                            id: user.user_id
-                        }
-                    })
-                };
-            }
-        }
-    });
+<script src="{{ asset('js/flowbite.js') }}"></script>
+@include('partials.js_select2.owner')
 
-    $('#id_specie').on('change', function() {
-        $('#id_race').html('');
-        $("#id_race").val([]);
-        $('#id_fur').html('');
-        $("#id_fur").val([]);
-        $('#pather').val(null).trigger('change');
-        $('#pather').html('');
-        $('#mother').val(null).trigger('change');
-        $('#mother').html('');
-        $('#childrens').val(null).trigger('change');
-        $('#childrens').html('');
-        $('#select2-id_race-container').html('');
+@include('partials.js_select.changeSpecie')
 
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{url('dashboard/getRacesToSpeciesAjax')}}",
-            data: {
-                id_specie: $('#id_specie').val()
-            }
-        }).done(function(msg) {
-            let raceOptions;
-            if (msg.length <= 0) {
-                if (!$("#id_specie").val())
-                    raceOptions = "<option selected value>Primero seleccione una especie</option>"
-                else
-                    raceOptions = "<option selected value>No hay razas para esa especie</option>"
-            } else {
-                raceOptions = "<option selected value>Seleccione una raza</option>";
-                $.each(msg, function(i, races) {
-                    raceOptions += '<option value="' + races.id + '">' + races.name + '</option>';
-                });
-            }
-            $('#id_race').html(raceOptions);
-            $('#id_race').trigger('change')
-        });
-
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{url('dashboard/getFursToSpeciesAjax')}}",
-            data: {
-                id_specie: $('#id_specie').val()
-            }
-        }).done(function(msg) {
-            let furOptions;
-            if (msg.length <= 0) {
-                if (!$("#id_specie").val())
-                    furOptions = "<option selected value>Primero seleccione una especie</option>"
-                else
-                    furOptions = "<option selected value>No hay pelajes para esa especie</option>"
-            } else {
-                furOptions = "<option selected value>Seleccione un pelaje</option>";
-                $.each(msg, function(i, furs) {
-                    furOptions += '<option value="' + furs.id + '">' + furs.name + '</option>';
-                });
-            }
-            $('#id_fur').html(furOptions);
-            $('#id_fur').trigger('change')
-        });
-    });
-</script>
-
-<script>
-    $('.add_specie').click(function(e) {
-        e.preventDefault();
-        var fur = $('#name_specie').val();
-        $('.add_specie').attr('disabled', 'disabled');
-        $('.add_specie').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
-
-        $.ajax({
-            type: "POST",
-            url: "{{url('dashboard/add-specie-modal')}}",
-            data: {
-                name: fur,
-                _token: '{{csrf_token()}}'
-            },
-            success: function(data) {
-                if (data.error) {
-                    $('.error_specie').html(data.error[0]);
-                } else {
-                    $('#id_specie').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                    $('#id_specie').trigger('change');
-                    $('#name_specie').val('');
-                    $('#ModalSpecie').modal('hide');
-                }
-                $('.add_specie').removeAttr('disabled');
-                $('.add_specie').html('Guardar');
-            },
-            error: function(data) {
-                console.log(data);
-                $('.add_specie').removeAttr('disabled');
-                $('.add_specie').html('Guardar');
-            }
-        })
-    });
-</script>
-
-<script>
-    $('.add_fur').click(function(e) {
-        e.preventDefault();
-        $('.add_fur').attr('disabled', 'disabled');
-        $('.add_fur').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
-
-        var fur = $('#name_fur').val();
-        var id_specie = $('#id_specie').val();
-        if (id_specie) {
-            $.ajax({
-                type: "POST",
-                url: "{{url('dashboard/add-fur-modal')}}",
-                data: {
-                    name: fur,
-                    id_specie,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function(data) {
-                    if (data.error) {
-                        $('.error_fur').html(data.error[0]);
-                    } else {
-                        $('#id_fur').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                        $('#id_fur').trigger('change');
-                        $('#name_fur').val('');
-                        $('#ModalFur').modal('hide');
-                    }
-                    $('.add_fur').removeAttr('disabled');
-                    $('.add_fur').html('Guardar');
-                },
-                error: function(data) {
-                    console.log(data);
-                    $('.add_fur').removeAttr('disabled');
-                    $('.add_fur').html('Guardar');
-                }
-            })
-        }
-    });
-    $('#ModalFur').on('show.bs.modal', function(event) {
-        var modal = $(this)
-        if (!$('#id_specie').val())
-            modal.find('.header-error').text('Primero debes seleccionar una especie');
-        else
-            modal.find('.header-error').text('');
-    })
-</script>
-
-<script>
-    $('#id_race').select2({
-        width: '100%'
-    });
-
-    $('.add_race').click(function(e) {
-        e.preventDefault();
-        var race = $('#name_race').val();
-        var id_specie = $('#id_specie').val();
-
-        if (id_specie) {
-            $('.add_race').attr('disabled', 'disabled');
-            $('.add_race').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
-
-            $.ajax({
-                type: "POST",
-                url: "{{url('dashboard/add-race-modal')}}",
-                data: {
-                    name: race,
-                    id_specie,
-                    _token: '{{csrf_token()}}'
-                },
-                success: function(data) {
-                    if (data.error) {
-                        $('.error_race').html(data.error[0]);
-                    } else {
-                        $('#id_race').append(`<option value="${data.id}" selected>${data.name}</option>`);
-                        $('#id_race').trigger('change');
-                        $('#name_race').val('');
-                        $('#ModalRace').modal('hide');
-                    }
-                    $('.add_race').removeAttr('disabled');
-                    $('.add_race').html('Guardar');
-                },
-                error: function(data) {
-                    console.log(data);
-                    $('.add_race').removeAttr('disabled');
-                    $('.add_race').html('Guardar');
-                }
-            })
-        }
-    });
-
-    $('#ModalRace').on('show.bs.modal', function(event) {
-        var modal = $(this)
-        if (!$('#id_specie').val())
-            modal.find('.header-error').text('Primero debes seleccionar una especie');
-        else
-            modal.find('.header-error').text('');
-    })
-</script>
+@include('partials.js_modals.fur')
+@include('partials.js_modals.race')
+@include('partials.js_modals.specie')
 @endpush

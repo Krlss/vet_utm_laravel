@@ -9,13 +9,14 @@ use App\Models\Parish;
 use App\Models\Province;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class ProvinceController extends Controller
 {
     public function __construct()
     {
         $this->middleware('can:dashboard.provinces.index')->only('index');
-        $this->middleware('can:dashboard.provinces.create')->only(['create', 'store']);
+        $this->middleware('can:dashboard.provinces.create')->only(['create', 'store', 'addProvinceModal']);
         $this->middleware('can:dashboard.provinces.edit')->only(['edit', 'update']);
         $this->middleware('can:dashboard.provinces.destroy')->only('destroy');
     }
@@ -145,6 +146,25 @@ class ProvinceController extends Controller
             return response()->json($result);
         } catch (\Throwable $e) {
             return response()->json([]);
+        }
+    }
+
+    public function addProvinceModal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:provinces',
+            'letter' => 'required|string|max:1|unique:provinces',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $province = Province::create([
+                'name' => $request->name,
+                'letter' => $request->letter
+            ]);
+
+            return response()->json($province);
         }
     }
 }

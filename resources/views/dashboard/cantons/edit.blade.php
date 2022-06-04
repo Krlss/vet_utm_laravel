@@ -1,6 +1,13 @@
 @extends('layouts.admin')
 
-@section('content')
+@push('css')
+<link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+
+@can('dashboard.provinces.create')
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
+@endcan
+
+@endpush
 
 @section('content_header')
 <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between sm:space-y-0 space-y-2">
@@ -24,6 +31,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
 
@@ -32,6 +40,10 @@
         {!! Form::model($canton, ['route' => ['dashboard.cantons.update', $canton], 'autocomplete' => 'off', 'method' => 'put', 'enctype' => 'multipart/form-data']) !!}
         @include('dashboard.cantons.fields')
         {!! Form::close() !!}
+
+        @if($lettersAvailable)
+        @include('dashboard.provinces.modal', ['lettersAvailable' => $lettersAvailable])
+        @endif
     </div>
 </div>
 

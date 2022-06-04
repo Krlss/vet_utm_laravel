@@ -1,11 +1,11 @@
 @extends('layouts.admin')
 
-@section('content')
 @push('css')
 <link rel="stylesheet" href="{{ asset('plugins/datatable/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatable/responsive.bootstrap4.min.css') }}">
 @endpush
+
 @section('content_header')
 <div class="flex justify-between items-center">
     <div class="text-lg font-bold">{{ __('Furs list') }}</div>
@@ -18,6 +18,8 @@
 
 </div>
 @endsection
+
+@section('content')
 <div class="card">
     <div class="card-body">
 

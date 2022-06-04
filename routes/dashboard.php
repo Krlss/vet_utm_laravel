@@ -24,10 +24,10 @@ Route::delete('pet/children/delete', [PetController::class, 'deletePetToChildren
 Route::resource('users', UserController::class)->names('dashboard.users');
 Route::resource('pets', PetController::class)->names('dashboard.pets');
 
-Route::resource('species', SpecieController::class)->names('dashboard.species');
-Route::resource('races', RaceController::class)->names('dashboard.races');
+Route::resource('species', SpecieController::class, ['except' => ['show']])->names('dashboard.species');
+Route::resource('races', RaceController::class, ['except' => ['show']])->names('dashboard.races');
 Route::post('getFurs', [FurController::class, 'getFursToAjax']);
-Route::resource('furs', FurController::class)->names('dashboard.furs');
+Route::resource('furs', FurController::class, ['except' => ['show']])->names('dashboard.furs');
 
 Route::get('getRacesToSpeciesAjax', [SpecieController::class, 'getRacesToSpeciesAjax']);
 

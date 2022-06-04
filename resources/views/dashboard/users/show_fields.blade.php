@@ -132,5 +132,6 @@
 
 @push('js')
 <script src="{{ asset('js/alpine.min.js') }}"></script>
+<script src="{{ asset('js/flowbite.js') }}"></script>
 @livewireScripts
 @endpush

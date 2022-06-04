@@ -1,9 +1,8 @@
 @extends('layouts.admin')
 
-@section('content')
-
 @push('css')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
 @endpush
 
 @section('content_header')
@@ -15,6 +14,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
 
@@ -29,7 +29,4 @@
         @include('dashboard.furs.modal')
     </div>
 </div>
-
-
-
 @endsection

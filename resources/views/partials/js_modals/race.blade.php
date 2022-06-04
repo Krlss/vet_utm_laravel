@@ -9,7 +9,7 @@
         var race = $('#name_race').val();
         var id_specie = $('#id_specie').val();
 
-        if (id_specie) {
+        if (id_specie && race) {
             $('.add_race').attr('disabled', 'disabled');
             $('.add_race').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
 
@@ -29,7 +29,7 @@
                         $('.error_race').html('');
                         $('#id_race').trigger('change');
                         $('#name_race').val('');
-                        $('#ModalRace').modal('hide');
+                        $('#Modalrace').modal('hide');
                     }
                     $('.add_race').removeAttr('disabled');
                     $('.add_race').html('Guardar');
@@ -43,7 +43,7 @@
         }
     });
 
-    $('#ModalRace').on('show.bs.modal', function(event) {
+    $('#Modalrace').on('show.bs.modal', function(event) {
         var modal = $(this)
         if (!$('#id_specie').val())
             modal.find('.header-error').text('Primero debes seleccionar una especie');

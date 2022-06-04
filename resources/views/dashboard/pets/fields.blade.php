@@ -29,15 +29,12 @@
             {!! Form::label('id_specie', __('Species') . '*', ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('id_specie', $species, $pet->id_specie ?? null, ['class' => 'select2 form-control', 'placeholder' => __('Select a specie'), 'required' => true]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalSpecie" data-tooltip-target="tooltip-create-specie" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-specie" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a specie')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+
+                @can('dashboard.species.create')
+                <x-button-modal target="specie" />
+                @endcan
+
             </div>
 
             @error('id_specie')
@@ -49,16 +46,12 @@
         <div class="flex flex-col px-2 md:mb-0 mb-2">
             {!! Form::label('id_race', __('Race') . '*', ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
-                {!! Form::select('id_race', $races, $pet->id_race ?? null, ['class' => 'select2 form-control', 'placeholder' => __('First select a specie'), 'required' => true]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalRace" data-tooltip-target="tooltip-create-race" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-race" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a race')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+                {!! Form::select('id_race', $races, $pet->id_race ?? null, ['class' => 'select2 form-control', 'placeholder' => $pet->id_specie ? __('Select a race') : __('First select a specie'), 'required' => true]) !!}
+
+                @can('dashboard.races.create')
+                <x-button-modal target="race" />
+                @endcan
+
             </div>
 
             @error('id_race')
@@ -99,16 +92,12 @@
         <div class="flex flex-col px-2 md:mb-0 mb-2 col-span-2">
             {!! Form::label('id_fur', __('Fur'), ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
-                {!! Form::select('id_fur', $furs, $pet->id_fur, ['class' => 'select2 form-control', 'placeholder' => __('First select a specie')]) !!}
-                <div class="">
-                    <button type="button" data-toggle="modal" data-target="#ModalFur" data-tooltip-target="tooltip-create-fur" class="shadow-sm">
-                        <i class="fa fa-plus bg-pink-300 hover:bg-pink-500 text-white p-2 text-xs rounded-sm"></i>
-                    </button>
-                    <div id="tooltip-create-fur" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('Create a fur')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+                {!! Form::select('id_fur', $furs, $pet->id_fur, ['class' => 'select2 form-control', 'placeholder' => $pet->id_specie ? __('Select a fur') : __('First select a specie')]) !!}
+
+                @can('dashboard.furs.create')
+                <x-button-modal target="fur" />
+                @endcan
+
             </div>
 
             @error('id_fur')
@@ -214,22 +203,18 @@
                         </button>
                     </div>
                 </div>
-                <div x-show="open" class="flex items-center">
+                <div x-show="open" class="flex items-center gap-2">
                     <div class="w-full">
                         {!! Form::select('childrens[]', $childrens, $childrensSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'childrens']) !!}
                         @error('childrens')
                         <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
-                    <div class="ml-2">
-                        <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank">
-                            <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
-                        </a>
-                        <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                            {{__('A new tab will be open to add a pet')}}
-                            <div class="tooltip-arrow" data-popper-arrow></div>
-                        </div>
-                    </div>
+
+                    @can('dashboard.pets.create')
+                    <x-button-new-tab-blank target="pet" />
+                    @endcan
+
                 </div>
             </div>
         </div>
@@ -238,7 +223,6 @@
     <!-- 6 row -->
     <!-- CHILDS -->
     <livewire:pets.show-list-childs :currentsPets="$childs" :pet_id="$pet->pet_id" :pet_name="$pet->name" :pet_sex="$pet->sex" :delete="false" />
-    @livewireScripts
 
     <!-- 7 row -->
     <div class="grid grid-cols-1 sm:space-y-0 space-y-2 mb-3 px-2">
@@ -272,15 +256,11 @@
             {!! Form::label('user_id', __('Owner'), ['class' => '']) !!}
             <div class="flex items-center justify-between w-full gap-2">
                 {!! Form::select('user_id', $users, $pet->user_id, ['placeholder' => '']) !!}
-                <div class="">
-                    <a data-tooltip-target="tooltip-create-user" href="{{ route('dashboard.users.create') }}" target="_blank">
-                        <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
-                    </a>
-                    <div id="tooltip-create-user" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                        {{__('A new tab will be open to add a user')}}
-                        <div class="tooltip-arrow" data-popper-arrow></div>
-                    </div>
-                </div>
+
+                @can('dashboard.users.create')
+                <x-button-new-tab-blank target="user" />
+                @endcan
+
             </div>
 
             @error('user_id')
@@ -296,6 +276,7 @@
 @push('js')
 <script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script src="{{ asset('js/flowbite.js') }}"></script>
 <script>
     $("[name='sex']").on('change', function() {
         $('#childrens').val(null).trigger('change');
@@ -307,7 +288,8 @@
 @include('partials.js_select2.mother')
 @include('partials.js_select2.childrens')
 @include('partials.js_select2.owner')
-@include('partials.js_select2.changeSpecie')
+
+@include('partials.js_select.changeSpecie')
 
 @include('partials.js_modals.fur')
 @include('partials.js_modals.race')

@@ -1,9 +1,13 @@
 @extends('layouts.admin')
 
-@section('content')
 
 @push('css')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+
+@can('dashboard.species.create')
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
+@endcan
+
 @endpush
 
 @section('content_header')
@@ -27,6 +31,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
 

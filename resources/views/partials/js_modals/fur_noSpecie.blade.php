@@ -5,20 +5,20 @@
         allowClear: true
     });
 
+
     $('.add_fur').click(function(e) {
         e.preventDefault();
         var fur = $('#name_fur').val();
-        var id_specie = $('#id_specie').val();
-        if (id_specie && fur) {
+        if (fur) {
             $('.add_fur').attr('disabled', 'disabled');
             $('.add_fur').html('Guardando... <i class="fa fa-spinner fa-spin"></i>');
+
             $.ajax({
                 type: "POST",
-                url: "{{ url('dashboard/add-fur-modal') }}",
+                url: "{{url('dashboard/add-fur-modal')}}",
                 data: {
                     name: fur,
-                    id_specie,
-                    _token: '{{ csrf_token() }}'
+                    _token: '{{csrf_token()}}'
                 },
                 success: function(data) {
                     if (data.error) {
@@ -41,12 +41,5 @@
             })
         }
     });
-    $('#Modalfur').on('show.bs.modal', function(event) {
-        var modal = $(this)
-        if (!$('#id_specie').val())
-            modal.find('.header-error').text('Primero debes seleccionar una especie');
-        else
-            modal.find('.header-error').text('');
-    })
 </script>
 @endcan

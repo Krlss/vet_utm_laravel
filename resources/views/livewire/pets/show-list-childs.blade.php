@@ -3,7 +3,7 @@
     <div class="flex md:flex-row flex-col md:items-center md:justify-between my-3">
         <div class="flex items-start">
             <div>
-                {!! Form::label('pets_user', __('Pets of user').' ('.count($currents).')', ['class' => 'text-gray-400 text-sm font-bold uppercase']) !!}
+                {!! Form::label('pets_user', __('Childrens of the pet').' ('.count($currents).')', ['class' => 'text-gray-400 text-sm font-bold uppercase']) !!}
             </div>
             <div class="ml-2 cursor-pointer">
                 <button @click="open=!open" type="button">

@@ -18,7 +18,7 @@ class SpecieController extends Controller
     {
         $this->middleware('can:dashboard.species.index')->only('index');
         $this->middleware('can:dashboard.species.destroy')->only('destroy');
-        $this->middleware('can:dashboard.species.create')->only('create', 'store');
+        $this->middleware('can:dashboard.species.create')->only('create', 'store', 'addSpecieModal');
         $this->middleware('can:dashboard.species.edit')->only('edit', 'update');
     }
 
@@ -52,8 +52,8 @@ class SpecieController extends Controller
                 uploadImageDashboard($request->file('image'), $specie->id);
             }
 
-            if ($request->has('furs')) {
-                $specie->furs()->sync($request->furs);
+            if ($request->has('id_fur')) {
+                $specie->furs()->sync($request->id_fur);
             }
 
             DB::commit();
@@ -88,7 +88,7 @@ class SpecieController extends Controller
                 uploadImageDashboard($request->file('image'), $specie->id);
             }
 
-            $specie->furs()->sync($request->furs);
+            $specie->furs()->sync($request->id_fur);
 
             DB::commit();
             return redirect()->route('dashboard.species.index')->with('success', __('Specie updated successfully'));

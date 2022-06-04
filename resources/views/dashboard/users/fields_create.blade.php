@@ -207,34 +207,26 @@
             </div>
         </div>
 
-        <div x-show="open" class="flex items-center justify-between">
-            <div class="grid grid-cols-1 mb-2 w-full">
-                <div class="flex flex-col col-span-2 px-2">
-                    {{-- pets --}}
-
+        <div x-show="open">
+            <div class="grid grid-cols-1 sm:space-y-0 space-y-2 mb-3">
+                <!-- pets -->
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('pets', __('Pets'), ['class' => '']) !!}
-                    {!! Form::select('pets[]', $pets, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets']) !!}
+                    <div class="flex items-center justify-between w-full gap-2">
+                        {!! Form::select('pets[]', $pets, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets']) !!}
+
+                        @can('dashboard.pets.create')
+                        <x-button-new-tab-blank target="pet" />
+                        @endcan
+
+                    </div>
+
                     @error('pets')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
-
                 </div>
             </div>
-
-            @can('dashboard.pets.create')
-            <div class="px-2 mt-3">
-                <a data-tooltip-target="tooltip-create-pet" href="{{ route('dashboard.pets.create') }}" target="_blank">
-                    <i class="fa fa-plus bg-yellow-300 hover:bg-yellow-500 text-white p-2 text-xs rounded-sm"></i>
-                </a>
-                <div id="tooltip-create-pet" role="tooltip" class="inline-block absolute invisible z-10 py-2 px-3 text-sm font-medium text-white bg-gray-600 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    {{__('A new tab will be open to add a pet')}}
-                    <div class="tooltip-arrow" data-popper-arrow></div>
-                </div>
-            </div>
-            @endcan
-
         </div>
-
     </div>
 
 
@@ -253,6 +245,7 @@
 @push('js')
 <script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
+<script src="{{ asset('js/flowbite.js') }}"></script>
 @include('partials.js_select.province')
 @include('partials.js_select.canton')
 

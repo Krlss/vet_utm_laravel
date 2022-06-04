@@ -1,6 +1,8 @@
 @extends('layouts.admin')
 
-@section('content')
+@push('css')
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
+@endpush
 
 @section('content_header')
 <div class="flex justify-between items-center">
@@ -13,6 +15,7 @@
 </div>
 @endsection
 
+@section('content')
 <div class="card">
     <div class="card-body">
         <x-flash-messages />
@@ -21,3 +24,9 @@
 </div>
 
 @endsection
+
+@push('js')
+<script src="{{ asset('js/flowbite.js') }}"></script>
+<script src="{{ asset('js/alpine.min.js') }}"></script>
+@livewireScripts
+@endpush

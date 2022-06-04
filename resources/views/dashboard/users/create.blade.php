@@ -2,6 +2,7 @@
 
 @push('css')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
+<link rel="stylesheet" href="{{asset('css/flowbite.min.css')}}">
 @endpush
 
 @section('content_header')

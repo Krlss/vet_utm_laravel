@@ -35,7 +35,6 @@
     @enderror
 </div>
 @push('js')
-<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script>
     let container = new DataTransfer();
 
