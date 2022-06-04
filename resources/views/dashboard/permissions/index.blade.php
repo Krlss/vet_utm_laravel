@@ -38,7 +38,7 @@
 </div>
 @endsection
 
-@push('scripts_lib')
+@push('js')
 <script>
     $('input[type="checkbox"].permission').click(function(event) {
         var url = "";

@@ -170,6 +170,6 @@
     <x-pet-photos-show :pet=$pet />
 </div>
 
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 @endpush

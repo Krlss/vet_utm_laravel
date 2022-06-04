@@ -52,7 +52,7 @@
 
 </div>
 
-@push('scripts_lib')
+@push('js')
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>
     const button = document.getElementById('button');

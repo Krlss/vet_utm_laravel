@@ -89,12 +89,3 @@
     @endif
 
 </div>
-
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
-<script>
-    window.onload = () => {
-        document.querySelector("html").style.overflowX = "hidden";
-    }
-</script>
-@endpush

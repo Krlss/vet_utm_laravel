@@ -38,7 +38,7 @@
 
 </div>
 
-@push('scripts_lib')
+@push('js')
 <script>
     $('.add_specie').click(function(e) {
         e.preventDefault();

@@ -214,9 +214,9 @@
                 <div class="flex flex-col col-span-2 px-2">
                     {{-- pets --}}
 
-                    {!! Form::label('pets_array', __('Pets'), ['class' => '']) !!}
-                    {!! Form::select('pets_array[]', $pets_array, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets_array']) !!}
-                    @error('pets_array')
+                    {!! Form::label('pets', __('Pets'), ['class' => '']) !!}
+                    {!! Form::select('pets[]', $pets, $petsSelected, ['class' => 'select2','multiple'=>'multiple','id'=>'pets']) !!}
+                    @error('pets')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
 
@@ -239,7 +239,6 @@
     </div>
 
     <livewire:users.show-list-pets :currentsPets="$user->pets" :user_id="$user->user_id" :delete="false" />
-    @livewireScripts
 
     <button type="submit" class="float-right bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-4 mb-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
 
@@ -252,163 +251,13 @@
     </style>
 </div>
 
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-<script>
-    $(document).ready(function() {
-        var cantoncurrent = "<?php echo $user->id_canton; ?>";
-        var parishecurrent = "<?php echo $user->id_parish; ?>";
-        var provincecurrent = "<?php echo $user->id_province; ?>";
-        $('#id_canton').val(null);
-        $('#id_canton').html('');
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons') }}",
-            data: {
-                id_province: provincecurrent
-            }
-        }).done(function(msg) {
-            let cantonsOptions;
-            if (msg.length <= 0) {
-                cantonsOptions = "<option value>Primero selecciona una provincia</option>";
-            } else {
-                cantonsOptions = "<option value>Selecciona un canton</option>";
-            }
-            $.each(msg, function(i, canton) {
-                if (cantoncurrent == canton.id) {
-                    cantonsOptions += '<option selected="selected" value="' + canton.id + '">' + canton.name + '</option>';
-                } else {
-                    cantonsOptions += '<option value="' + canton.id + '">' + canton.name + '</option>';
-                }
-            });
-            $('#id_canton').html(cantonsOptions);
-        });
+@include('partials.js_select.LoadCantonAndProvince')
+@include('partials.js_select.province')
+@include('partials.js_select.canton')
 
-        $('#id_parish').val(null);
-        $('#id_parish').html('');
-        /* Parroquias.. */
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons/parishes') }}",
-            data: {
-                id_canton: cantoncurrent
-            }
-        }).done(function(msg) {
-            let parishesOptions;
-            if (msg.length <= 0) {
-                parishesOptions = "<option value>Primero selecciona un cantón</option>"
-            } else {
-                parishesOptions = "<option value>Seleccione una parroquia</option>";
-            }
-            $.each(msg, function(i, parishe) {
-                if (parishecurrent == parishe.id) {
-                    parishesOptions += '<option selected="selected" value="' + parishe.id + '">' + parishe.name + '</option>';
-                } else {
-                    parishesOptions += '<option value="' + parishe.id + '">' + parishe.name + '</option>';
-                }
-            });
-            $('#id_parish').html(parishesOptions);
-        });
-    });
-</script>
-
-<script>
-    $('#id_province').on('change', function() {
-        $('#id_canton').html('');
-        $("#id_canton").val([]);
-        $('#id_parish').html('');
-        $("#id_parish").val([]);
-        $('#select2-id_canton-container').html('');
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons') }}",
-            data: {
-                id_province: $('#id_province').val()
-            }
-        }).done(function(msg) {
-            let cantonsOptions;
-            $('#id_parish').html("<option value>Primero selecciona un cantón</option>");
-            if (msg.length <= 0) {
-                cantonsOptions = '<option value>Primero selecciona una provincia</option>'
-            } else {
-                cantonsOptions = "<option value>Selecciona un canton</option>";
-                $.each(msg, function(i, canton) {
-                    cantonsOptions += '<option value="' + canton.id + '">' + canton.name + '</option>';
-                });
-            }
-            $('#id_canton').html(cantonsOptions);
-        });
-    });
-
-    $('#id_canton').on('change', function() {
-        $('#id_parish').html('');
-        $("#id_parish").val([]);
-        $('#select2-id_parish-container').html('');
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons/parishes') }}",
-            data: {
-                id_canton: $('#id_canton').val()
-            }
-        }).done(function(msg) {
-            let parishesOptions;
-            if (msg.length <= 0) {
-                parishesOptions = "<option value>Primero selecciona un cantón</option>"
-            } else {
-                parishesOptions = "<option value>Seleccione una parroquia</option>";
-                $.each(msg, function(i, parishes) {
-                    parishesOptions += '<option value="' + parishes.id + '">' + parishes.name + '</option>';
-                });
-            }
-            $('#id_parish').html(parishesOptions);
-        });
-    });
-
-    $('#pets_array').select2({
-        width: '100%',
-        placeholder: "Digita los identificadores de las mascotas",
-        minimumInputLength: 2,
-        allowClear: true,
-        language: {
-            noResults: function() {
-                return "No hay resultado";
-            },
-            searching: function() {
-                return "Buscando..";
-            },
-            inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
-            }
-        },
-        ajax: {
-            url: "{{url('dashboard/PetsWithoutOwner')}}",
-            dataType: 'json',
-            method: "POST",
-            data: function(params) {
-                var query = {
-                    search: params.term,
-                    "_token": "{{csrf_token()}}"
-                }
-                return query;
-            },
-            processResults: function(data) {
-                data.pets = data.pets.map(function(obj) {
-                    return {
-                        "text": obj.name + " - " + obj.pet_id,
-                        "id": obj.pet_id
-                    };
-                });
-                return {
-                    results: data.pets
-                };
-            },
-            cache: true
-        }
-    });
-</script>
+@include('partials.js_select2.petsWithoutOwner')
+@livewireScripts
 @endpush

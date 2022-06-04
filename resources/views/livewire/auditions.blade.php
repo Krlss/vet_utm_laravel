@@ -120,8 +120,8 @@
 
 </div>
 
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script>
     $('#exampleModal').on('show.bs.modal', function(event) {
         var button = $(event.relatedTarget) // Button that triggered the modal 

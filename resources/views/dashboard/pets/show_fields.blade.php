@@ -139,7 +139,7 @@
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate">
                             @if ($pet->id_pet_pather)
-                            <a href={{ route('dashboard.pets.show', $pet->id_pet_pather) }}>
+                            <a href="{{ route('dashboard.pets.show', $pet->id_pet_pather) }}">
                                 {!! $pet->id_pet_pather !!}
                             </a>
                             @else
@@ -155,7 +155,7 @@
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
                         <p class="truncate">
                             @if ($pet->id_pet_mother)
-                            <a href={{ route('dashboard.pets.show', $pet->id_pet_mother) }}>
+                            <a href="{{ route('dashboard.pets.show', $pet->id_pet_mother) }}">
                                 {!! $pet->id_pet_mother !!}
                             </a>
                             @else
@@ -189,11 +189,6 @@
 
     <!-- CHILDS -->
     <livewire:pets.show-list-childs :currentsPets="$childs" :pet_id="$pet->pet_id" :pet_name="$pet->name" :pet_sex="$pet->sex" :delete="true" />
-    @livewireScripts
 
     <x-pet-photos-show :pet=$pet />
 </div>
-
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
-@endpush

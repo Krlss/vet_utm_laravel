@@ -34,8 +34,8 @@
     <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script>
     let container = new DataTransfer();
 

@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@push('css_lib')
+@push('css')
 <link rel="stylesheet" href="{{ asset('plugins/datatable/bootstrap.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatable/dataTables.bootstrap4.min.css') }}">
 <link rel="stylesheet" href="{{ asset('plugins/datatable/responsive.bootstrap4.min.css') }}">
@@ -42,6 +42,6 @@
 </div>
 @endsection
 
-@push('scripts_lib')
+@push('js')
 @include('dashboard.users.datatable')
 @endpush

@@ -123,11 +123,11 @@ class UserController extends Controller
 
         $roles = Role::pluck('name', 'id');
 
-        $pets_array = $user->pets ? $user->pets->pluck('pet_id', 'pet_id') : [];
+        $pets = $user->pets ? $user->pets->pluck('pet_id', 'pet_id') : [];
 
-        $petsSelected = is_null($pets_array) ? [] : $pets_array->all();
+        $petsSelected = is_null($pets) ? [] : $pets->all();
 
-        return view('dashboard.users.edit', compact('user', 'provinces', 'cantons', 'roles', 'parishes', 'petsSelected', 'pets_array'));
+        return view('dashboard.users.edit', compact('user', 'provinces', 'cantons', 'roles', 'parishes', 'petsSelected', 'pets'));
     }
 
     public function update(UpdateUserRequest $request, User $user)
@@ -153,16 +153,16 @@ class UserController extends Controller
 
             foreach ($pets_exist as $current) {
                 $exist = null;
-                if (isset($input['pets_array']))
-                    $exist = array_search($current, $input['pets_array']);
+                if (isset($input['pets']))
+                    $exist = array_search($current, $input['pets']);
                 if (is_numeric($exist)) {
                     continue;
                 } else {
                     Pet::where('pet_id', $current)->update(['user_id' => null]);
                 }
             }
-            if (isset($input['pets_array']))
-                foreach ($input['pets_array'] as $new_pet) {
+            if (isset($input['pets']))
+                foreach ($input['pets'] as $new_pet) {
                     $exist = array_search($new_pet, $pets_exist->all());
                     if (is_numeric($exist)) {
                         continue;

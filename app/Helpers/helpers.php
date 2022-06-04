@@ -547,3 +547,19 @@ function getLettersAvailable($letterProvince = null)
 
     return $lettersAvailable;
 }
+
+//function return good morning or good afternoon or good evening depending on time
+function getGoodMorningOrGoodEveningOrGoodAfternoon()
+{
+    //get hour zone time ECUADOR
+    $timezone = new \DateTimeZone('America/Guayaquil');
+    $date = new \DateTime('now', $timezone);
+    $hourSystem = $date->format('H');
+    if ($hourSystem >= 0 && $hourSystem < 12) {
+        return __('Good Morning');
+    } else if ($hourSystem >= 12 && $hourSystem < 18) {
+        return __('Good Afternoon');
+    } else {
+        return __('Good Evening');
+    }
+}

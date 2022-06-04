@@ -90,7 +90,6 @@
                 <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm flex items-center justify-between">
                     <p class="truncate pr-2"> {!! $pet->user->email !!} </p>
                     <livewire:email-is-check :email_verified_at="$pet->user->email_verified_at" :api_token="$pet->user->api_token" :email="$pet->user->email" />
-                    @livewireScripts
                 </div>
             </div>
         </div>

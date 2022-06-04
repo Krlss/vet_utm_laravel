@@ -1,6 +1,6 @@
 @extends('layouts.admin')
 
-@push('css_lib')
+@push('css')
 <link rel="stylesheet" href="{{asset('plugins/select2/select2.min.css')}}">
 @endpush
 

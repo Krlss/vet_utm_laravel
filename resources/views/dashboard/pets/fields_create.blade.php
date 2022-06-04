@@ -292,8 +292,8 @@
 </div>
 
 
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
 <script>
     $("[name='sex']").on('change', function() {

@@ -129,3 +129,8 @@
 </div>
 
 <livewire:users.show-list-pets :currentsPets="$user->pets" :user_id="$user->user_id" :delete="true" />
+
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
+@livewireScripts
+@endpush

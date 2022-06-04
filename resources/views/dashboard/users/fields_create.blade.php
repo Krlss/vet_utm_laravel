@@ -183,8 +183,8 @@
             <!-- address ref -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 mb-2">
                 <div class="flex flex-col col-span-3 px-2">
-                    {!! Form::label('address_ref', __('Address reference'), ['class' => '']) !!}
-                    {!! Form::textarea('address_ref', old('address_ref'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Address reference'), 'rows' => 3]) !!}
+                    {!! Form::label('address_ref', __('Reference'), ['class' => '']) !!}
+                    {!! Form::textarea('address_ref', old('address_ref'), ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'placeholder' => __('Reference'), 'rows' => 3]) !!}
                     @error('address_ref')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -250,103 +250,11 @@
 
 </div>
 
-@push('scripts_lib')
-<script src="//unpkg.com/alpinejs"></script>
+@push('js')
+<script src="{{ asset('js/alpine.min.js') }}"></script>
 <script src="{{asset('plugins/select2/select2.min.js')}}"></script>
-<script>
-    $('#id_province').on('change', function() {
-        $('#id_canton').html('');
-        $("#id_canton").val([]);
-        $('#id_parish').html('');
-        $("#id_parish").val([]);
-        $('#select2-id_canton-container').html('');
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons') }}",
-            data: {
-                id_province: $('#id_province').val()
-            }
-        }).done(function(msg) {
-            let cantonsOptions;
-            $('#id_parish').html("<option value>Primero selecciona un cantón</option>");
-            if (msg.length <= 0) {
-                cantonsOptions = '<option value>Primero selecciona una provincia</option>'
-            } else {
-                cantonsOptions = "<option value>Selecciona un canton</option>";
-                $.each(msg, function(i, canton) {
-                    cantonsOptions += '<option value="' + canton.id + '">' + canton.name + '</option>';
-                });
-            }
-            $('#id_canton').html(cantonsOptions);
-        });
-    });
+@include('partials.js_select.province')
+@include('partials.js_select.canton')
 
-    $('#id_canton').on('change', function() {
-        $('#id_parish').html('');
-        $("#id_parish").val([]);
-        $('#select2-id_parish-container').html('');
-        $.ajax({
-            dataType: "json",
-            method: "GET",
-            url: "{{ url('dashboard/provinces/cantons/parishes') }}",
-            data: {
-                id_canton: $('#id_canton').val()
-            }
-        }).done(function(msg) {
-            let parishesOptions;
-            if (msg.length <= 0) {
-                parishesOptions = "<option value>Primero selecciona un cantón</option>"
-            } else {
-                parishesOptions = "<option value>Seleccione una parroquia</option>";
-                $.each(msg, function(i, parishes) {
-                    parishesOptions += '<option value="' + parishes.id + '">' + parishes.name + '</option>';
-                });
-            }
-            $('#id_parish').html(parishesOptions);
-        });
-    });
-
-    $('#pets').select2({
-        width: '100%',
-        placeholder: "Digita los identificadores de las mascotas",
-        minimumInputLength: 2,
-        allowClear: true,
-        language: {
-            noResults: function() {
-                return "No hay resultado";
-            },
-            searching: function() {
-                return "Buscando..";
-            },
-            inputTooShort: function() {
-                return "Por favor ingresa al menos dos letras... (identificador o nombre de la mascota)";
-            }
-        },
-        ajax: {
-            url: "{{url('dashboard/PetsWithoutOwner')}}",
-            dataType: 'json',
-            method: "POST",
-            data: function(params) {
-                var query = {
-                    search: params.term,
-                    "_token": "{{csrf_token()}}"
-                }
-                return query;
-            },
-            processResults: function(data) {
-                data.pets = data.pets.map(function(obj) {
-                    return {
-                        "text": obj.name + " - " + obj.pet_id,
-                        "id": obj.pet_id
-                    };
-                });
-                return {
-                    results: data.pets
-                };
-            },
-            cache: true
-        }
-    });
-</script>
+@include('partials.js_select2.petsWithoutOwner')
 @endpush
