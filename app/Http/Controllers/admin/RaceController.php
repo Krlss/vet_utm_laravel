@@ -82,7 +82,7 @@ class RaceController extends Controller
             return redirect()->route('dashboard.races.index')->with('success', __('Race created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in create Race') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in create Race') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -130,7 +130,7 @@ class RaceController extends Controller
             return redirect()->route('dashboard.races.index')->with('success', __('Race updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in update Race') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update Race') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -149,7 +149,7 @@ class RaceController extends Controller
             return redirect()->route('dashboard.races.index')->with('success', trans('Race deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', trans('Error in delete Race') . $e->getMessage());
+            return redirect()->back()->with('error', trans('Error in delete Race') . ' ' . $e->getMessage());
         }
     }
 

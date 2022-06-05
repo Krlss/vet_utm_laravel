@@ -70,7 +70,7 @@ class ParishController extends Controller
             return redirect()->route('dashboard.parishs.index')->with('success', __('Parish created successfully'));
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', __('Error in create parish') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in create parish') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -105,7 +105,7 @@ class ParishController extends Controller
             return redirect()->route('dashboard.parishs.index')->with('success', __('Parish deleted successfully'));
         } catch (\Exception $e) {
             DB::rollback();
-            return redirect()->back()->with('error', __('Error in delete parish') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in delete parish') . ' ' . $e->getMessage());
         }
     }
 

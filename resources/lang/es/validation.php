@@ -152,6 +152,11 @@ return [
             'required' => 'El :attribute es obligatorio.',
             'unique'   => 'El :attribute ya ha sido registrado.',
         ],
+        'image' => [
+            'required' => 'El :attribute es obligatorio.',
+            'image'    => 'El :attribute debe ser una imagen.',
+            'mimes'    => 'El :attribute debe ser una imagen con formato: :values.',
+        ]
     ],
     'attributes' => [
         'detail' => 'Detalle',

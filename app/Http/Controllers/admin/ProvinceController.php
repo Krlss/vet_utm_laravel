@@ -56,7 +56,7 @@ class ProvinceController extends Controller
             return redirect()->route('dashboard.provinces.index')->with('success', __('Province created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.provinces.index')->with('error', __('Error creating province') . $e->getMessage())->withInput();
+            return redirect()->route('dashboard.provinces.index')->with('error', __('Error creating province') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -99,7 +99,7 @@ class ProvinceController extends Controller
             return redirect()->route('dashboard.provinces.index')->with('success', __('Province created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in update Province') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update Province') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -119,7 +119,7 @@ class ProvinceController extends Controller
             return redirect()->route('dashboard.provinces.index')->with('success', __('Province deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.provinces.index')->with('error', __('Error deleting province') . $e->getMessage());
+            return redirect()->route('dashboard.provinces.index')->with('error', __('Error deleting province') . ' ' . $e->getMessage());
         }
     }
 

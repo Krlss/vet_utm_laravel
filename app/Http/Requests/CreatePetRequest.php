@@ -24,6 +24,6 @@ class CreatePetRequest extends FormRequest
      */
     public function rules()
     {
-        return Pet::$rules;
+        return Pet::$rulesCreate;
     }
 }

@@ -30,22 +30,20 @@
     </div>
 
     <!-- 2 row -->
-    <div class="flex">
-        <div class="px-2 md:mb-0 mb-2">
-            <input type="file" id="image" accept="image/*" name="image" required hidden />
-            <label for="image" class="cursor-pointer flex items-center mb-2">
-                {{__('Select a image')}}*
-                <li class="fa fa-upload ml-2"></li>
-            </label>
-            <small>{{__('This image will be displayed in app mobile, is required selected one')}}</small>
-            <div class="hidden" id="preview">
-                <img class="bg-contain max-w-xs" id="img" src="#" />
-                <button type="button" id="button" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md mt-2">{{__('Remove photo')}}</button>
-            </div>
+    <div class="px-2 md:mb-0 mb-2">
+        <label for="image" class="cursor-pointer flex items-center mb-2 bg-yellow-400 hover:bg-yellow-500 p-2 rounded justify-center md:max-w-xs max-w-none relative">
+            {{__('Select a image')}}*
+            <li class="fa fa-upload ml-2"></li>
+            <input type="file" id="image" accept="image/*" name="image" required class="absolute left-auto top-0 z-0 opacity-0 cursor-pointer" />
+        </label>
+        <small>{{__('This image will be displayed in app mobile, is required selected one')}}</small>
+        <div class="flex-col items-center justify-center hidden" id="preview">
+            <img class="bg-contain bg-center w-48 h-48 shadow" id="img" src="#" />
+            <button type="button" id="button" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md mt-2">{{__('Remove photo')}}</button>
         </div>
     </div>
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
+    <x-submit-button-default />
 
 </div>
 
@@ -70,7 +68,10 @@
     image.onchange = evt => {
         const [file] = image.files
         if (file) {
-            if (preview.classList.contains('hidden')) preview.classList.remove('hidden')
+            if (preview.classList.contains('hidden')) {
+                preview.classList.remove('hidden')
+                preview.classList.add('flex')
+            }
             img.src = URL.createObjectURL(file)
         }
     }

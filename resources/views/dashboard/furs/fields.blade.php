@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <button type="submit" class="float-right bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-2 rounded-md text-whire font-medium text-white">{{__('Save')}}</button>
+    <x-submit-button-default />
 
 </div>
 

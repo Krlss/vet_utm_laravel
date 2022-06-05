@@ -72,7 +72,7 @@ class CantonController extends Controller
             return redirect()->route('dashboard.cantons.index')->with('success', __('Canton created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.cantons.index')->with('error', __('Error creating canton') . $e->getMessage())->withInput();
+            return redirect()->route('dashboard.cantons.index')->with('error', __('Error creating canton') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -106,7 +106,7 @@ class CantonController extends Controller
             return redirect()->route('dashboard.cantons.index')->with('success', __('Canton created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in update canton') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update canton') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -121,7 +121,7 @@ class CantonController extends Controller
             return redirect()->route('dashboard.cantons.index')->with('success', __('Canton deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->route('dashboard.cantons.index')->with('error', __('Error deleting canton') . $e->getMessage());
+            return redirect()->route('dashboard.cantons.index')->with('error', __('Error deleting canton') . ' ' . $e->getMessage());
         }
     }
 

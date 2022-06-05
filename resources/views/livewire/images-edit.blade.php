@@ -37,10 +37,9 @@
 @push('js')
 <script>
     let container = new DataTransfer();
+    var images = <?php echo json_encode($images) ?>;
 
-    window.onload = () => {
-        var images = <?php echo json_encode($images) ?>;
-
+    $(document).ready(function() {
         for (e of images) preLoadInput(e);
         document.getElementById("images").files = container.files;
 
@@ -59,7 +58,7 @@
                 document.getElementById("images").files = container.files;
             }
         })
-    }
+    });
 
     const preLoadInput = (i) => {
         let file = new File([i.url], i.id_image, {

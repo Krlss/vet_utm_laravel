@@ -42,6 +42,14 @@ class Pet extends Model implements Auditable
         'birth' => 'required'
     ];
 
+    public static $rulesCreate = [
+        'name' => 'required',
+        'id_specie' => 'required',
+        'id_race' => 'required',
+        'sex' => 'required',
+        'birth' => 'required'
+    ];
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

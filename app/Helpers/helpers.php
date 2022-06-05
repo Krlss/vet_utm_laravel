@@ -441,7 +441,7 @@ function uploadImageDashboard($file, $external_id)
             $exist = array_search($imageCurrent[0]->id_image, array_column($fileCurrent, 'name'));
             if (!is_numeric($exist)) {
                 Storage::disk("google")->delete($imageCurrent[0]->id_image);
-                $imageCurrent[0] > delete();
+                $imageCurrent[0]->delete();
             }
         }
 

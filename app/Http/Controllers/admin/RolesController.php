@@ -101,7 +101,7 @@ class RolesController extends Controller
 
             return redirect()->route('dashboard.roles.index')->with('success', __('Role updated successfully'));
         } catch (\Throwable $e) {
-            return redirect()->back()->with('error', __('Error in update role') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update role') . ' ' . $e->getMessage())->withInput();
         }
     }
 

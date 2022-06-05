@@ -60,7 +60,7 @@ class SpecieController extends Controller
             return redirect()->route('dashboard.species.index')->with('success', __('Specie created successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in create specie') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in create specie') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -94,7 +94,7 @@ class SpecieController extends Controller
             return redirect()->route('dashboard.species.index')->with('success', __('Specie updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in update specie') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update specie') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -115,7 +115,7 @@ class SpecieController extends Controller
             return redirect()->route('dashboard.species.index')->with('success', __('Specie deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in delete specie') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in delete specie') . ' ' . $e->getMessage());
         }
     }
 

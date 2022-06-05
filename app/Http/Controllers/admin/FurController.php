@@ -67,7 +67,7 @@ class FurController extends Controller
             return redirect()->route('dashboard.furs.index')->with('success', __('Pelaje creado con éxito'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error al crear pelaje') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error al crear pelaje') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -118,7 +118,7 @@ class FurController extends Controller
             return redirect()->route('dashboard.furs.index')->with('success', __('Fur updated successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in update fur') . $e->getMessage())->withInput();
+            return redirect()->back()->with('error', __('Error in update fur') . ' ' . $e->getMessage())->withInput();
         }
     }
 
@@ -137,7 +137,7 @@ class FurController extends Controller
             return redirect()->route('dashboard.furs.index')->with('success', __('Fur deleted successfully'));
         } catch (\Throwable $e) {
             DB::rollBack();
-            return redirect()->back()->with('error', __('Error in delete fur') . $e->getMessage());
+            return redirect()->back()->with('error', __('Error in delete fur') . ' ' . $e->getMessage());
         }
     }
 
