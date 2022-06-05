@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <x-submit-button />
+                    <x-submit-button-default />
                 </div>
             </div>
         </div>
