@@ -113,6 +113,7 @@ class ParishController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255|unique:parishes,name',
+            'id_canton' => 'required|exists:cantons,id',
         ]);
 
         if ($validator->fails()) {
@@ -120,6 +121,7 @@ class ParishController extends Controller
         } else {
             $parish = Parish::create([
                 'name' => $request->name,
+                'id_canton' => $request->id_canton,
             ]);
 
             return response()->json($parish);

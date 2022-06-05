@@ -15,7 +15,7 @@
                 <div class="grid grid-cols-1">
                     <!-- Name province -->
                     <div class="flex flex-col px-2 md:mb-0 mb-2">
-                        {!! Form::label('letter', __('Letters') . '*' , ['class' => '']) !!}
+                        {!! Form::label('letter', __('Letters Available') . '*' , ['class' => '']) !!}
                         {!! Form::select('letter', $lettersAvailable, null, ['class' => 'form-control border-1 border-gray-300 focus:outline-none focus:ring-1 focus:ring-blue-300 focus:border-transparent rounded-sm', 'id'=>'letter', 'placeholder' => $lettersAvailable ? __('Select a letter') : __('There are no letters available...')]) !!}
                         <span class="text-danger error_letter"></span>
                     </div>

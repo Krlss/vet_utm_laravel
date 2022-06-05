@@ -23,6 +23,17 @@
         {!! Form::open(['route' => 'dashboard.users.store']) !!}
         @include('dashboard.users.fields_create')
         {!! Form::close() !!}
+
+
+        @if($lettersAvailable)
+        @include('dashboard.provinces.modal')
+        @endif
+
+        @include('dashboard.cantons.modal_user')
+        @include('dashboard.parishs.modal')
+        @include('dashboard.roles.modal')
+
+
     </div>
 </div>
 @endsection

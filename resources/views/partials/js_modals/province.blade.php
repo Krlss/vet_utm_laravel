@@ -1,9 +1,5 @@
 @can('dashboard.provinces.create')
 <script>
-    $('#id_province').select2({
-        width: '100%'
-    });
-
     $('.add_province').click(function(e) {
         e.preventDefault();
         var province = $('#name_province').val();

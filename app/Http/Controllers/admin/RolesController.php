@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class RolesController extends Controller
 {
@@ -14,7 +15,7 @@ class RolesController extends Controller
     {
         $this->middleware('can:dashboard.roles.index')->only('index');
         $this->middleware('can:dashboard.roles.destroy')->only('destroy');
-        $this->middleware('can:dashboard.roles.create')->only('create', 'store');
+        $this->middleware('can:dashboard.roles.create')->only('create', 'store', 'addRoleModal');
         $this->middleware('can:dashboard.roles.edit')->only('edit', 'update');
     }
 
@@ -121,6 +122,23 @@ class RolesController extends Controller
         } catch (\Throwable $th) {
             DB::rollBack();
             return redirect()->back()->with('error', __('Error in delete role'));
+        }
+    }
+
+    public function addRoleModal(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:255|unique:roles',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['error' => $validator->errors()->all()]);
+        } else {
+            $role = Role::create([
+                'name' => $request->name,
+            ]);
+
+            return response()->json($role);
         }
     }
 }

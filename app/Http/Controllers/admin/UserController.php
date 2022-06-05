@@ -13,6 +13,7 @@ use App\Models\Province;
 use App\Models\User;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
@@ -62,7 +63,13 @@ class UserController extends Controller
         $pets = [];
         $petsSelected = [];
 
-        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes', 'pets', 'petsSelected'));
+        $lettersAvailable = [];
+
+        if (Auth::user()->hasPermissionTo('dashboard.cantons.create')) {
+            $lettersAvailable = getLettersAvailable();
+        }
+
+        return view('dashboard.users.create', compact('provinces', 'cantons', 'roles', 'parishes', 'pets', 'petsSelected', 'lettersAvailable'));
     }
 
     public function store(CreateUserRequest $request)
@@ -127,7 +134,13 @@ class UserController extends Controller
 
         $petsSelected = is_null($pets) ? [] : $pets->all();
 
-        return view('dashboard.users.edit', compact('user', 'provinces', 'cantons', 'roles', 'parishes', 'petsSelected', 'pets'));
+        $lettersAvailable = [];
+
+        if (Auth::user()->hasPermissionTo('dashboard.cantons.create')) {
+            $lettersAvailable = getLettersAvailable();
+        }
+
+        return view('dashboard.users.edit', compact('user', 'provinces', 'cantons', 'roles', 'parishes', 'petsSelected', 'pets', 'lettersAvailable'));
     }
 
     public function update(UpdateUserRequest $request, User $user)

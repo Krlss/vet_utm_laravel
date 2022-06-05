@@ -64,9 +64,17 @@
 
                 <!-- role -->
                 @can('dashboard.users.role')
-                <div class="flex flex-col px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('roles', __('Role') . '*', ['class' => '']) !!}
-                    {!! Form::select('roles', $roles, 'Cliente', ['class' => 'select2 form-control', 'required' => true]) !!}
+                    <div class="flex items-center justify-between w-full gap-2">
+                        {!! Form::select('roles', $roles, 'Cliente', ['class' => 'select2 form-control', 'required' => true]) !!}
+
+                        @can('dashboard.roles.create')
+                        <x-button-modal target="role" />
+                        @endcan
+
+                    </div>
+
                     @error('roles')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -92,9 +100,19 @@
 
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 mb-2">
 
-                <div class="flex flex-col col-span-2 px-2">
+                <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('id_province', __('Province') . '*', ['class' => '']) !!}
-                    {!! Form::select('id_province', $provinces, null, ['class' => 'select2 form-control', 'placeholder' => __('Select a province'), 'required' => true]) !!}
+                    <div class="flex items-center justify-between w-full gap-2">
+                        {!! Form::select('id_province', $provinces, null, ['class' => 'select2 form-control', 'placeholder' => __('Select a province'), 'required' => true]) !!}
+
+                        @can('dashboard.provinces.create')
+                        @if($lettersAvailable)
+                        <x-button-modal target="province" />
+                        @endif
+                        @endcan
+
+                    </div>
+
                     @error('id_province')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -103,6 +121,8 @@
             </div>
 
         </div>
+
+
 
     </div>
 
@@ -121,19 +141,35 @@
         <div x-show="open">
             <div class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 mb-2">
 
+                <!-- cantons -->
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('id_canton', __('Canton'), ['class' => '']) !!}
-                    {!! Form::select('id_canton', $cantons, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a province')]) !!}
+                    <div class="flex items-center justify-between w-full gap-2">
+                        {!! Form::select('id_canton', $cantons, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a province')]) !!}
+
+                        @can('dashboard.cantons.create')
+                        <x-button-modal target="canton" />
+                        @endcan
+
+                    </div>
+
                     @error('id_canton')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <!-- Parroquias -->
-
                 <div class="flex flex-col px-2 md:mb-0 mb-2">
                     {!! Form::label('id_parish', __('Parish'), ['class' => '']) !!}
-                    {!! Form::select('id_parish', $parishes, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a canton')]) !!}
+                    <div class="flex items-center justify-between w-full gap-2">
+                        {!! Form::select('id_parish', $parishes, null, ['class' => 'select2 form-control', 'placeholder' => __('First select a canton')]) !!}
+
+                        @can('dashboard.parishs.create')
+                        <x-button-modal target="parish" />
+                        @endcan
+
+                    </div>
+
                     @error('id_parishes')
                     <span class="text-danger">{{ $message }}</span>
                     @enderror
@@ -250,4 +286,15 @@
 @include('partials.js_select.canton')
 
 @include('partials.js_select2.petsWithoutOwner')
+
+@include('partials.js_modals.canton_user')
+
+@if($lettersAvailable)
+@include('partials.js_modals.province')
+@endif
+
+@include('partials.js_modals.role')
+
+@include('partials.js_modals.parish_user')
+
 @endpush

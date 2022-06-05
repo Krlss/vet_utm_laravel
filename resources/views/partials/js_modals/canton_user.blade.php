@@ -1,10 +1,5 @@
 @can('dashboard.cantons.create')
 <script>
-    $('#id_province').select2({
-        width: '100%',
-        dropdownParent: $('#Modalcanton')
-    });
-
     $('.add_canton').click(function(e) {
         e.preventDefault();
         var canton = $('#name_canton').val();
@@ -42,5 +37,13 @@
             })
         }
     });
+
+    $('#Modalcanton').on('show.bs.modal', function(event) {
+        var modal = $(this)
+        if (!$('#id_province').val())
+            modal.find('.header-error').text(`{{__('Please first select a province')}}`);
+        else
+            modal.find('.header-error').text('');
+    })
 </script>
 @endcan

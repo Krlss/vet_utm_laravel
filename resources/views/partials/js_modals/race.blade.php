@@ -1,9 +1,5 @@
 @can('dashboard.races.create')
 <script>
-    $('#id_race').select2({
-        width: '100%'
-    });
-
     $('.add_race').click(function(e) {
         e.preventDefault();
         var race = $('#name_race').val();

@@ -63,6 +63,8 @@ Route::post('add-canton-modal', [CantonController::class, 'addCantonModal']);
 Route::post('add-province-modal', [ProvinceController::class, 'addProvinceModal']);
 Route::post('add-parish-modal', [ParishController::class, 'addParishModal']);
 
+Route::post('add-role-modal', [RolesController::class, 'addRoleModal']);
+
 Route::resource('provinces', ProvinceController::class)->names('dashboard.provinces');
 Route::resource('cantons', CantonController::class)->names('dashboard.cantons');
 Route::resource('parishs', ParishController::class)->names('dashboard.parishs');
