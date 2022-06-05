@@ -38,7 +38,7 @@
         </label>
         <small>{{__('This image will be displayed in app mobile, is required selected one')}}</small>
         <div class="flex-col items-center justify-center hidden" id="preview">
-            <img class="bg-contain bg-center w-48 h-48 shadow" id="img" src="#" />
+            <img class="bg-contain bg-center w-48 h-48" id="img" src="#" />
             <button type="button" id="button" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md mt-2">{{__('Remove photo')}}</button>
         </div>
     </div>

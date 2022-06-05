@@ -38,7 +38,7 @@
         </label>
         <small>{{__('This image will be displayed in app mobile, is required selected one')}}</small>
         <div class="flex-col items-center justify-center @if(!$specie->image) hidden @else flex @endif" id="preview">
-            <img class="bg-contain bg-center w-48 h-48 shadow" id="img" src="@if(!$specie->image) # @else {{$specie->image->url}} @endif" />
+            <img class="bg-contain bg-center w-48 h-48" id="img" src="@if(!$specie->image) # @else {{$specie->image->url}} @endif" />
             <button type="button" id="button" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md mt-2">{{__('Remove photo')}}</button>
         </div>
     </div>

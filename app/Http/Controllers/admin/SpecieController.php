@@ -154,16 +154,27 @@ class SpecieController extends Controller
     public function addSpecieModal(Request $request)
     {
 
-        $validator = Validator::make($request->all(), [
+        $input = $request->all();
+
+        $input['name'] = $input['name_specie'];
+        unset($input['name_specie']);
+
+        $validator = Validator::make($input, [
             'name' => 'required|string|max:255|unique:species',
+            'image' => 'image|mimes:jpg,png,jpeg,webp,svg'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['error' => $validator->errors()->all()]);
         } else {
+
             $specie = Specie::create([
-                'name' => $request->name,
+                'name' => $input['name'],
             ]);
+
+            if ($request->hasFile('image')) {
+                uploadImageDashboard($request->file('image'), $specie->id);
+            }
 
             return response()->json($specie);
         }
