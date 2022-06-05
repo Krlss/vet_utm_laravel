@@ -94,7 +94,10 @@ class UserApiController extends Controller
 
         try {
             DB::beginTransaction();
-            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
+            if (isset($input['name'])) {
+                $input['name'] = ucwords(strtolower($input['name']));
+                $input['profile_photo_path'] = generateProfilePhotoPath($input['name']);
+            }
             if (isset($input['last_name1']))  $input['last_name1'] = ucwords(strtolower($input['last_name1']));
             if (isset($input['last_name2']))  $input['last_name2'] = ucwords(strtolower($input['last_name2']));
             User::create($input);

@@ -46,7 +46,8 @@ class User extends Authenticatable implements Auditable
         'main_street',
         'street_1_sec',
         'street_2_sec',
-        'address_ref'
+        'address_ref',
+        'profile_photo_path'
     ];
 
     /**
