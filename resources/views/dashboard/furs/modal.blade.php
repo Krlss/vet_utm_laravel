@@ -1,5 +1,5 @@
 @can('dashboard.furs.create')
-<form autocomplete="off" method="post">
+<form autocomplete="off">
     <div class="modal fade" id="Modalfur" tabindex="-1" role="dialog" aria-labelledby="Modalfur" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

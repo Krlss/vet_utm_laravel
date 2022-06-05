@@ -1,5 +1,5 @@
 @can('dashboard.parishs.create')
-<form autocomplete="off" method="post">
+<form autocomplete="off">
     <div class="modal fade" id="Modalparish" tabindex="-1" role="dialog" aria-labelledby="Modalparish" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">

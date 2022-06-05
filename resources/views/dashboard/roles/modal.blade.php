@@ -1,5 +1,5 @@
 @can('dashboard.roles.create')
-<form autocomplete="off" method="post">
+<form autocomplete="off">
     <div class="modal fade" id="Modalrole" tabindex="-1" rolee="dialog" aria-labelledby="Modalrole" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" rolee="document">
             <div class="modal-content">

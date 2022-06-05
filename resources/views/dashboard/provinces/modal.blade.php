@@ -1,5 +1,5 @@
 @can('dashboard.provinces.create')
-<form autocomplete="off" method="post">
+<form autocomplete="off">
     <div class="modal fade" id="Modalprovince" tabindex="-1" role="dialog" aria-labelledby="Modalprovince" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
