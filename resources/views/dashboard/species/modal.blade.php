@@ -35,7 +35,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="bg-green-500 hover:bg-green-600 shadow-sm p-2 px-4 mt-2 rounded-md text-whire font-medium text-white add_specie save">{{__('Save')}}</button>
+                    <x-submit-button />
                 </div>
             </div>
         </div>
