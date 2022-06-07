@@ -75,8 +75,6 @@ class FortifyServiceProvider extends ServiceProvider
                             ->first()
                             ->id;
 
-                        $role = Role::findByName('Usuario');
-
                         $new_user = User::create([
                             'user_id' => $usuario_utm["cedula"],
                             'name' => $nombres_utm["2"],
@@ -89,7 +87,7 @@ class FortifyServiceProvider extends ServiceProvider
                             'id_province' => $id_province ?? 1,
                             'api_token' => Str::random(25),
                             'profile_photo_path' => $PhotoPath,
-                        ])->assignRole($role->name);
+                        ]);
 
                         return $new_user;
                     } else {

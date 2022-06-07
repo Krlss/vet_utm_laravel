@@ -125,7 +125,7 @@ class User extends Authenticatable implements Auditable
 
     public function adminlte_desc()
     {
-        return 'Rol: ' . $this->roles[0]->name;
+        return 'Rol: ' .  $this->roles[0]->name;
     }
 
     //Para que el usuario pueda actualizar su perfil
@@ -137,5 +137,14 @@ class User extends Authenticatable implements Auditable
     public function adminlte_image()
     {
         return $this->profile_photo_url;
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function ($user) {
+            $user->assignRole(config('role.auth.default'));
+        });
     }
 }
