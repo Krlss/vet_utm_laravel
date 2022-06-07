@@ -92,9 +92,9 @@ class UserController extends Controller
 
         DB::beginTransaction();
         try {
-            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
-            if (isset($input['last_name1']))  $input['last_name1'] = ucwords(strtolower($input['last_name1']));
-            if (isset($input['last_name2']))  $input['last_name2'] = ucwords(strtolower($input['last_name2']));
+            if (isset($input['name']))  $input['name'] = strtoupper($input['name']);
+            if (isset($input['last_name1']))  $input['last_name1'] = strtoupper($input['last_name1']);
+            if (isset($input['last_name2']))  $input['last_name2'] = strtoupper($input['last_name2']);
             $user = User::create($input)->assignRole($request['roles']);
 
             if (isset($input['pets'])) {
@@ -160,9 +160,9 @@ class UserController extends Controller
 
             //All pets this current user!
             $pets_exist = Pet::where('user_id', $user->user_id)->pluck('pet_id');
-            if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
-            if (isset($input['last_name1']))  $input['last_name1'] = ucwords(strtolower($input['last_name1']));
-            if (isset($input['last_name2']))  $input['last_name2'] = ucwords(strtolower($input['last_name2']));
+            if (isset($input['name']))  $input['name'] = strtoupper($input['name']);
+            if (isset($input['last_name1']))  $input['last_name1'] = strtoupper($input['last_name1']);
+            if (isset($input['last_name2']))  $input['last_name2'] = strtoupper($input['last_name2']);
 
             foreach ($pets_exist as $current) {
                 $exist = null;
