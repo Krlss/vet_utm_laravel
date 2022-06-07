@@ -511,7 +511,7 @@ function sendNotificationEmailToPetLost($pet)
 
 function generateProfilePhotoPath($string)
 {
-    return 'https://ui-avatars.com/api/?name=' . $string . '&color=fff&background=FFB509&bold=true&length=1';
+    return 'https://ui-avatars.com/api/?name=' . $string[0] . '&color=fff&background=FFB509&bold=true&length=1';
 }
 
 function shortenNumber($number, $precision = 2)
