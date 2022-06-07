@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Str;
+use Spatie\Permission\Models\Role;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -36,7 +37,7 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Fortify::createUsersUsing(CreateNewUser::class);
+        //Fortify::createUsersUsing(CreateNewUser::class);
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
@@ -74,6 +75,8 @@ class FortifyServiceProvider extends ServiceProvider
                             ->first()
                             ->id;
 
+                        $role = Role::findByName('Usuario');
+
                         $new_user = User::create([
                             'user_id' => $usuario_utm["cedula"],
                             'name' => $nombres_utm["2"],
@@ -86,7 +89,8 @@ class FortifyServiceProvider extends ServiceProvider
                             'id_province' => $id_province ?? 1,
                             'api_token' => Str::random(25),
                             'profile_photo_path' => $PhotoPath,
-                        ])->assignRole('Usuario');
+                        ])->assignRole($role->name);
+
                         return $new_user;
                     } else {
                         return $user;
