@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Http;
 
 class UserApiController extends Controller
 {
@@ -65,6 +66,63 @@ class UserApiController extends Controller
                     }
                 }
             } else {
+                if (strpos($request->email, "utm.edu.ec")) {
+                    /* usuario utm */
+                    try {
+                        $response = Http::withHeaders([
+                            'X-API-KEY' => '3ecbcb4e62a00d2bc58080218a4376f24a8079e1',
+                        ])->withOptions(["verify" => false])->post('https://app.utm.edu.ec/becas/api/publico/IniciaSesion', [
+                            'usuario' => $request->email,
+                            'clave' => $request->password,
+                        ]);
+                        $output = $response->json();
+                    } catch (\Throwable $th) {
+                        return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                    }
+                    if ($output["state"] == "success") {
+
+                        $usuario_utm = $output["value"];
+                        $nombres_utm = explode(" ", $usuario_utm["nombres"], 3);
+                        $PhotoPath = generateProfilePhotoPath($nombres_utm["2"]);
+
+                        $id_province = Province::where('name', 'Manabi')
+                            ->orWhere('name', 'Manabí')
+                            ->orWhere('name', 'manabí')
+                            ->orWhere('name', 'manabi')
+                            ->orWhere('name', 'MANABI')
+                            ->orWhere('name', 'MANABÍ')
+                            ->first()
+                            ->id;
+
+
+                        $new_user = User::create([
+                            'user_id' => $usuario_utm["cedula"],
+                            'name' => $nombres_utm["2"],
+                            'last_name1' => $nombres_utm["0"],
+                            'last_name2' => $nombres_utm["1"],
+                            'email' => $request->email,
+                            'password' => Hash::make($request->password),
+                            'email_verified_at' => date('Y-m-d h:i:s'),
+                            'id_province' => $id_province ?? 1,
+                            'api_token' => Str::random(25),
+                            'profile_photo_path' => $PhotoPath,
+                        ]);
+
+                        $pet = $new_user->pets;
+                        $canton = $new_user->canton;
+                        $province = $new_user->province;
+                        $parish = $new_user->parish;
+
+                        $new_user['pet'] = $pet;
+                        $new_user['canton'] = $canton;
+                        $new_user['province'] = $province;
+                        $new_user['parish '] = $parish;
+
+                        return response()->json(['message' => 'Welcome', 'data' => $new_user], 200);
+                    } else {
+                        return response()->json(['message' => 'User not found', 'data' => null], 404);
+                    }
+                }
                 return response()->json(['message' => 'User not found', 'data' => null], 404);
             }
         } catch (\Throwable $th) {
@@ -90,7 +148,16 @@ class UserApiController extends Controller
         $input['email'] = strtolower($input['email']);
 
         //Por defecto manabí...
-        $input['id_province'] = 13;
+        $id_province = Province::where('name', 'Manabi')
+            ->orWhere('name', 'Manabí')
+            ->orWhere('name', 'manabí')
+            ->orWhere('name', 'manabi')
+            ->orWhere('name', 'MANABI')
+            ->orWhere('name', 'MANABÍ')
+            ->first()
+            ->id;
+
+        $input['id_province'] = $id_province;
 
         try {
             DB::beginTransaction();
