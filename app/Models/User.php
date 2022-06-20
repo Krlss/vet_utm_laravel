@@ -147,4 +147,10 @@ class User extends Authenticatable implements Auditable
             $user->assignRole(config('role.auth.default'));
         });
     }
+
+    public function canLogin()
+    {
+        $permissionsUser = $this->getAllPermissions()->toArray();
+        return is_numeric(array_search('dashboard.home', array_column($permissionsUser, 'name')));
+    }
 }
