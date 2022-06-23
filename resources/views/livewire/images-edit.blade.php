@@ -8,9 +8,9 @@
     <div wire:loading class="w-full md:w-64 text-center mb-2 text-lg hidden">
         <i class="fa fa-spinner animate-spin"></i>
     </div>
-    @error('images')
-    <span class="text-danger">{{ $message }}</span>
-    @enderror
+
+    <x-flash-messages />
+
     @if(!empty($images)) <button type="button" wire:click="$emit('confirm_remove_files')" class="bg-red-600 hover:bg-red-500 text-white px-2 py-1 rounded-md float-right mb-4 w-full md:w-auto">{{__('Remove all photos')}} ({{count($images)}})</button> @endif
 
     <div id="container_images" class="w-full relative m-auto flex justify-evenly gap-5 flex-wrap items-end">

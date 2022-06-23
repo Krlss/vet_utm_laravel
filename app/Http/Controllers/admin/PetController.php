@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
+use App\GoogleDrive;
 
 class PetController extends Controller
 {
@@ -120,7 +121,7 @@ class PetController extends Controller
                 $request->validate([
                     'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                uploadImagesDashboard($request->file('images'), $input['pet_id']);
+                uploadImage($request->file('images'), $input['pet_id']);
             }
 
             DB::commit();
@@ -187,19 +188,11 @@ class PetController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($request->hasFile('images')) {
-                $request->validate([
-                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
-                ]);
-                uploadImagesDashboard($request->file('images'), $pet->pet_id);
-            } else {
-                //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
-                $imagesCurrent = $pet->images;
-                foreach ($imagesCurrent as $imgC) {
-                    Storage::disk("google")->delete($imgC->id_image);
-                    $imgC->delete();
-                }
-            }
+
+            $request->validate([
+                'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
+            ]);
+            uploadImage($request->file('images'), $pet->pet_id);
 
             if (isset($input['pet_id'])) $input['pet_id'] = strtoupper($input['pet_id']);
 
@@ -250,7 +243,8 @@ class PetController extends Controller
         try {
             $imagesCurrent = $pet->images;
             foreach ($imagesCurrent as $imgC) {
-                Storage::disk("google")->delete($imgC->id_image);
+                $google = new GoogleDrive();
+                $google->deleteFile($imgC->id_image);
                 $imgC->delete();
             }
             $pet->delete();

@@ -178,9 +178,6 @@ class PetApiController extends Controller
     {
         $input = $request->all();
 
-        $arrName = explode("-", $input['images'][0]['name']); // ['.....' - '.....' - '......']
-        $idWithJpg = $arrName[count($arrName) - 1]; // Last position jalksdjasd.jpg
-        $arridWithJpg = explode(".", $idWithJpg); // without .jpg
         $pet['pet_id'] = genaretePetId($input); //Last ID 
         $pet['name'] = 'Desconocido';
         $pet['birth'] = date('Y-m-d');
@@ -197,23 +194,7 @@ class PetApiController extends Controller
         try {
             Pet::create($pet);
 
-            for ($i = 0; $i < count($input['images']); $i++) {
-
-                $decode_file = base64_decode($input['images'][$i]['base64']);
-
-                Storage::disk("google")->put($input['images'][$i]['name'], $decode_file);
-
-                $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);
-                $urlG = explode('=', $urlGoogleImage);
-                $id_img = explode('&', $urlG[1]);
-
-                $image['id_image'] = $id_img[0];
-                $image['url'] = $urlGoogleImage;
-                $image['name'] = $input['images'][$i]['name'];
-                $image['external_id'] = $pet['pet_id'];
-
-                Image::create($image);
-            }
+            uploadImage($input['images'], $pet['pet_id'], true);
 
             DB::commit();
             return response()->json(['message' => 'Report is ok...', 'data' => []], 200);
@@ -246,39 +227,9 @@ class PetApiController extends Controller
                     }
 
                     DB::beginTransaction();
-                    $imagesCurrent = $pet->images;
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
-                    if (isset($input['images']))
-                        foreach ($imagesCurrent as $imgC) {
-                            $exist = array_search($imgC->url, array_column($input['images'], 'url'));
-                            if (is_numeric($exist)) {
-                                continue;
-                            } else {
-                                Storage::disk("google")->delete($imgC->id_image);
-                                $imgC->delete();
-                            }
-                        }
 
-                    if (isset($input['images'])) {
-                        for ($i = 0; $i < count($input['images']); $i++) {
-                            if (isset($input['images'][$i]['base64'])) {
-                                $decode_file = base64_decode($input['images'][$i]['base64']);
-
-                                Storage::disk("google")->put($input['images'][$i]['name'], $decode_file);
-
-                                $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);
-                                $urlG = explode('=', $urlGoogleImage);
-                                $id_img = explode('&', $urlG[1]);
-
-                                $image['id_image'] = $id_img[0];
-                                $image['url'] = $urlGoogleImage;
-                                $image['name'] = $input['images'][$i]['name'];
-                                $image['external_id'] = $pet['pet_id'];
-
-                                Image::create($image);
-                            }
-                        }
-                    }
+                    uploadImage($input['images'], $input['pet_id'], true);
 
                     $pet->update($input);
 
@@ -354,23 +305,7 @@ class PetApiController extends Controller
 
             Pet::create($pet);
 
-            for ($i = 0; $i < count($input['images']); $i++) {
-
-                $decode_file = base64_decode($input['images'][$i]['base64']);
-
-                Storage::disk("google")->put($input['images'][$i]['name'], $decode_file);
-
-                $urlGoogleImage = Storage::disk("google")->url($input['images'][$i]['name']);
-                $urlG = explode('=', $urlGoogleImage);
-                $id_img = explode('&', $urlG[1]);
-
-                $image['id_image'] = $id_img[0];
-                $image['url'] = $urlGoogleImage;
-                $image['name'] = $input['images'][$i]['name'];
-                $image['external_id'] = $pet['pet_id'];
-
-                Image::create($image);
-            }
+            uploadImage($input['images'], $pet['pet_id'], true);
 
             DB::commit();
             return response()->json(['message' => 'Report is ok...', 'data' => []], 200);

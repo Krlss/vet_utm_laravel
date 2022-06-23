@@ -5,16 +5,10 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use App\Models\Pet;
 use App\Models\User;
-use App\Models\Image;
 use Illuminate\Http\Request;
-use App\Http\Requests\CreatePetRequest;
 use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Mail;
-use App\Mail\NewReport;
 use App\Models\Fur;
-use App\Models\Parish;
 use App\Models\Race;
 use App\Models\Specie;
 
@@ -24,7 +18,6 @@ class ReportController extends Controller
     {
         $this->middleware('can:dashboard.reports.index')->only('index');
         $this->middleware('can:dashboard.reports.destroy')->only('destroy');
-        /* $this->middleware('can:dashboard.reports.create')->only('create', 'store'); */
         $this->middleware('can:dashboard.reports.edit')->only('edit', 'update');
         $this->middleware('can:dashboard.destroyImageGoogle')->only('destroyImageGoogle');
     }
@@ -57,14 +50,6 @@ class ReportController extends Controller
         return view('dashboard.reports.index', compact('pets'));
     }
 
-    public function create()
-    {
-    }
-
-    public function store(CreatePetRequest $request)
-    {
-    }
-
     public function show($id)
     {
         $pet = Pet::where('pet_id', $id)->first();
@@ -94,19 +79,11 @@ class ReportController extends Controller
 
         DB::beginTransaction();
         try {
-            if ($request->hasFile('images')) {
-                $request->validate([
-                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
-                ]);
-                uploadImagesDashboard($request->file('images'), $petUpdated->pet_id);
-            } else {
-                //Ahora eliminamos las imagenes si llega a tener, porque desde la vista no nos envían imagenes...
-                $imagesCurrent = Image::where('pet_id', $input['pet_id'])->get();
-                foreach ($imagesCurrent as $imgC) {
-                    Storage::disk("google")->delete($imgC->id_image);
-                    $imgC->delete();
-                }
-            }
+
+            $request->validate([
+                'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
+            ]);
+            uploadImage($request->file('images'), $petUpdated->pet_id);
 
             if ($petUpdated->published == 0 && $input['published'] == 1) {
                 sendNotificationEmailToPetLost($input);
@@ -118,25 +95,6 @@ class ReportController extends Controller
         } catch (\Throwable $e) {
             DB::rollBack();
             return redirect()->back()->with('error', __('Error updating pet') . ' ' . $e->getMessage())->withInput();
-        }
-    }
-
-    public function destroy(Pet $pet)
-    {
-    }
-    public function destroyImageGoogle(Request $request)
-    {
-        $input = $request->all();
-
-        try {
-            DB::beginTransaction();
-            $imagePet = Image::where('url', $input['url'])->first();
-            Storage::disk("google")->delete($imagePet->id_image);
-            $imagePet->delete();
-            DB::commit();
-            return redirect()->back()->with('info', trans('lang.image_pet_reporte_deleted'));
-        } catch (\Throwable $th) {
-            return redirect()->back()->with('error', trans('lang.user_error'));
         }
     }
 }

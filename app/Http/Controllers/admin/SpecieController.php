@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
+use App\GoogleDrive;
 
 class SpecieController extends Controller
 {
@@ -49,7 +50,7 @@ class SpecieController extends Controller
                 $request->validate([
                     'image' => 'image|mimes:jpg,png,jpeg,webp,svg'
                 ]);
-                uploadImageDashboard($request->file('image'), $specie->id);
+                uploadImage($request->file('image'), $specie->id);
             }
 
             if ($request->has('id_fur')) {
@@ -85,7 +86,10 @@ class SpecieController extends Controller
             $specie->update($input);
 
             if ($request->hasFile('image')) {
-                uploadImageDashboard($request->file('image'), $specie->id);
+                $request->validate([
+                    'images*' => 'image|mimes:jpg,png,jpeg,webp,svg'
+                ]);
+                uploadImage($request->file('image'), $specie->id);
             }
 
             $specie->furs()->sync($request->id_fur);
@@ -106,7 +110,8 @@ class SpecieController extends Controller
             $specie = Specie::find($id);
 
             if ($specie->image) {
-                Storage::disk("google")->delete($specie->image->id_image);
+                $google = new GoogleDrive();
+                $google->deleteFile($specie->image->id_image);
                 $specie->image->delete();
             }
 
@@ -173,7 +178,7 @@ class SpecieController extends Controller
             ]);
 
             if ($request->hasFile('image')) {
-                uploadImageDashboard($request->file('image'), $specie->id);
+                uploadImage($request->file('image'), $specie->id);
             }
 
             return response()->json($specie);
