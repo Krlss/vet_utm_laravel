@@ -3,10 +3,6 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Image;
-use App\Models\Pet;
-use App\Models\User;
-use Illuminate\Http\Request;
 use OwenIt\Auditing\Models\Audit as ModelsAudit;
 
 class Audit extends Controller
