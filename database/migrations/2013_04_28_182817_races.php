@@ -16,7 +16,7 @@ class Races extends Migration
         Schema::create('races', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->integer('id_specie')->nullable();
+            $table->integer('id_specie')->unsigned()->nullable();
             $table->timestamps();
 
             $table->foreign('id_specie')->references('id')->on('species')->onDelete('set null')->onUpdate('cascade');
