@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CreateUserApiRequest;
 use App\Http\Requests\CreateUserRequest;
-use App\Mail\VerifyEmail;
+use App\Mail\AccountVerifyEmail;
 use App\Models\Canton;
 use App\Models\Image;
 use App\Models\Parish;
@@ -38,31 +38,32 @@ class UserApiController extends Controller
 
             if ($user) {
                 if ($user->email_verified_at == null) {
-
-                    $detail = [
-                        'title' => 'Clínica veterinaria de la universidad técnica de manabí',
-                        'body' => 'Para verificar el correo electrónico da clic en el siguiente link.',
-                        'api_token' => $user->api_token,
-                        'backurl' => url()->previous()
-                    ];
-
-                    Mail::to($user->email)->send(new VerifyEmail($detail));
-                    return response()->json(['message' => 'Look your email', 'data' => []], 301);
+                    Mail::to($user->email)->send(new AccountVerifyEmail($user));
+                    return response()->json([
+                        'type' => 'info',
+                        'title' => __('Active your account'),
+                        'message' => __('Follow the instructions that have been sent to the email')
+                    ], 301);
                 } else {
                     $passwordD = Hash::check($password, $user->password);
                     if ($passwordD) {
-                        $pet = $user->pets;
-                        $canton = $user->canton;
-                        $province = $user->province;
-                        $parish = $user->parish;
+                        $user->pets;
+                        $user->canton;
+                        $user->province;
+                        $user->parish;
 
-                        $user['pet'] = $pet;
-                        $user['canton'] = $canton;
-                        $user['province'] = $province;
-                        $user['parish '] = $parish;
-                        return response()->json(['message' => 'Welcome', 'data' => $user], 200);
+                        return response()->json([
+                            'type' => 'success',
+                            'title' => __('Login success'),
+                            'message' => __('Welcome again!'),
+                            'user' => $user
+                        ], 200);
                     } else {
-                        return response()->json(['message' => 'Password incorrect', 'data' => null], 401);
+                        return response()->json([
+                            'type' => 'error',
+                            'title' => __('Login failed'),
+                            'message' => __('These credentials do not match our records')
+                        ], 401);
                     }
                 }
             } else {
@@ -77,7 +78,11 @@ class UserApiController extends Controller
                         ]);
                         $output = $response->json();
                     } catch (\Throwable $th) {
-                        return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                        return response()->json([
+                            'type' => 'error',
+                            'title' => __('Something went wrong'),
+                            'message' => __('There was an error on the server, please try again later')
+                        ], 500);
                     }
                     if ($output["state"] == "success") {
 
@@ -117,16 +122,32 @@ class UserApiController extends Controller
                         $new_user['canton'] = $canton;
                         $new_user['province'] = $province;
                         $new_user['parish '] = $parish;
-
-                        return response()->json(['message' => 'Welcome', 'data' => $new_user], 200);
+                        return response()->json([
+                            'type' => 'success',
+                            'title' => __('Login success'),
+                            'message' => __('Welcome again!'),
+                            'user' => $new_user
+                        ], 200);
                     } else {
-                        return response()->json(['message' => 'User not found', 'data' => null], 404);
+                        return response()->json([
+                            'type' => 'error',
+                            'title' => __('Login failed'),
+                            'message' => __('These credentials do not match our records')
+                        ], 401);
                     }
                 }
-                return response()->json(['message' => 'User not found', 'data' => null], 404);
+                return response()->json([
+                    'type' => 'error',
+                    'title' => __('Login failed'),
+                    'message' => __('These credentials do not match our records')
+                ], 401);
             }
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Something went wrong'),
+                'message' => __('There was an error on the server, please try again later')
+            ], 500);
         }
     }
 
@@ -142,7 +163,11 @@ class UserApiController extends Controller
             if (isset($input['user_id']))
                 validateUserID($input['user_id']);
         } catch (Exception $e) {
-            return response()->json(['message' => __('CI/RUC is invalid'), 'data' => []], 401);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Error in create user'),
+                'message' => __('CI/RUC is invalid')
+            ], 401);
         }
 
         $input['email'] = strtolower($input['email']);
@@ -170,10 +195,17 @@ class UserApiController extends Controller
             User::create($input);
 
             DB::commit();
-
-            return response()->json(['message' => 'Welcome', 'data' => []], 200);
+            return response()->json([
+                'type' => 'success',
+                'title' => __('Register success'),
+                'message' => __('Now you can login')
+            ], 200);
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Something went wrong'),
+                'message' => __('There was an error on the server, please try again later')
+            ], 500);
         }
     }
 
@@ -279,15 +311,15 @@ class UserApiController extends Controller
             DB::beginTransaction();
 
             $user = User::where('api_token', $api_token)->first();
-            if ($user->email_verified_at) return response()->json(['message' => 'the email has already been verified', 'data' => []], 500);
+            if ($user->email_verified_at) return view('emails.accounts.index', ['message' => __('Your email is already verified')]);
             $data['email_verified_at'] = now();
             $user->update($data);
             DB::commit();
 
-            return response()->json(['message' => 'Verified email!', 'data' => []], 200);
+            return view('emails.accounts.index', ['message' => __('Account email is verified')]);
         } catch (\Throwable $th) {
             DB::rollBack();
-            return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+            return view('emails.accounts.index', ['message' => __('Something went wrong')]);
         }
     }
 

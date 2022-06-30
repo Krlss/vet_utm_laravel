@@ -43,7 +43,7 @@ switch ($level) {
 @if (! empty($salutation))
 {{ $salutation }}
 @else
-@lang('Saludos'),<br>
+@lang('Salutations'),<br>
 {{ config('app.name') }}
 @endif
 
