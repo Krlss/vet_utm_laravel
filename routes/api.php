@@ -38,6 +38,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
+Route::get('selects', [PetApiController::class, 'getSelects']);
 Route::get('getPetByID/{id}', [PetApiController::class, 'getPetByID']);
 
 Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->name('dashboard.uploadGoogle');

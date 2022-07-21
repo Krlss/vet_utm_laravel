@@ -37,34 +37,33 @@ class UserApiController extends Controller
             $user = User::where('email', strtolower($request->email))->first();
 
             if ($user) {
-                if ($user->email_verified_at == null) {
-                    Mail::to($user->email)->send(new AccountVerifyEmail($user));
-                    return response()->json([
-                        'type' => 'info',
-                        'title' => __('Active your account'),
-                        'message' => __('Follow the instructions that have been sent to the email')
-                    ], 301);
-                } else {
-                    $passwordD = Hash::check($password, $user->password);
-                    if ($passwordD) {
-                        $user->pets;
-                        $user->canton;
-                        $user->province;
-                        $user->parish;
-
+                $passwordD = Hash::check($password, $user->password);
+                if ($passwordD) {
+                    if ($user->email_verified_at == null) {
+                        Mail::to($user->email)->send(new AccountVerifyEmail($user));
                         return response()->json([
-                            'type' => 'success',
-                            'title' => __('Login success'),
-                            'message' => __('Welcome again!'),
-                            'user' => $user
-                        ], 200);
-                    } else {
-                        return response()->json([
-                            'type' => 'error',
-                            'title' => __('Login failed'),
-                            'message' => __('These credentials do not match our records')
-                        ], 401);
+                            'type' => 'info',
+                            'title' => __('Active your account'),
+                            'message' => __('Follow the instructions that have been sent to the email')
+                        ], 301);
                     }
+                    $user->pets;
+                    $user->canton;
+                    $user->province;
+                    $user->parish;
+
+                    return response()->json([
+                        'type' => 'success',
+                        'title' => __('Login success'),
+                        'message' => __('Welcome again!'),
+                        'user' => $user
+                    ], 200);
+                } else {
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Login failed'),
+                        'message' => __('These credentials do not match our records')
+                    ], 401);
                 }
             } else {
                 if (strpos($request->email, "utm.edu.ec")) {
@@ -233,7 +232,7 @@ class UserApiController extends Controller
                 $user['province'] = $province;
                 $user['parish'] = $parish;
 
-                return response()->json(['message' => 'Your data :)', 'data' => $user], 200);
+                return response()->json(['message' => 'Welcome again', 'user' => $user], 200);
             }
             return response()->json(['message' => 'User not found', 'data' => []], 404);
         } else {

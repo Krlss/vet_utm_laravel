@@ -365,7 +365,7 @@ function genaretePetId($input)
             if ($num_int < 10) $new_num = '000' . $num_int;
             elseif ($num_int < 100) $new_num = '00' . $num_int;
             elseif ($num_int < 1000) $new_num = '0' . $num_int;
-            else $new_num = '' . $new_num;
+            else $new_num = '' . $num_int;
 
             $last_pet = strtoupper($region . $last_convination_letter . "-" . $new_num);
         }
@@ -379,7 +379,7 @@ function getConvination_letters()
     return array("AA", "AB", "AU", "AC", "AX", "AH", "AO", "AE", "AG", "AI", "AL", "AR", "AM", "AV", "AN", "AS", "AP", "AT", "AZ", "AW", "AK", "AQ", "AJ", "AY", "BA", "BB", "BU", "BC", "BX", "BH", "BO", "BE", "BG", "BI", "BL", "BR", "BM", "BV", "BN", "BS", "BP", "BT", "BZ", "BW", "BK", "BQ", "BJ", "BY", "UA", "UB", "UU", "UC", "UX", "UH", "UO", "UE", "UG", "UI", "UL", "UR", "UM", "UV", "UN", "US", "UP", "UT", "UZ", "UW", "UK", "UQ", "UJ", "UY", "CA", "CB", "CU", "CC", "CX", "CH", "CO", "CE", "CG", "CI", "CL", "CR", "CM", "CV", "CN", "CS", "CP", "CT", "CZ", "CW", "CK", "CQ", "CJ", "CY", "XA", "XB", "XU", "XC", "XX", "XH", "XO", "XE", "XG", "XI", "XL", "XR", "XM", "XV", "XN", "XS", "XP", "XT", "XZ", "XW", "XK", "XQ", "XJ", "XY", "HA", "HB", "HU", "HC", "HX", "HH", "HO", "HE", "HG", "HI", "HL", "HR", "HM", "HV", "HN", "HS", "HP", "HT", "HZ", "HW", "HK", "HQ", "HJ", "HY", "OA", "OB", "OU", "OC", "OX", "OH", "OO", "OE", "OG", "OI", "OL", "OR", "OM", "OV", "ON", "OS", "OP", "OT", "OZ", "OW", "OK", "OQ", "OJ", "OY", "EA", "EB", "EU", "EC", "EX", "EH", "EO", "EE", "EG", "EI", "EL", "ER", "EM", "EV", "EN", "ES", "EP", "ET", "EZ", "EW", "EK", "EQ", "EJ", "EY", "GA", "GB", "GU", "GC", "GX", "GH", "GO", "GE", "GG", "GI", "GL", "GR", "GM", "GV", "GN", "GS", "GP", "GT", "GZ", "GW", "GK", "GQ", "GJ", "GY", "IA", "IB", "IU", "IC", "IX", "IH", "IO", "IE", "IG", "II", "IL", "IR", "IM", "IV", "IN", "IS", "IP", "IT", "IZ", "IW", "IK", "IQ", "IJ", "IY", "LA", "LB", "LU", "LC", "LX", "LH", "LO", "LE", "LG", "LI", "LL", "LR", "LM", "LV", "LN", "LS", "LP", "LT", "LZ", "LW", "LK", "LQ", "LJ", "LY", "RA", "RB", "RU", "RC", "RX", "RH", "RO", "RE", "RG", "RI", "RL", "RR", "RM", "RV", "RN", "RS", "RP", "RT", "RZ", "RW", "RK", "RQ", "RJ", "RY", "MA", "MB", "MU", "MC", "MX", "MH", "MO", "ME", "MG", "MI", "ML", "MR", "MM", "MV", "MN", "MS", "MP", "MT", "MZ", "MW", "MK", "MQ", "MJ", "MY", "VA", "VB", "VU", "VC", "VX", "VH", "VO", "VE", "VG", "VI", "VL", "VR", "VM", "VV", "VN", "VS", "VP", "VT", "VZ", "VW", "VK", "VQ", "VJ", "VY", "NA", "NB", "NU", "NC", "NX", "NH", "NO", "NE", "NG", "NI", "NL", "NR", "NM", "NV", "NN", "NS", "NP", "NT", "NZ", "NW", "NK", "NQ", "NJ", "NY", "SA", "SB", "SU", "SC", "SX", "SH", "SO", "SE", "SG", "SI", "SL", "SR", "SM", "SV", "SN", "SS", "SP", "ST", "SZ", "SW", "SK", "SQ", "SJ", "SY", "PA", "PB", "PU", "PC", "PX", "PH", "PO", "PE", "PG", "PI", "PL", "PR", "PM", "PV", "PN", "PS", "PP", "PT", "PZ", "PW", "PK", "PQ", "PJ", "PY", "TA", "TB", "TU", "TC", "TX", "TH", "TO", "TE", "TG", "TI", "TL", "TR", "TM", "TV", "TN", "TS", "TP", "TT", "TZ", "TW", "TK", "TQ", "TJ", "TY", "ZA", "ZB", "ZU", "ZC", "ZX", "ZH", "ZO", "ZE", "ZG", "ZI", "ZL", "ZR", "ZM", "ZV", "ZN", "ZS", "ZP", "ZT", "ZZ", "ZW", "ZK", "ZQ", "ZJ", "ZY", "WA", "WB", "WU", "WC", "WX", "WH", "WO", "WE", "WG", "WI", "WL", "WR", "WM", "WV", "WN", "WS", "WP", "WT", "WZ", "WW", "WK", "WQ", "WJ", "WY", "KA", "KB", "KU", "KC", "KX", "KH", "KO", "KE", "KG", "KI", "KL", "KR", "KM", "KV", "KN", "KS", "KP", "KT", "KZ", "KW", "KK", "KQ", "KJ", "KY", "QA", "QB", "QU", "QC", "QX", "QH", "QO", "QE", "QG", "QI", "QL", "QR", "QM", "QV", "QN", "QS", "QP", "QT", "QZ", "QW", "QK", "QQ", "QJ", "QY", "JA", "JB", "JU", "JC", "JX", "JH", "JO", "JE", "JG", "JI", "JL", "JR", "JM", "JV", "JN", "JS", "JP", "JT", "JZ", "JW", "JK", "JQ", "JJ", "JY", "YA", "YB", "YU", "YC", "YX", "YH", "YO", "YE", "YG", "YI", "YL", "YR", "YM", "YV", "YN", "YS", "YP", "YT", "YZ", "YW", "YK", "YQ", "YJ", "YY");
 }
 
-function uploadImage($files, $external_id, $from_api = false)
+function uploadImage($files, $external_id)
 {
     try {
 
@@ -394,13 +394,11 @@ function uploadImage($files, $external_id, $from_api = false)
             if (!is_array($files)) {
                 $file_['name'] = $files->getClientOriginalName();
                 $file_['ext'] = $files->getClientOriginalExtension();
-                $file_['base64'] = false;
                 array_push($filesCurrent, $file_);
             } else {
                 foreach ($files as $file) {
-                    $file_['name'] = $from_api ? $file['name'] : $file->getClientOriginalName();
-                    $file_['ext'] = $from_api ? '' : $file->getClientOriginalExtension();
-                    $file_['base64'] = $from_api ? isset($file['base64']) : false;
+                    $file_['name'] =  $file->getClientOriginalName();
+                    $file_['ext'] = $file->getClientOriginalExtension();
                     array_push($filesCurrent, $file_);
                 };
             }
@@ -409,7 +407,7 @@ function uploadImage($files, $external_id, $from_api = false)
         // eliminar imagenes que no se encuentran en la base de datos
         foreach ($imagesCurrentDB as $imageC) {
             //name = id_image de google, en la vista se muestra el nombre de la imagen
-            $exist = array_search($from_api ? $imageC->url : $imageC->id_image, $from_api ? array_column($files, 'url') : array_column($filesCurrent, 'name'));
+            $exist = array_search($imageC->id_image, array_column($filesCurrent, 'name'));
             if (is_numeric($exist)) {
                 continue;
             } else {
@@ -421,7 +419,7 @@ function uploadImage($files, $external_id, $from_api = false)
         // subir imagenes que no se encuentran en la base de datos
         foreach ($filesCurrent as $key => $file) {
             if ($file['ext'] <> '' || $file['base64']) {
-                $data = $google->uploadFile(!is_array($files) ? $files : $files[$key], $from_api);
+                $data = $google->uploadFile(!is_array($files) ? $files : $files[$key]);
                 $image['id_image'] = $data['id'];
                 $image['url'] = $data['url'];
                 $image['name'] = $data['name'];
