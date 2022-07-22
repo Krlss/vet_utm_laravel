@@ -24,6 +24,6 @@ class Report extends Model
 
     public function pet()
     {
-        return $this->belongsTo('App\Models\Pet');
+        return $this->belongsTo('App\Models\Pet', 'pet_id');
     }
 }

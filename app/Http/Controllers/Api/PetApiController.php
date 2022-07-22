@@ -172,7 +172,31 @@ class PetApiController extends Controller
                 unset($specie['image']);
             }
 
-            return response()->json(['message' => 'All pets lost', 'species' => $species], 200);
+            $pets = Pet::with(['reports' => function ($query) {
+                $query->where('active', true)->get();
+            }])
+                ->where('published', true)
+                ->where('lost', true)
+                ->get();
+
+            foreach ($pets as $pet) {
+                $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
+                $pet['race_name'] = $pet->race ? $pet->race->name : null;
+                $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
+                $pet['images'] = $pet->images;
+                $pet['user'] = $pet->user;
+                $pet['report'] = count($pet['reports']) ? $pet['reports'][0] : null;
+                $pet['report_date'] = $pet['report'] ? $pet['report']->created_at : null;
+                unset($pet['reports']);
+                unset($pet['specie']);
+                unset($pet['race']);
+                unset($pet['fur']);
+            }
+            $pets = $pets->toArray();
+            usort($pets, function ($a, $b) {
+                return strcmp($b['report_date'], $a['report_date']);
+            });
+            return response()->json(['message' => 'All pets lost', 'species' => $species, 'pets' => $pets], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went error', 'data' => []], 500);
         }
