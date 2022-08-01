@@ -38,6 +38,10 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
+Route::get('petsLost/search/{query}', [PetApiController::class, 'getAllPetsLostByQuery']);
+Route::get('petsLostBySpecie/{id}', [PetApiController::class, 'getAllPetsLostBySpecie']);
+Route::get('getAllReports', [PetApiController::class, 'getAllReports']);
+
 Route::get('selects', [PetApiController::class, 'getSelects']);
 Route::get('getPetByID/{id}', [PetApiController::class, 'getPetByID']);
 

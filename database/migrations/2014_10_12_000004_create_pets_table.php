@@ -17,7 +17,7 @@ class CreatePetsTable extends Migration
             $table->string('pet_id', 15)->unique();
             $table->string('pet_photo_path', 2048)->nullable();
             $table->string('name');
-            $table->date('birth');
+            $table->date('birth')->nullable();
             $table->string('sex')->default(null)->nullable();
             $table->boolean('castrated')->default(false);
             $table->boolean('lost')->default(false);

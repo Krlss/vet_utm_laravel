@@ -82,6 +82,6 @@ class Pet extends Model implements Auditable
 
     public function reports()
     {
-        return $this->hasMany(Report::class, 'pet_id');
+        return $this->hasMany(Report::class, 'pet_id', 'pet_id');
     }
 }

@@ -52,6 +52,14 @@ class UserApiController extends Controller
                     $user->province;
                     $user->parish;
 
+                    /* for ($i = 0; $i < count($pet); $i++) {
+                        if ($pet[$i]->specie)
+                            $pet[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $pet[$i]['images'] = $pet[$i]->images;
+                        $pet[$i]['specie'] = $pet[$i]->specie->name;
+                        $pet[$i]['race'] = $pet[$i]->race->name;
+                    } */
+
                     return response()->json([
                         'type' => 'success',
                         'title' => __('Login success'),
@@ -112,15 +120,11 @@ class UserApiController extends Controller
                             'profile_photo_path' => $PhotoPath,
                         ]);
 
-                        $pet = $new_user->pets;
-                        $canton = $new_user->canton;
-                        $province = $new_user->province;
-                        $parish = $new_user->parish;
+                        $new_user->pets;
+                        $new_user->canton;
+                        $new_user->province;
+                        $new_user->parish;
 
-                        $new_user['pet'] = $pet;
-                        $new_user['canton'] = $canton;
-                        $new_user['province'] = $province;
-                        $new_user['parish '] = $parish;
                         return response()->json([
                             'type' => 'success',
                             'title' => __('Login success'),
@@ -215,22 +219,17 @@ class UserApiController extends Controller
             $user = User::where('api_token', $header)->first();
             if ($user) {
                 $pet = $user->pets;
-                $canton = $user->canton;
-                $province = $user->province;
-                $parish = $user->parish;
+                $user->canton;
+                $user->province;
+                $user->parish;
 
                 for ($i = 0; $i < count($pet); $i++) {
-                    if ($pet[$i]->specie)
-                        $pet[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
-                    $pet[$i]['images'] = $pet[$i]->images;
-                    $pet[$i]['specie'] = $pet[$i]->specie->name;
-                    $pet[$i]['race'] = $pet[$i]->race->name;
+                    if ($user->pets[$i]->specie)
+                        $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                    $user->pets[$i]['images'] = $pet[$i]->images;
+                    $user->pets[$i]['specie'] = $pet[$i]->specie->name;
+                    $user->pets[$i]['race'] = $pet[$i]->race->name;
                 }
-
-                $user['pet'] = $pet;
-                $user['canton'] = $canton;
-                $user['province'] = $province;
-                $user['parish'] = $parish;
 
                 return response()->json(['message' => 'Welcome again', 'user' => $user], 200);
             }
@@ -258,19 +257,28 @@ class UserApiController extends Controller
                 $userFindP = User::where('phone', $input['phone'])
                     ->where('api_token', '!=', $header)
                     ->first();
-                if ($userFindE) return response()->json(['message' => 'El correo ya está registrado', 'data' => []], 301);
+                if ($userFindE) return response()->json([
+                    'type' => 'error',
+                    'title' => __('Error in update user'),
+                    'message' => __('Email is already registered')
+                ], 301);
                 try {
                     if (isset($input['user_id']))
                         validateUserID($input['user_id']);
                 } catch (Exception $e) {
-                    return response()->json(['message' => __('CI/RUC is invalid'), 'data' => []], 401);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Error in update user'),
+                        'message' => __('CI/RUC is invalid')
+                    ], 401);
                 }
-                if ($userFindP) return response()->json(['message' => 'El número de teléfono ya está registrado', 'data' => []], 301);
+                if ($userFindP) return response()->json([
+                    'type' => 'error',
+                    'title' => __('Error in update user'),
+                    'message' => __('Phone is already registered')
+                ], 301);
                 if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 
-                $pet = Pet::where('user_id', $user->user_id)->get();
-                $canton = Canton::where('id', $user->id_canton)->first();
-                $province = $canton ? Province::where('id', $canton->id_province)->first() : null;
 
                 if ($user->email != $input['email']) {
                     $input['email_verified_at'] = null;
@@ -286,20 +294,46 @@ class UserApiController extends Controller
 
                     $user->update($input);
 
-                    $user['pet'] = $pet;
-                    $user['canton'] = $canton;
-                    $user['province'] = $province;
+                    $pet = $user->pets;
+                    $user->canton;
+                    $user->province;
+                    $user->parish;
+
+                    for ($i = 0; $i < count($pet); $i++) {
+                        if ($user->pets[$i]->specie)
+                            $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $user->pets[$i]['images'] = $pet[$i]->images;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie->name;
+                        $user->pets[$i]['race'] = $pet[$i]->race->name;
+                    }
 
                     DB::commit();
-                    return response()->json(['message' => 'User updated!', 'data' => $user], 200);
+                    return response()->json([
+                        'type' => 'success',
+                        'title' => __('Updated successfully'),
+                        'message' => __('Updated user data'),
+                        'user' => $user
+                    ], 200);
                 } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Something went wrong'),
+                        'message' => __('There was an error on the server, please try again later')
+                    ], 500);
                 }
             } else {
-                return response()->json(['message' => 'User not found', 'data' => []], 404);
+                return response()->json([
+                    'type' => 'error',
+                    'title' => __('Something went wrong'),
+                    'message' => __('User not found')
+                ], 404);
             }
         } else {
-            return response()->json(['message' => 'you are not authorized to update that profile', 'data' => []], 401);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Something went wrong'),
+                'message' => __('You are not authorized to update that profile')
+            ], 401);
         }
     }
 
@@ -336,7 +370,11 @@ class UserApiController extends Controller
                     unset($input['currentPassword']);
                     $input['password'] =  Hash::make($input['password']);
                 } else {
-                    return response()->json(['message' => 'Contraseña actual incorrecta.', 'data' => []], 404);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Error in update user'),
+                        'message' => __('Current password is incorrect')
+                    ], 404);
                 }
 
                 try {
@@ -346,16 +384,46 @@ class UserApiController extends Controller
 
                     $user->update($input);
 
+                    $pet = $user->pets;
+                    $user->canton;
+                    $user->province;
+                    $user->parish;
+
+                    for ($i = 0; $i < count($pet); $i++) {
+                        if ($user->pets[$i]->specie)
+                            $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $user->pets[$i]['images'] = $pet[$i]->images;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie->name;
+                        $user->pets[$i]['race'] = $pet[$i]->race->name;
+                    }
+
                     DB::commit();
-                    return response()->json(['message' => 'Password Updated!', 'data' => $user], 200);
+                    return response()->json([
+                        'type' => 'success',
+                        'title' => __('Updated successfully'),
+                        'message' => __('Password updated successfully'),
+                        'user' => $user
+                    ], 200);
                 } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Something went wrong'),
+                        'message' => __('There was an error on the server, please try again later')
+                    ], 500);
                 }
             } else {
-                return response()->json(['message' => 'User not found', 'data' => []], 404);
+                return response()->json([
+                    'type' => 'error',
+                    'title' => __('Something went wrong'),
+                    'message' => __('User not found')
+                ], 404);
             }
         } else {
-            return response()->json(['message' => 'you are not authorized to update that profile', 'data' => []], 401);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Something went wrong'),
+                'message' => __('You are not authorized to update that profile')
+            ], 401);
         }
     }
 }

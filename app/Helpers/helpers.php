@@ -309,8 +309,8 @@ function genaretePetId($input)
     $letter_user = null;
     $region = null;
 
-    if (isset($input['user_id'])) {
-        $user = User::where('user_id', $input['user_id'])->first();
+    $user = isset($input['user_id']) ? User::where('user_id', $input['user_id'])->first() : null;
+    if ($user) {
         //de la provincia del usuario saco su letra
         $letter_user = $user->province()->pluck('letter');
         if (count($letter_user)) $region = $letter_user[0];

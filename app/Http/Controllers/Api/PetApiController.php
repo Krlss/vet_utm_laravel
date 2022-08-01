@@ -177,25 +177,24 @@ class PetApiController extends Controller
             }])
                 ->where('published', true)
                 ->where('lost', true)
-                ->get();
+                ->orderBy('created_at', 'asc')
+                ->paginate(50);
 
             foreach ($pets as $pet) {
                 $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
+                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
                 $pet['race_name'] = $pet->race ? $pet->race->name : null;
                 $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
                 $pet['images'] = $pet->images;
                 $pet['user'] = $pet->user;
-                $pet['report'] = count($pet['reports']) ? $pet['reports'][0] : null;
+                $pet['report'] = count($pet['reports']) ? $pet['reports'][count($pet['reports']) - 1] : null;
                 $pet['report_date'] = $pet['report'] ? $pet['report']->created_at : null;
                 unset($pet['reports']);
                 unset($pet['specie']);
                 unset($pet['race']);
                 unset($pet['fur']);
             }
-            $pets = $pets->toArray();
-            usort($pets, function ($a, $b) {
-                return strcmp($b['report_date'], $a['report_date']);
-            });
+
             return response()->json(['message' => 'All pets lost', 'species' => $species, 'pets' => $pets], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went error', 'data' => []], 500);
@@ -209,7 +208,6 @@ class PetApiController extends Controller
 
         $pet['pet_id'] = genaretePetId($input); //Last ID 
         $pet['name'] = 'Desconocido';
-        $pet['birth'] = date('Y-m-d');
         $pet['sex'] = null;
         $pet['lost'] = true;
         $pet['published'] = true;
@@ -222,7 +220,7 @@ class PetApiController extends Controller
         $report['longitude'] = $location->longitude ?? null;
         $report['active'] = true;
         $report['pet_id'] = $pet['pet_id'];
-        $report['user_id'] = $input['user_id'];
+        $report['user_id'] = User::where('user_id',  $input['user_id'])->first();
         $report['created_at'] = date('Y-m-d H:i:s');
         $report['updated_at'] = date('Y-m-d H:i:s');
 
@@ -409,6 +407,89 @@ class PetApiController extends Controller
             return response()->json(['message' => 'Selects loaded', 'data' => $selects], 200);
         } catch (\Throwable $th) {
             return response()->json(['message' => 'Something went error...', 'data' => []], 500);
+        }
+    }
+
+    public function getAllPetsLostBySpecie($id)
+    {
+        try {
+
+            $pets = Pet::with(['reports' => function ($query) {
+                $query->where('active', true)->get();
+            }])->where('id_specie', $id)
+                ->where('published', true)
+                ->where('lost', true)
+                ->orderBy('created_at', 'asc')
+                ->paginate(50);
+
+            foreach ($pets as $pet) {
+                $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
+                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
+                $pet['race_name'] = $pet->race ? $pet->race->name : null;
+                $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
+                $pet['images'] = $pet->images;
+                $pet['user'] = $pet->user;
+                $pet['report'] = count($pet['reports']) ? $pet['reports'][count($pet['reports']) - 1] : null;
+                $pet['report_date'] = $pet['report'] ? $pet['report']->created_at : null;
+                unset($pet['reports']);
+                unset($pet['specie']);
+                unset($pet['race']);
+                unset($pet['fur']);
+            }
+
+            return response()->json(['message' => 'Pets loaded', 'pets' =>  $pets], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went error...', 'data' => []], 500);
+        }
+    }
+
+    public function getAllPetsLostByQuery($query)
+    {
+        try {
+
+            $pets = Pet::with(['reports' => function ($query) {
+                $query->where('active', true)->get();
+            }])->where('published', true)
+                ->where('lost', true)
+                ->where('name', 'like', '%' . $query . '%')
+                ->orWhere('pet_id', 'like', '%' . $query . '%')
+                ->orderBy('created_at', 'asc')
+                ->paginate(50);
+
+            foreach ($pets as $pet) {
+                $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
+                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
+                $pet['race_name'] = $pet->race ? $pet->race->name : null;
+                $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
+                $pet['images'] = $pet->images;
+                $pet['user'] = $pet->user;
+                $pet['report'] = count($pet['reports']) ? $pet['reports'][count($pet['reports']) - 1] : null;
+                $pet['report_date'] = $pet['report'] ? $pet['report']->created_at : null;
+                unset($pet['reports']);
+                unset($pet['specie']);
+                unset($pet['race']);
+                unset($pet['fur']);
+            }
+
+            return response()->json(['message' => 'Pets loaded', 'pets' =>  $pets], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went error...', 'data' => []], 500);
+        }
+    }
+
+    public function getAllReports()
+    {
+        try {
+
+            $reports = Report::with(['pet' => function ($query) {
+                $query->with(['specie' => function ($query) {
+                    $query->with(['image']);
+                }]);
+            }])->where('active', true)->orderBy('id', 'desc')->limit(100)->get();
+
+            return response()->json(['message' => 'Reports ', 'reports' => $reports], 200);
+        } catch (\Throwable $th) {
+            return response()->json(['message' => 'Something went error...', $th], 500);
         }
     }
 }

@@ -23,7 +23,7 @@ class CreateReport extends Migration
             $table->timestamps();
 
             $table->foreign('user_id')->references('user_id')->on('users')->onDelete('set null')->onUpdate('cascade');
-            $table->foreign('pet_id')->references('pet_id')->on('pets')->onDelete('cascade')->onUpdate('cascade');
+            $table->foreign('pet_id')->references('pet_id')->on('pets')->onDelete('set null')->onUpdate('cascade');
         });
     }
 

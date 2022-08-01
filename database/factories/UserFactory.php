@@ -25,8 +25,8 @@ class UserFactory extends Factory
      * @return array
      */
     public function definition()
-    {   
-            $user_id = $this->faker->numerify('#############');
+    {
+        $user_id = $this->faker->numerify('#############');
         return [
             'user_id' => $user_id,
             'name' => $this->faker->name(),
