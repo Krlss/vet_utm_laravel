@@ -259,10 +259,15 @@ class PetApiController extends Controller
             $pet = Pet::where('pet_id', $input['pet_id'])->first();
             if ($pet) {
                 try {
+                    $user = null;
 
                     if (isset($input['user_id'])) {
                         $user = User::where('user_id', $input['user_id'])->first();
-                        if (!$user) return response()->json(['message' => 'User not found', 'data' => []], 404);
+                        if (!$user) return response()->json([
+                            'type' => 'error',
+                            'title' => __('Error in update data'),
+                            'message' => __('User not found')
+                        ], 404);
                     }
 
                     $input['updated_at'] = now();
@@ -279,16 +284,47 @@ class PetApiController extends Controller
 
                     $pet->update($input);
 
+                    $pet = $user->pets;
+                    $user->canton;
+                    $user->province;
+                    $user->parish;
+
+                    for ($i = 0; $i < count($pet); $i++) {
+                        if ($user->pets[$i]->specie)
+                            $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $user->pets[$i]['images'] = $pet[$i]->images;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie ? $pet[$i]->specie->name : null;
+                        $user->pets[$i]['race'] = $pet[$i]->race ? $pet[$i]->race->name : null;
+                        $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
+                    }
+
                     DB::commit();
-                    return response()->json(['message' => 'Pet updated!', 'data' => []], 200);
+                    return response()->json([
+                        'type' => 'success',
+                        'title' => __('Update data done successfully'),
+                        'message' => __('Pet updated successfully'),
+                        'user' => $user
+                    ], 200);
                 } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Error in update data'),
+                        'message' => __('Something went wrong')
+                    ], 500);
                 }
             } else {
-                return response()->json(['message' => 'Pet not found', 'data' => []], 404);
+                return response()->json([
+                    'type' => 'error',
+                    'title' => __('Error in update data'),
+                    'message' => __('Pet not found')
+                ], 404);
             }
         } else {
-            return response()->json(['message' => 'you are not authorized to update that profile', 'data' => []], 401);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Error in update data'),
+                'message' => __('You are not authorized to update that profile')
+            ], 401);
         }
     }
 
@@ -489,7 +525,7 @@ class PetApiController extends Controller
 
             return response()->json(['message' => 'Reports ', 'reports' => $reports], 200);
         } catch (\Throwable $th) {
-            return response()->json(['message' => 'Something went error...', $th], 500);
+            return response()->json(['message' => 'Something went error...', $th->getMessage()], 500);
         }
     }
 }

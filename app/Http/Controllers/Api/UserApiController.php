@@ -47,18 +47,19 @@ class UserApiController extends Controller
                             'message' => __('Follow the instructions that have been sent to the email')
                         ], 301);
                     }
-                    $user->pets;
+                    $pet = $user->pets;
                     $user->canton;
                     $user->province;
                     $user->parish;
 
-                    /* for ($i = 0; $i < count($pet); $i++) {
-                        if ($pet[$i]->specie)
-                            $pet[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
-                        $pet[$i]['images'] = $pet[$i]->images;
-                        $pet[$i]['specie'] = $pet[$i]->specie->name;
-                        $pet[$i]['race'] = $pet[$i]->race->name;
-                    } */
+                    for ($i = 0; $i < count($pet); $i++) {
+                        if ($user->pets[$i]->specie)
+                            $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $user->pets[$i]['images'] = $pet[$i]->images;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie->name ? $pet[$i]->specie->name :   null;
+                        $user->pets[$i]['race'] = $pet[$i]->race ? $pet[$i]->race->name : null;
+                        $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
+                    }
 
                     return response()->json([
                         'type' => 'success',
@@ -227,8 +228,9 @@ class UserApiController extends Controller
                     if ($user->pets[$i]->specie)
                         $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
                     $user->pets[$i]['images'] = $pet[$i]->images;
-                    $user->pets[$i]['specie'] = $pet[$i]->specie->name;
-                    $user->pets[$i]['race'] = $pet[$i]->race->name;
+                    $user->pets[$i]['specie'] = $pet[$i]->specie->name ? $pet[$i]->specie->name :   null;
+                    $user->pets[$i]['race'] = $pet[$i]->race ? $pet[$i]->race->name : null;
+                    $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
                 }
 
                 return response()->json(['message' => 'Welcome again', 'user' => $user], 200);
@@ -303,8 +305,9 @@ class UserApiController extends Controller
                         if ($user->pets[$i]->specie)
                             $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
                         $user->pets[$i]['images'] = $pet[$i]->images;
-                        $user->pets[$i]['specie'] = $pet[$i]->specie->name;
-                        $user->pets[$i]['race'] = $pet[$i]->race->name;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie ? $pet[$i]->specie->name : null;
+                        $user->pets[$i]['race'] = $pet[$i]->race ? $pet[$i]->race->name : null;
+                        $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
                     }
 
                     DB::commit();
@@ -395,6 +398,7 @@ class UserApiController extends Controller
                         $user->pets[$i]['images'] = $pet[$i]->images;
                         $user->pets[$i]['specie'] = $pet[$i]->specie->name;
                         $user->pets[$i]['race'] = $pet[$i]->race->name;
+                        $user->pets[$i]['fur'] = $pet[$i]->fur->name;
                     }
 
                     DB::commit();
