@@ -418,7 +418,7 @@ function uploadImage($files, $external_id)
 
         // subir imagenes que no se encuentran en la base de datos
         foreach ($filesCurrent as $key => $file) {
-            if ($file['ext'] <> '' || $file['base64']) {
+            if ($file['ext'] <> '') {
                 $data = $google->uploadFile(!is_array($files) ? $files : $files[$key]);
                 $image['id_image'] = $data['id'];
                 $image['url'] = $data['url'];

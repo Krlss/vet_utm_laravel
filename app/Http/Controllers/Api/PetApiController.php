@@ -220,7 +220,7 @@ class PetApiController extends Controller
         $report['longitude'] = $location->longitude ?? null;
         $report['active'] = true;
         $report['pet_id'] = $pet['pet_id'];
-        $report['user_id'] = User::where('user_id',  $input['user_id'])->first();
+        $report['user_id'] = isset($input['user_id']) ? $input['user_id'] : null;
         $report['created_at'] = date('Y-m-d H:i:s');
         $report['updated_at'] = date('Y-m-d H:i:s');
 
@@ -280,7 +280,28 @@ class PetApiController extends Controller
                     DB::beginTransaction();
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
 
-                    uploadImage($input['images'], $input['pet_id'], true);
+                    if (isset($input['images'])) {
+                        uploadImage($input['images'], $input['pet_id'], true);
+                    }
+
+                    if ($pet->lost && isset($input['lost'])) {
+                        if ($input['lost']) {
+                            Report::where('pet_id', $pet['pet_id'])->update(['active' => false]);
+                        }
+                    }
+
+                    $location = isset($input['location']) ? json_decode($input['location']) : null;
+
+                    if ($location) {
+                        $report['latitude'] = $location->latitude ?? null;
+                        $report['longitude'] = $location->longitude ?? null;
+                        $report['active'] = true;
+                        $report['pet_id'] = $pet['pet_id'];
+                        $report['user_id'] = isset($input['user_id']) ? $input['user_id'] : null;
+                        $report['created_at'] = date('Y-m-d H:i:s');
+                        $report['updated_at'] = date('Y-m-d H:i:s');
+                        Report::create($report);
+                    }
 
                     $pet->update($input);
 
