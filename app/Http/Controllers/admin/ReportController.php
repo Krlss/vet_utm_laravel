@@ -10,6 +10,7 @@ use App\Http\Requests\UpdatePetRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\Fur;
 use App\Models\Race;
+use App\Models\Report;
 use App\Models\Specie;
 
 class ReportController extends Controller
@@ -54,7 +55,9 @@ class ReportController extends Controller
     {
         $pet = Pet::where('pet_id', $id)->first();
 
-        return view('dashboard.reports.show', compact('pet'));
+        $report = Report::where('pet_id', $id)->first();
+
+        return view('dashboard.reports.show', compact('pet', 'report'));
     }
 
     public function edit($id)

@@ -58,11 +58,7 @@ class PetApiController extends Controller
             if ($user) {
                 try {
 
-                    if ($input['lost']) {
-                        $input['n_lost'] = 1;
-                    } else {
-                        $input['n_lost'] = 0;
-                    }
+                    $input['n_lost'] = 0;
                     $input['user_id'] = $user->user_id;
 
                     DB::beginTransaction();
@@ -72,7 +68,28 @@ class PetApiController extends Controller
                     Pet::create($input);
 
                     DB::commit();
-                    return response()->json(['message' => 'Pet created!', 'data' => []], 200);
+
+
+                    $pet = $user->pets;
+                    $user->canton;
+                    $user->province;
+                    $user->parish;
+
+                    for ($i = 0; $i < count($pet); $i++) {
+                        if ($user->pets[$i]->specie)
+                            $user->pets[$i]['image_specie'] = $pet[$i]->specie->image ? $pet[$i]->specie->image->url : null;
+                        $user->pets[$i]['images'] = $pet[$i]->images;
+                        $user->pets[$i]['specie'] = $pet[$i]->specie ? $pet[$i]->specie->name : null;
+                        $user->pets[$i]['race'] = $pet[$i]->race ? $pet[$i]->race->name : null;
+                        $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
+                    }
+
+                    return response()->json([
+                        'type' => 'success',
+                        'title' => __('Created data done successfully'),
+                        'message' => __('Pet created successfully'),
+                        'user' => $user
+                    ], 200);
                 } catch (\Throwable $th) {
                     return response()->json(['message' => 'Something went error', 'data' => $th], 500);
                 }
@@ -275,6 +292,14 @@ class PetApiController extends Controller
 
                     if (!$pet->lost && isset($input['lost'])) {
                         if ($input['lost']) $input['n_lost'] = $pet->n_lost + 1;
+                    }
+
+                    if (isset($input['new_user_id'])) {
+                        if ($input['new_user_id'] != $pet->user_id) {
+                            $input['user_id'] = null;
+                        } else {
+                            unset($input['new_user_id']);
+                        }
                     }
 
                     DB::beginTransaction();
