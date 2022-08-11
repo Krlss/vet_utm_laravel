@@ -217,7 +217,8 @@ class UserApiController extends Controller
     {
         $header = $request->header('Authorization');
         if ($header) {
-            $user = User::where('api_token', $header)->first();
+            $token = explode(' ', $header)[1];
+            $user = User::where('api_token', $token)->first();
             if ($user) {
                 $pet = $user->pets;
                 $user->canton;
@@ -250,15 +251,16 @@ class UserApiController extends Controller
         $header = $request->header('Authorization');
 
         if ($header) {
-            $user = User::where('api_token', $header)->first();
+            $token = explode(' ', $header)[1];
+            $user = User::where('api_token', $token)->first();
             if ($user) {
 
-                $userFindE = User::where('email', $input['email'])
+                $userFindE = isset($input['email']) ? User::where('email', $input['email'])
                     ->where('api_token', '!=', $header)
-                    ->first();
-                $userFindP = User::where('phone', $input['phone'])
+                    ->first() : null;
+                $userFindP = isset($input['phone']) ? User::where('phone', $input['phone'])
                     ->where('api_token', '!=', $header)
-                    ->first();
+                    ->first() : null;
                 if ($userFindE) return response()->json([
                     'type' => 'error',
                     'title' => __('Error in update user'),
@@ -281,12 +283,12 @@ class UserApiController extends Controller
                 ], 301);
                 if (isset($input['name']))  $input['name'] = ucwords(strtolower($input['name']));
 
-
-                if ($user->email != $input['email']) {
-                    $input['email_verified_at'] = null;
+                if (isset($input['email'])) {
+                    if ($user->email != $input['email']) {
+                        $input['email_verified_at'] = null;
+                    }
+                    $input['email'] = strtolower($input['email']);
                 }
-
-                $input['email'] = strtolower($input['email']);
 
                 try {
                     DB::beginTransaction();
@@ -366,7 +368,8 @@ class UserApiController extends Controller
         $header = $request->header('Authorization');
 
         if ($header) {
-            $user = User::where('api_token', $header)->first();
+            $token = explode(' ', $header)[1];
+            $user = User::where('api_token', $token)->first();
             if ($user) {
                 $passwordC = Hash::check($input['currentPassword'], $user->password);
                 if ($passwordC) {

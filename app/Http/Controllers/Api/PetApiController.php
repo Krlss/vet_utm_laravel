@@ -51,10 +51,12 @@ class PetApiController extends Controller
     public function store(Request $request)
     {
         $input = $request->all();
+
         $header = $request->header('Authorization');
 
         if ($header) {
-            $user = User::where('api_token', $header)->first();
+            $token = explode(' ', $header)[1];
+            $user = User::where('api_token', $token)->first();
             if ($user) {
                 try {
 
@@ -91,13 +93,25 @@ class PetApiController extends Controller
                         'user' => $user
                     ], 200);
                 } catch (\Throwable $th) {
-                    return response()->json(['message' => 'Something went error', 'data' => $th], 500);
+                    return response()->json([
+                        'type' => 'error',
+                        'title' => __('Error'),
+                        'message' => __('Something went error'),
+                    ], 500);
                 }
             } else {
-                return response()->json(['message' => 'User not found', 'data' => []], 404);
+                return response()->json([
+                    'type' => 'error',
+                    'title' => __('Error'),
+                    'message' => __('User not found'),
+                ], 404);
             }
         } else {
-            return response()->json(['message' => 'you do not have permission to create a new pet in that profile', 'data' => []], 401);
+            return response()->json([
+                'type' => 'error',
+                'title' => __('Error'),
+                'message' => __('You do not have permission to create a new pet in that profile')
+            ], 401);
         }
     }
 
@@ -222,7 +236,6 @@ class PetApiController extends Controller
     {
         $input = $request->all();
 
-
         $pet['pet_id'] = genaretePetId($input); //Last ID 
         $pet['name'] = 'Desconocido';
         $pet['sex'] = null;
@@ -243,12 +256,12 @@ class PetApiController extends Controller
 
         DB::beginTransaction();
 
-
         try {
             Pet::create($pet);
             Report::create($report);
 
-            uploadImage($input['images'], $pet['pet_id']);
+            if ($request->hasFile('image'))
+                uploadImage($request->file('images'), $pet['pet_id']);
 
             DB::commit();
 
@@ -302,10 +315,14 @@ class PetApiController extends Controller
                         }
                     }
 
+                    if (isset($input['id_fur'])) {
+                        $input['id_fur'] = $input['id_fur'] == "undefined" ? null : $input['id_fur'];
+                    }
+
                     DB::beginTransaction();
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
 
-                    if (isset($input['images'])) {
+                    if ($request->hasFile('image')) {
                         uploadImage($input['images'], $input['pet_id'], true);
                     }
 
@@ -447,7 +464,8 @@ class PetApiController extends Controller
             $report['updated_at'] = date('Y-m-d H:i:s');
 
             Pet::create($pet);
-            uploadImage($input['images'], $pet['pet_id']);
+            if ($request->hasFile('image'))
+                uploadImage($input['images'], $pet['pet_id']);
 
             Report::create($report);
             DB::commit();

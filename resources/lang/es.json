@@ -360,6 +360,7 @@
     "Created data done successfully": "Datos creados con éxito",
     "Something went wrong": "Algo salió mal",
     "Error in create user": "Error al crear usuario",
+    "You do not have permission to create a new pet in that profile": "No tienes autorización para crear un nuevo mascota en ese perfil",
     "Register success": "Registro correcto",
     "Now you can login": "Ahora puedes iniciar sesión",
     "Report done successfully": "Reporte realizado con éxito",
