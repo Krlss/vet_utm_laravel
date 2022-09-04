@@ -38,6 +38,11 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('petsLost', [PetApiController::class, 'getAllPetsLost']);
+Route::get('petsLost/search/{query}', [PetApiController::class, 'getAllPetsLostByQuery']);
+Route::get('petsLostBySpecie/{id}', [PetApiController::class, 'getAllPetsLostBySpecie']);
+Route::get('getAllReports', [PetApiController::class, 'getAllReports']);
+
+Route::get('selects', [PetApiController::class, 'getSelects']);
 Route::get('getPetByID/{id}', [PetApiController::class, 'getPetByID']);
 
 Route::post('upload/petUnknown', [PetApiController::class, 'uploadPetUnknow'])->name('dashboard.uploadGoogle');
@@ -48,7 +53,7 @@ Route::post('register', [UserApiController::class, 'Register']);
 Route::get('users/{id}', [UserApiController::class, 'getProfile']);
 Route::put('updatedUser/', [UserApiController::class, 'updateDataUser']);
 Route::put('updatedPassword/', [UserApiController::class, 'updatedPassword']);
-Route::put('updatedPet/', [PetApiController::class, 'updateDataPet']);
+Route::post('updatedPet/', [PetApiController::class, 'updateDataPet']);
 Route::post('createdPet', [PetApiController::class, 'store']);
 
 Route::get('verifyEmail/{token}', [UserApiController::class, 'VerifyEmail']);

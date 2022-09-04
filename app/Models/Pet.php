@@ -79,4 +79,9 @@ class Pet extends Model implements Auditable
     {
         return $this->belongsTo(Fur::class, 'id_fur');
     }
+
+    public function reports()
+    {
+        return $this->hasMany(Report::class, 'pet_id', 'pet_id');
+    }
 }

@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         /* Province::factory(100)->create(); */
         $this->call(SpecieSeeder::class);
         $this->call(RaceSeeder::class);
-        
+
         $this->call(ProvinceSeeder::class);
         //Canton::factory(500)->create();
         $this->call(CantonSeeder::class);
@@ -29,6 +29,5 @@ class DatabaseSeeder extends Seeder
 
         //User::factory(150)->create();
         $this->call(UserSeeder::class);
-
     }
 }

@@ -27,7 +27,7 @@
             } else {
                 $(this).find(':submit').html('<i class="fa fa-spinner fa-spin"></i>');
             }
-            $(this).addClass('submitted');
+            $(this).find(':submit').prop('disabled', true);
         }
     });
     $("#email_verificate").on("click", function() {

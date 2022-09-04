@@ -15,10 +15,6 @@
             [6, "desc"]
         ],
         "dom": 'lfrtip',
-        columnDefs: [{
-            orderable: false,
-            targets: -1,
-        }],
         language: len,
         ajax: {
             url: "{{ route('dashboard.pets.index') }}",
@@ -45,7 +41,9 @@
                 data: 'updated_at',
             },
             {
-                data: 'actions'
+                data: 'actions',
+                searchable: false,
+                orderable: false,
             }
         ]
     });

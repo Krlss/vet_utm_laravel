@@ -14,12 +14,12 @@ class Image extends Migration
     public function up()
     {
         Schema::create('images', function (Blueprint $table) {
-        $table->id();
-	    $table->string('id_image');
-	    $table->string('url');
-	    $table->string('name'); 
-        $table->string('external_id');
-        $table->timestamps();
+            $table->increments('id');
+            $table->string('id_image');
+            $table->string('url');
+            $table->string('name');
+            $table->string('external_id');
+            $table->timestamps();
         });
     }
 

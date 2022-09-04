@@ -48,9 +48,8 @@ class GoogleDrive
      * 
      * @return The file ID, name, mimeType, and url.
      */
-    public function uploadFile($file, $from_api = false)
+    public function uploadFile($file)
     {
-        $this->from_api = $from_api;
 
         $this->serviceFile = new \Google_Service_Drive_DriveFile($this->client);
         $this->serviceFile->setName($this->getName($file));
@@ -59,7 +58,7 @@ class GoogleDrive
         $this->serviceFile->setParents([env('GOOGLE_DRIVE_FOLDER_ID')]);
 
         $result = $this->drive->files->create($this->serviceFile, [
-            'data' => $from_api ? base64_decode($file['base64']) : file_get_contents($file),
+            'data' => file_get_contents($file),
             'mimeType' => 'image/png',
             'uploadType' => 'media'
         ]);

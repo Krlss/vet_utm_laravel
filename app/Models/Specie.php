@@ -17,6 +17,8 @@ class Specie extends Model implements Auditable
         'name' => 'required',
     ];
 
+    public $keyType = 'string';
+
     public function races()
     {
         return $this->hasMany(Race::class, 'id_specie', 'id');

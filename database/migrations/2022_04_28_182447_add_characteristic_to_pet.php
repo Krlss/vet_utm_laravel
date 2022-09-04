@@ -14,7 +14,7 @@ class AddCharacteristicToPet extends Migration
     public function up()
     {
         Schema::table('pets', function (Blueprint $table) {
-            $table->string('characteristic', 255)->nullable()->after('published');
+            $table->text('characteristic')->nullable()->after('published');
         });
     }
 

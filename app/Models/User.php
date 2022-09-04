@@ -79,7 +79,7 @@ class User extends Authenticatable implements Auditable
         'last_name1' => 'required|max:50',
         'last_name2' => 'required|max:50',
         'email' => 'required|max:100|unique:users|email',
-        'phone' => 'numeric|nullable|digits:10',
+        'phone' => 'numeric|nullable|digits:10|unique:users',
     ];
 
     public static $rules_updated = [

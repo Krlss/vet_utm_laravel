@@ -168,4 +168,8 @@
     </div>
 
     <x-pet-photos-show :pet=$pet />
+
+    @if($report)
+    <iframe id="gmap_canvas" class="w-full h-64 mt-9" src="https://maps.google.com/maps?q={{$report->latitude}},{{$report->longitude}}&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe>
+    @endif
 </div>
