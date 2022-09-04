@@ -234,14 +234,12 @@ class UserApiController extends Controller
                     $user->pets[$i]['fur'] = $pet[$i]->fur ? $pet[$i]->fur->name : null;
                 }
 
-                return response()->json(['message' => 'Welcome again', 'user' => $user], 200);
+                return response()->json(['message' => __('Welcome again'), 'user' => $user], 200);
             }
-            return response()->json(['message' => 'User not found', 'data' => []], 404);
+            return response()->json(['message' => __('You are not authorized to view that profile')], 404);
         } else {
-            return response()->json(['message' => 'you are not authorized to view that profile', 'data' => []], 401);
+            return response()->json(['message' => __('Api key required')], 401);
         }
-
-        return response()->json(['message' => 'Welcome', 'data' => []], 200);
     }
 
     function updateDataUser(Request $request)

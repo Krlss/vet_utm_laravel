@@ -18,7 +18,7 @@ class CreateReport extends Migration
             $table->double('latitude');
             $table->double('longitude');
             $table->boolean('active')->default(false);
-            $table->string('pet_id');
+            $table->string('pet_id')->nullable();
             $table->string('user_id', 13)->nullable();
             $table->timestamps();
 

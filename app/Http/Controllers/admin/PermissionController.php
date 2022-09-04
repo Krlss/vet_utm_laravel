@@ -16,7 +16,7 @@ class PermissionController extends Controller
     public function index()
     {
         $roles = Role::all();
-        $permissions = Permission::all();
+        $permissions = Permission::where('name', 'like', '%dashboard%')->get();
 
         return view('dashboard.permissions.index', compact('roles', 'permissions'));
     }

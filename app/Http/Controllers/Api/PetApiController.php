@@ -213,7 +213,7 @@ class PetApiController extends Controller
 
             foreach ($pets as $pet) {
                 $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
-                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
+                $pet['specie_image'] =  $pet->specie->image->url ?? null;
                 $pet['race_name'] = $pet->race ? $pet->race->name : null;
                 $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
                 $pet['images'] = $pet->images;
@@ -260,7 +260,7 @@ class PetApiController extends Controller
             Pet::create($pet);
             Report::create($report);
 
-            if ($request->hasFile('image'))
+            if ($request->hasFile('images'))
                 uploadImage($request->file('images'), $pet['pet_id']);
 
             DB::commit();
@@ -275,7 +275,8 @@ class PetApiController extends Controller
             return response()->json([
                 'type' => 'error',
                 'title' => __('Error in create report'),
-                'message' => __('Try again')
+                'message' => __('Try again'),
+                'errors' => $th->getMessage()
             ], 500);
         }
     }
@@ -322,7 +323,7 @@ class PetApiController extends Controller
                     DB::beginTransaction();
                     if (isset($input['name'])) $input['name'] = ucwords(strtolower($input['name']));
 
-                    if ($request->hasFile('image')) {
+                    if ($request->hasFile('images')) {
                         uploadImage($input['images'], $input['pet_id'], true);
                     }
 
@@ -395,8 +396,6 @@ class PetApiController extends Controller
     {
         $input = $request->all();
 
-
-
         DB::beginTransaction();
 
 
@@ -464,7 +463,7 @@ class PetApiController extends Controller
             $report['updated_at'] = date('Y-m-d H:i:s');
 
             Pet::create($pet);
-            if ($request->hasFile('image'))
+            if ($request->hasFile('images'))
                 uploadImage($input['images'], $pet['pet_id']);
 
             Report::create($report);
@@ -524,7 +523,7 @@ class PetApiController extends Controller
 
             foreach ($pets as $pet) {
                 $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
-                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
+                $pet['specie_image'] = $pet->specie->image->url ?? null;
                 $pet['race_name'] = $pet->race ? $pet->race->name : null;
                 $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
                 $pet['images'] = $pet->images;
@@ -558,7 +557,7 @@ class PetApiController extends Controller
 
             foreach ($pets as $pet) {
                 $pet['specie_name'] = $pet->specie ? $pet->specie->name : null;
-                $pet['specie_image'] = $pet['specie_name'] ? $pet->specie->image->url : null;
+                $pet['specie_image'] = $pet->specie->image->url ?? null;
                 $pet['race_name'] = $pet->race ? $pet->race->name : null;
                 $pet['fur_name'] = $pet->fur ? $pet->fur->name : null;
                 $pet['images'] = $pet->images;
