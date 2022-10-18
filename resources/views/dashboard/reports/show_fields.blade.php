@@ -133,7 +133,7 @@
                 <div>
                     {!! Form::label('birth', __('Birth date'), ['class' => ' ']) !!}
                     <div class="px-3 py-2 rounded-md bg-gray-50 shadow-sm">
-                        <p class="truncate"> {!! $pet->birth !!} </p>
+                        <p class="truncate"> {!! $pet->birth ?? __('Birth undefined') !!} </p>
                     </div>
                 </div>
 
