@@ -1,66 +1,150 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# **_Sistema de control para usuarios, mascotas y reportes de la Veterinaria de la Universidad técnica de Manabí_**
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## **Instalación en entorno de desarrollo**
 
-## About Laravel
+Para este paso se necesita instalar PHP, composer, nodejs
+Para proceder a la ejecución del proyecto se necesita seguir los siguientes pasos:
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+1. Ejecutar los comandos `composer install && npm install`
+2. Crear el archivo `.env` en la raíz del proyecto
+   `APP_NAME='Sistema de Gestión SINVET'`
+   `APP_ENV=local`
+   `APP_KEY=base64:VOTucStHAJKoMrRQMrvE5iAo5j38iIFCmKsXJVhgz4g=`
+   `APP_DEBUG=true`
+   `APP_URL=http://localhost`
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+    `LOG_CHANNEL=stack`
+    `LOG_DEPRECATIONS_CHANNEL=null`
+    `LOG_LEVEL=debug`
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+    `DB_CONNECTION=<La base de datos que utilizarás>`
+    `DB_HOST=<Host de la base de datos>`
+    `DB_PORT=<Puerto que utiliza tu base de datos>`
+    `DB_DATABASE=<Base de datos>`
+    `DB_USERNAME=<Usuario de la base de datos>`
+    `DB_PASSWORD=<Contraseña de acceso del usuario>`
 
-## Learning Laravel
+    `BROADCAST_DRIVER=log`
+    `CACHE_DRIVER=file`
+    `FILESYSTEM_DRIVER=local`
+    `QUEUE_CONNECTION=sync`
+    `SESSION_DRIVER=database`
+    `SESSION_LIFETIME=120`
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+    `MEMCACHED_HOST=127.0.0.1`
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 1500 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+    `REDIS_HOST=127.0.0.1`
+    `REDIS_PASSWORD=null`
+    `REDIS_PORT=6379`
 
-## Laravel Sponsors
+    `MAIL_MAILER=smtp`
+    `MAIL_HOST=smtp.googlemail.com`
+    `MAIL_PORT=465`
+    `MAIL_USERNAME=<Tu correo>`
+    `MAIL_PASSWORD=<Tu contraseña>`
+    `MAIL_ENCRYPTION=ssl`
+    `MAIL_FROM_ADDRESS=<Tu correo>`
+    `MAIL_FROM_NAME="${APP_NAME}"`
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+    `AWS_ACCESS_KEY_ID=`
+    `AWS_SECRET_ACCESS_KEY=`
+    `AWS_DEFAULT_REGION=us-east-1`
+    `AWS_BUCKET=`
+    `AWS_USE_PATH_STYLE_ENDPOINT=false`
 
-### Premium Partners
+    `PUSHER_APP_ID=`
+    `PUSHER_APP_KEY=`
+    `PUSHER_APP_SECRET=`
+    `PUSHER_APP_CLUSTER=mt1`
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[CMS Max](https://www.cmsmax.com/)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
-- **[Romega Software](https://romegasoftware.com)**
+    `MIX_PUSHER_APP_KEY="${PUSHER_APP_KEY}"`
+    `MIX_PUSHER_APP_CLUSTER="${PUSHER_APP_CLUSTER}" `
 
-## Contributing
+    `GOOGLE_TYPE_ACCOUNT=service_account`
+    `GOOGLE_SCOPES="https://www.googleapis.com/auth/drive"`
+    `GOOGLE_PRIVATE_KEY=`
+    `GOOGLE_CLIENT_EMAIL=`
+    `GOOGLE_CLIENT_ID=`
+    `GOOGLE_DRIVE_FOLDER_ID=`
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+3. Crear la base de datos, el nombre de la base de datos tiene que ser el mismo que se coló en el .env
+4. Ejecutar los comandos `php artisan migrate && php artisan db:seed`
+5. Para ejecutar el proyecto ejecutar `php artisan serv`
 
-## Code of Conduct
+# Para enviar correos electrónicos hacer la siguiente configuración
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+-   Ir a tu cuenta de google y crear una contraseña de aplicación
+    ![Imagen de contraseña de aplicación](https://github.com/Krlss/vet_utm_laravel/tree/master/storage/paso_1_email.png)
+-   Copiar la contraseña y ponerla en tu `.env`
+    ![Imagen de la contraseña generada](https://github.com/Krlss/vet_utm_laravel/tree/master/storage/pass_email.png)
 
-## Security Vulnerabilities
+# Para utilizar tu google drive para el almacenamiento de imagenes
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+-   Ir a la consola de google [console google](https://console.cloud.google.com/).
+    Como no tendrás una proyecto creado, ir a la parte superior y darle clic en seleccionar proyecto, se te abrirá un modal donde podrás darle a "Proyecto nuevo". Aquí solo le pondrás el nombre del nombre.
+-   Una vez creado el proyecto en el buscador de la consola de google busca "Google Drive API" y dale "Habilitar"
+-   Una vez habilitado Google Drive API se deberá crear unas crendenciales para el uso de la api
+-   En el buscador de la consola de google busca "Apis & services". Una ves dentro iras a credenciales y le darás "Crear credenciales" y cuenta de servicio
+    ![Cuenta de servicio de google](https://github.com/Krlss/vet_utm_laravel/tree/master/storage/cuenta_de_servicio_credenciales.png)
+-   Dentro del formulario pondrás un nombre del servicio y ya.
+-   Una ves creado la cuenta de servicio en la parte inferior le darás clic a tu cuenta
+    ![Clic en la cuenta de servicio](https://github.com/Krlss/vet_utm_laravel/tree/master/storage/clic_cuenta_de_servicios.png)
+-   Cuando le hayas dado clic a tu cuenta le darás clic a "KEYS" -> "ADD KEY" -> "Create new key" -> JSON
+-   Se te descargará un archivo `.json` donde copiarás y pegarás cierta información en tu `.env` que son las siguientes:
+    `private_key, client_email, client_id`
+-   Cabe recalcar que la private_key en el `.env` va entre comillas.
+-   Ahora deberás crear una carpeta en tu google drive, esta carpeta será compartida con el correo que te salió cuando creaste las credenciales y le darás permiso de editar.
+    ![Clic en la cuenta de servicio](https://github.com/Krlss/vet_utm_laravel/tree/master/storage/clic_cuenta_de_servicios.png)
 
-## License
+### Manejos de usuarios:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+-   Ver lista de usuarios
+-   Crear usuario
+-   Editar usuario
+-   Eliminar usuario
+
+### Manejos de mascotas:
+
+-   Ver lista de mascotas
+-   Crear mascota
+-   Editar mascota
+-   Eliminar mascota
+
+### Auditoria:
+
+-   Ver lista de auditoria
+
+### Manejos de especies:
+
+-   Ver lista de especies
+-   Crear especie
+-   Editar especie
+-   Eliminar especie
+
+### Manejos de pelajes:
+
+-   Ver lista de pelajes
+-   Crear pelaje
+-   Editar pelaje
+-   Eliminar pelaje
+
+### Manejos de razas:
+
+-   Ver lista de razas
+-   Crear raza
+-   Editar raza
+-   Eliminar raza
+
+### Manejos de regiones
+
+-   Ver lista de provincias/cantones/parroquias
+-   Crear provincias/cantones/parroquias
+-   Editar provincias/cantones/parroquias
+-   Eliminar provincias/cantones/parroquias
+
+### Manejos de roles y permisos
+
+-   Ver lista de roles y permisos
+-   Crear rol/permiso
+-   Editar rol/permiso
+-   Eliminar rol/permiso
