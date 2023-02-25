@@ -164,6 +164,28 @@ return [
             'required' => 'El :attribute es obligatorio.',
             'image'    => 'El :attribute debe ser una imagen.',
             'mimes'    => 'El :attribute debe ser una imagen con formato: :values.',
+        ],
+        'products' => [
+            'required' => 'Debe tener al menos un producto.',
+        ],
+        'products.*.product_id' => [
+            'required' => 'Debe seleccionar un producto.',
+            'exists'   => 'El producto seleccionado no existe.',
+        ],
+        'products.*.quantity' => [
+            'required' => 'Debe ingresar una cantidad.',
+            'numeric'  => 'La cantidad debe ser numérica.',
+            'integer'  => 'La cantidad debe ser un número entero.',
+            'min'      => 'La cantidad debe ser mayor a 0.',
+        ],
+        'products.*.expire' => [
+            'required' => 'Debe ingresar una fecha de expiración.',
+            'date'  => 'Este valor debe ser una fecha válida',
+            'before_or_equal' => 'La fecha de expiración debe ser anterior o igual a la fecha actual.',
+            'date_format' => 'La fecha de expiración debe tener el formato :format.',
+        ],
+        'products.*.lote' => [
+            'required' => 'Debe ingresar un número de lote',
         ]
     ],
     'attributes' => [
@@ -196,6 +218,9 @@ return [
         'id_race' => 'Raza',
         'id_fur' => 'Pelaje',
         'id_pet_pather' => 'Identificación del padre',
-        'id_pet_mother' => 'Identificación de la madre'
+        'id_pet_mother' => 'Identificación de la madre',
+        'detail' => 'Detalle',
+        'created_at' => 'Fecha de creación',
+        'quantity' => 'Cantidad',
     ],
 ];

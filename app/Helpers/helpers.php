@@ -535,17 +535,30 @@ function getGoodMorningOrGoodEveningOrGoodAfternoon()
     }
 }
 
-function createAccountFromUTM(Request $request, $api = false)
+function flashMessage($message, $type = 'success')
 {
+    if ($type == 'success') {
+        $type = 'primary';
+    } elseif ($type == 'error') {
+        $type = 'danger';
+    }
+
+    return '<div class="alert alert-' . $type . ' alert-dismissible fade show" role="alert">' . $message . '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button></div>';
+}
+
+function createAccountFromUTM(Request $request)
+{
+    // Verificamos si existe el usuario
     $user = User::where('email', $request->email)->first();
 
     if (!$user) {
+        // Verificamos si el usuario es de la UTM
         if (strpos($request->email, "utm.edu.ec")) {
             /* usuario utm */
             try {
                 $response = Http::withHeaders([
-                    'X-API-KEY' => '3ecbcb4e62a00d2bc58080218a4376f24a8079e1',
-                ])->withOptions(["verify" => false])->post('https://app.utm.edu.ec/becas/api/publico/IniciaSesion', [
+                    'X-API-KEY' => env('API_KEY_UTM'),
+                ])->withOptions(["verify" => false])->post(env('API_URL_UTM'), [
                     'usuario' => $request->email,
                     'clave' => $request->password,
                 ]);
@@ -553,6 +566,7 @@ function createAccountFromUTM(Request $request, $api = false)
             } catch (\Throwable $th) {
                 return null;
             }
+            // Verificamos si el usuario es valido y creamos el usuario
             if ($output["state"] == "success") {
 
                 $usuario_utm = $output["value"];
@@ -582,14 +596,17 @@ function createAccountFromUTM(Request $request, $api = false)
                     'profile_photo_path' => $PhotoPath,
                 ]);
 
-                throw ValidationException::withMessages([__('Your account dont have access to the system')]);;
+                throw ValidationException::withMessages([__('Your account dont have access to the system')]);
             } else {
+                // Si el usuario no es valido
                 return null;
             }
         } else {
+            // Si el usuario no es de la UTM
             return null;
         }
     } else {
+        // si el usuario existe, verificamos que la contraseña sea correcta y si tiene acceso al sistema
         if ($user && Hash::check($request->password, $user->password)) {
             if (!$user->canLogin()) {
                 throw ValidationException::withMessages([__('Your account dont have access to the system')]);

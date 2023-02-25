@@ -83,5 +83,41 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'dashboard.parishs.create'])->syncRoles($role2);
         Permission::create(['name' => 'dashboard.parishs.edit'])->syncRoles($role2);
         Permission::create(['name' => 'dashboard.parishs.destroy'])->syncRoles($role2);
+
+        Permission::create(['name' => 'inventory.permissions'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.home'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.products.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.products.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.products.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.products.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.products.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.ingress-products.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.ingress-products.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.ingress-products.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.ingress-products.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.ingress-products.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.egress-products.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.egress-products.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.egress-products.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.egress-products.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.egress-products.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.expires-products.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.expires-stock-products.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.categories.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.categories.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.categories.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.categories.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.categories.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.types.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.types.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.types.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.types.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.types.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.units.index'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.units.show'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.units.create'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.units.edit'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.units.destroy'])->syncRoles([$role2]);
+        Permission::create(['name' => 'inventory.reports'])->syncRoles([$role2]);
     }
 }
