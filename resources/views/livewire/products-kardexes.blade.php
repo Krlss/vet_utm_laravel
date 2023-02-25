@@ -51,7 +51,7 @@
                     </td>
                     <td>
                         @if ($type == 'ingress')
-                        <input type="text" name="products[{{ $index }}][lote]" class="form-control" wire:model="products.{{ $index }}.lote" />
+                        <input type="text" name="products[{{ $index }}][lote]" class="form-control border" wire:model="products.{{ $index }}.lote" />
                         @if ($errors->has('products.' . $index . '.lote'))
                         <span class="text-red-500 text-xs  ">{{ $errors->first('products.' . $index . '.lote') }}</span>
                         @endif
@@ -73,7 +73,7 @@
                     </td>
                     @if ($expire)
                     <td>
-                        <input type="date" name="products[{{ $index }}][expire]" class="form-control" wire:model="products.{{ $index }}.expire" required />
+                        <input type="date" name="products[{{ $index }}][expire]" class="form-control border" wire:model="products.{{ $index }}.expire" required />
                         @if ($errors->has('products.' . $index . '.expire'))
                         <span class="text-red-500 text-xs ">{{ $errors->first('products.' . $index . '.expire') }}</span>
                         @endif
@@ -91,22 +91,9 @@
 
         <div class="row">
             <div class="col-md-12">
-                <button class="btn btn-sm btn-secondary add" wire:click.prevent="addProduct">+
+                <button type="button" class="btn btn-sm btn-secondary add" wire:click.prevent="addProduct">+
                     {{ __('Add Another Product') }}</button>
             </div>
         </div>
     </div>
 </div>
-{{-- @push('js')
-    <script>
-        $(document).ready(function() {
-            
-            window.livewire.on('add_Product', (products) => {
-              
-                console.log(products)
-            });
-
-        })
-      
-    </script>
-@endpush --}}

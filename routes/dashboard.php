@@ -25,6 +25,7 @@ use App\Http\Controllers\dashboard\ProductsMinStock;
 use App\Http\Controllers\dashboard\TypeController;
 use App\Http\Controllers\dashboard\UnitController;
 use App\Http\Controllers\dashboard\Report;
+use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Route;
 

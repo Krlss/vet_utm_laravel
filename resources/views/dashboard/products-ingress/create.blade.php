@@ -30,7 +30,7 @@
     <x-card-kardex id="{{$count}}" readonly={{false}} :kardex=null />
 
     @livewire('products-kardexes', ['products' => old('products') ? old('products') : [], 'type' => 'ingress'])
-
+    <livewire:scripts :currentFiles="" />
 </form>
 
 @endsection
