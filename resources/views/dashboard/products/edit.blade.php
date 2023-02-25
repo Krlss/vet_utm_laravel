@@ -31,7 +31,7 @@
             <x-tabs routeTo='dashboard.products.create' routeCurrent='products/create' title='Crear Producto' />
             @endcan
             @can('inventory.products.edit')
-            <x-tabs routeTo='dashboard.products.edit' routeCurrent='products/*' title='Editar Producto' />
+            <x-tabs routeTo="dashboard.products.edit" isEdit model=$product routeCurrent='products/*' title='Editar Producto' />
             @endcan
         </ul>
     </div>

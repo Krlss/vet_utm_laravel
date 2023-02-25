@@ -40,7 +40,7 @@ class InventoryController extends Controller
                     $query->where('name', 'LIKE', '%' .  ucwords(strtolower($request->search)) . '%');
                 })->get();
             return datatables()->of($data)
-                ->addColumn('actions', function (Products $product) {
+                ->addColumn('actions', function ($product) {
                     return view('dashboard.inventory.partials.actions', compact('product'));
                 })->make(true);
         } else {
