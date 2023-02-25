@@ -9,7 +9,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{url('add-category-modal')}}",
+                url: "{{url('dashboard/add-category-modal')}}",
                 data: {
                     name: category,
                     _token: '{{csrf_token()}}'

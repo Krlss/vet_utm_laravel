@@ -3,7 +3,7 @@
         event.preventDefault();
         var form_data = $(this).serialize();
         $.ajax({
-            url: "{{ route('ajaxdata.postdata') }}",
+            url: "{{ route('dashboard/ajaxdata.postdata') }}",
             method: "POST",
             data: form_data,
             dataType: "json",

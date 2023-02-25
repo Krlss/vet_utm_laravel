@@ -9,7 +9,7 @@
 
             $.ajax({
                 type: "POST",
-                url: "{{url('add-unit-modal')}}",
+                url: "{{url('dashboard/add-unit-modal')}}",
                 data: {
                     name: unit,
                     _token: '{{csrf_token()}}'
