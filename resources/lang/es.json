@@ -1346,5 +1346,11 @@
     "inventory.lotes.show": "Ver detalles de un lote",
     "inventory.lotes.create": "Crear un lote",
     "inventory.lotes.edit": "Editar un lote",
-    "inventory.lotes.destroy": "Eliminar un lote"
+    "inventory.lotes.destroy": "Eliminar un lote",
+    "Total item": "Total de productos",
+    "Stock on Hand": "Existencias disponibles",
+    "Items Available for Sale": "Productos disponibles para la venta",
+    "Items committed for Sales": "Productos comprometidos para la venta",
+    "Items Quantity In": "Cantidad de ingresos realizados",
+    "Items Quantity Out": "Cantidad egresos realizados"
 }
