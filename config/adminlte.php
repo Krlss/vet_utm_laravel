@@ -275,7 +275,7 @@ return [
             'can'          => 'dashboard.pets.index'
         ],
         [
-            'text'      => 'Reportes',
+            'text'      => 'Reportes de mascotas perdidas',
             'icon'      => 'fas fa-list-alt',
             'active'    => ['dashboard/reports*'],
             'route'         => 'dashboard.reports.index',
