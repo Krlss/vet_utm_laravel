@@ -56,16 +56,7 @@
                         <span class="text-red-500 text-xs  ">{{ $errors->first('products.' . $index . '.lote') }}</span>
                         @endif
                         @else
-                        <select wire:model="products.{{ $index }}.lote" name="products[{{ $index }}][lote]" class="form-control" required>
-                            <option value="">{{ __('Choose a lote') }}</option>
-                            @if ($products[$index]['lotes'])
-                            @foreach ($products[$index]['lotes'] as $lote)
-                            <option value="{{ $lote['lote'] }}" @if ($products[$index]['lote']==$lote['lote']) selected @endif>
-                                {{ $lote['lote'] }}
-                            </option>
-                            @endforeach
-                            @endif
-                        </select>
+                        {!! Form::select("products[{{ $index }}][lote]", $products[$index]['lotes'], $products[$index]['lote'], ['class' => 'form-control', 'placeholder' => 'Elige un lote']) !!}
                         @endif
                         @if ($errors->has('products.' . $index . '.lote'))
                         <span class="text-red-500 text-xs ">{{ $errors->first('products.' . $index . '.lote') }}</span>

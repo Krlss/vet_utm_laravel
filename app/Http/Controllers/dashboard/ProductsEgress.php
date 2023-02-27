@@ -143,7 +143,7 @@ class ProductsEgress extends Controller
 
         foreach ($kardex->products as $product) {
             $lote = $lotes->where('products_id', $product->id)->first();
-            $lotes_ = $lotes->where('products_id', $product->id)->pluck('id', 'lote');
+            $lotes_ = $lotes->where('products_id', $product->id)->pluck('lote', 'id');
             $products[] = [
                 'product_id' => $product->id,
                 'quantity' => $product->pivot->quantity,

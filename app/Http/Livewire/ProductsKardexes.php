@@ -5,6 +5,7 @@ namespace App\Http\Livewire;
 use App\Models\Products;
 use App\Models\Lote;
 use Livewire\Component;
+use Illuminate\Support\Collection;
 
 class ProductsKardexes extends Component
 {
@@ -30,9 +31,9 @@ class ProductsKardexes extends Component
             $this->allProducts = [];
         }
 
-        /* products tiene la cantidad de productos agregados 
+        /* products tiene la cantidad de productos agregados
             tengan o no datos (Haber seleccionado el producto o poner una cantidad válida).
-            Simplemente cargan los datos que previamente se guardaron 
+            Simplemente cargan los datos que previamente se guardaron
             para que no haga todo el proceso de nuevo
         */
         try {
