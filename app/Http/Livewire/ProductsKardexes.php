@@ -23,7 +23,7 @@ class ProductsKardexes extends Component
 
         if ($type == 'egress') {
             $this->allProducts = Products::where('stock', '>', 0)->orderBy('name', 'asc')->get();
-            $this->allLotes = Lote::All();
+            $this->allLotes = Lote::pluck('lote', 'id');
         } elseif ($type == 'ingress') {
 
             $this->allProducts = Products::orderBy('name', 'asc')->get();
