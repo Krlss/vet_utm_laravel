@@ -57,7 +57,7 @@ class ProductsKardexes extends Component
     }
     public function addProduct()
     {
-        $this->products[] = ['product_id' => '', 'quantity' => 1, 'lote' => '', 'lotes' => Lote::all()->toArray(), 'expire' => ''];
+        $this->products[] = ['product_id' => '', 'quantity' => 1, 'lote' => '', 'lotes' => Lote::pluck('lote', 'id'), 'expire' => ''];
         /*     $this->set('products', $this->allProducts); */
     }
 
@@ -70,7 +70,7 @@ class ProductsKardexes extends Component
     public function changeProducts($value, $index)
     {
         /* Value is ID product */
-        $newLotes = Lote::where('products_id', intval($value))->get()->toArray();
+        $newLotes = Lote::where('products_id', intval($value))->pluck('lote', 'id');
         $this->products[$index]['lotes'] =  $newLotes;
     }
     public function render()
