@@ -22,7 +22,7 @@ class ProductsEgress extends Controller
         $this->middleware('can:inventory.egress-products.show')->only('show');
         $this->middleware('can:inventory.egress-products.create')->only('store');
         $this->middleware('can:inventory.egress-products.edit')->only('edit');
-        $this->middleware('can:inventory.egress-products.update')->only('update');
+        $this->middleware('can:inventory.egress-products.edit')->only('update');
         $this->middleware('can:inventory.egress-products.destroy')->only('destroy');
     }
 

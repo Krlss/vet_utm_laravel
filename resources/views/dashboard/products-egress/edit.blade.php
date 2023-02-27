@@ -24,11 +24,10 @@
 
 @section('content')
 
-{!! Form::model($kardex, ['route' => ['dashboard.products-egress.update', $kardex], 'autocomplete' => 'off', 'method' => 'put', 'id' => 'form-kardex', 'class' => 'md:mb-0 mb-10']) !!}
+{!! Form::model($kardex, ['route' => ['dashboard.products-egress.update', $kardex], 'autocomplete' => 'off', 'method' => 'put', 'id' => 'form-kardex', 'class' => 'md:mb-0 mb-10', 'wire:submit.prevent' => '']) !!}
 <x-flash-messages />
 <x-card-kardex id="{{$count}}" readonly={{false}} :kardex=$kardex />
-@livewire('products-kardexes', ['products' => old('products') ?? $products , 'type' => 'egress'])
-<livewire:scripts :currentFiles="" />
+<livewire:products-kardexes :products="old('products') ?? $products" type="egress" />
 {!! Form::close() !!}
 
 @endsection

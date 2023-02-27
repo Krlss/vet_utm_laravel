@@ -19,19 +19,19 @@
     <div class="card-head">
         <ul class="flex md:flex-row flex-col border-b">
             @can('inventory.products.index')
-            <x-tabs routeTo='dashboard.inventory.index' routeCurrent='inventory*' title='Busqueda' />
+            <x-tabs routeTo='dashboard.inventory.index' routeCurrent='dashboard/inventory*' title='Busqueda' />
             @endcan
             @can('inventory.ingress-products.index')
-            <x-tabs routeTo='dashboard.products-ingress.index' routeCurrent='products-ingress*' title='Ingreso Productos' />
+            <x-tabs routeTo='dashboard.products-ingress.index' routeCurrent='dashboard/products-ingress*' title='Ingreso Productos' />
             @endcan
             @can('inventory.egress-products.index')
-            <x-tabs routeTo='dashboard.products-egress.index' routeCurrent='products-egress*' title='Egreso Productos' />
+            <x-tabs routeTo='dashboard.products-egress.index' routeCurrent='dashboard/products-egress*' title='Egreso Productos' />
             @endcan
             @can('inventory.products.create')
             <x-tabs routeTo='dashboard.products.create' routeCurrent='products/create' title='Crear Producto' />
             @endcan
             @can('inventory.products.edit')
-            <x-tabs routeTo="dashboard.products.edit" isEdit model=$product routeCurrent='products/*' title='Editar Producto' />
+            <x-tabs routeTo="dashboard.products.edit" isEdit model=$product routeCurrent='dashboard/products/*' title='Editar Producto' />
             @endcan
         </ul>
     </div>

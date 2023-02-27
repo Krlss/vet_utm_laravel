@@ -41,9 +41,9 @@ class ProductsKardexes extends Component
             if (count($products) > 0) {
                 foreach ($products as $index => $product) {
                     $this->products[$index] = [
-                        'product_id' =>  $product['product_id'],
-                        'quantity' =>   $product['quantity'],
-                        'lote' =>  $product['lote'],
+                        'product_id' => $product['product_id'],
+                        'quantity' => $product['quantity'],
+                        'lote' =>  isset($product['lote']) ? $product['lote'] : [],
                         'lotes' =>  isset($product['lotes']) ? $product['lotes'] :  [],
                         'expire' => isset($product['expire']) ? $product['expire'] : null,
                     ];

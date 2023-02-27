@@ -56,7 +56,7 @@
                         <span class="text-red-500 text-xs  ">{{ $errors->first('products.' . $index . '.lote') }}</span>
                         @endif
                         @else
-                        {!! Form::select("products[{{ $index }}][lote]", $products[$index]['lotes'], $products[$index]['lote'], ['class' => 'form-control', 'placeholder' => 'Elige un lote']) !!}
+                        {!! Form::select("products[$index][lote]", $products[$index]['lotes'], $products[$index]['lote'], ['class' => 'form-control', 'placeholder' => 'Elige un lote']) !!}
                         @endif
                         @if ($errors->has('products.' . $index . '.lote'))
                         <span class="text-red-500 text-xs ">{{ $errors->first('products.' . $index . '.lote') }}</span>

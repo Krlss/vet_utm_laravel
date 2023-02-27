@@ -28,7 +28,6 @@
 <x-flash-messages />
 <x-card-kardex id="{{$count}}" readonly={{false}} :kardex=$kardex />
 @livewire('products-kardexes', ['products' => old('products') ?? $products , 'type' => 'ingress'])
-<livewire:scripts :currentFiles="" />
 {!! Form::close() !!}
 
 @endsection
