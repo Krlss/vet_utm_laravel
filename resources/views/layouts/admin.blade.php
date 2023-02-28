@@ -8,9 +8,8 @@
 </div>
 <strong>Copyright © Facultad de Ciencias informáticas UTM.</strong> Todos los derechos reservados.
 @endsection
-
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/app.css') }}">
+<link rel="stylesheet"  href="{{ asset('css/app.css') }}">
 @stop
 
 @section('js')
