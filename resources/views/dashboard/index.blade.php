@@ -24,6 +24,7 @@
         @can('dashboard.reports.index')
         <x-card-home small='Reports quantity' value="{{shortenNumber($petsReport)}}" icon="fas fa-question" route="dashboard.reports.index" bg="yellow" color="black" />
         @endcan
+
     </div>
 
     <div class="flex flex-col items-center">
@@ -39,6 +40,7 @@
                     @can('inventory.reports')
                     <x-link-module name="{{__('Reports')}}" desc="{{ __('Information for decision making')}}" route="{{ route('dashboard.report.index') }}" />
                     @endcan
+                    <x-link-module name="{{__('History')}}" desc="Ingreso de historias clinicas" route="{{ route('deshidratacion.index') }}" />
                 </div>
             </div>
             @endcanany

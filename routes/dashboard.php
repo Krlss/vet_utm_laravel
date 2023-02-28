@@ -25,6 +25,7 @@ use App\Http\Controllers\dashboard\ProductsMinStock;
 use App\Http\Controllers\dashboard\TypeController;
 use App\Http\Controllers\dashboard\UnitController;
 use App\Http\Controllers\dashboard\Report;
+use App\Http\Controllers\DeshidratacionController;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Support\Facades\Route;
@@ -118,3 +119,57 @@ Route::get('/ingressByDayMes', [Report::class, 'ingressByDayMes'])->name('ingres
 Route::resource('permissions', PermissionController::class)->names('dashboard.permissions');
 Route::post('permissions/revoke-permission-to-role', [PermissionController::class, 'revokePermissionToRole']);
 Route::post('permissions/give-permission-to-role', [PermissionController::class, 'givePermissionToRole']);
+
+
+// RUTAS INGRESO DE HISTORIAS CLINICAS
+
+Route::get('/', 'WelcomeController@index');
+
+Route::resource('mucosas', 'MucosasController')->middleware('auth');
+Route::get('problema/{id}','ListaProblemaController@problema');
+
+Route::resource('tokenes', 'TokenesController')->middleware('auth');
+Route::resource('hoja_clinica', 'HojaClinicaController')->middleware('auth');
+Route::resource('ingreso_producto', 'IngProductoController')->middleware('auth');
+Route::resource('ingreso_especie', 'EspecieController')->middleware('auth');
+Route::resource('ingreso_raza', 'RazaController')->middleware('auth');
+Route::resource('ingreso_tipo_pelaje', 'TipoPelajeController')->middleware('auth');
+Route::resource('ing_lista_maestra', 'SistemasController')->middleware('auth');
+Route::resource('ingreso_mascota', 'IngMascotaController')->middleware('auth');
+Route::resource('ingresos', 'IngresosController')->middleware('auth');
+Route::resource('hoja_seguimiento', 'HojaSeguimientoController')->middleware('auth');
+Route::resource('test_patron', 'TestPatronController')->middleware('auth');
+Route::resource('ingreso_freidora', 'IngFreidoraController')->middleware('auth');
+Route::resource('ingreso_vacuna', 'VacunaController')->middleware('auth');
+Route::resource('desparasitante', 'DesparasitanteController')->middleware('auth');
+Route::resource('ingreso_vacunacion', 'VacunacionController')->middleware('auth');
+Route::resource('examen_fisico', 'ExamenFisicoController')->middleware('auth');
+Route::resource('lista_problemas', 'ListaProblemaController')->middleware('auth');
+Route::resource('anexos', 'AnexoController')->middleware('auth');
+Route::get('ingreso_vacunacion/create/{cod_mascota}','VacunacionController@create')->middleware('auth');
+Route::get('hoja_clinica/examen_fisico/{cod_mascota}','HojaClinicaController@examen_fisico')->middleware('auth');
+Route::get('hoja_clinica/lista_problemas/{cod_mascota}','HojaClinicaController@lista_problemas')->middleware('auth');
+Route::get('hoja_clinica/plan_terapeutico/{cod_mascota}','HojaClinicaController@plan_terapeutico')->middleware('auth');
+Route::get('hoja_clinica/create/{cod_mascota}','HojaClinicaController@create')->name('create');
+Route::get('hoja_clinica/show/{cod_mascota}','HojaClinicaController@show')->name('show');
+Route::get('lista_maestra/create/{cod_mascota}','ListaMaestraController@create')->middleware('auth');
+Route::get('plan_terapeutico/create/{cod_mascota}','PlanTerapeuticoController@create')->middleware('auth');
+Route::post('lista_maestra/create/{cod_mascota}','ListaMaestraController@store');
+Route::post('plan_terapeutico/create/{cod_mascota}','PlanTerapeuticoController@store')->middleware('auth');
+
+Route::get('anexos/create/{cod_mascota}','AnexoController@create')->middleware('auth');
+Route::post('anexos/create/{cod_mascota}','AnexoController@store')->middleware('auth');
+Route::get('anexos/listado/{cod_mascota}','AnexoController@listado')->middleware('auth');
+Route::get('examen_fisico/create/{cod_mascota}','ExamenFisicoController@create')->middleware('auth');
+
+//Route::get('hoja_clinica/lista_problemas/','HojaClinicaController@getlista_problemas')->middleware('auth');
+
+Route::resource('deshidratacion', DeshidratacionController::class)->names('deshidratacion')->middleware('auth');
+Route::resource('nomproductoseg', 'EgProductoEgresoController')->middleware('auth');
+Route::resource('marcaseg', 'EgMarcasController')->middleware('auth');
+
+//Route::post('/email', 'WelcomeController@email')->name('email');
+
+Route::get('/home', 'HomeController@index')->name('home');
+/**********SERVICIOS******/
+Route::get('/urlService1', 'ServiciosController@obtenerDato')->name('service1');
