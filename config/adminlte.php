@@ -128,7 +128,7 @@ return [
     'classes_content_header' => '',
     'classes_content' => '',
     'classes_sidebar' => 'sidebar-dark-primary elevation-4',
-    'classes_sidebar_nav' => 'fixed',
+    'classes_sidebar_nav' => 'sticky-top',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
     'classes_topnav_container' => 'container',
@@ -146,14 +146,14 @@ return [
     */
 
     'sidebar_mini' => 'lg',
-    'sidebar_collapse' => true,
+    'sidebar_collapse' => false,
     'sidebar_collapse_auto_size' => false,
     'sidebar_collapse_remember' => false,
-    'sidebar_collapse_remember_no_transition' => true,
+    'sidebar_collapse_remember_no_transition' => false,
     'sidebar_scrollbar_theme' => 'os-theme-light',
     'sidebar_scrollbar_auto_hide' => 'l',
     'sidebar_nav_accordion' => true,
-    'sidebar_nav_animation_speed' => 300,
+    'sidebar_nav_animation_speed' => 400,
 
     /*
     |--------------------------------------------------------------------------
@@ -224,6 +224,20 @@ return [
     |
     */
     'menu' => [
+
+        [
+            'text'  => date('d/m/Y'),
+            'url' => '#',
+            'topnav_right' => true
+        ],
+        [
+            'id' => 2,
+            'icon' => 'fa fa-bell',
+            'type'         => 'navbar-notification',
+            'topnav_right' => true,
+            'url' => '#'
+        ],
+
         [
             'text' => 'Dashboard',
             'url'  => '/dashboard',
@@ -240,6 +254,13 @@ return [
             ]
         ],
         [
+            'text'      => 'Inventario',
+            'icon'      => 'fas fa-bars',
+            'active'    => ['dashboard/inventory*'],
+            'route'         => 'dashboard.inventory.index',
+            'can'          => 'inventory.products.index'
+        ],
+        [
             'text'      => 'Usuarios',
             'icon'      => 'fas fa-users',
             'active'    => ['dashboard/users*'],
@@ -254,11 +275,18 @@ return [
             'can'          => 'dashboard.pets.index'
         ],
         [
-            'text'      => 'Reportes',
+            'text'      => 'Reportes de mascotas perdidas',
             'icon'      => 'fas fa-list-alt',
             'active'    => ['dashboard/reports*'],
             'route'         => 'dashboard.reports.index',
             'can'          => 'dashboard.reports.index'
+        ],
+        [
+            'text' => 'Productos por expirar',
+            'icon' => 'fa fa-info-circle',
+            'route' => 'dashboard.products-expires.index',
+            'active' => ['dashboard.products-expires.*'],
+            'can' => ['inventory.expires-products.index', 'inventory.expires-stock-products.index']
         ],
         [
             'header' => 'Administración de la página',
@@ -331,6 +359,27 @@ return [
                     'can'          => 'dashboard.parishs.index',
                 ],
             ]
+        ],
+        [
+            'text' => 'Categorías',
+            'route' => 'categories.index',
+            'icon' => 'fa fa-tag',
+            'active'    => ['categories*'],
+            'can' => 'inventory.categories.index'
+        ],
+        [
+            'text' => 'Tipos',
+            'route' => 'types.index',
+            'icon' => 'fa fa-bookmark',
+            'active'    => ['types*'],
+            'can' => 'inventory.types.index'
+        ],
+        [
+            'text' => 'Unidades de medida',
+            'route' => 'units.index',
+            'icon' => 'fa fa-list',
+            'active'    => ['units*'],
+            'can' => 'inventory.units.index'
         ],
         [
             'text'      => 'Roles y permisos',

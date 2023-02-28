@@ -19,3 +19,70 @@
         /* .5px */
     ;
 }
+
+.bg-yellow-navbar {
+    background: rgba(255, 255, 58, 1);
+}
+
+.text-yellow-navbar {
+    color: rgba(255, 255, 58, 1);
+}
+
+
+.turbolinks-progress-bar {
+    height: 2px;
+    background-color: #016831;
+}
+
+.tab-active {
+    font-weight: bold;
+}
+
+.sidebar {
+    transition: width .3s ease-in-out;
+    position: fixed;
+}
+
+.filter-select {
+    max-width: 200px;
+}
+
+.max-w-100px {
+    max-width: 100px;
+}
+
+.progress-bar {
+    height: 4px;
+    background-color: rgba(5, 206, 72, 0.2);
+    width: 100%;
+    overflow: hidden;
+}
+
+.progress-bar-value {
+    width: 100%;
+    height: 100%;
+    background-color: #016831;
+    animation: indeterminateAnimation 1s infinite linear;
+    transform-origin: 0% 50%;
+}
+
+@keyframes indeterminateAnimation {
+    0% {
+        transform: translateX(0) scaleX(0);
+    }
+
+    40% {
+        transform: translateX(0) scaleX(0.4);
+    }
+
+    100% {
+        transform: translateX(100%) scaleX(0.5);
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+}

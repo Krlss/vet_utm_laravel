@@ -14,6 +14,7 @@
 @stop
 
 @section('js')
+@livewireScripts
 <script>
     window.onload = () => {
         document.querySelector("html").style.overflowX = "hidden";

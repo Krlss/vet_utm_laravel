@@ -12,6 +12,7 @@
         "doctrine/dbal": "^3.3",
         "fruitcake/laravel-cors": "^2.0",
         "google/apiclient": "^2.12",
+        "guzzlehttp/guzzle": "^7.5",
         "jeroennoten/laravel-adminlte": "^3.7",
         "laravel/framework": "^8.65",
         "laravel/jetstream": "^2.4",
@@ -19,7 +20,9 @@
         "laravel/tinker": "^2.5",
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.5",
+        "nesbot/carbon": "^2.66",
         "owen-it/laravel-auditing": "^13.0",
+        "realrashid/sweet-alert": "^6.0",
         "spatie/laravel-permission": "^5.4",
         "yajra/laravel-datatables-oracle": "~9.0"
     },
